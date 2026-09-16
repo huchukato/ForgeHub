@@ -106,12 +106,37 @@ _CHAT_SKIP_TYPES = {"Note", "MarkdownNote", "Reroute", "PrimitiveNode"}
 _CHAT_MODES = {0: None, 2: "bypassed", 4: "muted"}
 
 
-def _build_chat_graph(workflow: dict[str, Any]) -> dict[str, Any]:
+def _widget_options_from_object_info(
+    class_type: str, widget_name: str, object_info: dict[str, Any]
+) -> list[str] | None:
+    """Return the allowed values for a combo widget, or None."""
+    info = object_info.get(class_type)
+    if not isinstance(info, dict):
+        return None
+    input_spec = info.get("input") or {}
+    for section in ("required", "optional"):
+        entries = input_spec.get(section) or {}
+        spec = entries.get(widget_name)
+        if spec is None:
+            continue
+        # spec is [type_or_choices, config?]. Combo specs have a list as first element.
+        if isinstance(spec, (list, tuple)) and spec:
+            head = spec[0]
+            if isinstance(head, (list, tuple)):
+                return [str(v) for v in head]
+    return None
+
+
+def _build_chat_graph(
+    workflow: dict[str, Any], object_info: dict[str, Any] | None = None
+) -> dict[str, Any]:
     """Build a node snapshot for the chat model.
 
     Handles both UI format (nodes list with widgets_values_named) and API
-    format (node_id -> class_type/inputs).
+    format (node_id -> class_type/inputs). Includes combo options from
+    object_info when available so the model knows valid widget values.
     """
+    object_info = object_info or {}
     graph: dict[str, Any] = {"nodes": []}
 
     if isinstance(workflow.get("nodes"), list):
@@ -136,7 +161,11 @@ def _build_chat_graph(workflow: dict[str, Any]) -> dict[str, Any]:
             if isinstance(wvn, dict):
                 for k, v in wvn.items():
                     if isinstance(v, (str, int, float, bool)):
-                        widgets.append({"name": k, "value": v})
+                        w: dict[str, Any] = {"name": k, "value": v}
+                        options = _widget_options_from_object_info(ntype, k, object_info)
+                        if options:
+                            w["options"] = {"values": options}
+                        widgets.append(w)
             entry["widgets"] = widgets
             graph["nodes"].append(entry)
         return graph
@@ -214,7 +243,12 @@ async def chat(request: ChatRequest) -> ChatResponse:
         if result is None:
             raise HTTPException(status_code=404, detail="Workflow not found")
         workflow, meta = result
-        graph = _build_chat_graph(workflow)
+        object_info = None
+        try:
+            object_info = await COMFY_CLIENT.object_info()
+        except Exception:
+            pass
+        graph = _build_chat_graph(workflow, object_info)
     if request.images:
         request = request.model_copy(update={"images": _resolve_chat_images(request.images)})
     try:
