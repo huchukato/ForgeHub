@@ -34,10 +34,16 @@ class ChatRequest(BaseModel):
     options: dict[str, Any] = Field(default_factory=dict)
 
 
+class ChatChoice(BaseModel):
+    label: str
+    send: str
+
+
 class ChatResponse(BaseModel):
     thinking: str = ""
     message: str = ""
     actions: list[dict[str, Any]] = Field(default_factory=list)
+    choices: list[ChatChoice] = Field(default_factory=list)
 
 
 class ExecuteRequest(BaseModel):

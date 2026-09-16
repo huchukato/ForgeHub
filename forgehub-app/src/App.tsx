@@ -122,9 +122,10 @@ export default function App() {
     return groups;
   }, [workflows]);
 
-  async function sendMessage() {
-    if (!input.trim() || loading) return;
-    const userMsg: ChatMessage = { role: "user", content: input };
+  async function sendMessage(text?: string) {
+    const content = (text ?? input).trim();
+    if (!content || loading) return;
+    const userMsg: ChatMessage = { role: "user", content };
     const nextMessages = [...messages, userMsg].slice(-20);
     setMessages(nextMessages);
     setInput("");
@@ -144,6 +145,7 @@ export default function App() {
           role: "assistant",
           content: result.message,
           thinking: result.thinking ? formatThinking(result.thinking) : undefined,
+          choices: result.choices?.length ? result.choices : undefined,
         },
       ]);
 
@@ -595,6 +597,28 @@ export default function App() {
                 >
                   {m.content}
                 </div>
+                {m.choices && m.choices.length > 0 && (
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 8 }}>
+                    {m.choices.map((c, j) => (
+                      <button
+                        key={j}
+                        onClick={() => sendMessage(c.send)}
+                        disabled={loading}
+                        style={{
+                          background: `${COLORS.accent}22`,
+                          border: `1px solid ${COLORS.accent}66`,
+                          color: COLORS.text,
+                          borderRadius: 10,
+                          padding: "6px 12px",
+                          fontSize: 13,
+                          cursor: loading ? "default" : "pointer",
+                        }}
+                      >
+                        {c.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
                 {m.thinking && (
                   <details style={{ marginTop: 8 }}>
                     <summary
@@ -820,7 +844,7 @@ export default function App() {
               }}
             />
             <button
-              onClick={sendMessage}
+              onClick={() => sendMessage()}
               disabled={loading || !input.trim()}
               style={{
                 background: loading || !input.trim() ? "#2a2a3a" : COLORS.accent,

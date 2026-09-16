@@ -8,10 +8,16 @@ export interface Workflow {
   outputs: string[];
 }
 
+export interface ChatChoice {
+  label: string;
+  send: string;
+}
+
 export interface ChatMessage {
   role: "user" | "assistant";
   content: string;
   thinking?: string;
+  choices?: ChatChoice[];
 }
 
 export interface ChatOptions {
@@ -26,6 +32,7 @@ export interface ChatResult {
   thinking: string;
   message: string;
   actions: Array<Record<string, unknown>>;
+  choices?: ChatChoice[];
 }
 
 export interface ExecuteResult {
