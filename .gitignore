@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+forgehub-app/node_modules/
+forgehub-app/dist/
+forgehub-app/dist-electron/
+forgehub-app/build/
+forgehub-app/release/
+forgehub-app/*.log
+
+.DS_Store
+*.local
+.env

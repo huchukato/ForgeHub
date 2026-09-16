@@ -1,0 +1,51 @@
+{
+  "name": "forgehub-app",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist-electron/electron/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build && tsc -p tsconfig.electron.json",
+    "preview": "vite preview",
+    "icon": "mkdir -p build && iconutil -c icns ../img/icon.iconset -o build/icon.icns",
+    "electron:dev": "cross-env NODE_ENV=development electron dist-electron/electron/main.js",
+    "electron:build": "npm run build && npm run icon && electron-builder"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "cross-env": "^7.0.3",
+    "electron": "^33.0.0",
+    "electron-builder": "^25.1.8",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  },
+  "build": {
+    "appId": "ai.devin.forgehub",
+    "productName": "ForgeHub",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*"
+    ],
+    "mac": {
+      "icon": "build/icon.icns",
+      "category": "public.app-category.graphics-design"
+    },
+    "win": {
+      "icon": "build/icon.icns"
+    },
+    "linux": {
+      "icon": "build/icon.icns"
+    }
+  }
+}
