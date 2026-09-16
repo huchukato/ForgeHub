@@ -17,6 +17,7 @@ class ComfyClient:
         self.base_url = base_url or SETTINGS.comfy_url
         self.ws_url = ws_url or SETTINGS.comfy_ws_url
         self._session: aiohttp.ClientSession | None = None
+        self._object_info: dict[str, Any] | None = None
 
     async def _session_or_new(self) -> aiohttp.ClientSession:
         if self._session is None or self._session.closed:
@@ -56,6 +57,12 @@ class ComfyClient:
         if prompt_id:
             return await self.get(f"/history/{prompt_id}")
         return await self.get("/history")
+
+    async def object_info(self, invalidate: bool = False) -> dict[str, Any]:
+        """Fetch /object_info (node class specs), cached for the client lifetime."""
+        if invalidate or self._object_info is None:
+            self._object_info = await self.get("/object_info")
+        return self._object_info
 
     def view_url(self, filename: str, subfolder: str = "", type_: str = "output") -> str:
         # URL relative to the ForgeHub backend (proxied via /outputs/{filename})

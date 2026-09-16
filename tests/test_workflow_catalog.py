@@ -91,6 +91,24 @@ def test_ui_format_workflow_detected(tmp_path: Path):
     assert meta.parameters == []
 
 
+def test_ui_format_category_from_node_types(tmp_path: Path):
+    ui_workflow = {
+        "nodes": [
+            {"id": 1, "type": "KSampler"},
+            {"id": 2, "type": "SaveImage"},
+            {"id": 3, "type": "VAEDecode"},
+        ],
+        "links": [],
+    }
+    (tmp_path / "ui_img.json").write_text(json.dumps(ui_workflow))
+    catalog = WorkflowCatalog(tmp_path)
+    meta = catalog.list_workflows()[0]
+    assert meta.format == "ui"
+    assert meta.category == "image"
+    assert "image" in meta.outputs
+    assert meta.parameters == []
+
+
 def test_api_format_is_default(tmp_path: Path):
     workflow = {"1": {"class_type": "KSampler", "inputs": {}}}
     (tmp_path / "api_wf.json").write_text(json.dumps(workflow))

@@ -20,6 +20,9 @@ class Settings:
         self.max_image_pixels = int(os.getenv("FORGEHUB_MAX_IMAGE_PIXELS", "1024"))
         self.cors_origins = [origin.strip() for origin in os.getenv("FORGEHUB_CORS_ORIGINS", "*").split(",") if origin.strip()]
         self.log_level = os.getenv("FORGEHUB_LOG_LEVEL", "INFO").upper()
+        # Directory with the built frontend (index.html + assets). When set and
+        # valid, the backend serves the ForgeHub GUI at "/".
+        self.frontend_dir = os.getenv("FORGEHUB_FRONTEND_DIR", "")
 
 
 SETTINGS = Settings()

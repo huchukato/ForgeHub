@@ -5,6 +5,7 @@ export const translations = {
     appName: "ForgeHub",
     tagline: "ComfyUI workflow hub",
     backendUrl: "Backend URL",
+    backendUrlHint: "Leave empty = same origin (backend-served GUI)",
     categories: {
       agent: "Agent",
       video: "Video",
@@ -16,6 +17,7 @@ export const translations = {
     chatModel: "Chat model",
     backendGguf: "GGUF (local)",
     backendHf: "HF Transformers",
+    model: "Model",
     maxTokens: "Max tokens",
     temperature: "Temperature",
     enableThinking: "Enable thinking",
@@ -37,6 +39,7 @@ export const translations = {
     appName: "ForgeHub",
     tagline: "Hub per workflow ComfyUI",
     backendUrl: "URL backend",
+    backendUrlHint: "Lascia vuoto = stessa origine (GUI servita dal backend)",
     categories: {
       agent: "Agent",
       video: "Video",
@@ -48,6 +51,7 @@ export const translations = {
     chatModel: "Modello chat",
     backendGguf: "GGUF (locale)",
     backendHf: "HF Transformers",
+    model: "Modello",
     maxTokens: "Max tokens",
     temperature: "Temperature",
     enableThinking: "Abilita thinking",
@@ -71,6 +75,7 @@ export interface Translations {
   appName: string;
   tagline: string;
   backendUrl: string;
+  backendUrlHint: string;
   categories: {
     agent: string;
     video: string;
@@ -82,6 +87,7 @@ export interface Translations {
   chatModel: string;
   backendGguf: string;
   backendHf: string;
+  model: string;
   maxTokens: string;
   temperature: string;
   enableThinking: string;

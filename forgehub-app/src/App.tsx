@@ -31,8 +31,14 @@ export default function App() {
   const [lang, setLang] = useState<Language>((localStorage.getItem("forgehub.lang") as Language) || "en");
   const t: Translations = translations[lang];
 
+  // Empty URL = same origin (GUI served by the backend). In `vite dev` we
+  // still default to the local backend on :8484.
+  const defaultBackendUrl =
+    window.location.hostname === "localhost" && window.location.port === "5173"
+      ? "http://localhost:8484"
+      : "";
   const [backendUrl, setBackendUrl] = useState(
-    localStorage.getItem("forgehub.backendUrl") || "http://localhost:8484"
+    localStorage.getItem("forgehub.backendUrl") ?? defaultBackendUrl
   );
   const [workflows, setWorkflows] = useState<Workflow[]>([]);
   const [activeCategory, setActiveCategory] = useState<string>("image");
@@ -47,6 +53,10 @@ export default function App() {
     max_tokens: 1024,
     temperature: 0.2,
     thinking: false,
+  });
+  const [chatModels, setChatModels] = useState<{ hf: string[]; gguf: string[] }>({
+    hf: [],
+    gguf: [],
   });
   const [outputs, setOutputs] = useState<OutputFile[]>([]);
   const [uploads, setUploads] = useState<Array<{ filename: string; url: string }>>([]);
@@ -76,6 +86,22 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem("forgehub.backendUrl", backendUrl);
   }, [backendUrl]);
+
+  useEffect(() => {
+    client
+      .getChatModels()
+      .then(setChatModels)
+      .catch(() => setChatModels({ hf: [], gguf: [] }));
+  }, [client]);
+
+  const modelsForBackend =
+    chatModels[chatOptions.backend === "hf" ? "hf" : "gguf"] ?? [];
+
+  useEffect(() => {
+    if (modelsForBackend.length > 0 && !modelsForBackend.includes(chatOptions.model ?? "")) {
+      setChatOptions((o) => ({ ...o, model: modelsForBackend[0] }));
+    }
+  }, [modelsForBackend, chatOptions.model]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -181,7 +207,7 @@ export default function App() {
         <div style={{ padding: "20px 18px", borderBottom: `1px solid ${COLORS.border}` }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18 }}>
             <img
-              src="/logo.png"
+              src="./logo.png"
               alt={t.appName}
               style={{ width: 34, height: 34, borderRadius: 10, objectFit: "cover" }}
             />
@@ -205,6 +231,7 @@ export default function App() {
             <input
               type="text"
               value={backendUrl}
+              placeholder={t.backendUrlHint}
               onChange={(e) => setBackendUrl(e.target.value)}
               style={{
                 width: "100%",
@@ -360,6 +387,32 @@ export default function App() {
             <option value="gguf">{t.backendGguf}</option>
             <option value="hf">{t.backendHf}</option>
           </select>
+          {modelsForBackend.length > 0 && (
+            <>
+              <label style={{ fontSize: 10, color: COLORS.muted }}>{t.model}</label>
+              <select
+                value={chatOptions.model}
+                onChange={(e) => setChatOptions((o) => ({ ...o, model: e.target.value }))}
+                style={{
+                  width: "100%",
+                  marginTop: 4,
+                  marginBottom: 10,
+                  background: COLORS.panel,
+                  color: COLORS.text,
+                  border: `1px solid ${COLORS.border}`,
+                  borderRadius: 8,
+                  padding: "8px 10px",
+                  fontSize: 12,
+                }}
+              >
+                {modelsForBackend.map((m) => (
+                  <option key={m} value={m}>
+                    {m}
+                  </option>
+                ))}
+              </select>
+            </>
+          )}
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
             <div>
               <label style={{ fontSize: 10, color: COLORS.muted }}>{t.maxTokens}</label>
@@ -492,7 +545,7 @@ export default function App() {
                 color: COLORS.muted,
               }}
             >
-              <div style={{ fontSize: 40, marginBottom: 16 }}>\u2728</div>
+              <div style={{ fontSize: 40, marginBottom: 16 }}>{"\u2728"}</div>
               <div style={{ fontSize: 16, fontWeight: 600, color: COLORS.text, marginBottom: 8 }}>
                 {t.welcomeTitle}
               </div>
@@ -553,7 +606,7 @@ export default function App() {
                         userSelect: "none",
                       }}
                     >
-                      \u25B6 {t.thinking}
+                      {"\u25B6"} {t.thinking}
                     </summary>
                     <pre
                       style={{
@@ -693,7 +746,12 @@ export default function App() {
                     color: COLORS.text,
                   }}
                 >
-                  <span>\u25A2 {u.filename}</span>
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <path d="m21 15-5-5L5 21" />
+                  </svg>
+                  <span>{u.filename}</span>
                   <button
                     onClick={() => removeUpload(idx)}
                     style={{
@@ -729,7 +787,11 @@ export default function App() {
               }}
               title={t.addImage}
             >
-              \u25A2
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <circle cx="8.5" cy="8.5" r="1.5" />
+                <path d="m21 15-5-5L5 21" />
+              </svg>
             </button>
             <textarea
               value={input}

@@ -3,6 +3,7 @@
 import base64
 import json
 from contextlib import asynccontextmanager
+from pathlib import Path
 from typing import Any
 
 import copy
@@ -10,12 +11,14 @@ import copy
 from fastapi import FastAPI, File, HTTPException, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
+from fastapi.staticfiles import StaticFiles
 
 from forgehub_backend.chat_proxy import CHAT_PROXY
 from forgehub_backend.comfy_client import COMFY_CLIENT
 from forgehub_backend.config import SETTINGS
 from forgehub_backend.executor import execute_workflow, wait_for_outputs
 from forgehub_backend.files import read_output_file, save_uploaded_image
+from forgehub_backend.ui_to_api import convert_ui_to_api
 from forgehub_backend.models import (
     ChatRequest,
     ChatResponse,
@@ -59,6 +62,20 @@ def _get_catalog() -> WorkflowCatalog:
     return app.state.catalog
 
 
+async def _resolve_prompt(workflow: dict[str, Any], meta: WorkflowMeta) -> dict[str, Any]:
+    """Return an API-format prompt, converting UI-format workflows on the fly."""
+    if meta.format != "ui":
+        return workflow
+    try:
+        object_info = await COMFY_CLIENT.object_info()
+    except Exception as exc:
+        raise HTTPException(status_code=503, detail=f"ComfyUI object_info unavailable: {exc}")
+    try:
+        return convert_ui_to_api(workflow, object_info)
+    except Exception as exc:
+        raise HTTPException(status_code=422, detail=f"Cannot convert UI workflow to API format: {exc}")
+
+
 def _looks_like_base64(value: str) -> bool:
     try:
         base64.b64decode(value, validate=True)
@@ -80,11 +97,6 @@ def _resolve_chat_images(images: list[str]) -> list[str]:
             raise HTTPException(status_code=400, detail=f"Image not found: {item}")
         resolved.append(base64.b64encode(data).decode("ascii"))
     return resolved
-
-
-@app.get("/")
-async def root():
-    return {"status": "ok", "service": "forgehub"}
 
 
 @app.get("/health")
@@ -183,8 +195,7 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
     if result is None:
         raise HTTPException(status_code=404, detail="Workflow not found")
     workflow, meta = result
-    if meta.format == "ui":
-        raise HTTPException(status_code=400, detail="Workflow is in UI format; export it in API format")
+    workflow = await _resolve_prompt(workflow, meta)
     try:
         exec_result = await execute_workflow(workflow, request.parameters, client_id=request.client_id)
         return ExecuteResponse(prompt_id=exec_result.prompt_id, status=exec_result.status)
@@ -230,8 +241,7 @@ async def apply_chat_actions(payload: dict[str, Any]):
     if result is None:
         raise HTTPException(status_code=404, detail="Workflow not found")
     workflow, meta = result
-    if meta.format == "ui":
-        raise HTTPException(status_code=400, detail="Workflow is in UI format; export it in API format")
+    workflow = await _resolve_prompt(workflow, meta)
     workflow = copy.deepcopy(workflow)
 
     parameters = {}
@@ -260,6 +270,12 @@ async def apply_chat_actions(payload: dict[str, Any]):
         "outputs": [out.model_dump() for out in exec_result.outputs],
         "error": exec_result.error,
     }
+
+
+# Serve the built ForgeHub frontend last, so API routes keep precedence.
+_frontend_dir = Path(SETTINGS.frontend_dir) if SETTINGS.frontend_dir else None
+if _frontend_dir and _frontend_dir.is_dir() and (_frontend_dir / "index.html").exists():
+    app.mount("/", StaticFiles(directory=str(_frontend_dir), html=True), name="frontend")
 
 
 if __name__ == "__main__":

@@ -36,8 +36,7 @@ def _is_api_format(workflow: dict[str, Any]) -> bool:
     )
 
 
-def _guess_category(workflow: dict[str, Any]) -> str:
-    classes = {node.get("class_type", "").lower() for node in workflow.values() if isinstance(node, dict)}
+def _score_categories(classes: set[str]) -> str:
     scores = {}
     for category, hints in CATEGORY_HINTS.items():
         score = sum(1 for hint in hints if any(hint.lower() in cls for cls in classes))
@@ -45,6 +44,39 @@ def _guess_category(workflow: dict[str, Any]) -> str:
     if not scores or max(scores.values()) == 0:
         return "other"
     return max(scores, key=scores.get)
+
+
+def _guess_category(workflow: dict[str, Any]) -> str:
+    classes = {node.get("class_type", "").lower() for node in workflow.values() if isinstance(node, dict)}
+    return _score_categories(classes)
+
+
+def _ui_node_types(workflow: dict[str, Any]) -> set[str]:
+    """Collect node type names from a UI-format (canvas) workflow graph."""
+    nodes = workflow.get("nodes")
+    if not isinstance(nodes, list):
+        return set()
+    return {
+        str(node.get("type", "")).lower()
+        for node in nodes
+        if isinstance(node, dict)
+    }
+
+
+def _guess_category_ui(workflow: dict[str, Any]) -> str:
+    return _score_categories(_ui_node_types(workflow))
+
+
+def _outputs_from_types(classes: set[str]) -> list[str]:
+    outputs = []
+    for cls in classes:
+        if cls in ("saveimage", "previewimage"):
+            outputs.append("image")
+        elif cls in ("savevideo", "videocombine"):
+            outputs.append("video")
+        elif "saveaudio" in cls or "audiosave" in cls:
+            outputs.append("audio")
+    return list(set(outputs)) or ["unknown"]
 
 
 def _extract_parameters(workflow: dict[str, Any]) -> list[dict[str, Any]]:
@@ -100,14 +132,28 @@ def load_meta(path: Path, workflow: dict[str, Any] | None = None, base_dir: Path
     wf_id = _workflow_id(path, base_dir) if base_dir else _slugify(path.stem)
     name = path.stem.replace("_", " ").replace("-", " ").title()
     is_api = _is_api_format(workflow) if workflow else True
-    category = _guess_category(workflow) if (workflow and is_api) else "other"
+    if workflow and is_api:
+        category = _guess_category(workflow)
+        parameters = _extract_parameters(workflow)
+        outputs = _extract_outputs(workflow)
+    elif workflow:
+        # UI format: category/outputs inferred from nodes[].type, parameters
+        # left empty (widgets are resolved at conversion time via object_info).
+        ui_types = _ui_node_types(workflow)
+        category = _score_categories(ui_types)
+        parameters = []
+        outputs = _outputs_from_types(ui_types)
+    else:
+        category = "other"
+        parameters = []
+        outputs = ["unknown"]
     return WorkflowMeta(
         id=wf_id,
         name=name,
         category=category,
         description="",
-        parameters=_extract_parameters(workflow) if (workflow and is_api) else [],
-        outputs=_extract_outputs(workflow) if (workflow and is_api) else ["unknown"],
+        parameters=parameters,
+        outputs=outputs,
         format="api" if is_api else "ui",
     )
 

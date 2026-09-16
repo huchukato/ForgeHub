@@ -1,5 +1,7 @@
 .venv
-forgehub-app
+forgehub-app/node_modules
+forgehub-app/dist
+forgehub-app/dist-electron
 tests
 img
 __pycache__

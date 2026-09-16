@@ -48,7 +48,12 @@ export interface ExecutionStatus {
 }
 
 export class ForgeHubClient {
-  constructor(private baseUrl: string = "http://localhost:8484") {}
+  // Empty baseUrl = same-origin relative URLs (GUI served by the backend itself).
+  private baseUrl: string;
+
+  constructor(baseUrl: string = "") {
+    this.baseUrl = baseUrl.replace(/\/+$/, "");
+  }
 
   private async request<T>(path: string, init?: RequestInit): Promise<T> {
     const response = await fetch(`${this.baseUrl}${path}`, {
@@ -72,6 +77,10 @@ export class ForgeHubClient {
   async listWorkflows(): Promise<Workflow[]> {
     const data = await this.request<{ workflows: Workflow[] }>("/workflows");
     return data.workflows;
+  }
+
+  async getChatModels(): Promise<{ hf: string[]; gguf: string[] }> {
+    return this.request<{ hf: string[]; gguf: string[] }>("/chat/models");
   }
 
   async chat(
