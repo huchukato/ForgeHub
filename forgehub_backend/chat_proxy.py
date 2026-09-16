@@ -1,5 +1,6 @@
 """Proxy chat requests to ComfyUI-QwenVL-Mod endpoints."""
 
+import json
 from typing import Any
 
 import aiohttp
@@ -23,10 +24,20 @@ class ChatProxy:
             await self._session.close()
             self._session = None
 
+    @staticmethod
+    async def _raise_with_body(response: aiohttp.ClientResponse) -> None:
+        body = await response.text()
+        try:
+            detail = json.loads(body).get("error") or body
+        except (json.JSONDecodeError, AttributeError):
+            detail = body
+        raise RuntimeError(f"ComfyUI {response.status}: {detail or response.reason}")
+
     async def models(self) -> dict[str, list[str]]:
         session = await self._session_or_new()
         async with session.get(f"{self.base_url}/qwenvl/chat/models") as response:
-            response.raise_for_status()
+            if not response.ok:
+                await self._raise_with_body(response)
             return await response.json()
 
     async def chat(self, request: ChatRequest, graph: dict[str, Any] | None = None) -> ChatResponse:
@@ -41,7 +52,8 @@ class ChatProxy:
         if graph is not None:
             payload["graph"] = graph
         async with session.post(f"{self.base_url}/qwenvl/chat", json=payload) as response:
-            response.raise_for_status()
+            if not response.ok:
+                await self._raise_with_body(response)
             data = await response.json()
             return ChatResponse(**data)
 
