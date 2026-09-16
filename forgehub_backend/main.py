@@ -99,6 +99,64 @@ def _resolve_chat_images(images: list[str]) -> list[str]:
     return resolved
 
 
+# Node types that carry no user-editable widgets — skip from the chat graph.
+_CHAT_SKIP_TYPES = {"Note", "MarkdownNote", "Reroute", "PrimitiveNode"}
+
+# LiteGraph modes: 0=normal, 2=bypassed, 4=muted.
+_CHAT_MODES = {0: None, 2: "bypassed", 4: "muted"}
+
+
+def _build_chat_graph(workflow: dict[str, Any]) -> dict[str, Any]:
+    """Build a node snapshot for the chat model.
+
+    Handles both UI format (nodes list with widgets_values_named) and API
+    format (node_id -> class_type/inputs).
+    """
+    graph: dict[str, Any] = {"nodes": []}
+
+    if isinstance(workflow.get("nodes"), list):
+        # UI format — each entry has id, type, title, mode, widgets_values_named.
+        for node in workflow["nodes"]:
+            if not isinstance(node, dict):
+                continue
+            ntype = str(node.get("type") or "")
+            if ntype in _CHAT_SKIP_TYPES:
+                continue
+            mode = _CHAT_MODES.get(node.get("mode", 0))
+            entry: dict[str, Any] = {
+                "id": node.get("id"),
+                "type": ntype,
+            }
+            if node.get("title"):
+                entry["title"] = node["title"]
+            if mode:
+                entry["mode"] = mode
+            widgets = []
+            wvn = node.get("widgets_values_named")
+            if isinstance(wvn, dict):
+                for k, v in wvn.items():
+                    if isinstance(v, (str, int, float, bool)):
+                        widgets.append({"name": k, "value": v})
+            entry["widgets"] = widgets
+            graph["nodes"].append(entry)
+        return graph
+
+    # API format — keys are node IDs, values have class_type/inputs.
+    for node_id, node in workflow.items():
+        if not isinstance(node, dict):
+            continue
+        graph["nodes"].append({
+            "id": node_id,
+            "type": node.get("class_type", ""),
+            "widgets": [
+                {"name": k, "value": v}
+                for k, v in node.get("inputs", {}).items()
+                if isinstance(v, (str, int, float, bool))
+            ],
+        })
+    return graph
+
+
 @app.get("/health")
 async def health():
     return {"status": "ok"}
@@ -155,19 +213,8 @@ async def chat(request: ChatRequest) -> ChatResponse:
         result = catalog.get_workflow(request.workflow_id)
         if result is None:
             raise HTTPException(status_code=404, detail="Workflow not found")
-        graph = {"nodes": []}
-        for node_id, node in result[0].items():
-            if not isinstance(node, dict):
-                continue
-            graph["nodes"].append({
-                "id": node_id,
-                "type": node.get("class_type", ""),
-                "widgets": [
-                    {"name": k, "value": v}
-                    for k, v in node.get("inputs", {}).items()
-                    if isinstance(v, (str, int, float, bool))
-                ],
-            })
+        workflow, meta = result
+        graph = _build_chat_graph(workflow)
     if request.images:
         request = request.model_copy(update={"images": _resolve_chat_images(request.images)})
     try:
