@@ -90,6 +90,10 @@ export class ForgeHubClient {
     return this.request<{ hf: string[]; gguf: string[] }>("/chat/models");
   }
 
+  async getWorkflowRaw(id: string): Promise<Record<string, unknown>> {
+    return this.request<Record<string, unknown>>(`/workflows/${id}/raw`);
+  }
+
   async chat(
     messages: ChatMessage[],
     options: ChatOptions = {},
@@ -121,6 +125,24 @@ export class ForgeHubClient {
       method: "POST",
       body: JSON.stringify({ workflow_id: workflowId, actions }),
     });
+  }
+
+  async executeWorkflow(
+    workflowId: string,
+    parameters: Record<string, unknown> = {}
+  ): Promise<ExecuteResult> {
+    return this.request<ExecuteResult>("/execute", {
+      method: "POST",
+      body: JSON.stringify({ workflow_id: workflowId, parameters }),
+    });
+  }
+
+  async getExecutionStatus(
+    promptId: string,
+    clientId?: string
+  ): Promise<ExecutionStatus> {
+    const params = clientId ? `?client_id=${encodeURIComponent(clientId)}` : "";
+    return this.request<ExecutionStatus>(`/execute/${promptId}/status${params}`);
   }
 
   async uploadImage(file: File): Promise<{ filename: string; url: string }> {

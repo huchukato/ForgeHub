@@ -3,12 +3,163 @@ import { ChatMessage, ChatOptions, ForgeHubClient, OutputFile, Workflow } from "
 import { format, Language, translations, Translations } from "./i18n";
 
 const CATEGORIES = [
-  { id: "agent", label: "Agent", icon: "\u2728" },
-  { id: "video", label: "Video", icon: "\u25B6" },
-  { id: "image", label: "Image", icon: "\u25A2" },
-  { id: "audio", label: "Audio", icon: "\u266A" },
-  { id: "other", label: "Other", icon: "\u25A0" },
+  { id: "agent", label: "Agent", icon: "🤖" },
+  { id: "video", label: "Video", icon: "🎬" },
+  { id: "image", label: "Image", icon: "🖼️" },
+  { id: "audio", label: "Audio", icon: "🎵" },
+  { id: "other", label: "Other", icon: "📦" },
 ] as const;
+
+// Node types to hide from the workflow inspector (not user-editable).
+const SKIP_NODE_TYPES = new Set([
+  "Note", "MarkdownNote", "Reroute", "PrimitiveNode",
+  "Fast Groups Bypasser (rgthree)", "Reroute (rgthree)",
+]);
+// Widget names to hide (metadata, not real parameters).
+const SKIP_WIDGETS = new Set([
+  "control_after_generate", "PowerLoraLoaderHeaderWidget", "divider",
+  "➕ Add Lora", "label", "button",
+]);
+
+interface WorkflowViewProps {
+  rawWorkflow: Record<string, unknown>;
+  overrides: Record<string, unknown>;
+  setOverrides: React.Dispatch<React.SetStateAction<Record<string, unknown>>>;
+  executing: boolean;
+  onExecute: () => void;
+}
+
+function WorkflowView({ rawWorkflow, overrides, setOverrides, executing, onExecute }: WorkflowViewProps) {
+  const nodes = (rawWorkflow as Record<string, unknown>).nodes;
+  const nodeList = Array.isArray(nodes) ? nodes as Array<Record<string, unknown>> : [];
+
+  const getWidgetValue = (nodeId: unknown, name: string, original: unknown): unknown => {
+    const key = `${nodeId}:${name}`;
+    return key in overrides ? overrides[key] : original;
+  };
+
+  const setWidgetValue = (nodeId: unknown, name: string, value: unknown) => {
+    const key = `${nodeId}:${name}`;
+    setOverrides((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const renderWidget = (nodeId: unknown, name: string, value: unknown) => {
+    if (SKIP_WIDGETS.has(name)) return null;
+    const currentValue = getWidgetValue(nodeId, name, value);
+    const inputStyle: React.CSSProperties = {
+      width: "100%", background: COLORS.panel, color: COLORS.text,
+      border: `1px solid ${COLORS.border}`, borderRadius: 6,
+      padding: "6px 8px", fontSize: 12, boxSizing: "border-box",
+    };
+    const labelStyle: React.CSSProperties = {
+      fontSize: 10, color: COLORS.muted, marginBottom: 3, display: "block",
+    };
+
+    // Long text (prompts, descriptions) → textarea
+    if (typeof value === "string" && value.length > 60) {
+      return (
+        <div key={name} style={{ marginBottom: 10 }}>
+          <label style={labelStyle}>{name}</label>
+          <textarea
+            value={String(currentValue ?? "")}
+            onChange={(e) => setWidgetValue(nodeId, name, e.target.value)}
+            rows={Math.min(8, Math.ceil(value.length / 60))}
+            style={{ ...inputStyle, resize: "vertical", fontFamily: "monospace" }}
+          />
+        </div>
+      );
+    }
+    // Boolean → checkbox
+    if (typeof value === "boolean") {
+      return (
+        <label key={name} style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 10, fontSize: 12, color: COLORS.text, cursor: "pointer" }}>
+          <input
+            type="checkbox"
+            checked={Boolean(currentValue)}
+            onChange={(e) => setWidgetValue(nodeId, name, e.target.checked)}
+            style={{ accentColor: COLORS.accent }}
+          />
+          {name}
+        </label>
+      );
+    }
+    // Number → number input
+    if (typeof value === "number") {
+      return (
+        <div key={name} style={{ marginBottom: 10 }}>
+          <label style={labelStyle}>{name}</label>
+          <input
+            type="number"
+            value={Number(currentValue ?? 0)}
+            step={typeof value === "number" && !Number.isInteger(value) ? 0.1 : 1}
+            onChange={(e) => setWidgetValue(nodeId, name, Number(e.target.value))}
+            style={inputStyle}
+          />
+        </div>
+      );
+    }
+    // String (short) → text input
+    return (
+      <div key={name} style={{ marginBottom: 10 }}>
+        <label style={labelStyle}>{name}</label>
+        <input
+          type="text"
+          value={String(currentValue ?? "")}
+          onChange={(e) => setWidgetValue(nodeId, name, e.target.value)}
+          style={inputStyle}
+        />
+      </div>
+    );
+  };
+
+  return (
+    <div style={{ flex: 1, overflow: "auto", padding: "20px 32px" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: COLORS.text }}>
+          ⚙️ Workflow Parameters
+        </div>
+        <button
+          onClick={onExecute}
+          disabled={executing}
+          style={{
+            background: executing ? COLORS.border : COLORS.accent,
+            color: "#fff",
+            border: "none",
+            borderRadius: 8,
+            padding: "8px 20px",
+            fontSize: 13,
+            fontWeight: 700,
+            cursor: executing ? "default" : "pointer",
+          }}
+        >
+          {executing ? "⏳ Running..." : "▶ Execute"}
+        </button>
+      </div>
+      {nodeList
+        .filter((n) => {
+          const t = String(n.type || "");
+          return !SKIP_NODE_TYPES.has(t);
+        })
+        .map((node) => {
+          const wvn = node.widgets_values_named as Record<string, unknown> | undefined;
+          if (!wvn || typeof wvn !== "object") return null;
+          const entries = Object.entries(wvn).filter(([k]) => !SKIP_WIDGETS.has(k));
+          if (entries.length === 0) return null;
+          return (
+            <div key={String(node.id)} style={{
+              background: COLORS.panel, border: `1px solid ${COLORS.border}`,
+              borderRadius: 10, padding: 16, marginBottom: 12,
+            }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: COLORS.accent, marginBottom: 10 }}>
+                {node.title ? String(node.title) : String(node.type)}
+              </div>
+              {entries.map(([name, value]) => renderWidget(node.id, name, value))}
+            </div>
+          );
+        })}
+    </div>
+  );
+}
 
 const COLORS = {
   bg: "#0a0a0f",
@@ -60,6 +211,10 @@ export default function App() {
   });
   const [outputs, setOutputs] = useState<OutputFile[]>([]);
   const [uploads, setUploads] = useState<Array<{ filename: string; url: string }>>([]);
+  const [viewMode, setViewMode] = useState<"chat" | "workflow">("chat");
+  const [rawWorkflow, setRawWorkflow] = useState<Record<string, unknown> | null>(null);
+  const [wfOverrides, setWfOverrides] = useState<Record<string, unknown>>({});
+  const [executing, setExecuting] = useState(false);
   const fileRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -111,6 +266,14 @@ export default function App() {
     () => workflows.find((w) => w.id === selectedId),
     [workflows, selectedId]
   );
+
+  // Fetch raw workflow when selection changes (for the Workflow view).
+  useEffect(() => {
+    if (!selectedId) { setRawWorkflow(null); setWfOverrides({}); return; }
+    client.getWorkflowRaw(selectedId)
+      .then((data) => { setRawWorkflow(data); setWfOverrides({}); })
+      .catch((e) => { setError(String(e)); setRawWorkflow(null); });
+  }, [client, selectedId]);
 
   const groupedWorkflows = useMemo(() => {
     const groups: Record<string, Workflow[]> = {};
@@ -303,101 +466,27 @@ export default function App() {
           })}
         </div>
 
-        {/* Workflow list */}
+        {/* Workflow list OR chat settings (Agent tab) */}
         <div style={{ flex: 1, overflow: "auto", padding: "12px 14px" }}>
-          {groupedWorkflows[activeCategory]?.length === 0 && (
-            <div style={{ color: COLORS.muted, fontSize: 12, textAlign: "center", marginTop: 24 }}>
-              {t.noWorkflows}
-            </div>
-          )}
-          {groupedWorkflows[activeCategory]?.map((w) => {
-            const selected = selectedId === w.id;
-            return (
+          {activeCategory === "agent" ? (
+            /* Chat model settings — shown only in the Agent tab */
+            <div style={{ padding: "8px 4px" }}>
               <div
-                key={w.id}
-                onClick={() => setSelectedId(w.id)}
                 style={{
-                  padding: "12px 14px",
-                  borderRadius: 10,
-                  cursor: "pointer",
-                  background: selected ? `${COLORS.accent}18` : "transparent",
-                  border: `1px solid ${selected ? `${COLORS.accent}44` : "transparent"}`,
-                  marginBottom: 8,
-                  transition: "background 0.15s, border 0.15s",
-                }}
-                onMouseEnter={(e) => {
-                  if (!selected) e.currentTarget.style.background = COLORS.panelHover;
-                }}
-                onMouseLeave={(e) => {
-                  if (!selected) e.currentTarget.style.background = "transparent";
+                  fontSize: 10,
+                  color: COLORS.muted,
+                  textTransform: "uppercase",
+                  letterSpacing: 0.5,
+                  marginBottom: 10,
                 }}
               >
-                <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                  <div style={{ fontWeight: 600, fontSize: 13, color: COLORS.text }}>{w.name}</div>
-                  {selected && (
-                    <div
-                      style={{
-                        width: 18,
-                        height: 18,
-                        borderRadius: "50%",
-                        background: COLORS.accent,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 10,
-                      }}
-                    >
-                      ✓
-                    </div>
-                  )}
-                </div>
-                <div style={{ fontSize: 11, color: COLORS.muted, marginTop: 4, lineHeight: 1.4 }}>
-                  {w.description || w.outputs.join(", ") || "Workflow"}
-                </div>
+                {t.chatModel}
               </div>
-            );
-          })}
-        </div>
-
-        {/* Chat config */}
-        <div style={{ padding: "16px 18px", borderTop: `1px solid ${COLORS.border}`, background: COLORS.bg }}>
-          <div
-            style={{
-              fontSize: 10,
-              color: COLORS.muted,
-              textTransform: "uppercase",
-              letterSpacing: 0.5,
-              marginBottom: 10,
-            }}
-          >
-            {t.chatModel}
-          </div>
-          <select
-            value={chatOptions.backend}
-            onChange={(e) => setChatOptions((o) => ({ ...o, backend: e.target.value }))}
-            style={{
-              width: "100%",
-              marginBottom: 10,
-              background: COLORS.panel,
-              color: COLORS.text,
-              border: `1px solid ${COLORS.border}`,
-              borderRadius: 8,
-              padding: "8px 10px",
-              fontSize: 12,
-            }}
-          >
-            <option value="gguf">{t.backendGguf}</option>
-            <option value="hf">{t.backendHf}</option>
-          </select>
-          {modelsForBackend.length > 0 && (
-            <>
-              <label style={{ fontSize: 10, color: COLORS.muted }}>{t.model}</label>
               <select
-                value={chatOptions.model}
-                onChange={(e) => setChatOptions((o) => ({ ...o, model: e.target.value }))}
+                value={chatOptions.backend}
+                onChange={(e) => setChatOptions((o) => ({ ...o, backend: e.target.value }))}
                 style={{
                   width: "100%",
-                  marginTop: 4,
                   marginBottom: 10,
                   background: COLORS.panel,
                   color: COLORS.text,
@@ -407,74 +496,152 @@ export default function App() {
                   fontSize: 12,
                 }}
               >
-                {modelsForBackend.map((m) => (
-                  <option key={m} value={m}>
-                    {m}
-                  </option>
-                ))}
+                <option value="gguf">{t.backendGguf}</option>
+                <option value="hf">{t.backendHf}</option>
               </select>
+              {modelsForBackend.length > 0 && (
+                <>
+                  <label style={{ fontSize: 10, color: COLORS.muted }}>{t.model}</label>
+                  <select
+                    value={chatOptions.model}
+                    onChange={(e) => setChatOptions((o) => ({ ...o, model: e.target.value }))}
+                    style={{
+                      width: "100%",
+                      marginTop: 4,
+                      marginBottom: 10,
+                      background: COLORS.panel,
+                      color: COLORS.text,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 8,
+                      padding: "8px 10px",
+                      fontSize: 12,
+                    }}
+                  >
+                    {modelsForBackend.map((m) => (
+                      <option key={m} value={m}>
+                        {m}
+                      </option>
+                    ))}
+                  </select>
+                </>
+              )}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+                <div>
+                  <label style={{ fontSize: 10, color: COLORS.muted }}>{t.maxTokens}</label>
+                  <input
+                    type="number"
+                    value={chatOptions.max_tokens}
+                    onChange={(e) => setChatOptions((o) => ({ ...o, max_tokens: Number(e.target.value) }))}
+                    style={{
+                      width: "100%",
+                      marginTop: 4,
+                      background: COLORS.panel,
+                      color: COLORS.text,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 8,
+                      padding: "6px 8px",
+                      fontSize: 12,
+                      boxSizing: "border-box",
+                    }}
+                  />
+                </div>
+                <div>
+                  <label style={{ fontSize: 10, color: COLORS.muted }}>{t.temperature}</label>
+                  <input
+                    type="number"
+                    step={0.1}
+                    value={chatOptions.temperature}
+                    onChange={(e) => setChatOptions((o) => ({ ...o, temperature: Number(e.target.value) }))}
+                    style={{
+                      width: "100%",
+                      marginTop: 4,
+                      background: COLORS.panel,
+                      color: COLORS.text,
+                      border: `1px solid ${COLORS.border}`,
+                      borderRadius: 8,
+                      padding: "6px 8px",
+                      fontSize: 12,
+                      boxSizing: "border-box",
+                    }}
+                  />
+                </div>
+              </div>
+              <label
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  marginTop: 12,
+                  fontSize: 12,
+                  color: COLORS.text,
+                  cursor: "pointer",
+                }}
+              >
+                <input
+                  type="checkbox"
+                  checked={chatOptions.thinking}
+                  onChange={(e) => setChatOptions((o) => ({ ...o, thinking: e.target.checked }))}
+                  style={{ accentColor: COLORS.accent }}
+                />
+                {t.enableThinking}
+              </label>
+            </div>
+          ) : (
+            <>
+              {groupedWorkflows[activeCategory]?.length === 0 && (
+                <div style={{ color: COLORS.muted, fontSize: 12, textAlign: "center", marginTop: 24 }}>
+                  {t.noWorkflows}
+                </div>
+              )}
+              {groupedWorkflows[activeCategory]?.map((w) => {
+                const selected = selectedId === w.id;
+                return (
+                  <div
+                    key={w.id}
+                    onClick={() => setSelectedId(w.id)}
+                    style={{
+                      padding: "12px 14px",
+                      borderRadius: 10,
+                      cursor: "pointer",
+                      background: selected ? `${COLORS.accent}18` : "transparent",
+                      border: `1px solid ${selected ? `${COLORS.accent}44` : "transparent"}`,
+                      marginBottom: 8,
+                      transition: "background 0.15s, border 0.15s",
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!selected) e.currentTarget.style.background = COLORS.panelHover;
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!selected) e.currentTarget.style.background = "transparent";
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                      <div style={{ fontWeight: 600, fontSize: 13, color: COLORS.text }}>{w.name}</div>
+                      {selected && (
+                        <div
+                          style={{
+                            width: 18,
+                            height: 18,
+                            borderRadius: "50%",
+                            background: COLORS.accent,
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                            fontSize: 10,
+                          }}
+                        >
+                          ✓
+                        </div>
+                      )}
+                    </div>
+                    <div style={{ fontSize: 11, color: COLORS.muted, marginTop: 4, lineHeight: 1.4 }}>
+                      {w.description || w.outputs.join(", ") || "Workflow"}
+                    </div>
+                  </div>
+                );
+              })}
             </>
           )}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-            <div>
-              <label style={{ fontSize: 10, color: COLORS.muted }}>{t.maxTokens}</label>
-              <input
-                type="number"
-                value={chatOptions.max_tokens}
-                onChange={(e) => setChatOptions((o) => ({ ...o, max_tokens: Number(e.target.value) }))}
-                style={{
-                  width: "100%",
-                  marginTop: 4,
-                  background: COLORS.panel,
-                  color: COLORS.text,
-                  border: `1px solid ${COLORS.border}`,
-                  borderRadius: 8,
-                  padding: "6px 8px",
-                  fontSize: 12,
-                  boxSizing: "border-box",
-                }}
-              />
-            </div>
-            <div>
-              <label style={{ fontSize: 10, color: COLORS.muted }}>{t.temperature}</label>
-              <input
-                type="number"
-                step={0.1}
-                value={chatOptions.temperature}
-                onChange={(e) => setChatOptions((o) => ({ ...o, temperature: Number(e.target.value) }))}
-                style={{
-                  width: "100%",
-                  marginTop: 4,
-                  background: COLORS.panel,
-                  color: COLORS.text,
-                  border: `1px solid ${COLORS.border}`,
-                  borderRadius: 8,
-                  padding: "6px 8px",
-                  fontSize: 12,
-                  boxSizing: "border-box",
-                }}
-              />
-            </div>
-          </div>
-          <label
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              marginTop: 12,
-              fontSize: 12,
-              color: COLORS.text,
-              cursor: "pointer",
-            }}
-          >
-            <input
-              type="checkbox"
-              checked={chatOptions.thinking}
-              onChange={(e) => setChatOptions((o) => ({ ...o, thinking: e.target.checked }))}
-              style={{ accentColor: COLORS.accent }}
-            />
-            {t.enableThinking}
-          </label>
         </div>
       </aside>
 
@@ -502,6 +669,38 @@ export default function App() {
             )}
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            {selectedWorkflow && (
+              <div style={{ display: "flex", background: COLORS.bg, borderRadius: 8, border: `1px solid ${COLORS.border}`, overflow: "hidden" }}>
+                <button
+                  onClick={() => setViewMode("chat")}
+                  style={{
+                    background: viewMode === "chat" ? COLORS.accent : "transparent",
+                    color: viewMode === "chat" ? "#fff" : COLORS.muted,
+                    border: "none",
+                    padding: "6px 14px",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                >
+                  💬 Chat
+                </button>
+                <button
+                  onClick={() => setViewMode("workflow")}
+                  style={{
+                    background: viewMode === "workflow" ? COLORS.accent : "transparent",
+                    color: viewMode === "workflow" ? "#fff" : COLORS.muted,
+                    border: "none",
+                    padding: "6px 14px",
+                    fontSize: 12,
+                    fontWeight: 600,
+                    cursor: "pointer",
+                  }}
+                >
+                  ⚙️ Workflow
+                </button>
+              </div>
+            )}
             <button
               onClick={() => setLang((l) => (l === "en" ? "it" : "en"))}
               style={{
@@ -534,7 +733,32 @@ export default function App() {
           </div>
         </header>
 
-        {/* Chat + outputs */}
+        {/* Chat + outputs OR Workflow view */}
+        {viewMode === "workflow" && selectedWorkflow && rawWorkflow ? (
+          <WorkflowView
+            rawWorkflow={rawWorkflow}
+            overrides={wfOverrides}
+            setOverrides={setWfOverrides}
+            executing={executing}
+            onExecute={async () => {
+              if (!selectedWorkflow) return;
+              setExecuting(true);
+              setError(null);
+              try {
+                const result = await client.executeWorkflow(selectedWorkflow.id, wfOverrides);
+                const status = await client.getExecutionStatus(result.prompt_id, result.prompt_id);
+                if (status.outputs.length > 0) setOutputs(status.outputs);
+                if (status.error) setError(status.error);
+                setViewMode("chat");
+              } catch (e) {
+                setError(String(e));
+              } finally {
+                setExecuting(false);
+              }
+            }}
+          />
+        ) : (
+        <>
         <div style={{ flex: 1, overflow: "auto", padding: "24px 32px" }}>
           {messages.length === 0 && (
             <div
@@ -862,6 +1086,8 @@ export default function App() {
             </button>
           </div>
         </div>
+        </>
+        )}
       </main>
 
       {/* Keyframes */}
