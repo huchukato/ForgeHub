@@ -11,7 +11,7 @@ from forgehub_backend.models import WorkflowMeta
 
 CATEGORY_HINTS = {
     "image": ["LoadImage", "SaveImage", "PreviewImage", "EmptyLatentImage", "VAEEncode", "VAEDecode"],
-    "video": ["LoadVideo", "SaveVideo", "VideoCombine", "LTX", "Wan", "MMAudio", "CogVideo"],
+    "video": ["LoadVideo", "SaveVideo", "VideoCombine", "LTX", "Wan", "MiniMax", "MMAudio", "CogVideo"],
     "audio": ["LoadAudio", "SaveAudio", "Audio", "MMAudio", "SeedanceAudio"],
     "agent": ["Qwen", "LLM", "Prompt", "Text"],
 }
@@ -37,6 +37,13 @@ def _is_api_format(workflow: dict[str, Any]) -> bool:
 
 
 def _score_categories(classes: set[str]) -> str:
+    # Output type is the strongest signal: a workflow that saves video/audio
+    # belongs to that category even when image nodes (frames, previews) are
+    # present in the graph.
+    if any("videocombine" in cls or "savevideo" in cls for cls in classes):
+        return "video"
+    if any("saveaudio" in cls or "audiosave" in cls for cls in classes):
+        return "audio"
     scores = {}
     for category, hints in CATEGORY_HINTS.items():
         score = sum(1 for hint in hints if any(hint.lower() in cls for cls in classes))
@@ -72,7 +79,7 @@ def _outputs_from_types(classes: set[str]) -> list[str]:
     for cls in classes:
         if cls in ("saveimage", "previewimage"):
             outputs.append("image")
-        elif cls in ("savevideo", "videocombine"):
+        elif "savevideo" in cls or "videocombine" in cls:
             outputs.append("video")
         elif "saveaudio" in cls or "audiosave" in cls:
             outputs.append("audio")
