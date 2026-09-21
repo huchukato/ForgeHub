@@ -1,5 +1,7 @@
 # ForgeHub
 
+> ⚠️ **Progetto sospeso (settembre 2026)**: esperimento di hub ComfyUI orchestrato via chat. Il concept "AI director" è continuato e si è concretizzato in [QwenHub](https://github.com/huchukato/QwenHub) (standalone, Livepeer Agent/MCP) e nella Qwen Chat di [ComfyUI-QwenVL-Mod](https://github.com/huchukato/ComfyUI-QwenVL-Mod). Codice mantenuto privato in locale.
+
 Frontend hub per orchestrare workflow ComfyUI via chat. Backend Python FastAPI + frontend Electron/React/TypeScript.
 
 ## Struttura
