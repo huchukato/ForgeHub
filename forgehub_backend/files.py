@@ -45,14 +45,8 @@ def save_uploaded_image(data: str, original_name: str = "upload.png") -> str:
     return filename
 
 
-def _is_serverless() -> bool:
-    return SETTINGS.execution_mode == "serverless"
-
-
 def _output_base(type_: str) -> Path:
-    if _is_serverless():
-        return (SETTINGS.storage_dir / ("uploads" if type_ == "input" else "outputs")).resolve()
-    return (SETTINGS.comfy_output_dir if type_ == "output" else SETTINGS.comfy_input_dir).resolve()
+    return (SETTINGS.storage_dir / ("uploads" if type_ == "input" else "outputs")).resolve()
 
 
 def save_output_b64(filename: str, b64: str, subfolder: str = "") -> Path:

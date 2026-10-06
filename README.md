@@ -2,7 +2,7 @@
 
 ![ForgeHub](img/banner.jpeg)
 
-A frontend for orchestrating ComfyUI workflows — against a local ComfyUI instance or a Runpod Serverless endpoint. Python FastAPI backend + React/TypeScript frontend (web or Electron).
+A frontend for orchestrating ComfyUI workflows on Runpod Serverless endpoints. Python FastAPI backend + React/TypeScript frontend (web or Electron).
 
 Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio)
 
@@ -45,12 +45,9 @@ Options: `./start.sh --build` forces a frontend rebuild · `./start.sh --dev` st
 
 Prerequisites: only **Node.js** (for the frontend build) — everything else is handled by uv.
 
-## Execution modes
+## Execution
 
-| `FORGEHUB_EXECUTION_MODE` | What it does |
-| --- | --- |
-| `serverless` | Job → `api.runpod.ai/v2/{endpoint}/run`, base64 output → `data/storage`, served from `/outputs/` |
-| `direct` | Job → local ComfyUI (`COMFYUI_HOST:PORT`, default `localhost:8188`) |
+Jobs always run on a RunPod serverless endpoint: `/run` → `/status` poll → base64 output saved to `data/storage` and served from `/outputs/`. Set your API key + endpoint in Settings (or `.env`).
 
 Wildcard expansion (`__pmp/…__`) and runtime selects happen backend-side — the `wildcards/` directory is bundled; override with `FORGEHUB_WILDCARD_DIRS` (colon-separated).
 
@@ -58,10 +55,10 @@ Wildcard expansion (`__pmp/…__`) and runtime selects happen backend-side — t
 
 - `FORGEHUB_HOST` / `FORGEHUB_PORT` — backend bind (default `0.0.0.0:8484`)
 - `RUNPOD_API_KEY` / `RUNPOD_ENDPOINT_ID` — serverless endpoint
-- `COMFYUI_HOST` / `COMFYUI_PORT` — ComfyUI for direct mode
 - `FORGEHUB_STORAGE_DIR` — output/upload storage (default `data/storage`)
 - `FORGEHUB_WILDCARD_DIRS` — wildcard dirs (default `./wildcards`)
-- `FORGEHUB_CHAT_BASE_URL` — optional chat (`/qwenvl/chat` from QwenVL-Mod)
+- `FORGEHUB_CHAT_LLM_URL` / `FORGEHUB_CHAT_LLM_MODEL` / `FORGEHUB_CHAT_LLM_KEY` — optional prompt assist (OpenAI-compatible)
+- `FORGEHUB_CHAT_BASE_URL` — optional QwenVL-Mod `/qwenvl/chat` endpoint
 - `FORGEHUB_FRONTEND_DIR` — frontend dist served from `/`
 
 See `.env.example` for the full set.

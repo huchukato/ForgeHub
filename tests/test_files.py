@@ -8,23 +8,23 @@ from forgehub_backend.files import read_output_file
 
 
 def test_read_output_file_reads_output(tmp_path: Path, monkeypatch):
-    monkeypatch.setattr(SETTINGS, "execution_mode", "direct")
-    monkeypatch.setattr(SETTINGS, "comfy_output_dir", tmp_path)
-    (tmp_path / "out.png").write_bytes(b"pngdata")
+    monkeypatch.setattr(SETTINGS, "storage_dir", tmp_path)
+    (tmp_path / "outputs").mkdir()
+    (tmp_path / "outputs" / "out.png").write_bytes(b"pngdata")
     assert read_output_file("out.png") == b"pngdata"
 
 
 def test_read_output_file_reads_input_type(tmp_path: Path, monkeypatch):
-    monkeypatch.setattr(SETTINGS, "execution_mode", "direct")
-    monkeypatch.setattr(SETTINGS, "comfy_input_dir", tmp_path)
-    (tmp_path / "in.png").write_bytes(b"indata")
+    monkeypatch.setattr(SETTINGS, "storage_dir", tmp_path)
+    (tmp_path / "uploads").mkdir()
+    (tmp_path / "uploads" / "in.png").write_bytes(b"indata")
     assert read_output_file("in.png", "", "input") == b"indata"
 
 
 def test_read_output_file_rejects_traversal(tmp_path: Path, monkeypatch):
-    base = tmp_path / "output"
+    base = tmp_path / "outputs"
     base.mkdir()
-    monkeypatch.setattr(SETTINGS, "comfy_output_dir", base)
+    monkeypatch.setattr(SETTINGS, "storage_dir", tmp_path)
     secret = tmp_path / "secret.txt"
     secret.write_bytes(b"secret")
     with pytest.raises(FileNotFoundError):
@@ -38,9 +38,9 @@ def test_resolve_chat_images_converts_filename(tmp_path: Path, monkeypatch):
 
     from forgehub_backend.main import _resolve_chat_images
 
-    monkeypatch.setattr(SETTINGS, "execution_mode", "direct")
-    monkeypatch.setattr(SETTINGS, "comfy_input_dir", tmp_path)
-    (tmp_path / "forgehub_test.jpg").write_bytes(b"jpegdata")
+    monkeypatch.setattr(SETTINGS, "storage_dir", tmp_path)
+    (tmp_path / "uploads").mkdir()
+    (tmp_path / "uploads" / "forgehub_test.jpg").write_bytes(b"jpegdata")
 
     out = _resolve_chat_images(["forgehub_test.jpg"])
     assert out == [base64.b64encode(b"jpegdata").decode("ascii")]

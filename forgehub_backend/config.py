@@ -14,21 +14,13 @@ class Settings:
     def __init__(self):
         self.app_host = os.getenv("FORGEHUB_HOST", "0.0.0.0")
         self.app_port = int(os.getenv("FORGEHUB_PORT", "8484"))
-        self.comfy_host = os.getenv("COMFYUI_HOST", "localhost")
-        self.comfy_port = int(os.getenv("COMFYUI_PORT", "8188"))
-        self.comfy_url = f"http://{self.comfy_host}:{self.comfy_port}"
-        self.comfy_ws_url = f"ws://{self.comfy_host}:{self.comfy_port}"
         self.workflow_dir = Path(os.getenv("FORGEHUB_WORKFLOW_DIR", "/workspace/workflows"))
-        self.comfy_input_dir = Path(os.getenv("COMFYUI_INPUT_DIR", "/workspace/ComfyUI/input"))
-        self.comfy_output_dir = Path(os.getenv("COMFYUI_OUTPUT_DIR", "/workspace/ComfyUI/output"))
         self.max_upload_mb = int(os.getenv("FORGEHUB_MAX_UPLOAD_MB", "32"))
         self.max_chat_images = int(os.getenv("FORGEHUB_MAX_CHAT_IMAGES", "3"))
         self.max_image_pixels = int(os.getenv("FORGEHUB_MAX_IMAGE_PIXELS", "1024"))
         self.cors_origins = [origin.strip() for origin in os.getenv("FORGEHUB_CORS_ORIGINS", "*").split(",") if origin.strip()]
         self.log_level = os.getenv("FORGEHUB_LOG_LEVEL", "INFO").upper()
-        # Execution backend: "direct" (talk to a running ComfyUI) or
-        # "serverless" (RunPod endpoint /run + /status).
-        self.execution_mode = os.getenv("FORGEHUB_EXECUTION_MODE", "direct").lower()
+        # Jobs always run on a RunPod serverless endpoint (/run + /status).
         self.runpod_api_key = os.getenv("RUNPOD_API_KEY", "")
         self.runpod_endpoint_id = os.getenv("RUNPOD_ENDPOINT_ID", "")
         self.runpod_base_url = f"https://api.runpod.ai/v2/{self.runpod_endpoint_id}"
@@ -68,7 +60,6 @@ SETTINGS_FILE = Path(os.getenv("FORGEHUB_SETTINGS_FILE", "data/settings.json"))
 _SETTINGS_KEYS = (
     "runpod_api_key",
     "runpod_endpoint_id",
-    "execution_mode",
     "chat_llm_url",
     "chat_llm_model",
     "chat_llm_key",

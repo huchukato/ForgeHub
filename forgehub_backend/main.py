@@ -15,7 +15,6 @@ from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
 
 from forgehub_backend.chat_proxy import CHAT_PROXY
-from forgehub_backend.comfy_client import COMFY_CLIENT
 from forgehub_backend.config import SETTINGS
 from forgehub_backend.executor import get_backend
 from forgehub_backend.files import (
@@ -24,7 +23,6 @@ from forgehub_backend.files import (
     save_uploaded_image,
     thumbnail_path,
 )
-from forgehub_backend.ui_to_api import convert_ui_to_api
 from forgehub_backend.models import (
     ChatRequest,
     ChatResponse,
@@ -45,7 +43,6 @@ async def lifespan(app: FastAPI):
     try:
         yield
     finally:
-        await COMFY_CLIENT.close()
         await CHAT_PROXY.close()
         backend = getattr(app.state, "backend", None)
         client = getattr(backend, "client", None)
@@ -71,25 +68,6 @@ app.add_middleware(
 
 def _get_catalog() -> WorkflowCatalog:
     return app.state.catalog
-
-
-async def _resolve_prompt(workflow: dict[str, Any], meta: WorkflowMeta) -> dict[str, Any]:
-    """Return an API-format prompt, converting UI-format workflows on the fly."""
-    if meta.format != "ui":
-        return workflow
-    if SETTINGS.execution_mode == "serverless":
-        raise HTTPException(
-            status_code=422,
-            detail="UI-format workflows are not supported in serverless mode; re-export the workflow in ComfyUI API format.",
-        )
-    try:
-        object_info = await COMFY_CLIENT.object_info()
-    except Exception as exc:
-        raise HTTPException(status_code=503, detail=f"ComfyUI object_info unavailable: {exc}")
-    try:
-        return convert_ui_to_api(workflow, object_info)
-    except Exception as exc:
-        raise HTTPException(status_code=422, detail=f"Cannot convert UI workflow to API format: {exc}")
 
 
 def _looks_like_base64(value: str) -> bool:
@@ -210,20 +188,17 @@ async def health():
 @app.get("/config")
 async def config():
     return {
-        "comfy_url": SETTINGS.comfy_url,
         "workflow_dir": str(SETTINGS.workflow_dir),
         "max_upload_mb": SETTINGS.max_upload_mb,
         "max_chat_images": SETTINGS.max_chat_images,
         "max_image_pixels": SETTINGS.max_image_pixels,
-        "execution_mode": SETTINGS.execution_mode,
-        "chat_enabled": bool(SETTINGS.chat_llm_url or SETTINGS.chat_base_url or SETTINGS.execution_mode == "direct"),
+        "chat_enabled": bool(SETTINGS.chat_llm_url or SETTINGS.chat_base_url),
     }
 
 
 @app.get("/settings")
 async def get_settings():
     return {
-        "execution_mode": SETTINGS.execution_mode,
         "runpod_endpoint_id": SETTINGS.runpod_endpoint_id,
         "runpod_api_key_set": bool(SETTINGS.runpod_api_key),
         "chat_llm_url": SETTINGS.chat_llm_url,
@@ -276,21 +251,17 @@ async def get_workflow_raw(workflow_id: str):
 
 
 def _chat_unavailable() -> bool:
-    return (
-        SETTINGS.execution_mode == "serverless"
-        and not SETTINGS.chat_base_url
-        and not SETTINGS.chat_llm_url
-    )
+    return not (SETTINGS.chat_base_url or SETTINGS.chat_llm_url)
 
 
 @app.get("/chat/models")
 async def chat_models():
     if _chat_unavailable():
-        raise HTTPException(status_code=503, detail="Chat is disabled in serverless mode (set FORGEHUB_CHAT_BASE_URL)")
+        raise HTTPException(status_code=503, detail="Chat is disabled (set FORGEHUB_CHAT_LLM_URL or FORGEHUB_CHAT_BASE_URL)")
     try:
         return await CHAT_PROXY.models()
     except Exception as exc:
-        raise HTTPException(status_code=503, detail=f"ComfyUI chat unavailable: {exc}")
+        raise HTTPException(status_code=503, detail=f"Chat backend unavailable: {exc}")
 
 
 @app.get("/chat/provider-models")
@@ -318,7 +289,7 @@ async def provider_models(url: str):
 @app.post("/chat")
 async def chat(request: ChatRequest) -> ChatResponse:
     if _chat_unavailable():
-        raise HTTPException(status_code=503, detail="Chat is disabled in serverless mode (set FORGEHUB_CHAT_BASE_URL)")
+        raise HTTPException(status_code=503, detail="Chat is disabled (set FORGEHUB_CHAT_LLM_URL or FORGEHUB_CHAT_BASE_URL)")
     catalog = _get_catalog()
     graph = None
     if request.workflow_id:
@@ -326,12 +297,7 @@ async def chat(request: ChatRequest) -> ChatResponse:
         if result is None:
             raise HTTPException(status_code=404, detail="Workflow not found")
         workflow, meta = result
-        object_info = None
-        try:
-            object_info = await COMFY_CLIENT.object_info()
-        except Exception:
-            pass
-        graph = _build_chat_graph(workflow, object_info)
+        graph = _build_chat_graph(workflow)
     if request.images:
         request = request.model_copy(update={"images": _resolve_chat_images(request.images)})
     try:
@@ -415,25 +381,21 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
     if result is None:
         raise HTTPException(status_code=404, detail="Workflow not found")
     workflow, meta = result
+    if meta.format == "ui":
+        raise HTTPException(status_code=422, detail="UI-format workflows are not supported; re-export the workflow in ComfyUI API format.")
     if meta.requires_endpoint and not meta.endpoint_id:
         raise HTTPException(status_code=400, detail=f"Workflow '{meta.id}' requires a dedicated RunPod endpoint — set endpoint_id in its meta.json")
     backend = app.state.backend
 
-    job_input: dict[str, Any] = {}
-    node_params: dict[str, Any] = {}
-    if SETTINGS.execution_mode == "serverless":
-        job_params, node_params = _split_parameters(request, meta)
-        job_input = {**request.extra_data, **job_params}
-        job_input["workflow"] = meta.remote_file or f"{meta.id}.json"
-        if meta.endpoint_id:
-            job_input["endpoint_id"] = meta.endpoint_id
-        if request.images:
-            job_input["images"] = request.images
-        if request.video:
-            job_input["video"] = request.video
-    else:
-        workflow = await _resolve_prompt(workflow, meta)
-        node_params = request.parameters
+    job_params, node_params = _split_parameters(request, meta)
+    job_input: dict[str, Any] = {**request.extra_data, **job_params}
+    job_input["workflow"] = meta.remote_file or f"{meta.id}.json"
+    if meta.endpoint_id:
+        job_input["endpoint_id"] = meta.endpoint_id
+    if request.images:
+        job_input["images"] = request.images
+    if request.video:
+        job_input["video"] = request.video
 
     try:
         job_id = await backend.queue(workflow, node_params, job_input, client_id=request.client_id)

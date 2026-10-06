@@ -59,7 +59,6 @@ async def test_serverless_queue_builds_payload():
 @pytest.mark.asyncio
 async def test_serverless_status_saves_outputs(tmp_path, monkeypatch):
     monkeypatch.setattr(SETTINGS, "storage_dir", tmp_path)
-    monkeypatch.setattr(SETTINGS, "execution_mode", "serverless")
     backend = RunPodServerlessBackend(client=FakeRunPodClient())
     st = await backend.status("job-123")
     assert st.status == "success"

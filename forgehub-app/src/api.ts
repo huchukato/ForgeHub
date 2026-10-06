@@ -71,7 +71,6 @@ export interface RunpodEndpoint {
 }
 
 export interface ForgeHubSettings {
-  execution_mode: string;
   runpod_endpoint_id: string;
   runpod_api_key_set: boolean;
   chat_llm_url: string;
@@ -114,9 +113,7 @@ export class ForgeHubClient {
 
   async getConfig() {
     return this.request<{
-      comfy_url: string;
       workflow_dir: string;
-      execution_mode?: string;
       chat_enabled?: boolean;
     }>("/config");
   }

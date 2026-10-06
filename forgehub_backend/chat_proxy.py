@@ -11,7 +11,7 @@ from forgehub_backend.models import ChatRequest, ChatResponse
 
 class ChatProxy:
     def __init__(self, base_url: str | None = None):
-        self.base_url = base_url or SETTINGS.chat_base_url or SETTINGS.comfy_url
+        self.base_url = base_url or SETTINGS.chat_base_url
         self._session: aiohttp.ClientSession | None = None
 
     async def _session_or_new(self) -> aiohttp.ClientSession:
