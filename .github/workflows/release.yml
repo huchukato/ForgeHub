@@ -21,6 +21,18 @@ jobs:
           cache: npm
           cache-dependency-path: forgehub-app/package-lock.json
 
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Bundle backend (PyInstaller)
+        run: |
+          pip install -e . pyinstaller
+          pyinstaller packaging/backend_entry.py \
+            --name forgehub-backend --onefile --noconfirm --clean \
+            --distpath backend-dist --workpath backend-build \
+            --paths . --collect-submodules uvicorn
+
       - name: Install and build
         working-directory: forgehub-app
         run: |

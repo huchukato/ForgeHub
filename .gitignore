@@ -11,6 +11,9 @@ forgehub-app/dist-electron/
 forgehub-app/build/
 forgehub-app/release/
 forgehub-app/*.log
+backend-dist/
+backend-build/
+*.spec
 
 .DS_Store
 *.local
