@@ -2,9 +2,9 @@
 
 ![ForgeHub](img/banner.jpeg)
 
-Frontend per orchestrare workflow ComfyUI — su ComfyUI locale o su endpoint Runpod Serverless. Backend Python FastAPI + frontend React/TypeScript (web o Electron).
+A frontend for orchestrating ComfyUI workflows — against a local ComfyUI instance or a Runpod Serverless endpoint. Python FastAPI backend + React/TypeScript frontend (web or Electron).
 
-Companion dei worker: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio)
+Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio)
 
 ## Quick start
 
@@ -22,59 +22,59 @@ git clone https://github.com/huchukato/ForgeHub.git && cd ForgeHub
 start.bat
 ```
 
-Lo script fa tutto da solo: installa **uv** se manca, crea `.venv` e installa il backend (`pip install -e .`), `npm install` + build del frontend, poi avvia su **http://127.0.0.1:8484**. Al primo giro copia `.env.example` → `.env`: compilalo (Runpod API key + endpoint id) e rilancia.
+The script handles everything: installs **uv** if missing, creates `.venv` and installs the backend (`pip install -e .`), runs `npm install` + frontend build, then starts on **http://127.0.0.1:8484**. On first run it copies `.env.example` → `.env`: fill it in (Runpod API key + endpoint id) and relaunch.
 
-Opzioni: `./start.sh --build` forza il rebuild del frontend · `./start.sh --dev` avvia backend + Vite dev server (:5173, hot reload).
+Options: `./start.sh --build` forces a frontend rebuild · `./start.sh --dev` starts backend + Vite dev server (:5173, hot reload).
 
-Prerequisiti: solo **Node.js** (per il build del frontend) — il resto è gestito da uv.
+Prerequisites: only **Node.js** (for the frontend build) — everything else is handled by uv.
 
-## Modalità di esecuzione
+## Execution modes
 
-| `FORGEHUB_EXECUTION_MODE` | Cosa fa |
+| `FORGEHUB_EXECUTION_MODE` | What it does |
 | --- | --- |
-| `serverless` | Job → `api.runpod.ai/v2/{endpoint}/run`, output in base64 → `data/storage`, serviti da `/outputs/` |
-| `direct` | Job → ComfyUI locale (`COMFYUI_HOST:PORT`, default `localhost:8188`) |
+| `serverless` | Job → `api.runpod.ai/v2/{endpoint}/run`, base64 output → `data/storage`, served from `/outputs/` |
+| `direct` | Job → local ComfyUI (`COMFYUI_HOST:PORT`, default `localhost:8188`) |
 
-Wildcard expansion (`__pmp/…__`) e select a runtime lato backend — la directory `wildcards/` è bundled; override con `FORGEHUB_WILDCARD_DIRS` (colon-separated).
+Wildcard expansion (`__pmp/…__`) and runtime selects happen backend-side — the `wildcards/` directory is bundled; override with `FORGEHUB_WILDCARD_DIRS` (colon-separated).
 
-## Variabili d'ambiente
+## Environment variables
 
-- `FORGEHUB_HOST` / `FORGEHUB_PORT` — bind backend (default `0.0.0.0:8484`)
-- `RUNPOD_API_KEY` / `RUNPOD_ENDPOINT_ID` — endpoint serverless
-- `COMFYUI_HOST` / `COMFYUI_PORT` — ComfyUI per la modalità direct
-- `FORGEHUB_STORAGE_DIR` — storage output/upload (default `data/storage`)
-- `FORGEHUB_WILDCARD_DIRS` — dir wildcard (default `./wildcards`)
-- `FORGEHUB_CHAT_BASE_URL` — chat opzionale (`/qwenvl/chat` di QwenVL-Mod)
-- `FORGEHUB_FRONTEND_DIR` — dist frontend servita da `/`
+- `FORGEHUB_HOST` / `FORGEHUB_PORT` — backend bind (default `0.0.0.0:8484`)
+- `RUNPOD_API_KEY` / `RUNPOD_ENDPOINT_ID` — serverless endpoint
+- `COMFYUI_HOST` / `COMFYUI_PORT` — ComfyUI for direct mode
+- `FORGEHUB_STORAGE_DIR` — output/upload storage (default `data/storage`)
+- `FORGEHUB_WILDCARD_DIRS` — wildcard dirs (default `./wildcards`)
+- `FORGEHUB_CHAT_BASE_URL` — optional chat (`/qwenvl/chat` from QwenVL-Mod)
+- `FORGEHUB_FRONTEND_DIR` — frontend dist served from `/`
 
-Vedi `.env.example` per il set completo.
+See `.env.example` for the full set.
 
 ## Frontend
 
 ```bash
 cd forgehub-app
 npm run dev            # Vite dev server
-npm run build          # build produzione (servita dal backend)
-npm run electron:dev   # desktop Electron in dev
+npm run build          # production build (served by the backend)
+npm run electron:dev   # Electron desktop in dev
 npm run electron:build # dmg/exe via electron-builder
 ```
 
-L'app desktop prende il backend URL da Settings (`forgehub.backend`) — punta a un backend locale o remoto.
+The desktop app reads the backend URL from Settings (`forgehub.backend`) — point it at a local or remote backend.
 
-## Workflow
+## Workflows
 
-File JSON in formato **API ComfyUI** (`Export API`), con `.meta.json` opzionale per metadati/parametri:
+JSON files in ComfyUI **API format** (`Export API`), with an optional `.meta.json` for metadata/parameters:
 
 ```json
 {
   "id": "pony-txt2img",
   "name": "Pony XL Txt2Img",
   "category": "image",
-  "description": "Genera immagini con Pony Diffusion XL",
+  "description": "Generate images with Pony Diffusion XL",
   "tags": ["pony", "sdxl"],
   "parameters": [],
   "outputs": ["image"]
 }
 ```
 
-Categorie: `agent`, `video`, `image`, `audio`, `other`.
+Categories: `agent`, `video`, `image`, `audio`, `other`.
