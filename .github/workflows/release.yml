@@ -1,0 +1,58 @@
+name: Release builds
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-14, windows-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: forgehub-app/package-lock.json
+
+      - name: Install and build
+        working-directory: forgehub-app
+        run: |
+          npm ci
+          npm run build
+          npx electron-builder --publish never
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: forgehub-${{ matrix.os }}
+          path: |
+            forgehub-app/release/*.dmg
+            forgehub-app/release/*.exe
+            forgehub-app/release/*.AppImage
+            forgehub-app/release/*.deb
+          if-no-files-found: error
+
+  publish:
+    if: github.ref_type == 'tag'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: forgehub-*
+          merge-multiple: true
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: "*"
+          generate_release_notes: true

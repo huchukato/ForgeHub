@@ -1,13 +1,13 @@
 {
   "name": "forgehub-app",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "main": "dist-electron/electron/main.js",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build && tsc -p tsconfig.electron.json",
     "preview": "vite preview",
-    "icon": "mkdir -p build && iconutil -c icns ../img/icon.iconset -o build/icon.icns",
+    "icon": "mkdir -p icons && iconutil -c icns ../img/icon.iconset -o icons/icon.icns",
     "electron:dev": "cross-env NODE_ENV=development electron dist-electron/electron/main.js",
     "electron:build": "npm run build && npm run icon && electron-builder"
   },
@@ -41,14 +41,17 @@
       "dist-electron/**/*"
     ],
     "mac": {
-      "icon": "build/icon.icns",
-      "category": "public.app-category.graphics-design"
+      "icon": "icons/icon.icns",
+      "category": "public.app-category.graphics-design",
+      "target": ["dmg"]
     },
     "win": {
-      "icon": "build/icon.icns"
+      "icon": "icons/icon.ico",
+      "target": ["nsis"]
     },
     "linux": {
-      "icon": "build/icon.icns"
+      "icon": "icons/icon.png",
+      "target": ["AppImage", "deb"]
     }
   }
 }
