@@ -143,7 +143,7 @@ export default function RecipeForm({ client, parameters, values, setValue, image
           {files.map((f, i) => (
             <div key={i} className="group relative">
               <img
-                src={`/outputs/${f}?type=input`}
+                src={client.abs(`/outputs/${f}?type=input`)}
                 alt={f}
                 title={f}
                 className="h-24 w-auto max-w-44 rounded-lg border border-border object-cover shadow-[var(--shadow-panel)]"

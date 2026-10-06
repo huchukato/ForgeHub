@@ -90,8 +90,8 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
     setLightbox(outputs[(idx + delta + outputs.length) % outputs.length]);
   }
 
-  async function useAsInput(e: React.MouseEvent, o: OutputFile) {
-    e.stopPropagation();
+  async function useAsInput(e: React.MouseEvent | null, o: OutputFile) {
+    e?.stopPropagation();
     try {
       const blob = await (await fetch(o.url)).blob();
       await onUseAsInput?.(new File([blob], o.filename, { type: blob.type }));
@@ -369,6 +369,15 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
                     {capturing === "last" ? "Capturing…" : "Set last frame as reference"}
                   </button>
                 </>
+              )}
+              {canReference && !isVideo(lightbox.filename) && (
+                <button
+                  onClick={() => useAsInput(null, lightbox)}
+                  className="flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 font-medium text-accent transition-colors hover:bg-accent/20 hover:shadow-[0_0_12px_rgb(124_92_255/0.2)]"
+                >
+                  <ImageDown size={15} />
+                  Use as reference
+                </button>
               )}
               <a
                 href={lightbox.url}

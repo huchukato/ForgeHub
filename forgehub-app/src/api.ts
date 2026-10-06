@@ -98,7 +98,7 @@ export class ForgeHubClient {
 
   // Media URLs come back relative ("/outputs/...") — absolutize them so they
   // also work when the UI is loaded from file:// in the packaged app.
-  private abs(url: string): string {
+  abs(url: string): string {
     return url.startsWith("/") ? `${this.baseUrl}${url}` : url;
   }
 
