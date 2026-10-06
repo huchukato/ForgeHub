@@ -1,6 +1,6 @@
 {
   "name": "forgehub-app",
-  "version": "0.1.1",
+  "version": "0.1.3",
   "private": true,
   "description": "Frontend for ComfyUI workflows — local or Runpod Serverless",
   "author": "huchukato",
@@ -46,22 +46,38 @@
       "splash.html"
     ],
     "extraResources": [
-      { "from": "../backend-dist", "to": "." },
-      { "from": "../workflows", "to": "workflows" },
-      { "from": "../wildcards", "to": "wildcards" }
+      {
+        "from": "../backend-dist",
+        "to": "."
+      },
+      {
+        "from": "../workflows",
+        "to": "workflows"
+      },
+      {
+        "from": "../wildcards",
+        "to": "wildcards"
+      }
     ],
     "mac": {
       "icon": "icons/icon.icns",
       "category": "public.app-category.graphics-design",
-      "target": ["dmg"]
+      "target": [
+        "dmg"
+      ]
     },
     "win": {
       "icon": "icons/icon.ico",
-      "target": ["nsis"]
+      "target": [
+        "nsis"
+      ]
     },
     "linux": {
       "icon": "icons/icon.png",
-      "target": ["AppImage", "deb"],
+      "target": [
+        "AppImage",
+        "deb"
+      ],
       "maintainer": "huchukato <noreply@github.com>"
     }
   }

@@ -8,7 +8,14 @@ import SettingsDialog from "./components/SettingsDialog";
 import Sidebar from "./components/Sidebar";
 
 export default function App() {
-  const [backendUrl] = useState(() => localStorage.getItem("forgehub.backend") || "");
+  const [backendUrl] = useState(
+    () =>
+      // Inside Electron the bundled backend is authoritative — a stale
+      // localStorage override (e.g. an old remote URL) must not win.
+      (window as { forgehub?: { backendUrl?: string } }).forgehub?.backendUrl ??
+      localStorage.getItem("forgehub.backend") ??
+      ""
+  );
   const client = useMemo(() => new ForgeHubClient(backendUrl), [backendUrl]);
 
   const [workflows, setWorkflows] = useState<Workflow[]>([]);

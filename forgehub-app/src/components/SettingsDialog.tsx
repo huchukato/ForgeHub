@@ -1,6 +1,6 @@
 import { MessageSquare, RefreshCw, Settings, X, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { ForgeHubClient } from "../api";
+import type { ForgeHubClient, RunpodEndpoint } from "../api";
 import { Button, Label, Select, TextInput } from "./ui";
 
 const LLM_SERVICES = [
@@ -38,6 +38,31 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
   const [modelsLoading, setModelsLoading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [endpoints, setEndpoints] = useState<RunpodEndpoint[]>([]);
+  const [detecting, setDetecting] = useState(false);
+  const [detectMsg, setDetectMsg] = useState("");
+
+  const detect = async (key = apiKey) => {
+    setDetecting(true);
+    setDetectMsg("");
+    try {
+      const eps = await client.getRunpodEndpoints(key || undefined);
+      setEndpoints(eps);
+      if (eps.length === 0) {
+        setDetectMsg("No endpoints found on this account");
+      } else if (eps.length === 1) {
+        setEndpointId(eps[0].id);
+        setDetectMsg(`Selected ${eps[0].name || eps[0].id}`);
+      } else {
+        setDetectMsg(`${eps.length} endpoints — pick one below`);
+      }
+    } catch (e) {
+      setEndpoints([]);
+      setDetectMsg(String(e).replace(/^Error:\s*/, "").slice(0, 160));
+    } finally {
+      setDetecting(false);
+    }
+  };
 
   const serviceNeedsKey = (id = service) =>
     !LLM_SERVICES.find((s) => s.id === id)?.noKey;
@@ -66,6 +91,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
       setLlmModel(s.chat_llm_model);
       setLlmKeySet(s.chat_llm_key_set);
       setLlmKey("");
+      if (s.runpod_api_key_set && !s.runpod_endpoint_id) detect("");
       if (s.chat_llm_url && (s.chat_llm_key_set || !serviceNeedsKey(svc?.id ?? "custom"))) {
         fetchModels(s.chat_llm_url, s.chat_llm_key_set || !serviceNeedsKey(svc?.id ?? "custom"));
       }
@@ -112,13 +138,6 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
           </span>
           RunPod Serverless
         </div>
-        <Label>Endpoint ID</Label>
-        <TextInput
-          value={endpointId}
-          onChange={(e) => setEndpointId(e.target.value.trim())}
-          placeholder="2zehy6ujr6peku"
-          className="mb-3 font-mono"
-        />
         <Label>
           API Key {keySet && <span className="normal-case text-accent">(set — empty = keep)</span>}
         </Label>
@@ -127,8 +146,46 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
           value={apiKey}
           onChange={(e) => setApiKey(e.target.value.trim())}
           placeholder="rpa_…"
-          className="mb-5 font-mono"
+          className="mb-1 font-mono"
         />
+        <div className="mb-3 text-[11px]">
+          <a href="https://console.runpod.io/user/settings" target="_blank" rel="noreferrer" className="text-accent hover:underline">
+            Get your API key →
+          </a>
+        </div>
+        <div className="flex items-center justify-between">
+          <Label>Endpoint ID</Label>
+          <button
+            onClick={() => detect()}
+            disabled={detecting}
+            className="flex items-center gap-1 text-[11px] font-semibold text-accent hover:underline disabled:opacity-50"
+          >
+            <RefreshCw size={10} className={detecting ? "animate-spin" : ""} />
+            {detecting ? "Detecting…" : "Detect from account"}
+          </button>
+        </div>
+        {endpoints.length > 1 && (
+          <Select
+            value={endpointId}
+            onChange={(e) => setEndpointId(e.target.value)}
+            className="mb-2 font-mono"
+          >
+            <option value="">— pick an endpoint —</option>
+            {endpoints.map((ep) => (
+              <option key={ep.id} value={ep.id}>
+                {ep.name || ep.id}{ep.gpus ? ` · ${ep.gpus}` : ""} ({ep.id})
+              </option>
+            ))}
+          </Select>
+        )}
+        <TextInput
+          value={endpointId}
+          onChange={(e) => setEndpointId(e.target.value.trim())}
+          placeholder="2zehy6ujr6peku"
+          className="mb-1 font-mono"
+        />
+        {detectMsg && <div className="mb-2 text-[10px] text-muted">{detectMsg}</div>}
+        <div className="mb-4" />
 
         <div className="mb-3 mt-5 flex items-center gap-2 border-b border-border pb-2 text-[11px] font-bold uppercase tracking-[0.08em] text-muted">
           <span className="flex h-5 w-5 items-center justify-center rounded-md border border-accent/40 bg-accent/15 text-accent">

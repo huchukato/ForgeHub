@@ -63,6 +63,13 @@ export interface OutputFile {
   mtime?: number;
 }
 
+export interface RunpodEndpoint {
+  id: string;
+  name: string;
+  gpus: string;
+  workers?: number;
+}
+
 export interface ForgeHubSettings {
   execution_mode: string;
   runpod_endpoint_id: string;
@@ -126,6 +133,12 @@ export class ForgeHubClient {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
+  }
+
+  async getRunpodEndpoints(apiKey?: string): Promise<RunpodEndpoint[]> {
+    const qs = apiKey ? `?api_key=${encodeURIComponent(apiKey)}` : "";
+    const data = await this.request<{ endpoints: RunpodEndpoint[] }>(`/runpod/endpoints${qs}`);
+    return data.endpoints;
   }
 
   async listWildcards(): Promise<string[]> {

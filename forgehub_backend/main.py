@@ -242,6 +242,15 @@ async def put_settings(body: dict):
     return await get_settings()
 
 
+@app.get("/runpod/endpoints")
+async def runpod_endpoints(api_key: str = ""):
+    from forgehub_backend.runpod_client import list_endpoints
+    try:
+        return {"endpoints": await list_endpoints(api_key or None)}
+    except RuntimeError as exc:
+        raise HTTPException(status_code=502, detail=str(exc))
+
+
 @app.get("/workflows")
 async def list_workflows() -> WorkflowListResponse:
     catalog = _get_catalog()

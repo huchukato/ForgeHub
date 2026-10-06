@@ -12,6 +12,32 @@ from forgehub_backend.config import SETTINGS
 TERMINAL_STATES = {"COMPLETED", "FAILED", "CANCELLED", "TIMED_OUT"}
 
 
+async def list_endpoints(api_key: str | None = None) -> list[dict[str, Any]]:
+    """List the account's serverless endpoints (REST v1). Lets the UI fill in
+    endpoint ids instead of asking the user to copy them from the console."""
+    key = api_key or SETTINGS.runpod_api_key
+    if not key:
+        raise RuntimeError("RunPod API key not set")
+    async with aiohttp.ClientSession(
+        timeout=aiohttp.ClientTimeout(total=20),
+        headers={"Authorization": f"Bearer {key}"},
+    ) as session:
+        async with session.get("https://rest.runpod.io/v1/endpoints") as resp:
+            body = await resp.text()
+            if not resp.ok:
+                raise RuntimeError(f"RunPod {resp.status}: {body[:300]}")
+            data = json.loads(body)
+    return [
+        {
+            "id": ep.get("id", ""),
+            "name": ep.get("name", ""),
+            "gpus": ep.get("gpuIds") or ep.get("gpuTypeIds") or "",
+            "workers": ep.get("workersMax"),
+        }
+        for ep in (data if isinstance(data, list) else data.get("endpoints", []))
+    ]
+
+
 class RunPodClient:
     def __init__(
         self,
