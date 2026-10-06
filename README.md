@@ -6,7 +6,24 @@ A frontend for orchestrating ComfyUI workflows — against a local ComfyUI insta
 
 Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio)
 
-## Quick start
+## Download (desktop app)
+
+Get the latest build from [Releases](https://github.com/huchukato/ForgeHub/releases/latest) — the backend is bundled, nothing else to install:
+
+| Platform | File |
+| --- | --- |
+| macOS (Apple Silicon) | `ForgeHub-*-arm64.dmg` |
+| Windows | `ForgeHub.Setup.*.exe` |
+| Linux | `ForgeHub-*.AppImage` · `forgehub-app_*_amd64.deb` |
+
+Unsigned builds — how to open them:
+
+- **macOS**: run `xattr -dr com.apple.quarantine /Applications/ForgeHub.app` (or right-click → Open), or install [Sentinel](https://github.com/alienator88/Sentinel-App) — `brew install --cask sentinel` — and drop the app on "Allow unsigned app to launch".
+- **Windows**: click "More info → Run anyway".
+
+Then set your Runpod API key in **Settings** — "Detect from account" lists your endpoints automatically.
+
+## Quick start (from source)
 
 **macOS / Linux**
 
@@ -59,7 +76,7 @@ npm run electron:dev   # Electron desktop in dev
 npm run electron:build # dmg/exe via electron-builder
 ```
 
-The desktop app reads the backend URL from Settings (`forgehub.backend`) — point it at a local or remote backend.
+The packaged desktop app spawns its own bundled backend on `127.0.0.1:8484` — nothing to configure. In `electron:dev` it loads the Vite dev server, so start the backend too (e.g. `./start.sh`).
 
 ## Workflows
 
