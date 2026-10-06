@@ -1,5 +1,7 @@
 # ForgeHub
 
+![ForgeHub](img/banner.jpeg)
+
 Frontend per orchestrare workflow ComfyUI — su ComfyUI locale o su endpoint Runpod Serverless. Backend Python FastAPI + frontend React/TypeScript (web o Electron).
 
 Companion dei worker: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio)
