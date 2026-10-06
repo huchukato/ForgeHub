@@ -101,7 +101,9 @@ function createWindow() {
     width: 1400,
     height: 900,
     icon,
-    titleBarStyle: "hiddenInset",
+    // NOTE: hiddenInset on macOS 26 makes the whole window swallow left-clicks
+    // (movableByWindowBackground bug). Default chrome until upstream fix.
+    // titleBarStyle: "hiddenInset",
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
