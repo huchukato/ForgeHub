@@ -2,7 +2,7 @@
   "name": "forgehub-app",
   "version": "0.1.4",
   "private": true,
-  "description": "Frontend for ComfyUI workflows — local or Runpod Serverless",
+  "description": "Desktop app for ComfyUI workflows on Runpod Serverless",
   "author": "huchukato",
   "homepage": "https://github.com/huchukato/ForgeHub",
   "main": "dist-electron/electron/main.js",

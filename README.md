@@ -2,11 +2,17 @@
 
 ![ForgeHub](img/banner.jpeg)
 
-A frontend for orchestrating ComfyUI workflows on Runpod Serverless endpoints. Python FastAPI backend + React/TypeScript frontend (web or Electron).
+[![Release](https://img.shields.io/github/v/release/huchukato/ForgeHub)](https://github.com/huchukato/ForgeHub/releases/latest)
+[![Downloads](https://img.shields.io/github/downloads/huchukato/ForgeHub/total)](https://github.com/huchukato/ForgeHub/releases)
+[![Platform](https://img.shields.io/badge/platform-macOS%20%7C%20Windows%20%7C%20Linux-blue)](#-download-desktop-app)
+[![Runpod](https://img.shields.io/badge/Runpod-Serverless-6931D8)](https://runpod.io)
+[![Stack](https://img.shields.io/badge/stack-FastAPI%20%2B%20React%20%2B%20Electron-009688)](#-frontend)
+
+A desktop app for orchestrating ComfyUI workflows on **Runpod Serverless** endpoints — wildcard prompts, QwenVL prompt enhancer, job queue and output gallery. Backend bundled: nothing else to install.
 
 Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio)
 
-## Download (desktop app)
+## 📥 Download (desktop app)
 
 Get the latest build from [Releases](https://github.com/huchukato/ForgeHub/releases/latest) — the backend is bundled, nothing else to install:
 
@@ -23,7 +29,7 @@ Unsigned builds — how to open them:
 
 Then set your Runpod API key in **Settings** — "Detect from account" lists your endpoints automatically.
 
-## Quick start (from source)
+## ⚡ Quick start (from source)
 
 **macOS / Linux**
 
@@ -45,13 +51,13 @@ Options: `./start.sh --build` forces a frontend rebuild · `./start.sh --dev` st
 
 Prerequisites: only **Node.js** (for the frontend build) — everything else is handled by uv.
 
-## Execution
+## ☁️ Execution
 
-Jobs always run on a RunPod serverless endpoint: `/run` → `/status` poll → base64 output saved to `data/storage` and served from `/outputs/`. Set your API key + endpoint in Settings (or `.env`).
+Jobs always run on a RunPod serverless endpoint: `/run` → `/status` poll → base64 output saved to `data/storage` and served from `/outputs/`. Set your API key + endpoint in Settings (or `.env`) — "Detect from account" lists your endpoints automatically.
 
 Wildcard expansion (`__pmp/…__`) and runtime selects happen backend-side — the `wildcards/` directory is bundled; override with `FORGEHUB_WILDCARD_DIRS` (colon-separated).
 
-## Environment variables
+## 🔧 Environment variables
 
 - `FORGEHUB_HOST` / `FORGEHUB_PORT` — backend bind (default `0.0.0.0:8484`)
 - `RUNPOD_API_KEY` / `RUNPOD_ENDPOINT_ID` — serverless endpoint
@@ -63,7 +69,7 @@ Wildcard expansion (`__pmp/…__`) and runtime selects happen backend-side — t
 
 See `.env.example` for the full set.
 
-## Frontend
+## 🖥️ Frontend
 
 ```bash
 cd forgehub-app
@@ -75,7 +81,7 @@ npm run electron:build # dmg/exe via electron-builder
 
 The packaged desktop app spawns its own bundled backend on `127.0.0.1:8484` — nothing to configure. In `electron:dev` it loads the Vite dev server, so start the backend too (e.g. `./start.sh`).
 
-## Workflows
+## 🧩 Workflows
 
 JSON files in ComfyUI **API format** (`Export API`), with an optional `.meta.json` for metadata/parameters:
 
