@@ -415,7 +415,7 @@
     "inputs": {
       "attention": "comfy kitchen attention",
       "model": [
-        "105:6",
+        "105:263",
         0
       ]
     },
@@ -495,6 +495,20 @@
         "105:255",
         0
       ]
+    }
+  },
+  "105:263": {
+    "inputs": {
+      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "105:6",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Carica LoRA"
     }
   }
 }
