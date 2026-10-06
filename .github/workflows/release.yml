@@ -26,6 +26,7 @@ jobs:
           python-version: "3.12"
 
       - name: Bundle backend (PyInstaller)
+        shell: bash
         run: |
           pip install -e . pyinstaller
           pyinstaller packaging/backend_entry.py \
@@ -35,6 +36,7 @@ jobs:
 
       - name: Install and build
         working-directory: forgehub-app
+        shell: bash
         run: |
           npm ci
           npm run build
