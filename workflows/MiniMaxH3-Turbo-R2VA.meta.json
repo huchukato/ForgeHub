@@ -2,9 +2,10 @@
   "id": "mmh3-r2va",
   "name": "MiniMax H3 R2VA",
   "category": "video",
-  "description": "Reference \u2192 video con audio (MiniMax H3 ref2va turbo, serverless INT8)",
+  "description": "Reference → video con audio (MiniMax H3 ref2va turbo, serverless INT8)",
   "handler": "mmh3",
   "remote_file": "MiniMaxH3-Turbo-R2VA.json",
+  "endpoint_id": "qrmygqi9xiflap",
   "outputs": [
     "video",
     "audio"
@@ -29,7 +30,11 @@
       "type": "select",
       "target": "job",
       "default": "5",
-      "options": ["5", "10", "15"]
+      "options": [
+        "5",
+        "10",
+        "15"
+      ]
     },
     {
       "key": "config",
@@ -87,12 +92,12 @@
       "label": "Enhancer preset",
       "type": "select",
       "target": "job",
-      "default": "MiniMax \u203a NSFW R2VA",
+      "default": "MiniMax › NSFW R2VA",
       "options": [
-        "MiniMax \u203a NSFW R2VA",
-        "MiniMax \u203a NSFW I2VA",
-        "MiniMax \u203a NSFW FL2VA",
-        "MiniMax \u203a SFW I2VA"
+        "MiniMax › NSFW R2VA",
+        "MiniMax › NSFW I2VA",
+        "MiniMax › NSFW FL2VA",
+        "MiniMax › SFW I2VA"
       ]
     },
     {
