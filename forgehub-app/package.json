@@ -2,6 +2,9 @@
   "name": "forgehub-app",
   "version": "0.1.1",
   "private": true,
+  "description": "Frontend for ComfyUI workflows — local or Runpod Serverless",
+  "author": "huchukato",
+  "homepage": "https://github.com/huchukato/ForgeHub",
   "main": "dist-electron/electron/main.js",
   "scripts": {
     "dev": "vite",
@@ -51,7 +54,8 @@
     },
     "linux": {
       "icon": "icons/icon.png",
-      "target": ["AppImage", "deb"]
+      "target": ["AppImage", "deb"],
+      "maintainer": "huchukato <noreply@github.com>"
     }
   }
 }
