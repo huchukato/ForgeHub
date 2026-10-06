@@ -3,12 +3,13 @@
 import base64
 import json
 from contextlib import asynccontextmanager
+from urllib.parse import quote
 from pathlib import Path
 from typing import Any
 
 import copy
 
-from fastapi import FastAPI, File, HTTPException, UploadFile
+from fastapi import FastAPI, File, HTTPException, Request, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import Response
 from fastapi.staticfiles import StaticFiles
@@ -16,8 +17,13 @@ from fastapi.staticfiles import StaticFiles
 from forgehub_backend.chat_proxy import CHAT_PROXY
 from forgehub_backend.comfy_client import COMFY_CLIENT
 from forgehub_backend.config import SETTINGS
-from forgehub_backend.executor import execute_workflow, wait_for_outputs
-from forgehub_backend.files import read_output_file, save_uploaded_image
+from forgehub_backend.executor import get_backend
+from forgehub_backend.files import (
+    delete_output_file,
+    read_output_file,
+    save_uploaded_image,
+    thumbnail_path,
+)
 from forgehub_backend.ui_to_api import convert_ui_to_api
 from forgehub_backend.models import (
     ChatRequest,
@@ -35,11 +41,16 @@ from forgehub_backend.workflow_catalog import WorkflowCatalog
 async def lifespan(app: FastAPI):
     catalog = WorkflowCatalog()
     app.state.catalog = catalog
+    app.state.backend = get_backend()
     try:
         yield
     finally:
         await COMFY_CLIENT.close()
         await CHAT_PROXY.close()
+        backend = getattr(app.state, "backend", None)
+        client = getattr(backend, "client", None)
+        if client is not None and hasattr(client, "close"):
+            await client.close()
 
 
 app = FastAPI(
@@ -66,6 +77,11 @@ async def _resolve_prompt(workflow: dict[str, Any], meta: WorkflowMeta) -> dict[
     """Return an API-format prompt, converting UI-format workflows on the fly."""
     if meta.format != "ui":
         return workflow
+    if SETTINGS.execution_mode == "serverless":
+        raise HTTPException(
+            status_code=422,
+            detail="UI-format workflows are not supported in serverless mode; re-export the workflow in ComfyUI API format.",
+        )
     try:
         object_info = await COMFY_CLIENT.object_info()
     except Exception as exc:
@@ -199,7 +215,31 @@ async def config():
         "max_upload_mb": SETTINGS.max_upload_mb,
         "max_chat_images": SETTINGS.max_chat_images,
         "max_image_pixels": SETTINGS.max_image_pixels,
+        "execution_mode": SETTINGS.execution_mode,
+        "chat_enabled": bool(SETTINGS.chat_llm_url or SETTINGS.chat_base_url or SETTINGS.execution_mode == "direct"),
     }
+
+
+@app.get("/settings")
+async def get_settings():
+    return {
+        "execution_mode": SETTINGS.execution_mode,
+        "runpod_endpoint_id": SETTINGS.runpod_endpoint_id,
+        "runpod_api_key_set": bool(SETTINGS.runpod_api_key),
+        "chat_llm_url": SETTINGS.chat_llm_url,
+        "chat_llm_model": SETTINGS.chat_llm_model,
+        "chat_llm_key_set": bool(SETTINGS.chat_llm_key),
+    }
+
+
+@app.put("/settings")
+async def put_settings(body: dict):
+    from forgehub_backend.config import save_overrides
+    save_overrides(body)
+    # Rebuild the execution backend so the new credentials/endpoint apply
+    # without a restart.
+    app.state.backend = get_backend()
+    return await get_settings()
 
 
 @app.get("/workflows")
@@ -226,16 +266,50 @@ async def get_workflow_raw(workflow_id: str):
     return result[0]
 
 
+def _chat_unavailable() -> bool:
+    return (
+        SETTINGS.execution_mode == "serverless"
+        and not SETTINGS.chat_base_url
+        and not SETTINGS.chat_llm_url
+    )
+
+
 @app.get("/chat/models")
 async def chat_models():
+    if _chat_unavailable():
+        raise HTTPException(status_code=503, detail="Chat is disabled in serverless mode (set FORGEHUB_CHAT_BASE_URL)")
     try:
         return await CHAT_PROXY.models()
     except Exception as exc:
         raise HTTPException(status_code=503, detail=f"ComfyUI chat unavailable: {exc}")
 
 
+@app.get("/chat/provider-models")
+async def provider_models(url: str):
+    """List model ids from an OpenAI-compatible provider (GET {url}/models)."""
+    import aiohttp
+    base = url.rstrip("/")
+    headers = {}
+    if SETTINGS.chat_llm_key:
+        headers["Authorization"] = f"Bearer {SETTINGS.chat_llm_key}"
+    try:
+        async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15)) as s:
+            async with s.get(f"{base}/models", headers=headers) as resp:
+                if resp.status != 200:
+                    raise HTTPException(status_code=resp.status, detail=f"Provider returned {resp.status}: {await resp.text()}")
+                data = await resp.json()
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Provider unreachable: {exc}")
+    ids = [m.get("id") for m in data.get("data", []) if isinstance(m, dict) and m.get("id")]
+    return {"models": sorted(ids)}
+
+
 @app.post("/chat")
 async def chat(request: ChatRequest) -> ChatResponse:
+    if _chat_unavailable():
+        raise HTTPException(status_code=503, detail="Chat is disabled in serverless mode (set FORGEHUB_CHAT_BASE_URL)")
     catalog = _get_catalog()
     graph = None
     if request.workflow_id:
@@ -269,17 +343,94 @@ async def upload_image(file: UploadFile = File(...)):
     return {"filename": filename, "url": f"/outputs/{filename}?type=input"}
 
 
+def _split_parameters(request: ExecuteRequest, meta: WorkflowMeta) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Split declared form params: target "job" → job input fields, "node:.."
+    or undeclared colon keys → graph patches."""
+    job_params: dict[str, Any] = {}
+    node_params: dict[str, Any] = {}
+    targets = {p.get("key"): p.get("target", "job") for p in meta.parameters if isinstance(p, dict)}
+    for key, value in request.parameters.items():
+        target = targets.get(key)
+        if target == "job":
+            job_params[key] = value
+        elif target and target.startswith("node:"):
+            node_params[target[5:]] = value
+        elif ":" in key:
+            node_params[key] = value
+        else:
+            job_params[key] = value
+    return job_params, node_params
+
+
+def _expand_wildcards(parameters: dict[str, Any]) -> dict[str, Any]:
+    """Expand TagForge-style __wildcards__ and {a|b} groups in string params
+    before the job leaves ForgeHub — works identically for direct and
+    serverless backends."""
+    if not SETTINGS.wildcard_dirs:
+        return parameters
+    import time
+    from forgehub_backend.wildcards import WildcardLoader
+
+    def _expand(value: Any) -> Any:
+        if isinstance(value, str) and ("__" in value or ("{" in value and "|" in value)):
+            return WildcardLoader.process(value, seed=int(time.time() * 1000) % (2**63))
+        return value
+
+    return {key: _expand(value) for key, value in parameters.items()}
+
+
+@app.get("/wildcards")
+async def list_wildcards():
+    if not SETTINGS.wildcard_dirs:
+        return {"wildcards": []}
+    from forgehub_backend.wildcards import WildcardLoader
+    return {"wildcards": WildcardLoader.get_wildcards_list()}
+
+
+@app.get("/wildcards/values")
+async def wildcard_values(key: str = ""):
+    if not SETTINGS.wildcard_dirs:
+        return {"values": []}
+    from forgehub_backend.wildcards import WildcardLoader
+    key = key.strip().strip("_")
+    if not key:
+        return {"values": []}
+    return {"values": WildcardLoader.get_wildcard_value(key) or []}
+
+
 @app.post("/execute")
 async def execute(request: ExecuteRequest) -> ExecuteResponse:
+    request = request.model_copy(update={"parameters": _expand_wildcards(request.parameters)})
     catalog = _get_catalog()
     result = catalog.get_workflow(request.workflow_id)
     if result is None:
         raise HTTPException(status_code=404, detail="Workflow not found")
     workflow, meta = result
-    workflow = await _resolve_prompt(workflow, meta)
+    if meta.requires_endpoint and not meta.endpoint_id:
+        raise HTTPException(status_code=400, detail=f"Workflow '{meta.id}' requires a dedicated RunPod endpoint — set endpoint_id in its meta.json")
+    backend = app.state.backend
+
+    job_input: dict[str, Any] = {}
+    node_params: dict[str, Any] = {}
+    if SETTINGS.execution_mode == "serverless":
+        job_params, node_params = _split_parameters(request, meta)
+        job_input = {**request.extra_data, **job_params}
+        job_input["workflow"] = meta.remote_file or f"{meta.id}.json"
+        if meta.endpoint_id:
+            job_input["endpoint_id"] = meta.endpoint_id
+        if request.images:
+            job_input["images"] = request.images
+        if request.video:
+            job_input["video"] = request.video
+    else:
+        workflow = await _resolve_prompt(workflow, meta)
+        node_params = request.parameters
+
     try:
-        exec_result = await execute_workflow(workflow, request.parameters, client_id=request.client_id)
-        return ExecuteResponse(prompt_id=exec_result.prompt_id, status=exec_result.status)
+        job_id = await backend.queue(workflow, node_params, job_input, client_id=request.client_id)
+        return ExecuteResponse(prompt_id=job_id, status="queued")
+    except HTTPException:
+        raise
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Execution failed: {exc}")
 
@@ -287,14 +438,53 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
 @app.get("/execute/{prompt_id}/status")
 async def execution_status(prompt_id: str, client_id: str | None = None) -> ExecutionStatus:
     try:
-        used_client_id = client_id or prompt_id
-        return await wait_for_outputs(COMFY_CLIENT, prompt_id, used_client_id)
+        return await app.state.backend.status(prompt_id)
     except Exception as exc:
         raise HTTPException(status_code=500, detail=f"Status check failed: {exc}")
 
 
+@app.post("/execute/{prompt_id}/cancel")
+async def cancel_execution(prompt_id: str):
+    backend = app.state.backend
+    if not hasattr(backend, "cancel"):
+        raise HTTPException(status_code=501, detail="Backend does not support cancellation")
+    try:
+        await backend.cancel(prompt_id)
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"Cancel failed: {exc}")
+    return {"ok": True}
+
+
+@app.get("/outputs")
+async def list_outputs():
+    base = SETTINGS.storage_dir / "outputs"
+    if not base.is_dir():
+        return {"outputs": []}
+    items = []
+    for p in sorted(base.rglob("*"), key=lambda x: x.stat().st_mtime, reverse=True):
+        if not p.is_file():
+            continue
+        rel = p.relative_to(base)
+        item = {
+            "filename": p.name,
+            "subfolder": str(rel.parent) if str(rel.parent) != "." else "",
+            "type": "output",
+            "url": f"/outputs/{quote(p.name)}" + (f"?subfolder={rel.parent}" if str(rel.parent) != "." else ""),
+            "size": p.stat().st_size,
+            "mtime": p.stat().st_mtime,
+        }
+        if p.suffix.lower() in (".mp4", ".webm", ".mov", ".png", ".jpg", ".jpeg", ".webp", ".gif"):
+            item["thumb"] = f"/outputs/{quote(p.name)}/thumb" + (
+                f"?subfolder={rel.parent}" if str(rel.parent) != "." else ""
+            )
+        items.append(item)
+        if len(items) >= 200:
+            break
+    return {"outputs": items}
+
+
 @app.get("/outputs/{filename}")
-async def output_proxy(filename: str, subfolder: str = "", type: str = "output"):
+async def output_proxy(request: Request, filename: str, subfolder: str = "", type: str = "output"):
     try:
         data = read_output_file(filename, subfolder, type)
         content_type = "application/octet-stream"
@@ -304,9 +494,49 @@ async def output_proxy(filename: str, subfolder: str = "", type: str = "output")
             content_type = "video/" + filename.split(".")[-1].lower()
         elif filename.lower().endswith((".mp3", ".wav", ".ogg", ".flac")):
             content_type = "audio/" + filename.split(".")[-1].lower()
-        return Response(content=data, media_type=content_type)
+        range_header = request.headers.get("range")
+        if range_header and range_header.startswith("bytes="):
+            import re
+            m = re.match(r"bytes=(\d*)-(\d*)", range_header)
+            if m:
+                start = int(m.group(1)) if m.group(1) else 0
+                end = int(m.group(2)) if m.group(2) else len(data) - 1
+                end = min(end, len(data) - 1)
+                if start <= end:
+                    return Response(
+                        content=data[start : end + 1],
+                        status_code=206,
+                        media_type=content_type,
+                        headers={
+                            "Content-Range": f"bytes {start}-{end}/{len(data)}",
+                            "Accept-Ranges": "bytes",
+                            "Content-Length": str(end - start + 1),
+                        },
+                    )
+        return Response(content=data, media_type=content_type, headers={"Accept-Ranges": "bytes"})
     except FileNotFoundError:
         raise HTTPException(status_code=404, detail="Output not found")
+
+
+@app.get("/outputs/{filename}/thumb")
+async def output_thumb(filename: str, subfolder: str = ""):
+    try:
+        thumb = thumbnail_path(filename, subfolder)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Output not found")
+    if thumb is None:
+        raise HTTPException(status_code=404, detail="No thumbnail for this file type")
+    return Response(content=thumb.read_bytes(), media_type="image/jpeg",
+                    headers={"Cache-Control": "private, max-age=3600"})
+
+
+@app.delete("/outputs/{filename}")
+async def delete_output(filename: str, subfolder: str = ""):
+    try:
+        delete_output_file(filename, subfolder)
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Output not found")
+    return {"ok": True}
 
 
 @app.post("/chat/actions")
@@ -343,13 +573,17 @@ async def apply_chat_actions(payload: dict[str, Any]):
     if not should_queue:
         return {"status": "patched", "parameters": parameters}
 
-    exec_result = await execute_workflow(workflow, parameters)
+    backend = app.state.backend
+    job_input = {}
+    if SETTINGS.execution_mode == "serverless":
+        job_input = {"workflow": meta.remote_file or f"{meta.id}.json"}
+        if meta.endpoint_id:
+            job_input["endpoint_id"] = meta.endpoint_id
+    job_id = await backend.queue(workflow, parameters, job_input)
     return {
-        "status": exec_result.status,
-        "prompt_id": exec_result.prompt_id,
+        "status": "queued",
+        "prompt_id": job_id,
         "parameters": parameters,
-        "outputs": [out.model_dump() for out in exec_result.outputs],
-        "error": exec_result.error,
     }
 
 

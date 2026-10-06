@@ -53,6 +53,20 @@ class ComfyClient:
         result = await self.post("/prompt", json=payload)
         return result["prompt_id"], client_id
 
+    async def interrupt(self) -> None:
+        """Interrupt the currently running prompt (no-op if nothing runs)."""
+        try:
+            await self.post("/interrupt")
+        except Exception:
+            pass
+
+    async def delete_from_queue(self, prompt_id: str) -> None:
+        """Remove a queued (not yet running) prompt from the queue."""
+        try:
+            await self.post("/queue", json={"delete": [prompt_id]})
+        except Exception:
+            pass
+
     async def get_history(self, prompt_id: str | None = None) -> dict[str, Any]:
         if prompt_id:
             return await self.get(f"/history/{prompt_id}")

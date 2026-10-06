@@ -1,0 +1,323 @@
+{
+  "512": {
+    "inputs": {
+      "text": "__qwen21/headswap__",
+      "seed": 175040467273976,
+      "populated_text": "Replace the entire head and hair of the person in <image1> with the head, facial identity, facial hair, and hairstyle of the person in <image2>, re-rendered photorealistically in place — not a composited cutout. Retain the exact skull geometry, hairline, and facial expression from <image2>, adapted to the pose, framing and lighting of <image1>. Blend at the neckline and collar of <image1>, recalculating ambient occlusion and specular highlights so the new head matches the directional lighting and environmental reflections of <image1>. Keep the body, clothing and background of <image1> completely unchanged — the result must look like a single photograph.",
+      "mode": "populate",
+      "deduplicate": true,
+      "downvote_factor": 0.5,
+      "base_model": "None"
+    },
+    "class_type": "WildcardProcessor",
+    "_meta": {
+      "title": "🃏 Wildcard Processor"
+    }
+  },
+  "513": {
+    "inputs": {
+      "text": "Replace the entire head and hair of the person in <image1> with the head, facial identity, facial hair, and hairstyle of the person in <image2>, re-rendered photorealistically in place — not a composited cutout. Retain the exact skull geometry, hairline, and facial expression from <image2>, adapted to the pose, framing and lighting of <image1>. Blend at the neckline and collar of <image1>, recalculating ambient occlusion and specular highlights so the new head matches the directional lighting and environmental reflections of <image1>. Keep the body, clothing and background of <image1> completely unchanged — the result must look like a single photograph.",
+      "source": [
+        "515:547",
+        0
+      ]
+    },
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Show Text Pixaroma"
+    }
+  },
+  "526": {
+    "inputs": {
+      "images": [
+        "515:488",
+        0
+      ],
+      "name": [
+        "567",
+        4
+      ],
+      "SaveImageState": "{\"version\":1,\"folder\":\"\",\"pattern\":\"Qwen21_%date:yyyy-MM-dd%_%counter%%\",\"format\":\"jpg\",\"quality\":100,\"embedWorkflow\":true,\"civitaiMeta\":false,\"saveOnRun\":true,\"dateStyle\":\"yyyy-MM-dd\",\"counterDigits\":3,\"folded\":true,\"hideBarWhenFolded\":false,\"webpLossless\":false,\"inputSubfolders\":false,\"showOpen\":true,\"showCopy\":true,\"showFolder\":true,\"showPng\":true,\"showJpg\":true,\"showWebp\":true}"
+    },
+    "class_type": "PixaromaSaveImage",
+    "_meta": {
+      "title": "Save Image Pixaroma"
+    }
+  },
+  "541": {
+    "inputs": {
+      "note_json": "{\"version\": 1, \"content\": \"<p><br></p><h2>Qwen Image Edit 2.1 \\u2014 Wildcard Guide</h2><p>\\n</p><p>Wildcards expand into detailed editing prompts. Type <code>__qwen21/&lt;name&gt;__</code> for a specific edit, or <code>__qwen21/*__</code> for a random one. You can mix wildcards with your own text \\u2014 the wildcard is replaced inline before the prompt is sent.</p><p>\\n</p><p><code>&lt;image1&gt;</code>, <code>&lt;image2&gt;</code>, <code>&lt;image3&gt;</code> inside a wildcard refer to the reference images connected to the node, in order.</p><p>\\n\\n</p><h3>Available edits</h3><p>\\n</p><table class=\\\"pix-note-grid\\\">\\n  <thead>\\n    <tr><th>Wildcard</th><th>Imgs</th><th>What it does</th></tr>\\n  </thead>\\n  <tbody>\\n    <tr><td><code>__qwen21/sheet__</code></td><td>1</td><td>Quick character sheet: front, side, back + headshot</td></tr>\\n    <tr><td><code>__qwen21/prosheet__</code></td><td>1</td><td>Pro reference sheet, image2 as extra ref</td></tr>\\n    <tr><td><code>__qwen21/newscene__</code></td><td>1</td><td>Subject into a new random scene (location wildcard)</td></tr>\\n    <tr><td><code>__qwen21/backgroundswap__</code></td><td>2</td><td>Subject of image1 onto background of image2</td></tr>\\n    <tr><td><code>__qwen21/enhance__</code></td><td>1</td><td>Detail enhance, restore, creative upscale (pairs with detailer LoRA)</td></tr>\\n    <tr><td><code>__qwen21/faceswap__</code></td><td>2</td><td>Face of image1 \\u2190 identity from image2</td></tr>\\n    <tr><td><code>__qwen21/headswap__</code></td><td>2</td><td>Head+hair of image1 \\u2190 head from image2</td></tr>\\n    <tr><td><code>__qwen21/eyeswap__</code></td><td>2</td><td>Eyes of image1 \\u2190 eyes from image2</td></tr>\\n    <tr><td><code>__qwen21/makeupswap__</code></td><td>2</td><td>Makeup, contacts &amp; lipstick of image2 onto image1 \\u2014 identity kept</td></tr>\\n    <tr><td><code>__qwen21/hairswap__</code></td><td>2</td><td>Hair of image1 \\u2190 hair from image2</td></tr>\\n    <tr><td><code>__qwen21/outfitswap__</code></td><td>2</td><td>Dresses subject of image1 with outfit from image2</td></tr>\\n    <tr><td><code>__qwen21/poseswap__</code></td><td>2</td><td>Subject of image1 into body pose from image2</td></tr>\\n    <tr><td><code>__qwen21/expressionswap__</code></td><td>2</td><td>Expression of image2 onto image1</td></tr>\\n    <tr><td><code>__qwen21/multiref__</code></td><td>3</td><td>Scene combining image1 + image2 inside image3</td></tr>\\n    <tr><td><code>__qwen21/multiedit__</code></td><td>1</td><td>Applies every edit you describe at once</td></tr>\\n    <tr><td><code>__qwen21/timeweather__</code></td><td>1</td><td>Change time/weather to what you describe</td></tr>\\n    <tr><td><code>__qwen21/removeobject__</code></td><td>1</td><td>Removes the object you name + inpaint</td></tr>\\n    <tr><td><code>__qwen21/insertobject__</code></td><td>1</td><td>Inserts the object you describe</td></tr>\\n    <tr><td><code>__qwen21/textedit__</code></td><td>1</td><td>Replaces visible text with yours</td></tr>\\n    <tr><td><code>__qwen21/novelview__</code></td><td>1</td><td>Camera angle you describe</td></tr>\\n    <tr><td><code>__qwen21/anime2real__</code></td><td>1</td><td>Anime \\u2192 photorealistic human</td></tr>\\n    <tr><td><code>__qwen21/real2anime__</code></td><td>1</td><td>Photo \\u2192 manhwa/webtoon illustration</td></tr>\\n  </tbody>\\n</table><p>\\n\\n</p><h3>\\u26a0\\ufe0f Important: QwenVL bypass</h3><p>\\n</p><p>The <code>__qwen21/*__</code> editing wildcards are already complete edit instructions (they contain <code>&lt;image1&gt;</code>/<code>&lt;image2&gt;</code> bindings). The <b>QwenVL Unified</b> node is <b>bypassed</b> in this workflow so the expanded text reaches the encoder untouched \\u2014 if the LLM rewrote it, the image bindings would break and the edit would fail. When <b>generating</b> images instead of editing, un-bypass it with <b>Ctrl+B</b>: the LLM then expands your text and content wildcards (<code>__pmp/...__</code>) into a full prompt via the selected preset (e.g. Pony\\u2192Natural). Keep it bypassed (or set <b>passthrough = true</b>) whenever an edit wildcard is in the prompt.</p><p>\\n\\n</p><h3>Tips</h3><p>\\n</p><ul>\\n  <li><b>Mind the image count</b> \\u2014 edits marked 2 or 3 need that many references, in the right order (e.g. faceswap: image1 = photo to modify, image2 = identity donor).</li>\\n  <li><b>Edits that need a target</b> \\u2014 for <code>removeobject</code>, <code>insertobject</code>, <code>textedit</code>, <code>novelview</code>, <code>timeweather</code> and <code>multiedit</code>, describe what to change in your own words next to the wildcard: <code>a red parked car, __qwen21/removeobject__</code>.</li>\\n  <li><b>Combine with text</b> \\u2014 <code>__qwen21/backgroundswap__, dramatic mood</code> works fine.</li>\\n  <li><b>Add your own</b> \\u2014 drop a <code>.txt</code> in <code>ComfyUI/models/wildcards/</code>, one prompt per line \\u2192 becomes <code>__filename__</code>. YAML supports nested keys like <code>__name/subkey__</code>.</li>\\n  <li><b>Random pick</b> \\u2014 <code>__qwen21/*__</code> chooses a random edit, fun for batch runs.</li>\\n</ul>\", \"buttonColor\": \"#f66744\", \"lineColor\": \"#f66744\", \"width\": 400, \"height\": 200}"
+    },
+    "class_type": "PixaromaNote",
+    "_meta": {
+      "title": "Wildcard Guide"
+    }
+  },
+  "556": {
+    "inputs": {},
+    "class_type": "PixaromaGroupSwitch",
+    "_meta": {
+      "title": "Group Switch Pixaroma"
+    }
+  },
+  "560": {
+    "inputs": {
+      "SeedState": "{\"runSeed\":4062943539497467}",
+      "seed": 4062943539497467
+    },
+    "class_type": "PixaromaSeed",
+    "_meta": {
+      "title": "3. Seed Random/Fixed?"
+    }
+  },
+  "561": {
+    "inputs": {
+      "SizesState": "{\"version\":1,\"sizes\":[[1024,1024],[1152,864],[1248,832],[1376,768],[1920,1088],[1536,1536],[2560,1440],[2048,2048],[2400,1792],[2528,1696],[2752,1536]],\"selected\":2,\"orientation\":\"portrait\",\"snap\":32,\"accent\":null,\"collapsed\":false,\"starred\":[\"2048x2048\",\"1792x2400\",\"1696x2528\",\"1536x2752\"],\"w\":832,\"h\":1248}"
+    },
+    "class_type": "PixaromaSizes",
+    "_meta": {
+      "title": "1. Pick Orientation and Size"
+    }
+  },
+  "565": {
+    "inputs": {
+      "image": "F2K_00021_.png",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"F2K_00021_.png\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "1. Load Image"
+    }
+  },
+  "566": {
+    "inputs": {
+      "image": "SeedVR2_50516_.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"SeedVR2_50516_.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "2. Load Image"
+    }
+  },
+  "567": {
+    "inputs": {
+      "image_info": [
+        "565",
+        1
+      ]
+    },
+    "class_type": "PixaromaImageInfo",
+    "_meta": {
+      "title": "Image Info Pixaroma"
+    }
+  },
+  "568": {
+    "inputs": {
+      "DropdownState": "{\"version\":1,\"type\":\"int\",\"value\":\"1024\"}"
+    },
+    "class_type": "PixaromaDropdown",
+    "_meta": {
+      "title": "Resolution"
+    }
+  },
+  "515:490": {
+    "inputs": {
+      "device": "auto",
+      "dtype": "default",
+      "model": [
+        "515:546",
+        0
+      ]
+    },
+    "class_type": "QwenImage21Cache",
+    "_meta": {
+      "title": "Cache Qwen Image 2.1"
+    }
+  },
+  "515:488": {
+    "inputs": {
+      "samples": [
+        "515:509",
+        0
+      ],
+      "vae": [
+        "515:486",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decodifica VAE"
+    }
+  },
+  "515:509": {
+    "inputs": {
+      "seed": [
+        "560",
+        0
+      ],
+      "steps": 25,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "515:559",
+        0
+      ],
+      "positive": [
+        "515:545",
+        0
+      ],
+      "negative": [
+        "515:545",
+        1
+      ],
+      "latent_image": [
+        "515:543",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "515:486": {
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Carica VAE"
+    }
+  },
+  "515:493": {
+    "inputs": {
+      "clip_name": "qwen3-vl-8b-heretic-1.3.0-int8convrot.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Carica CLIP"
+    }
+  },
+  "515:496": {
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Carica modello di diffusione"
+    }
+  },
+  "515:543": {
+    "inputs": {
+      "width": [
+        "561",
+        0
+      ],
+      "height": [
+        "561",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Immagine Latent Vuota"
+    }
+  },
+  "515:545": {
+    "inputs": {
+      "prompt": [
+        "515:547",
+        0
+      ],
+      "negative_prompt": "ugly, bad quality, low quality, blurry",
+      "resolution": [
+        "568",
+        0
+      ],
+      "clip": [
+        "515:493",
+        0
+      ],
+      "images.image_1": [
+        "565",
+        0
+      ],
+      "images.image_2": [
+        "566",
+        0
+      ],
+      "vae": [
+        "515:486",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImage21",
+    "_meta": {
+      "title": "Codifica testo Qwen Image 2.1"
+    }
+  },
+  "515:546": {
+    "inputs": {
+      "lora_name": "elusarcas-qwen2-1-detailer-v1.safetensors",
+      "strength_model": 0.7,
+      "model": [
+        "515:496",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Carica LoRA"
+    }
+  },
+  "515:547": {
+    "inputs": {
+      "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
+      "preset_prompt": "IMG › Qwen Edit",
+      "camera_tag": "None",
+      "prompt": [
+        "512",
+        0
+      ],
+      "max_tokens": 8192,
+      "keep_model_loaded": false,
+      "seed": 1762208886,
+      "keep_last_prompt": false,
+      "passthrough": true,
+      "frame_count": 16,
+      "duration": "5s",
+      "image": [
+        "565",
+        0
+      ],
+      "image2": [
+        "566",
+        0
+      ]
+    },
+    "class_type": "QwenVL_Unified",
+    "_meta": {
+      "title": "🧠 QwenVL Unified (HF / GGUF)"
+    }
+  },
+  "515:559": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "515:490",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  }
+}

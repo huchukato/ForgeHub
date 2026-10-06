@@ -1,0 +1,182 @@
+{
+  "id": "mmh3-r2va",
+  "name": "MiniMax H3 R2VA",
+  "category": "video",
+  "description": "Reference \u2192 video con audio (MiniMax H3 ref2va turbo, serverless INT8)",
+  "handler": "mmh3",
+  "remote_file": "MiniMaxH3-Turbo-R2VA.json",
+  "outputs": [
+    "video",
+    "audio"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Prompt",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "images",
+      "label": "Reference",
+      "type": "images",
+      "target": "job",
+      "max": 2
+    },
+    {
+      "key": "seconds",
+      "label": "Duration / QwenVL preset",
+      "type": "select",
+      "target": "job",
+      "default": "5",
+      "options": ["5", "10", "15"]
+    },
+    {
+      "key": "config",
+      "label": "Preset",
+      "type": "select",
+      "target": "job",
+      "default": "r2va_native_turbo",
+      "options": [
+        "native",
+        "native_turbo",
+        "r2va_native",
+        "r2va_native_turbo",
+        "10eros",
+        "10eros_turbo"
+      ]
+    },
+    {
+      "key": "camera_tag",
+      "label": "Camera tag",
+      "type": "select",
+      "target": "job",
+      "default": "None",
+      "options": [
+        "None",
+        "[STATIC_CAMERA]",
+        "[LOCKED_OFF]",
+        "[SLOW_ZOOM_IN]",
+        "[SLOW_ZOOM_OUT]",
+        "[FAST_ZOOM_IN]",
+        "[FAST_ZOOM_OUT]",
+        "[PAN_LEFT]",
+        "[PAN_RIGHT]",
+        "[TILT_UP]",
+        "[TILT_DOWN]",
+        "[DOLLY_IN]",
+        "[DOLLY_OUT]",
+        "[TRACKING_LEFT]",
+        "[TRACKING_RIGHT]",
+        "[CRANE_UP]",
+        "[CRANE_DOWN]",
+        "[ORBIT]",
+        "[HANDHELD]",
+        "[ROLL]"
+      ]
+    },
+    {
+      "key": "enhance",
+      "label": "Enhancer QwenVL",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "vl_preset",
+      "label": "Enhancer preset",
+      "type": "select",
+      "target": "job",
+      "default": "MiniMax \u203a NSFW R2VA",
+      "options": [
+        "MiniMax \u203a NSFW R2VA",
+        "MiniMax \u203a NSFW I2VA",
+        "MiniMax \u203a NSFW FL2VA",
+        "MiniMax \u203a SFW I2VA"
+      ]
+    },
+    {
+      "key": "220:aspect_ratio",
+      "label": "Aspect ratio",
+      "type": "select",
+      "target": "node",
+      "default": "3:4",
+      "options": [
+        "16:9",
+        "4:3",
+        "1:1",
+        "3:4",
+        "9:16",
+        "21:9"
+      ]
+    },
+    {
+      "key": "220:resolution",
+      "label": "Resolution",
+      "type": "select",
+      "target": "node",
+      "default": "Native",
+      "options": [
+        "Fast Draft",
+        "Preview",
+        "High Detail",
+        "Native",
+        "1.5K",
+        "1080P Class",
+        "2K"
+      ]
+    },
+    {
+      "key": "upscale",
+      "label": "Upscale",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "rife",
+      "label": "RIFE 48fps (post)",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "upscale_model",
+      "label": "Upscale model",
+      "type": "select",
+      "target": "job",
+      "default": "2xLexicaRRDBNet",
+      "options": [
+        "2x-CGIMaster-v1",
+        "2x-AnimeSharpV3",
+        "2xLexicaRRDBNet",
+        "2xLexicaRRDBNet_Sharp",
+        "RealESRGAN_x2plus",
+        "4xUltrasharp_4xUltrasharpV10",
+        "4x-AnimeSharp",
+        "4xNomos2_hq_dat2",
+        "4xNomos2_otf_esrgan",
+        "4xLSDIRplusC",
+        "RealESRGAN_x4plus",
+        "RealESRGAN_x4plus_anime_6B",
+        "realesrgan-x4minus"
+      ]
+    },
+    {
+      "key": "upscale_target",
+      "label": "Upscale target",
+      "type": "select",
+      "target": "job",
+      "default": "2K",
+      "options": [
+        "2x",
+        "3x",
+        "4x",
+        "1080p",
+        "2K",
+        "4K",
+        "custom"
+      ]
+    }
+  ]
+}

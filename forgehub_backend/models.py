@@ -5,6 +5,16 @@ from typing import Any
 from pydantic import BaseModel, Field
 
 
+class WorkflowParameter(BaseModel):
+    key: str
+    label: str = ""
+    type: str = "text"  # text | int | float | select | images | video
+    target: str = "job"  # "job" | "node:<id>:<widget>"
+    options: list[str] = Field(default_factory=list)
+    max: int | None = None
+    default: Any = None
+
+
 class WorkflowMeta(BaseModel):
     id: str
     name: str
@@ -14,6 +24,10 @@ class WorkflowMeta(BaseModel):
     parameters: list[dict[str, Any]] = Field(default_factory=list)
     outputs: list[str] = Field(default_factory=list)
     format: str = "api"
+    handler: str = ""
+    remote_file: str = ""
+    endpoint_id: str = ""  # optional RunPod endpoint override (multi-image setups)
+    requires_endpoint: bool = False  # set when meta declares endpoint_id (even empty): hidden until configured
 
 
 class WorkflowListResponse(BaseModel):
@@ -49,6 +63,8 @@ class ChatResponse(BaseModel):
 class ExecuteRequest(BaseModel):
     workflow_id: str
     parameters: dict[str, Any] = Field(default_factory=dict)
+    images: list[str] = Field(default_factory=list)
+    video: str | None = None
     extra_data: dict[str, Any] = Field(default_factory=dict)
     client_id: str | None = None
 
@@ -69,4 +85,7 @@ class ExecutionStatus(BaseModel):
     prompt_id: str
     status: str
     outputs: list[OutputFile] = Field(default_factory=list)
+    texts: dict[str, str] = Field(default_factory=dict)  # node_id → ShowText content (prompt trace)
     error: str | None = None
+    remote_status: str | None = None
+    elapsed_ms: int | None = None

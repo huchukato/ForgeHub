@@ -1,0 +1,90 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0a0a13;
+  --color-bg-elev: #10101b;
+  --color-panel: #181827;
+  --color-panel-hover: #202032;
+  --color-panel-active: #27273b;
+  --color-border: #2e2e44;
+  --color-border-strong: #41415c;
+  --color-text: #efeff5;
+  --color-muted: #9898ac;
+  --color-faint: #69697e;
+  --color-accent: #7c5cff;
+  --color-accent-hover: #9a85ff;
+  --color-accent-soft: #7c5cff24;
+  --color-magenta: #e0509e;
+  --color-danger: #ff5c6c;
+  --color-success: #34d399;
+  --color-warning: #f5b942;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --shadow-panel: 0 1px 0 rgb(255 255 255 / 0.03) inset, 0 8px 24px rgb(0 0 0 / 0.35);
+  --shadow-pop: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 16px 48px rgb(0 0 0 / 0.55);
+  --shadow-glow: 0 0 0 1px rgb(124 92 255 / 0.35), 0 0 24px rgb(124 92 255 / 0.12);
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  background:
+    radial-gradient(1100px 550px at 12% -8%, rgb(124 92 255 / 0.12), transparent 60%),
+    radial-gradient(900px 500px at 108% 112%, rgb(224 80 158 / 0.07), transparent 55%),
+    linear-gradient(rgb(10 10 19 / 0.25), rgb(10 10 19 / 0.45)),
+    url("./assets/background.jpg") center / cover no-repeat;
+  background-attachment: fixed;
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-feature-settings: "cv11", "ss01";
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+::selection {
+  background: rgb(124 92 255 / 0.35);
+  color: #fff;
+}
+
+/* Consistent focus ring */
+:focus-visible {
+  outline: 2px solid rgb(124 92 255 / 0.55);
+  outline-offset: 1px;
+  border-radius: 6px;
+}
+
+/* Thin scrollbars */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+}
+*::-webkit-scrollbar { width: 8px; height: 8px; }
+*::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: 4px; }
+*::-webkit-scrollbar-thumb:hover { background: var(--color-border-strong); }
+*::-webkit-scrollbar-track { background: transparent; }
+
+@keyframes fh-pulse {
+  0%, 100% { opacity: 0.35; }
+  50% { opacity: 1; }
+}
+
+@keyframes fh-shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(220%); }
+}
+
+@keyframes fh-fade-up {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

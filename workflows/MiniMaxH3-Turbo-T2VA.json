@@ -1,0 +1,469 @@
+{
+  "126": {
+    "inputs": {
+      "frame_rate": 48,
+      "loop_count": 0,
+      "filename_prefix": "video/MiniMax_H3_48FPS",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 20,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "254:177",
+        0
+      ],
+      "audio": [
+        "105:23",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "48FPS"
+    }
+  },
+  "137": {
+    "inputs": {
+      "text": "integrated_multimodal_description: [Shot 1] Photorealistic live-action cinematic, a medium-wide shot framed from a low three-quarter angle captures Rei Hino (Sailor Mars) silhouetted against a blazing tropical sunset. She stands barefoot on warm golden sand, her long black hair flowing gently in the breeze, face turned upward with eyes closed in pure bliss. Sunbeams pierce through clouds, backlit intensely, casting volumetric light across her skin, highlighting sweat glistening on her collarbones and thighs. Her signature red sailor-style outfit is slightly disheveled; the high-low skirt rides up exposing smooth thighs, while her hands clutch the fabric of her bodice, fingers pressing firmly against her ample chest as she engages in intense self breast sucking. One hand holds the cupped breast steady while her mouth works deeply over the nipple, tongue tracing the sensitive peak with deliberate, rhythmic pressure. Saliva drips visibly down her chin and onto her shoulder, catching the golden hour glow. Her expression shifts between tight-lipped ecstasy and parted-mouth sighs, cheeks flushed crimson under the sun\u2019s warmth. As the camera tracks smoothly leftward, maintaining her centered composition, she subtly shifts weight, hips swaying softly with each thrust of her head. A gentle sea breeze ruffles her skirt hem and lifts strands of hair around her face, blending seamlessly with the continuous lateral camera movement. Ambient waves lap rhythmically at the shore behind her, distant seagulls cry overhead, and the wind whispers through dune grass\u2014layered beneath her audible ragged breathing, sharp intake breaths, wet suction sounds, soft lip smacks against skin, and occasional throaty moans punctuating moments of heightened sensation. Skin-on-fabric friction hums faintly as her arms adjust her grip.\n\noverall_soundscape: Warm ocean breezes rustle through coastal vegetation, mingling with the steady crash of receding waves and occasional seabird calls echoing across the horizon. Underlying these ambient layers are Rei\u2019s own visceral responses: heavy inhalations followed by shaky exhales, rhythmic wet suction noises synced to her movements, subtle lip-smacking against skin, occasional throaty moans breaking into quiet giggles, and the faint squeak of silk shifting against her arms as she adjusts her position.\n\nnon_diegetic_music: N/A",
+      "anything": [
+        "105:256",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "QWEN3VL GENERATED PROMPT"
+    }
+  },
+  "221": {
+    "inputs": {
+      "model": "MiniMax H3",
+      "aspect_ratio": "3:4",
+      "resolution": "Native \u2014 864\u00d71184",
+      "divisible_by": 32,
+      "upscale": false,
+      "upscale_method": "lanczos",
+      "small_image_mode": "none",
+      "pad_color": "#000000",
+      "use_image_aspect": true
+    },
+    "class_type": "ComfyUI-PerfectVideoResolution",
+    "_meta": {
+      "title": "Perfect Video Resolution"
+    }
+  },
+  "224": {
+    "inputs": {
+      "text": "__pmp/prmpt/imgcmp/shots__, __pmp/prmpt/lctns/rndmlctns__, __pmp/prmpt/light/rndmlight__, __pmp/prmpt/char/favchar__, large breasts, __pmp/prmpt/clths/rndmclth__, __pmp/prmpt/clths/nudty_brsts__, __pmp/actsolo/brstplng__",
+      "seed": 356397769084179,
+      "populated_text": "profile, island, sunset, sunbeam, backlighting, shade, 1girl, rei hino \\(sailor mars\\), sailor moon, black hair, purple eyes, large breasts, high-low skirt, covering breasts, self breast sucking, tongue on nipple, saliva drip, eyes closed, pleasure expression",
+      "mode": "populate",
+      "deduplicate": true,
+      "downvote_factor": 0.5,
+      "base_model": "None"
+    },
+    "class_type": "WildcardProcessor",
+    "_meta": {
+      "title": "\ud83c\udccf Wildcard Processor"
+    }
+  },
+  "250": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma"
+    }
+  },
+  "251": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma"
+    }
+  },
+  "105:10": {
+    "inputs": {
+      "samples": [
+        "105:14",
+        0
+      ],
+      "vae": [
+        "105:11",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decodifica VAE"
+    }
+  },
+  "105:11": {
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Carica VAE"
+    }
+  },
+  "105:13": {
+    "inputs": {
+      "clip_name": "qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
+      "type": "minimax",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Carica CLIP"
+    }
+  },
+  "105:14": {
+    "inputs": {
+      "noise": [
+        "105:15",
+        0
+      ],
+      "guider": [
+        "105:16",
+        0
+      ],
+      "sampler": [
+        "105:155",
+        0
+      ],
+      "sigmas": [
+        "105:9",
+        0
+      ],
+      "latent_image": [
+        "105:104",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "105:24": {
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Carica VAE"
+    }
+  },
+  "105:91": {
+    "inputs": {
+      "fps": 24,
+      "bit_depth": 8,
+      "color_space": "sRGB",
+      "codec": "none",
+      "images": [
+        "105:10",
+        0
+      ],
+      "audio": [
+        "105:23",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Crea Video"
+    }
+  },
+  "105:107": {
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "105:111",
+        0
+      ]
+    },
+    "class_type": "ComfyMathExpression",
+    "_meta": {
+      "title": "Espressione Matematica"
+    }
+  },
+  "105:111": {
+    "inputs": {
+      "value": 10
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Float (duration)"
+    }
+  },
+  "105:16": {
+    "inputs": {
+      "model": [
+        "105:206",
+        0
+      ],
+      "conditioning": [
+        "105:104",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "Guida Base"
+    }
+  },
+  "105:15": {
+    "inputs": {
+      "noise_seed": 833238321491842
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "105:104": {
+    "inputs": {
+      "prompt": [
+        "105:256",
+        0
+      ],
+      "width": [
+        "221",
+        0
+      ],
+      "height": [
+        "221",
+        1
+      ],
+      "length": [
+        "105:107",
+        1
+      ],
+      "clip": [
+        "105:13",
+        0
+      ],
+      "vae": [
+        "105:11",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3ImageToVideo",
+    "_meta": {
+      "title": "MiniMax H3 Immagine in Video"
+    }
+  },
+  "105:6": {
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Carica modello di diffusione"
+    }
+  },
+  "105:155": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "105:9": {
+    "inputs": {
+      "scheduler": "simple",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "105:206",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "Scheduler Base"
+    }
+  },
+  "105:206": {
+    "inputs": {
+      "shift_video": 12,
+      "shift_audio": 4,
+      "model": [
+        "105:255",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3SigmaShift",
+    "_meta": {
+      "title": "ModelSamplingMiniMaxH3"
+    }
+  },
+  "105:255": {
+    "inputs": {
+      "selection": "sol-attn",
+      "selection.tau": 1.3,
+      "start_percent": 0.2,
+      "end_percent": 1,
+      "dense_blocks": "",
+      "min_tokens": 12288,
+      "extra_tokens": 256,
+      "sink_conditioning": "exact_kv_and_rows",
+      "verbose": false,
+      "model": [
+        "105:257",
+        0
+      ]
+    },
+    "class_type": "BlockSparseAttention",
+    "_meta": {
+      "title": "Attenzione sparsa del modello"
+    }
+  },
+  "105:23": {
+    "inputs": {
+      "samples": [
+        "105:14",
+        0
+      ],
+      "vae": [
+        "105:24",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "Decodifica audio VAE"
+    }
+  },
+  "105:256": {
+    "inputs": {
+      "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
+      "prompt_text": [
+        "224",
+        0
+      ],
+      "enhancement_style": "MiniMax \u203a NSFW T2V",
+      "camera_tag": "None",
+      "style_tag": "None",
+      "max_tokens": 8192,
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "repetition_penalty": 1.1,
+      "english_output": false,
+      "device": "auto",
+      "quantization": "None (FP16)",
+      "attention_mode": "auto",
+      "use_torch_compile": false,
+      "keep_model_loaded": false,
+      "seed": 1,
+      "keep_last_prompt": false,
+      "passthrough": false,
+      "duration": "5s"
+    },
+    "class_type": "QwenVL_Unified_PromptEnhancer",
+    "_meta": {
+      "title": "\u270d\ud83c\udffb QwenVL Unified Prompt Enhancer (HF / GGUF)"
+    }
+  },
+  "105:257": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "105:6",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  },
+  "254:176": {
+    "inputs": {
+      "model": "rife425_ensemble_False_scale_1_sim",
+      "precision": "fp16",
+      "resolution_profile": "large",
+      "batch_size": 1
+    },
+    "class_type": "AutoLoadRifeTensorrtModel",
+    "_meta": {
+      "title": "(Down)load RIFE TensorRT Model"
+    }
+  },
+  "254:186": {
+    "inputs": {
+      "model": "RealESRGAN_x2plus",
+      "precision": "fp16",
+      "batch_size": 2
+    },
+    "class_type": "LoadUpscalerTensorrtModel",
+    "_meta": {
+      "title": "Load Upscale Tensorrt Model"
+    }
+  },
+  "254:185": {
+    "inputs": {
+      "resize_to": "2K",
+      "batch_size": 2,
+      "resize_width": 2048,
+      "resize_height": 2048,
+      "images": [
+        "105:10",
+        0
+      ],
+      "upscaler_trt_model": [
+        "254:186",
+        0
+      ]
+    },
+    "class_type": "UpscalerTensorrt",
+    "_meta": {
+      "title": "Upscaler Tensorrt \u26a1"
+    }
+  },
+  "254:177": {
+    "inputs": {
+      "clear_cache_after_n_frames": 100,
+      "multiplier": 2,
+      "keep_model_loaded": false,
+      "batch_size": 1,
+      "multiplier_list": "",
+      "frames": [
+        "254:185",
+        0
+      ],
+      "rife_trt_model": [
+        "254:176",
+        0
+      ]
+    },
+    "class_type": "AutoRifeTensorrt",
+    "_meta": {
+      "title": "Auto RIFE TensorRT"
+    }
+  },
+  "999": {
+    "class_type": "PixaromaShowText",
+    "inputs": {
+      "source": [
+        "105:256",
+        0
+      ]
+    }
+  },
+  "998": {
+    "class_type": "PixaromaShowText",
+    "inputs": {
+      "source": [
+        "224",
+        0
+      ]
+    }
+  }
+}

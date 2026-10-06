@@ -1,0 +1,196 @@
+{
+  "id": "mmh3-t2va",
+  "name": "MiniMax H3 T2VA",
+  "category": "video",
+  "description": "Text \u2192 video con audio (MiniMax H3 turbo, serverless INT8)",
+  "handler": "mmh3",
+  "remote_file": "MiniMaxH3-Turbo-T2VA.json",
+  "outputs": [
+    "video",
+    "audio"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Prompt",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "seconds",
+      "label": "Duration / QwenVL preset",
+      "type": "select",
+      "target": "job",
+      "default": "5",
+      "options": ["5", "10", "15"]
+    },
+    {
+      "key": "config",
+      "label": "Preset",
+      "type": "select",
+      "target": "job",
+      "default": "native_turbo",
+      "options": [
+        "native",
+        "native_turbo",
+        "r2va_native",
+        "r2va_native_turbo",
+        "10eros",
+        "10eros_turbo"
+      ]
+    },
+    {
+      "key": "camera_tag",
+      "label": "Camera tag",
+      "type": "select",
+      "target": "job",
+      "default": "None",
+      "options": [
+        "None",
+        "[STATIC_CAMERA]",
+        "[LOCKED_OFF]",
+        "[SLOW_ZOOM_IN]",
+        "[SLOW_ZOOM_OUT]",
+        "[FAST_ZOOM_IN]",
+        "[FAST_ZOOM_OUT]",
+        "[PAN_LEFT]",
+        "[PAN_RIGHT]",
+        "[TILT_UP]",
+        "[TILT_DOWN]",
+        "[DOLLY_IN]",
+        "[DOLLY_OUT]",
+        "[TRACKING_LEFT]",
+        "[TRACKING_RIGHT]",
+        "[CRANE_UP]",
+        "[CRANE_DOWN]",
+        "[ORBIT]",
+        "[HANDHELD]",
+        "[ROLL]"
+      ]
+    },
+    {
+      "key": "enhance",
+      "label": "Enhancer QwenVL",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "vl_preset",
+      "label": "Enhancer preset",
+      "type": "select",
+      "target": "job",
+      "default": "MiniMax \u203a NSFW T2V",
+      "options": [
+        "MiniMax \u203a NSFW T2V",
+        "MiniMax \u203a SFW T2V"
+      ]
+    },
+    {
+      "key": "105:256:style_tag",
+      "label": "Style tag",
+      "type": "select",
+      "target": "node",
+      "default": "None",
+      "options": [
+        "None",
+        "[ANIME]",
+        "[PHOTOREALISTIC]",
+        "[SEMIREALANIME]",
+        "[3DCG]",
+        "[CARTOON]",
+        "[CLAYMATION]",
+        "[WATERCOLOR]",
+        "[VINTAGE]",
+        "[NOIR]",
+        "[CYBERPUNK]",
+        "[FANTASY]",
+        "[SOFTFOCUS]",
+        "[HENTAI]"
+      ]
+    },
+    {
+      "key": "221:aspect_ratio",
+      "label": "Aspect ratio",
+      "type": "select",
+      "target": "node",
+      "default": "3:4",
+      "options": [
+        "16:9",
+        "4:3",
+        "1:1",
+        "3:4",
+        "9:16",
+        "21:9"
+      ]
+    },
+    {
+      "key": "221:resolution",
+      "label": "Resolution",
+      "type": "select",
+      "target": "node",
+      "default": "Native",
+      "options": [
+        "Fast Draft",
+        "Preview",
+        "High Detail",
+        "Native",
+        "1.5K",
+        "1080P Class",
+        "2K"
+      ]
+    },
+    {
+      "key": "upscale",
+      "label": "Upscale",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "rife",
+      "label": "RIFE 48fps (post)",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "upscale_model",
+      "label": "Upscale model",
+      "type": "select",
+      "target": "job",
+      "default": "2xLexicaRRDBNet",
+      "options": [
+        "2x-CGIMaster-v1",
+        "2x-AnimeSharpV3",
+        "2xLexicaRRDBNet",
+        "2xLexicaRRDBNet_Sharp",
+        "RealESRGAN_x2plus",
+        "4xUltrasharp_4xUltrasharpV10",
+        "4x-AnimeSharp",
+        "4xNomos2_hq_dat2",
+        "4xNomos2_otf_esrgan",
+        "4xLSDIRplusC",
+        "RealESRGAN_x4plus",
+        "RealESRGAN_x4plus_anime_6B",
+        "realesrgan-x4minus"
+      ]
+    },
+    {
+      "key": "upscale_target",
+      "label": "Upscale target",
+      "type": "select",
+      "target": "job",
+      "default": "2K",
+      "options": [
+        "2x",
+        "3x",
+        "4x",
+        "1080p",
+        "2K",
+        "4K",
+        "custom"
+      ]
+    }
+  ]
+}

@@ -1,11 +1,23 @@
+export interface WorkflowParam {
+  key: string;
+  label?: string;
+  type?: string; // text | int | float | select | images | video
+  target?: string; // "job" | "node:<id>:<widget>"
+  options?: string[];
+  max?: number;
+  default?: unknown;
+  wildcard_prefix?: string;
+}
+
 export interface Workflow {
   id: string;
   name: string;
   category: string;
   description: string;
   tags: string[];
-  parameters: Array<Record<string, unknown>>;
+  parameters: WorkflowParam[];
   outputs: string[];
+  handler?: string;
 }
 
 export interface ChatChoice {
@@ -18,6 +30,7 @@ export interface ChatMessage {
   content: string;
   thinking?: string;
   choices?: ChatChoice[];
+  error?: boolean;
 }
 
 export interface ChatOptions {
@@ -45,13 +58,28 @@ export interface OutputFile {
   subfolder: string;
   type: string;
   url: string;
+  thumb?: string;
+  size?: number;
+  mtime?: number;
+}
+
+export interface ForgeHubSettings {
+  execution_mode: string;
+  runpod_endpoint_id: string;
+  runpod_api_key_set: boolean;
+  chat_llm_url: string;
+  chat_llm_model: string;
+  chat_llm_key_set: boolean;
 }
 
 export interface ExecutionStatus {
   prompt_id: string;
   status: string;
   outputs: OutputFile[];
+  texts?: Record<string, string>;
   error?: string;
+  remote_status?: string;
+  elapsed_ms?: number;
 }
 
 export class ForgeHubClient {
@@ -78,7 +106,45 @@ export class ForgeHubClient {
   }
 
   async getConfig() {
-    return this.request<{ comfy_url: string; workflow_dir: string }>("/config");
+    return this.request<{
+      comfy_url: string;
+      workflow_dir: string;
+      execution_mode?: string;
+      chat_enabled?: boolean;
+    }>("/config");
+  }
+
+  async getSettings(): Promise<ForgeHubSettings> {
+    return this.request<ForgeHubSettings>("/settings");
+  }
+
+  async saveSettings(
+    body: Partial<ForgeHubSettings> & { runpod_api_key?: string; chat_llm_key?: string }
+  ): Promise<ForgeHubSettings> {
+    return this.request<ForgeHubSettings>("/settings", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+  }
+
+  async listWildcards(): Promise<string[]> {
+    const data = await this.request<{ wildcards: string[] }>("/wildcards");
+    return data.wildcards;
+  }
+  async listWildcardValues(key: string): Promise<string[]> {
+    const data = await this.request<{ values: string[] }>(`/wildcards/values?key=${encodeURIComponent(key)}`);
+    return data.values;
+  }
+
+  async listOutputs(): Promise<OutputFile[]> {
+    const data = await this.request<{ outputs: OutputFile[] }>("/outputs");
+    return data.outputs;
+  }
+
+  async deleteOutput(o: OutputFile): Promise<void> {
+    const qs = o.subfolder ? `?subfolder=${encodeURIComponent(o.subfolder)}` : "";
+    await this.request(`/outputs/${encodeURIComponent(o.filename)}${qs}`, { method: "DELETE" });
   }
 
   async listWorkflows(): Promise<Workflow[]> {
@@ -88,6 +154,13 @@ export class ForgeHubClient {
 
   async getChatModels(): Promise<{ hf: string[]; gguf: string[] }> {
     return this.request<{ hf: string[]; gguf: string[] }>("/chat/models");
+  }
+
+  async getProviderModels(url: string): Promise<string[]> {
+    const data = await this.request<{ models: string[] }>(
+      `/chat/provider-models?url=${encodeURIComponent(url)}`
+    );
+    return data.models;
   }
 
   async getWorkflowRaw(id: string): Promise<Record<string, unknown>> {
@@ -129,11 +202,18 @@ export class ForgeHubClient {
 
   async executeWorkflow(
     workflowId: string,
-    parameters: Record<string, unknown> = {}
+    parameters: Record<string, unknown> = {},
+    images: string[] = [],
+    video?: string
   ): Promise<ExecuteResult> {
     return this.request<ExecuteResult>("/execute", {
       method: "POST",
-      body: JSON.stringify({ workflow_id: workflowId, parameters }),
+      body: JSON.stringify({
+        workflow_id: workflowId,
+        parameters,
+        images,
+        video: video ?? null,
+      }),
     });
   }
 
@@ -143,6 +223,10 @@ export class ForgeHubClient {
   ): Promise<ExecutionStatus> {
     const params = clientId ? `?client_id=${encodeURIComponent(clientId)}` : "";
     return this.request<ExecutionStatus>(`/execute/${promptId}/status${params}`);
+  }
+
+  async cancelExecution(promptId: string): Promise<void> {
+    await this.request(`/execute/${promptId}/cancel`, { method: "POST" });
   }
 
   async uploadImage(file: File): Promise<{ filename: string; url: string }> {

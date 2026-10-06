@@ -132,6 +132,7 @@ def load_meta(path: Path, workflow: dict[str, Any] | None = None, base_dir: Path
         with open(meta_path, "r", encoding="utf-8") as f:
             raw = json.load(f)
         meta = WorkflowMeta(**raw)
+        meta.requires_endpoint = "endpoint_id" in raw
         if workflow is not None and not _is_api_format(workflow):
             meta.format = "ui"
         return meta
@@ -178,7 +179,10 @@ class WorkflowCatalog:
                 continue
             try:
                 workflow = load_workflow(path)
-                results.append(load_meta(path, workflow, self.directory))
+                meta = load_meta(path, workflow, self.directory)
+                if meta.requires_endpoint and not meta.endpoint_id:
+                    continue  # dedicated endpoint not configured yet
+                results.append(meta)
             except Exception as exc:
                 print(f"[ForgeHub] Failed to load workflow {path}: {exc}")
         return results

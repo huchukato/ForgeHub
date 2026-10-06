@@ -1,0 +1,500 @@
+{
+  "126": {
+    "inputs": {
+      "frame_rate": 48,
+      "loop_count": 0,
+      "filename_prefix": [
+        "262",
+        4
+      ],
+      "format": "video/webm",
+      "pix_fmt": "yuv420p",
+      "crf": 32,
+      "save_metadata": false,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "253:177",
+        0
+      ],
+      "audio": [
+        "105:23",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "48FPS"
+    }
+  },
+  "137": {
+    "inputs": {
+      "text": "How the reference pictures align with the target video \u2014 Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 5.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] A dimly lit bedroom at night, bathed in cool blue moonlight filtering through unseen windows. A shirtless young man with short brown hair embraces a young woman with long, dark curly hair. She wears a delicate brown spaghetti-strap top and a thin gold chain necklace around her neck. At the start, they are locked in a passionate kiss, her left hand resting gently on his bare shoulder while his arms encircle her waist. As the scene unfolds over five seconds, the kiss deepens and intensifies. Her left hand slides from his shoulder up along his neck, her fingers gently grasping his jawline. Simultaneously, his right hand moves from her hip to wrap securely around the back of her neck, his fingers interlacing with hers at the nape of her neck. Her head tilts slightly back in surrender, eyelids fluttering closed as she leans fully into him. His gaze remains fixed on her lips, eyes half-lidded with desire. The camera executes a slow, smooth push-in, moving steadily closer to their faces, compressing the background while maintaining sharp focus on their interlocked hands and the intimate geometry of their embrace. The blue light casts soft shadows across their skin, highlighting the subtle rise and fall of their chests with each shared breath. By the final moment, they remain locked in this deepened embrace, hands now firmly clasped behind her neck, the camera having closed in to frame them in an intimate medium close-up.\n\noverall_soundscape: The room hums with the low, steady thrum of a refrigerator and distant traffic outside. Her breathing quickens noticeably, becoming shallow and rhythmic, syncing with his deeper inhales. Their lips press together with audible, soft wetness, the sound of skin on skin punctuated by the faint rustle of her top straps shifting against her shoulders. His hand gripping the back of her neck creates a subtle, muffled sound of fabric stretching. Their hearts beat in a synchronized, thunderous rhythm that seems to amplify in the quiet room.\n\nnon_diegetic_music: N/A",
+      "anything": [
+        "105:255",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "QWEN3VL GENERATED PROMPT"
+    }
+  },
+  "226": {
+    "inputs": {
+      "model": "MiniMax H3",
+      "aspect_ratio": "16:9",
+      "resolution": "Native \u2014 1344\u00d7768",
+      "divisible_by": 32,
+      "upscale": false,
+      "upscale_method": "lanczos",
+      "small_image_mode": "none",
+      "pad_color": "#000000",
+      "use_image_aspect": true,
+      "image": [
+        "262",
+        0
+      ],
+      "image2": [
+        "263",
+        0
+      ]
+    },
+    "class_type": "ComfyUI-PerfectVideoResolution",
+    "_meta": {
+      "title": "Perfect Video Resolution"
+    }
+  },
+  "241": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma"
+    }
+  },
+  "242": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma"
+    }
+  },
+  "256": {
+    "inputs": {},
+    "class_type": "PixaromaGroupSwitch",
+    "_meta": {
+      "title": "FPS"
+    }
+  },
+  "261": {
+    "inputs": {
+      "image": "S02_EP11_ThatNightHomeLucia_252_v01.jpg",
+      "LoadImageMiniState": "{\"allow_upscale\":false,\"orig_name\":\"S02_EP11_ThatNightHomeLucia_252_v01.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "First Frame"
+    }
+  },
+  "262": {
+    "inputs": {
+      "image_info": [
+        "261",
+        1
+      ]
+    },
+    "class_type": "PixaromaImageInfo",
+    "_meta": {
+      "title": "Image Info Pixaroma"
+    }
+  },
+  "263": {
+    "inputs": {
+      "image": "S02_EP11_ThatNightHomeLucia_253_v01.jpg",
+      "LoadImageMiniState": "{\"allow_upscale\":false,\"orig_name\":\"S02_EP11_ThatNightHomeLucia_253_v01.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "Last Frame"
+    }
+  },
+  "105:11": {
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Carica VAE"
+    }
+  },
+  "105:13": {
+    "inputs": {
+      "clip_name": "qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
+      "type": "minimax",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Carica CLIP"
+    }
+  },
+  "105:24": {
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Carica VAE"
+    }
+  },
+  "105:16": {
+    "inputs": {
+      "model": [
+        "105:203",
+        0
+      ],
+      "conditioning": [
+        "105:104",
+        0
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "Guida Base"
+    }
+  },
+  "105:15": {
+    "inputs": {
+      "noise_seed": 924829705493509
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "105:104": {
+    "inputs": {
+      "prompt": [
+        "105:255",
+        0
+      ],
+      "width": [
+        "226",
+        0
+      ],
+      "height": [
+        "226",
+        1
+      ],
+      "length": [
+        "105:107",
+        1
+      ],
+      "clip": [
+        "105:13",
+        0
+      ],
+      "vae": [
+        "105:11",
+        0
+      ],
+      "first_frame": [
+        "226",
+        2
+      ],
+      "last_frame": [
+        "226",
+        3
+      ]
+    },
+    "class_type": "MiniMaxH3ImageToVideo",
+    "_meta": {
+      "title": "MiniMax H3 Immagine in Video"
+    }
+  },
+  "105:111": {
+    "inputs": {
+      "value": 5
+    },
+    "class_type": "PrimitiveFloat",
+    "_meta": {
+      "title": "Float (duration)"
+    }
+  },
+  "105:107": {
+    "inputs": {
+      "expression": "max(5, round(a * 24)) + (5 - (max(5, round(a * 24)) % 17)) % 17",
+      "values.a": [
+        "105:111",
+        0
+      ]
+    },
+    "class_type": "ComfyMathExpression",
+    "_meta": {
+      "title": "Espressione Matematica"
+    }
+  },
+  "105:6": {
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Carica modello di diffusione"
+    }
+  },
+  "105:202": {
+    "inputs": {
+      "sampler_name": "res_multistep"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "105:9": {
+    "inputs": {
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1,
+      "model": [
+        "105:203",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "Scheduler Base"
+    }
+  },
+  "105:203": {
+    "inputs": {
+      "shift_video": 12,
+      "shift_audio": 3,
+      "model": [
+        "105:254",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3SigmaShift",
+    "_meta": {
+      "title": "ModelSamplingMiniMaxH3"
+    }
+  },
+  "105:14": {
+    "inputs": {
+      "noise": [
+        "105:15",
+        0
+      ],
+      "guider": [
+        "105:16",
+        0
+      ],
+      "sampler": [
+        "105:202",
+        0
+      ],
+      "sigmas": [
+        "105:9",
+        0
+      ],
+      "latent_image": [
+        "105:104",
+        1
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "105:10": {
+    "inputs": {
+      "samples": [
+        "105:14",
+        0
+      ],
+      "vae": [
+        "105:11",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decodifica VAE"
+    }
+  },
+  "105:91": {
+    "inputs": {
+      "fps": 24,
+      "bit_depth": 8,
+      "color_space": "sRGB",
+      "codec": "none",
+      "images": [
+        "105:10",
+        0
+      ],
+      "audio": [
+        "105:23",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Crea Video"
+    }
+  },
+  "105:254": {
+    "inputs": {
+      "selection": "sol-attn",
+      "selection.tau": 1,
+      "start_percent": 0.2,
+      "end_percent": 1,
+      "dense_blocks": "",
+      "min_tokens": 12288,
+      "extra_tokens": 256,
+      "sink_conditioning": "exact_kv_and_rows",
+      "verbose": false,
+      "model": [
+        "105:271",
+        0
+      ]
+    },
+    "class_type": "BlockSparseAttention",
+    "_meta": {
+      "title": "Attenzione sparsa del modello"
+    }
+  },
+  "105:255": {
+    "inputs": {
+      "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
+      "preset_prompt": "MiniMax \u203a NSFW FL2VA",
+      "camera_tag": "None",
+      "prompt": "kissing",
+      "max_tokens": 8192,
+      "keep_model_loaded": false,
+      "seed": 2957886626,
+      "keep_last_prompt": false,
+      "passthrough": false,
+      "frame_count": 16,
+      "duration": "5s",
+      "image": [
+        "226",
+        2
+      ],
+      "image2": [
+        "226",
+        3
+      ]
+    },
+    "class_type": "QwenVL_Unified",
+    "_meta": {
+      "title": "\ud83e\udde0 QwenVL Unified (HF / GGUF)"
+    }
+  },
+  "105:23": {
+    "inputs": {
+      "samples": [
+        "105:14",
+        0
+      ],
+      "vae": [
+        "105:24",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "Decodifica audio VAE"
+    }
+  },
+  "105:271": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "105:6",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  },
+  "253:176": {
+    "inputs": {
+      "model": "rife425_ensemble_False_scale_1_sim",
+      "precision": "fp16",
+      "resolution_profile": "large",
+      "batch_size": 1
+    },
+    "class_type": "AutoLoadRifeTensorrtModel",
+    "_meta": {
+      "title": "(Down)load RIFE TensorRT Model"
+    }
+  },
+  "253:186": {
+    "inputs": {
+      "model": "2xLexicaRRDBNet",
+      "precision": "fp16",
+      "batch_size": 2
+    },
+    "class_type": "LoadUpscalerTensorrtModel",
+    "_meta": {
+      "title": "Load Upscale Tensorrt Model"
+    }
+  },
+  "253:185": {
+    "inputs": {
+      "resize_to": "2K",
+      "batch_size": 2,
+      "resize_width": 2048,
+      "resize_height": 2048,
+      "images": [
+        "105:10",
+        0
+      ],
+      "upscaler_trt_model": [
+        "253:186",
+        0
+      ]
+    },
+    "class_type": "UpscalerTensorrt",
+    "_meta": {
+      "title": "Upscaler Tensorrt \u26a1"
+    }
+  },
+  "253:177": {
+    "inputs": {
+      "clear_cache_after_n_frames": 100,
+      "multiplier": 2,
+      "keep_model_loaded": false,
+      "batch_size": 1,
+      "multiplier_list": "",
+      "frames": [
+        "253:185",
+        0
+      ],
+      "rife_trt_model": [
+        "253:176",
+        0
+      ]
+    },
+    "class_type": "AutoRifeTensorrt",
+    "_meta": {
+      "title": "Auto RIFE TensorRT"
+    }
+  },
+  "999": {
+    "class_type": "PixaromaShowText",
+    "inputs": {
+      "source": [
+        "105:255",
+        0
+      ]
+    }
+  }
+}

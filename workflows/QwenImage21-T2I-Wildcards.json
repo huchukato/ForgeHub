@@ -1,0 +1,239 @@
+{
+  "512": {
+    "inputs": {
+      "text": "__pmp/prmpt/lctns/rndmlctns__, __pmp/prmpt/light/rndmlight__, __pmp/prmpt/char/favchar__, large breasts, __pmp/prmpt/clths/rndmclth__, __pmp/prmpt/pose/poses_basic__, __pmp/prmpt/clths/nudty_brsts__, __pmp/actsolo/brstplng__",
+      "seed": 1035925666020603,
+      "populated_text": "studio, twilight, stage lights, sidelighting, window shadow, 1girl, rikku \\(final fantasy x\\), final fantasy, blonde hair, green eyes, large breasts, trousers, lying, nipple slip, grabbing own breast, nipple visible, blushing, biting lip, cozy",
+      "mode": "populate",
+      "deduplicate": true,
+      "downvote_factor": 0.5,
+      "base_model": "None"
+    },
+    "class_type": "WildcardProcessor",
+    "_meta": {
+      "title": "🃏 Wildcard Processor"
+    }
+  },
+  "513": {
+    "inputs": {
+      "text": "A vibrant 2D anime cel-shaded illustration of Rikku from Final Fantasy X, lying down on a cozy stage under studio twilight lighting. Her blonde hair and green eyes are highlighted by dramatic sidelighting that casts soft window shadows across the scene. She wears tight trousers with her blouse slightly askew, revealing her large breasts and a teasing nipple slip that exposes one visible nipple as she playfully grabs at her own breast. Rikku's face is flushed with a deep blush while she bites her lip in anticipation, capturing an intimate moment of self-pleasure under the warm glow of stage lights. The composition emphasizes her curvaceous figure against the backdrop of cozy theatrical ambiance, rendered in rich anime colors and clean lineart typical of high-quality 2D animation.",
+      "source": [
+        "544:484",
+        0
+      ]
+    },
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "QWEN ENHANCED PROMPT"
+    }
+  },
+  "526": {
+    "inputs": {
+      "images": [
+        "544:457",
+        0
+      ],
+      "SaveImageState": "{\"version\":1,\"folder\":\"\",\"pattern\":\"Qwen21_%date:yyyy-MM-dd%_%counter%%\",\"format\":\"jpg\",\"quality\":100,\"embedWorkflow\":true,\"civitaiMeta\":false,\"saveOnRun\":true,\"dateStyle\":\"yyyy-MM-dd\",\"counterDigits\":3,\"folded\":true,\"hideBarWhenFolded\":false,\"webpLossless\":false,\"inputSubfolders\":false,\"showOpen\":true,\"showCopy\":true,\"showFolder\":true,\"showPng\":true,\"showJpg\":true,\"showWebp\":true}"
+    },
+    "class_type": "PixaromaSaveImage",
+    "_meta": {
+      "title": "Save Image Pixaroma"
+    }
+  },
+  "546": {
+    "inputs": {
+      "DropdownState": "{\"version\":1,\"type\":\"int\",\"value\":\"1024\"}"
+    },
+    "class_type": "PixaromaDropdown",
+    "_meta": {
+      "title": "Resolution"
+    }
+  },
+  "547": {
+    "inputs": {
+      "SizesState": "{\"version\":1,\"sizes\":[[1024,1024],[1152,864],[1248,832],[1376,768],[1920,1088],[1536,1536],[2560,1440],[2048,2048],[2400,1792],[2528,1696],[2752,1536]],\"selected\":2,\"orientation\":\"portrait\",\"snap\":32,\"accent\":null,\"collapsed\":false,\"starred\":[\"2048x2048\",\"1792x2400\",\"1696x2528\",\"1536x2752\"],\"w\":832,\"h\":1248}"
+    },
+    "class_type": "PixaromaSizes",
+    "_meta": {
+      "title": "1. Pick Orientation and Size"
+    }
+  },
+  "548": {
+    "inputs": {
+      "SeedState": "{\"runSeed\":4757114036778398}",
+      "seed": 4757114036778398
+    },
+    "class_type": "PixaromaSeed",
+    "_meta": {
+      "title": "3. Seed Random/Fixed?"
+    }
+  },
+  "544:451": {
+    "inputs": {
+      "unet_name": "qwen_image_2.1_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Carica modello di diffusione"
+    }
+  },
+  "544:452": {
+    "inputs": {
+      "prompt": [
+        "544:484",
+        0
+      ],
+      "negative_prompt": [
+        "512",
+        1
+      ],
+      "resolution": [
+        "546",
+        0
+      ],
+      "clip": [
+        "544:453",
+        0
+      ],
+      "vae": [
+        "544:454",
+        0
+      ]
+    },
+    "class_type": "TextEncodeQwenImage21",
+    "_meta": {
+      "title": "Codifica testo Qwen Image 2.1"
+    }
+  },
+  "544:453": {
+    "inputs": {
+      "clip_name": "qwen3-vl-8b-heretic-1.3.0-int8convrot.safetensors",
+      "type": "qwen_image",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Carica CLIP"
+    }
+  },
+  "544:454": {
+    "inputs": {
+      "vae_name": "qwen_image_2.1_vae_bf16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Carica VAE"
+    }
+  },
+  "544:456": {
+    "inputs": {
+      "width": [
+        "547",
+        0
+      ],
+      "height": [
+        "547",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Immagine Latent Vuota"
+    }
+  },
+  "544:457": {
+    "inputs": {
+      "samples": [
+        "544:458",
+        0
+      ],
+      "vae": [
+        "544:454",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decodifica VAE"
+    }
+  },
+  "544:458": {
+    "inputs": {
+      "seed": [
+        "548",
+        0
+      ],
+      "steps": 25,
+      "cfg": 1,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 1,
+      "model": [
+        "544:480",
+        0
+      ],
+      "positive": [
+        "544:452",
+        0
+      ],
+      "negative": [
+        "544:452",
+        1
+      ],
+      "latent_image": [
+        "544:456",
+        0
+      ]
+    },
+    "class_type": "KSampler",
+    "_meta": {
+      "title": "KSampler"
+    }
+  },
+  "544:480": {
+    "inputs": {
+      "device": "auto",
+      "dtype": "default",
+      "model": [
+        "544:451",
+        0
+      ]
+    },
+    "class_type": "QwenImage21Cache",
+    "_meta": {
+      "title": "Cache Qwen Image 2.1"
+    }
+  },
+  "544:484": {
+    "inputs": {
+      "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
+      "prompt_text": [
+        "512",
+        0
+      ],
+      "enhancement_style": "Qwen Image T2I",
+      "camera_tag": "None",
+      "style_tag": "[ANIME]",
+      "max_tokens": 8192,
+      "temperature": 0.7,
+      "top_p": 0.9,
+      "repetition_penalty": 1.1,
+      "english_output": false,
+      "device": "auto",
+      "quantization": "None (FP16)",
+      "attention_mode": "auto",
+      "use_torch_compile": false,
+      "keep_model_loaded": false,
+      "seed": 4172162974,
+      "keep_last_prompt": false,
+      "passthrough": false,
+      "duration": "5s"
+    },
+    "class_type": "QwenVL_Unified_PromptEnhancer",
+    "_meta": {
+      "title": "✍🏻 QwenVL Unified Prompt Enhancer (HF / GGUF)"
+    }
+  }
+}

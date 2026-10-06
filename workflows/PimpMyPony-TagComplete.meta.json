@@ -1,0 +1,115 @@
+{
+  "id": "pimpmypony-t2i",
+  "name": "PimpMyPony Text to Image",
+  "category": "image",
+  "description": "Pony / Illustrious text-to-image with TagForge wildcards (serverless)",
+  "handler": "pony",
+  "remote_file": "PimpMyPony-TagComplete.json",
+  "endpoint_id": "rm1dvsnh3gxlew",
+  "outputs": [
+    "image"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Prompt (wildcard __name__ o tag Pony)",
+      "type": "text",
+      "target": "job",
+      "wildcard_prefix": "pmp/"
+    },
+    {
+      "key": "97:mode",
+      "label": "Wildcard mode",
+      "type": "select",
+      "target": "node",
+      "default": "populate",
+      "options": [
+        "populate",
+        "fixed",
+        "reproduce"
+      ]
+    },
+    {
+      "key": "97:base_model",
+      "label": "Wildcard preset",
+      "type": "select",
+      "target": "node",
+      "default": "Pony",
+      "options": [
+        "Pony",
+        "Illustrious"
+      ]
+    },
+    {
+      "key": "92:85:ckpt_name",
+      "label": "Checkpoint",
+      "type": "select",
+      "target": "node",
+      "default": "pimpmypony_pmpInCaseEnhanced.safetensors",
+      "options": [
+        "pimpmypony_pmpInCaseEnhanced.safetensors",
+        "ilustmix_v111.safetensors"
+      ]
+    },
+    {
+      "key": "image_size",
+      "label": "Image size",
+      "type": "select",
+      "target": "job",
+      "default": "896x1152",
+      "options": [
+        "1024x1024",
+        "1152x896",
+        "896x1152",
+        "1216x832",
+        "832x1216",
+        "1344x768",
+        "768x1344",
+        "1536x640",
+        "640x1536"
+      ]
+    },
+    {
+      "key": "92:90:steps",
+      "label": "Steps",
+      "type": "int",
+      "target": "node",
+      "default": 30
+    },
+    {
+      "key": "92:90:cfg",
+      "label": "CFG",
+      "type": "float",
+      "target": "node",
+      "default": 6
+    },
+    {
+      "key": "92:90:sampler_name",
+      "label": "Sampler",
+      "type": "select",
+      "target": "node",
+      "default": "euler_ancestral",
+      "options": [
+        "dpmpp_2m_sde",
+        "dpmpp_2m",
+        "dpmpp_3m_sde",
+        "euler",
+        "euler_ancestral"
+      ]
+    },
+    {
+      "key": "92:90:scheduler",
+      "label": "Scheduler",
+      "type": "select",
+      "target": "node",
+      "default": "karras",
+      "options": [
+        "karras",
+        "normal",
+        "exponential",
+        "simple",
+        "sgm_uniform"
+      ]
+    }
+  ]
+}

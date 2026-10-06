@@ -1,0 +1,128 @@
+{
+  "id": "qwen21-t2i",
+  "name": "Qwen Image 2.1 Text to Image",
+  "category": "image",
+  "description": "Text→image con wildcard Pony + enhancer QwenVL (Qwen Image 2.1 UC INT8, serverless)",
+  "handler": "qwen21",
+  "remote_file": "QwenImage21-T2I-Wildcards.json",
+  "endpoint_id": "rm1dvsnh3gxlew",
+  "outputs": [
+    "image"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Prompt (wildcard __name__ o tag Pony)",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "512:mode",
+      "label": "Wildcard mode",
+      "type": "select",
+      "target": "node",
+      "default": "populate",
+      "options": [
+        "populate",
+        "fixed",
+        "reproduce"
+      ]
+    },
+    {
+      "key": "enhance",
+      "label": "Enhancer QwenVL",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "vl_preset",
+      "label": "Enhancer preset",
+      "type": "select",
+      "target": "job",
+      "default": "Qwen Image T2I",
+      "options": [
+        "Qwen Image T2I",
+        "Pony→Natural",
+        "Enhance",
+        "Detailed Visual",
+        "Creative Rewrite",
+        "Artistic Style"
+      ]
+    },
+    {
+      "key": "544:484:style_tag",
+      "label": "Style tag",
+      "type": "select",
+      "target": "node",
+      "default": "None",
+      "options": [
+        "None",
+        "[ANIME]",
+        "[PHOTOREALISTIC]",
+        "[SEMIREALANIME]",
+        "[3DCG]",
+        "[CARTOON]",
+        "[CLAYMATION]",
+        "[WATERCOLOR]",
+        "[VINTAGE]",
+        "[NOIR]",
+        "[CYBERPUNK]",
+        "[FANTASY]",
+        "[SOFTFOCUS]",
+        "[HENTAI]"
+      ]
+    },
+    {
+      "key": "image_size",
+      "label": "Image size",
+      "type": "select",
+      "target": "job",
+      "default": "1024x1024",
+      "options": [
+        "1024x1024",
+        "1152x1152",
+        "1344x1344",
+        "2048x2048",
+        "1344x768",
+        "1536x864",
+        "1920x1088",
+        "2048x1152",
+        "1152x864",
+        "1440x1088",
+        "2048x1536",
+        "768x1344",
+        "864x1536",
+        "1088x1920",
+        "1152x2048",
+        "864x1152",
+        "1088x1440",
+        "1536x2048",
+        "768x1152",
+        "832x1248",
+        "1344x2016",
+        "1152x768",
+        "1248x832",
+        "2016x1344",
+        "1536x640",
+        "2016x864",
+        "2528x1088",
+        "640x1536",
+        "1280x720",
+        "720x1280"
+      ]
+    },
+    {
+      "key": "resolution",
+      "label": "Encoder resolution",
+      "type": "select",
+      "target": "job",
+      "default": "1024",
+      "options": [
+        "1024",
+        "1536",
+        "2048"
+      ]
+    }
+  ]
+}

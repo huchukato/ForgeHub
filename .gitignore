@@ -15,3 +15,6 @@ forgehub-app/*.log
 .DS_Store
 *.local
 .env
+
+# Runtime data (outputs, uploads, saved settings incl. API key)
+data/

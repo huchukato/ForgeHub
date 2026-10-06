@@ -1,0 +1,94 @@
+# Qwen Image 2.1 editing prompt wildcards.
+# Select a specific edit with __qwen21/<name>__ or a random one with __qwen21/*__.
+# <image1>, <image2>, <image3> refer to the connected reference images.
+qwen21:
+  sheet: "Full turnaround model sheet of the character in <image1>. Display four distinct full-body and bust views lined up against a neutral light-gray background: (1) full-body front view in neutral A-pose, (2) full-body 90-degree side profile, (3) full-body back view, and (4) close-up headshot/portrait with a neutral expression. Maintain 100% fidelity to the character's facial structure, bone proportions, skin tone, hair color/texture, and costume details from <image1>. Clean studio lighting, high consistency, concept art turnaround, 8k resolution."
+  newscene: "Place the character from <image1> into a new setting: __pmp/prmpt/lctns/rndmlctns__. Keep the exact facial identity, hair silhouette, and outfit from <image1>, but naturally integrate the character into the new scene. Match the subject's lighting, color temperature, and shadows to the environment. Cinematic depth of field, natural ambient light integration."
+  enhance: "Enhance the image in <image1> to high resolution with rich fine details. Sharpen textures and surfaces, add natural microdetails, and improve clarity and definition across the image while preserving the original composition, lighting, atmosphere, and visual style. The input may be an illustration or a real photograph; preserve the original style faithfully."
+  faceswap: "Re-render the face of the person in <image1> with the facial identity of the person in <image2>, as a photorealistic in-place edit — do not paste or overlay pixels. Rebuild the features inside the hairline (eyes, eyebrows, nose, lips, skin texture, facial bone structure) using the identity of <image2>, adapted to the head tilt, neck connection, skin color temperature, directional lighting and shadow fall of <image1>. The hair is NOT part of the swap: keep the exact hairstyle, hairline, hair color, volume, and silhouette of <image1>, and do not reproduce the hair of <image2> at all. Keep the ears, head silhouette, body, clothing, background, framing and photographic style of <image1> completely unchanged. The result must read as the same photograph of <image1> with a different identity — fully relit and integrated, no pasted edges, no seam artifacts at the jaw or hairline."
+  headswap: "Replace the entire head and hair of the person in <image1> with the head, facial identity, facial hair, and hairstyle of the person in <image2>, re-rendered photorealistically in place — not a composited cutout. Retain the exact skull geometry, hairline, and facial expression from <image2>, adapted to the pose, framing and lighting of <image1>. Blend at the neckline and collar of <image1>, recalculating ambient occlusion and specular highlights so the new head matches the directional lighting and environmental reflections of <image1>. Keep the body, clothing and background of <image1> completely unchanged — the result must look like a single photograph."
+  eyeswap: "Re-render only the eyes of the person in <image1> with the eyes of the person in <image2>, as a photorealistic in-place edit — do not paste or overlay pixels. Rebuild the eye region (iris color and pattern, pupil, sclera, eyelid shape, eyelashes, eye makeup such as eyeliner) from <image2>, adapted to the gaze direction, head tilt, skin color temperature, shadow fall and directional lighting of <image1>. Keep everything else of <image1> completely unchanged: the eyebrows, the rest of the face, hair, ears, head silhouette, body, clothing, background. No pasted edges or seam artifacts around the eye sockets."
+  makeupswap: "Re-render only the cosmetics of the person in <image1> to match the makeup of the person in <image2>, as a photorealistic in-place edit — the facial identity of <image1> is fully preserved. Transfer from <image2> ONLY the makeup layer: iris color and contact lens color/pattern, eyeliner style and wing shape, eyeshadow colors and blending, mascara and lash darkness, lipstick color/finish/gloss, blush placement and intensity, and any beauty marks or face decoration. Keep everything else of <image1> completely unchanged: facial bone structure and features, natural eye shape, eyebrows, skin tone, hair, ears, head silhouette, body, clothing, background, expression, lighting and photographic style. The makeup must be re-rendered onto the anatomy of <image1> — eyeliner follows <image1>'s eye shape, lipstick follows <image1>'s lip shape — with the same lighting and color temperature. No pasted textures, no seam artifacts."
+  hairswap: "Re-render only the hair of the person in <image1> with the hair of the person in <image2>, as a photorealistic in-place edit — do not paste or overlay pixels. Rebuild hairstyle, hairline, hair color, length, volume, texture and silhouette from <image2>, adapted to the head tilt, scale, directional lighting, shadow fall and color temperature of <image1>. The face is NOT part of the swap: keep the facial features, eyebrows, ears, skin tone, neck, body, clothing and background of <image1> completely unchanged, and do not reproduce the face of <image2> at all. Seamless blending at the forehead, temples and around the ears, no seam artifacts."
+  outfitswap: "Re-dress the person in <image1> with the outfit worn by the person in <image2>, re-rendered photorealistically in place — not a pasted garment. Keep the face, hair, body posture, and background of <image1> completely identical. Rebuild the outfit from <image2> tailored to the <image1> pose, with physically accurate drape, realistic creases at the elbows, natural collar contact along the neckline, and fabric response consistent with the lighting and color temperature of <image1>."
+  multiref: "Compose a cohesive cinematic scene combining elements from the references: person from <image1> and <image2>, standing together in <image3>. realistic, organically captured photograph."
+  poseswap: "Transform the body pose of the person in <image1> to match the body pose of the person in <image2>, as a photorealistic in-place edit. The person must remain the same: keep the face, hair, clothing, body shape, skin tone and identity from <image1>. Change only the posture, limb positions, torso twist, head tilt and weight distribution. Keep the background, lighting and photographic style of <image1>."
+  expressionswap: "Re-render the facial expression of the character in <image1> to match the exact expression seen in <image2>, as a photorealistic in-place edit. Preserve eye shape, facial geometry, age, skin micro-details, and identity from <image1>. Rebuild only the expressive elements from <image2> — mouth shape and lip position, smile or frown lines, eye squinting or widening, eyebrow position, and cheek elevation — with natural dental anatomy and realistic muscle deformation on the <image1> face. Keep lighting, skin texture continuity, and everything else of <image1> unchanged."
+  backgroundswap: "Keep the subject of <image1> — the person, pose, facial identity, hair, and clothing — completely unchanged, down to the hair strands. Extract ONLY the environment and scenery from <image2> and rebuild the scene behind the subject of <image1> using that backdrop. Do not transfer any person, subject, or foreground object from <image2>: <image2> is only the background plate. Relight the subject of <image1> to match the ambient light, color temperature, and shadow direction of the <image2> scenery. Seamless edge blending between subject and new background, no seam artifacts."
+  timeweather: "Transform the time of day and weather in <image1> to the conditions described in this prompt. Keep the architecture, geometry, and composition of <image1> intact. Update the sky, surface wetness or dryness, shadow direction and length, and ambient light color to match the new conditions, with physically consistent reflections and atmosphere."
+  multiedit: "Apply every edit described in this prompt to <image1> simultaneously, keeping each change consistent with the others in lighting, color, and style. Keep the facial identity, hair, pose, and anything not explicitly changed completely intact."
+  removeobject: "Remove the object or element described in this prompt from <image1>. Inpaint the vacated area with seamless, photorealistic continuation of the surrounding surfaces. Maintain original texture continuity, shadow gradients, surface stains, and perspective vanishing lines. No blur, clone stamps, or artifacts."
+  insertobject: "Insert into <image1> the object described in this prompt, placed naturally within the scene at the indicated position. Match the existing focal length, depth of field, surface contact shadows, lighting direction, color temperature, and film grain. The object should look as though it was physically present during the original capture."
+  textedit: "In <image1>, replace the existing text with the new text described in this prompt. Replicate the exact typography, custom font, beveling, drop shadow, texture, and perspective angle of the original lettering. Keep the surrounding graphic elements, background art, and secondary text completely untouched."
+  novelview: "Generate the camera angle described in this prompt for the subject of <image1>. Extrapolate the unseen geometry — hair, clothing, ear contours, jawline — while strictly preserving the identity, style, and details established in <image1>."
+  anime2real: "Transform the anime character illustration in <image1> into a photorealistic, real-life human photograph. Translate 2D stylized facial features into anatomically correct human bone structure, genuine human eyes with iris depth, natural skin pores, realistic lips, and individual hair strands. Preserve the character's eye color, hair color/style, clothing design, and recognizable essence from <image1>. RAW photo, 85mm portrait lens, f/1.8."
+  real2anime: "Convert the photographic portrait in <image1> into a premium Korean manhwa/webtoon illustration style. Preserve the recognizable facial proportions, hairstyle, gaze direction, and expression of <image1>. Render with crisp cel-shaded line art, soft gradient skin rendering, expressive stylized eyes with detailed specular highlights, and vibrant digital painting aesthetics typical of high-end manhwa cover art."
+  prosheet: |
+    Create a professional character reference sheet based strictly on <image1>.
+
+    The character is the same person shown in <image2>. Use <image2> as an additional reference to capture more accurate facial features, proportions, hairstyle, clothing details, accessories, and other fine details.
+
+    Character consistency:
+    * Preserve the character's exact face, facial structure, hairstyle, proportions, clothing, colors, accessories, and identifiable details from the references.
+    * Do not redesign, reinterpret, beautify, or alter the face.
+    * Maintain the exact same person and identity across every panel.
+    * Capture all fine details from both reference images.
+    * Use <image2> whenever it provides additional information or details not clearly visible in <image1>.
+
+    Top section — full-body turnaround:
+    Place three full-body character views across the top:
+    1. Front view
+    2. Side/profile view
+    3. Back view
+    * Same outfit and identical character proportions in all three views.
+    * Use the same neutral standing pose for every view.
+    * Arms slightly separated from the torso so the silhouette and clothing are clearly visible.
+    * Hands relaxed and naturally posed.
+    * Keep the camera height, framing, scale, and perspective consistent between all three views.
+    * No pose drift, proportion drift, outfit changes, or character redesign.
+    * The back view must accurately match the front and side views.
+
+    Bottom section — expressions and props:
+    Use the bottom area for a clean collection of smaller reference panels.
+    Include three facial expression close-ups:
+    * Open mouth
+    * Smiling with teeth visible
+    * Surprised expression
+
+    Right side — large portrait:
+    Place one large, highly detailed shoulder-up portrait of the same person on the right side.
+    * Preserve the exact face and identity from <image1> and <image2>.
+    * Use <image2> to improve facial accuracy and capture details that may be missing from <image1>.
+    * High facial detail and accurate proportions.
+    * Clean, centered composition.
+    * Professional character-sheet presentation.
+    * The portrait must clearly match the face shown in all turnaround views and expression panels.
+
+    Layout and quality:
+    * Clean, professional character-sheet layout.
+    * Clearly separated panels with consistent spacing.
+    * Nothing may overlap, collide, merge, or bleed into another panel.
+    * No element should cross into another frame.
+    * Keep every character, expression, prop, and portrait completely contained within its designated area.
+    * No cropped heads, hands, feet, props, or important clothing details.
+    * Balanced spacing and clear visual hierarchy.
+    * High resolution and highly detailed.
+    * Maintain absolute character consistency across the entire sheet.
+    * Zero identity drift, zero outfit drift, zero proportion drift, and zero visual inconsistency.
+  styles:
+    - "[photorealistic] Render the scene as a convincing high-end photograph with anatomically natural subjects, realistic skin and fabric texture, soft directional daylight, accurate reflections, subtle depth of field, and balanced cinematic color grading."
+    - "[photorealistic] Render the scene as a candid documentary photograph taken with a 35mm lens, using authentic available light, natural proportions, fine environmental detail, restrained contrast, and subtle analog film grain."
+    - "[photorealistic] Render the scene as a refined medium-format portrait with precise facial detail, realistic pores and individual hair strands, smooth tonal transitions, soft highlight roll-off, creamy background separation, and an elegant editorial finish."
+    - "[photorealistic] Render the scene as an atmospheric analog snapshot with warm film-stock colors, visible fine grain, gentle halation around highlights, slightly faded tones, a soft vignette, and spontaneous framing."
+    - "[anime] Render the scene as a polished anime key visual with expressive character design, clean line art, controlled cel shading, vivid harmonious colors, layered environmental depth, and dramatic cinematic lighting."
+    - "[semirealanime] Render the scene as a semi-realistic 2.5D anime digital painting with lineless painterly rendering — anime facial features and character design, soft volumetric shading, smooth airbrushed gradients, glossy skin highlights, subsurface scattering, cinematic lighting and atmospheric depth; no flat cel-shading, no hard lineart."
+    - "[anime] Render the scene in the style of a 1990s anime OVA, with hand-painted backgrounds, crisp inked contours, traditional cel shading, nostalgic colors, subtle film grain, and dramatic highlights."
+    - "[hentai] Render the scene as an explicit adult anime illustration with clear anatomy and actions, clean line art, polished cel shading, vivid colors, coherent posing, detailed expressions, and cinematic lighting."
+    - "[3dcg] Render the scene as a premium cinematic 3D image with physically based materials, realistic global illumination, refined subsurface scattering, detailed surfaces, accurate reflections, and natural depth of field."
+    - "[cartoon] Render the scene as a lively western cartoon illustration with bold expressive shapes, confident outlines, vivid flat colors, readable silhouettes, playful exaggeration, and dynamic staging."
+    - "[watercolor] Render the scene as a traditional watercolor painting with translucent layered washes, organic pigment blooms, visible cold-pressed paper texture, loose expressive edges, and softly blended colors."
+    - "[cyberpunk] Render the scene as a dense cinematic cyberpunk environment with rain-soaked streets, luminous signs, wet reflective surfaces, layered atmospheric haze, holographic elements, and electric magenta and cyan lighting."
+    - "[noir] Render the scene as a classic black-and-white film-noir image with hard directional lighting, deep sculpted shadows, smoky atmosphere, elegant 1940s framing, strong contrast, and a tense mysterious mood."
+    - "[ghibli] Render the scene as a whimsical hand-painted animated film frame with warm natural colors, lush environmental detail, gentle character acting, soft atmospheric light, and a quiet sense of wonder."
+    - "[manga] Render the scene as a highly finished black-and-white manga illustration with expressive ink work, precise screentone shading, strong value grouping, dynamic perspective, and energetic motion lines."
+    - "[comics] Render the scene as a bold western comic-book illustration with powerful inked outlines, graphic shadow shapes, controlled halftones, vivid color separation, dramatic perspective, and a strong panel composition."
