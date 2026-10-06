@@ -80,13 +80,14 @@
       "default": "IMG › Qwen Edit",
       "options": [
         "IMG › Qwen Edit",
+        "IMG › Pony→Natural",
         "IMG › Detailed",
         "IMG › Ultra",
         "IMG › Cinematic",
         "IMG › Simple",
         "IMG › Tags",
-        "IMG › Pony→Natural",
-        "IMG › Analysis"
+        "IMG › Analysis",
+        "VID › Summary"
       ]
     },
     {
