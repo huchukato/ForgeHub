@@ -96,6 +96,20 @@ export class ForgeHubClient {
     this.baseUrl = baseUrl.replace(/\/+$/, "");
   }
 
+  // Media URLs come back relative ("/outputs/...") — absolutize them so they
+  // also work when the UI is loaded from file:// in the packaged app.
+  private abs(url: string): string {
+    return url.startsWith("/") ? `${this.baseUrl}${url}` : url;
+  }
+
+  private absOutputs(outputs: OutputFile[] | undefined): OutputFile[] {
+    return (outputs ?? []).map((o) => ({
+      ...o,
+      url: this.abs(o.url),
+      thumb: o.thumb ? this.abs(o.thumb) : o.thumb,
+    }));
+  }
+
   private async request<T>(path: string, init?: RequestInit): Promise<T> {
     const response = await fetch(`${this.baseUrl}${path}`, {
       ...init,
@@ -149,7 +163,7 @@ export class ForgeHubClient {
 
   async listOutputs(): Promise<OutputFile[]> {
     const data = await this.request<{ outputs: OutputFile[] }>("/outputs");
-    return data.outputs;
+    return this.absOutputs(data.outputs);
   }
 
   async deleteOutput(o: OutputFile): Promise<void> {
@@ -204,10 +218,16 @@ export class ForgeHubClient {
     workflowId: string,
     actions: Array<Record<string, unknown>>
   ): Promise<{ status: string; prompt_id?: string; outputs?: OutputFile[]; error?: string }> {
-    return this.request("/chat/actions", {
+    const data = await this.request<{
+      status: string;
+      prompt_id?: string;
+      outputs?: OutputFile[];
+      error?: string;
+    }>("/chat/actions", {
       method: "POST",
       body: JSON.stringify({ workflow_id: workflowId, actions }),
     });
+    return { ...data, outputs: this.absOutputs(data.outputs) };
   }
 
   async executeWorkflow(
@@ -232,7 +252,8 @@ export class ForgeHubClient {
     clientId?: string
   ): Promise<ExecutionStatus> {
     const params = clientId ? `?client_id=${encodeURIComponent(clientId)}` : "";
-    return this.request<ExecutionStatus>(`/execute/${promptId}/status${params}`);
+    const data = await this.request<ExecutionStatus>(`/execute/${promptId}/status${params}`);
+    return { ...data, outputs: this.absOutputs(data.outputs) };
   }
 
   async cancelExecution(promptId: string): Promise<void> {
@@ -250,6 +271,7 @@ export class ForgeHubClient {
       const text = await response.text();
       throw new Error(`${response.status}: ${text}`);
     }
-    return response.json();
+    const data = (await response.json()) as { filename: string; url: string };
+    return { ...data, url: this.abs(data.url) };
   }
 }
