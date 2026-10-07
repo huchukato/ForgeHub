@@ -69,7 +69,7 @@ class ChatProxy:
         headers = {}
         if SETTINGS.chat_llm_key:
             headers["Authorization"] = f"Bearer {SETTINGS.chat_llm_key}"
-        messages = [{"role": "system", "content": _LLM_SYSTEM_PROMPT}]
+        messages = [{"role": "system", "content": _system_prompt(request.workflow_id)}]
         messages += [{"role": m.role, "content": m.content} for m in request.messages]
         payload = {
             "model": request.model or SETTINGS.chat_llm_model,
@@ -93,6 +93,30 @@ _LLM_SYSTEM_PROMPT = (
     "text only when the user asks for a prompt; otherwise answer briefly. "
     "Write prompts in English."
 )
+
+_MM3_SPEC_PROMPT = (
+    _LLM_SYSTEM_PROMPT
+    + " For MiniMax H3 workflows, prompts follow this structured spec — "
+    "produce it verbatim when asked for a prompt:\n"
+    "subject_definitions:\n"
+    "<Subject N> for people/characters (use 'the woman in <Picture N>' for "
+    "reference images, preserving face/hair/outfit), <Picture N> for artworks/"
+    "objects that must be preserved exactly, <Environment N> for locations.\n\n"
+    "summary: one paragraph describing the whole sequence.\n\n"
+    "retention_analysis: one line per subject/picture/environment stating "
+    "which shot it appears in and 'fully_preserved' or the allowed change.\n\n"
+    "detailed_description: [Shot N] blocks with precise action, camera "
+    "movement and timestamps (00:00.000). Spoken dialogue goes in [D]\"...\"[/D] "
+    "tags, kept short for clean lip sync.\n\n"
+    "overall_soundscape: diegetic sounds only (no music).\n\n"
+    "non_diegetic_music: score description or N/A."
+)
+
+
+def _system_prompt(workflow_id: str | None) -> str:
+    if workflow_id and workflow_id.lower().startswith("mmh3"):
+        return _MM3_SPEC_PROMPT
+    return _LLM_SYSTEM_PROMPT
 
 
 CHAT_PROXY = ChatProxy()

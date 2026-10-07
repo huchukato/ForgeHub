@@ -394,8 +394,8 @@
       "preset_prompt": "MiniMax \u203a NSFW R2VA",
       "camera_tag": "None",
       "prompt": "",
-      "max_tokens": 8192,
-      "keep_model_loaded": false,
+      "max_tokens": 2048,
+      "keep_model_loaded": true,
       "seed": 1,
       "keep_last_prompt": false,
       "passthrough": false,
@@ -475,7 +475,7 @@
     "inputs": {
       "clear_cache_after_n_frames": 100,
       "multiplier": 2,
-      "keep_model_loaded": false,
+      "keep_model_loaded": true,
       "batch_size": 1,
       "multiplier_list": "",
       "frames": [

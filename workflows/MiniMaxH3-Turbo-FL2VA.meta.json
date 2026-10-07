@@ -5,7 +5,7 @@
   "description": "First/last frame → video con audio (MiniMax H3 turbo, serverless INT8)",
   "handler": "mmh3",
   "remote_file": "MiniMaxH3-Turbo-FL2VA.json",
-  "endpoint_id": "qrmygqi9xiflap",
+  "endpoint_id": "s0iopnieywyu7k",
   "outputs": [
     "video",
     "audio"

@@ -27,7 +27,7 @@
   },
   "137": {
     "inputs": {
-      "text": "integrated_multimodal_description: [Shot 1] Photorealistic live-action cinematic, a medium-wide shot framed from a low three-quarter angle captures Rei Hino (Sailor Mars) silhouetted against a blazing tropical sunset. She stands barefoot on warm golden sand, her long black hair flowing gently in the breeze, face turned upward with eyes closed in pure bliss. Sunbeams pierce through clouds, backlit intensely, casting volumetric light across her skin, highlighting sweat glistening on her collarbones and thighs. Her signature red sailor-style outfit is slightly disheveled; the high-low skirt rides up exposing smooth thighs, while her hands clutch the fabric of her bodice, fingers pressing firmly against her ample chest as she engages in intense self breast sucking. One hand holds the cupped breast steady while her mouth works deeply over the nipple, tongue tracing the sensitive peak with deliberate, rhythmic pressure. Saliva drips visibly down her chin and onto her shoulder, catching the golden hour glow. Her expression shifts between tight-lipped ecstasy and parted-mouth sighs, cheeks flushed crimson under the sun’s warmth. As the camera tracks smoothly leftward, maintaining her centered composition, she subtly shifts weight, hips swaying softly with each thrust of her head. A gentle sea breeze ruffles her skirt hem and lifts strands of hair around her face, blending seamlessly with the continuous lateral camera movement. Ambient waves lap rhythmically at the shore behind her, distant seagulls cry overhead, and the wind whispers through dune grass—layered beneath her audible ragged breathing, sharp intake breaths, wet suction sounds, soft lip smacks against skin, and occasional throaty moans punctuating moments of heightened sensation. Skin-on-fabric friction hums faintly as her arms adjust her grip.\n\noverall_soundscape: Warm ocean breezes rustle through coastal vegetation, mingling with the steady crash of receding waves and occasional seabird calls echoing across the horizon. Underlying these ambient layers are Rei’s own visceral responses: heavy inhalations followed by shaky exhales, rhythmic wet suction noises synced to her movements, subtle lip-smacking against skin, occasional throaty moans breaking into quiet giggles, and the faint squeak of silk shifting against her arms as she adjusts her position.\n\nnon_diegetic_music: N/A",
+      "text": "integrated_multimodal_description: [Shot 1] Photorealistic live-action cinematic, a medium-wide shot framed from a low three-quarter angle captures Rei Hino (Sailor Mars) silhouetted against a blazing tropical sunset. She stands barefoot on warm golden sand, her long black hair flowing gently in the breeze, face turned upward with eyes closed in pure bliss. Sunbeams pierce through clouds, backlit intensely, casting volumetric light across her skin, highlighting sweat glistening on her collarbones and thighs. Her signature red sailor-style outfit is slightly disheveled; the high-low skirt rides up exposing smooth thighs, while her hands clutch the fabric of her bodice, fingers pressing firmly against her ample chest as she engages in intense self breast sucking. One hand holds the cupped breast steady while her mouth works deeply over the nipple, tongue tracing the sensitive peak with deliberate, rhythmic pressure. Saliva drips visibly down her chin and onto her shoulder, catching the golden hour glow. Her expression shifts between tight-lipped ecstasy and parted-mouth sighs, cheeks flushed crimson under the sun\u2019s warmth. As the camera tracks smoothly leftward, maintaining her centered composition, she subtly shifts weight, hips swaying softly with each thrust of her head. A gentle sea breeze ruffles her skirt hem and lifts strands of hair around her face, blending seamlessly with the continuous lateral camera movement. Ambient waves lap rhythmically at the shore behind her, distant seagulls cry overhead, and the wind whispers through dune grass\u2014layered beneath her audible ragged breathing, sharp intake breaths, wet suction sounds, soft lip smacks against skin, and occasional throaty moans punctuating moments of heightened sensation. Skin-on-fabric friction hums faintly as her arms adjust her grip.\n\noverall_soundscape: Warm ocean breezes rustle through coastal vegetation, mingling with the steady crash of receding waves and occasional seabird calls echoing across the horizon. Underlying these ambient layers are Rei\u2019s own visceral responses: heavy inhalations followed by shaky exhales, rhythmic wet suction noises synced to her movements, subtle lip-smacking against skin, occasional throaty moans breaking into quiet giggles, and the faint squeak of silk shifting against her arms as she adjusts her position.\n\nnon_diegetic_music: N/A",
       "anything": [
         "105:256",
         0
@@ -42,7 +42,7 @@
     "inputs": {
       "model": "MiniMax H3",
       "aspect_ratio": "3:4",
-      "resolution": "Native — 864×1184",
+      "resolution": "Native \u2014 864\u00d71184",
       "divisible_by": 32,
       "upscale": false,
       "upscale_method": "lanczos",
@@ -67,7 +67,7 @@
     },
     "class_type": "WildcardProcessor",
     "_meta": {
-      "title": "🃏 Wildcard Processor"
+      "title": "\ud83c\udccf Wildcard Processor"
     }
   },
   "250": {
@@ -348,10 +348,10 @@
         "224",
         0
       ],
-      "enhancement_style": "MiniMax › NSFW T2V",
+      "enhancement_style": "MiniMax \u203a NSFW T2V",
       "camera_tag": "None",
       "style_tag": "None",
-      "max_tokens": 8192,
+      "max_tokens": 2048,
       "temperature": 0.7,
       "top_p": 0.9,
       "repetition_penalty": 1.1,
@@ -360,7 +360,7 @@
       "quantization": "None (FP16)",
       "attention_mode": "auto",
       "use_torch_compile": false,
-      "keep_model_loaded": false,
+      "keep_model_loaded": true,
       "seed": 1,
       "keep_last_prompt": false,
       "passthrough": false,
@@ -368,7 +368,7 @@
     },
     "class_type": "QwenVL_Unified_PromptEnhancer",
     "_meta": {
-      "title": "✍🏻 QwenVL Unified Prompt Enhancer (HF / GGUF)"
+      "title": "\u270d\ud83c\udffb QwenVL Unified Prompt Enhancer (HF / GGUF)"
     }
   },
   "105:257": {
@@ -424,14 +424,14 @@
     },
     "class_type": "UpscalerTensorrt",
     "_meta": {
-      "title": "Upscaler Tensorrt ⚡"
+      "title": "Upscaler Tensorrt \u26a1"
     }
   },
   "254:177": {
     "inputs": {
       "clear_cache_after_n_frames": 100,
       "multiplier": 2,
-      "keep_model_loaded": false,
+      "keep_model_loaded": true,
       "batch_size": 1,
       "multiplier_list": "",
       "frames": [
