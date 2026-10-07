@@ -23,7 +23,7 @@
     "inputs": {
       "model": "MiniMax H3",
       "aspect_ratio": "3:4",
-      "resolution": "Native — 864×1184",
+      "resolution": "Native \u2014 864\u00d71184",
       "divisible_by": 32,
       "upscale": false,
       "upscale_method": "lanczos",
@@ -81,7 +81,7 @@
   },
   "265": {
     "inputs": {
-      "text": "subject_definitions:\n<Subject 1> is a voluptuous blonde woman with heterochromatic blue eyes and gradient hair transitioning from platinum to electric blue to soft pink. She wears a revealing red satin bikini-style swimsuit with white faux-fur trim and a gold choker, standing knee-deep in a dark forest pond at night.\n\nsummary:\nreference generation — one continuous NEW scene featuring the referenced subject(s): a cinematic night-time forest bathing sequence where the subject wades through glowing blue water, her movements fluid and deliberate as she interacts with the natural surroundings.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1]): fully_preserved - heterochromatic blue eyes, gradient hair, red satin swimsuit with white faux-fur trim, gold choker, knee-deep in pond, night forest setting.\n\ndetailed_description:\nThe target video uses a cinematic anime style with vibrant lighting and dynamic water effects.\n[Shot 1] A slow camera roll (rotation around the lens axis) captures the subject wading through dark blue forest water under starlight. At 00:00, she lifts her hand to brush wet hair from her face, her heterochromatic blue eyes scanning the surroundings with focused intensity. Water ripples around her legs, reflecting moonlight. Her red satin swimsuit clings to her curves, the white faux-fur trim contrasting against the dark water. As the camera rolls, she turns her head slightly, her gradient hair (platinum to electric blue to pink) flowing naturally in the breeze. At 00:03, she pauses, pressing her palm against the water's surface, creating concentric ripples. Her expression shifts from curious to contemplative, lips parting slightly as she inhales the cool night air. The forest background features tall silhouetted trees and floating lily pads, all bathed in deep blue ambient light with occasional bioluminescent specks drifting through the water.\n\noverall_soundscape:\nA soft female voice in a calm, contemplative tone speaks in clear English, synchronized with her breathing and movements. The soundscape includes gentle water lapping against her legs, distant forest rustling, and faint nocturnal insect chirps.\n\nnon_diegetic_music:\nN/A",
+      "text": "subject_definitions:\n<Subject 1> is a voluptuous blonde woman with heterochromatic blue eyes and gradient hair transitioning from platinum to electric blue to soft pink. She wears a revealing red satin bikini-style swimsuit with white faux-fur trim and a gold choker, standing knee-deep in a dark forest pond at night.\n\nsummary:\nreference generation \u2014 one continuous NEW scene featuring the referenced subject(s): a cinematic night-time forest bathing sequence where the subject wades through glowing blue water, her movements fluid and deliberate as she interacts with the natural surroundings.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1]): fully_preserved - heterochromatic blue eyes, gradient hair, red satin swimsuit with white faux-fur trim, gold choker, knee-deep in pond, night forest setting.\n\ndetailed_description:\nThe target video uses a cinematic anime style with vibrant lighting and dynamic water effects.\n[Shot 1] A slow camera roll (rotation around the lens axis) captures the subject wading through dark blue forest water under starlight. At 00:00, she lifts her hand to brush wet hair from her face, her heterochromatic blue eyes scanning the surroundings with focused intensity. Water ripples around her legs, reflecting moonlight. Her red satin swimsuit clings to her curves, the white faux-fur trim contrasting against the dark water. As the camera rolls, she turns her head slightly, her gradient hair (platinum to electric blue to pink) flowing naturally in the breeze. At 00:03, she pauses, pressing her palm against the water's surface, creating concentric ripples. Her expression shifts from curious to contemplative, lips parting slightly as she inhales the cool night air. The forest background features tall silhouetted trees and floating lily pads, all bathed in deep blue ambient light with occasional bioluminescent specks drifting through the water.\n\noverall_soundscape:\nA soft female voice in a calm, contemplative tone speaks in clear English, synchronized with her breathing and movements. The soundscape includes gentle water lapping against her legs, distant forest rustling, and faint nocturnal insect chirps.\n\nnon_diegetic_music:\nN/A",
       "source": [
         "105:258",
         0
@@ -108,32 +108,6 @@
     "class_type": "PixaromaLabel",
     "_meta": {
       "title": "Label Pixaroma"
-    }
-  },
-  "268": {
-    "inputs": {
-      "max_resolution": 1024,
-      "jpeg_quality": 80,
-      "suppress_default_preview": true,
-      "preview_frames": 10,
-      "preview_fps": 12,
-      "tiny_vae": "taeh3.safetensors",
-      "model": [
-        "105:170",
-        0
-      ],
-      "vae": [
-        "105:11",
-        0
-      ],
-      "audio_vae": [
-        "105:24",
-        0
-      ]
-    },
-    "class_type": "ModelPreviewOverrideKJ",
-    "_meta": {
-      "title": "Model Preview Override"
     }
   },
   "270": {
@@ -245,7 +219,7 @@
   "105:16": {
     "inputs": {
       "model": [
-        "268",
+        "105:170",
         0
       ],
       "conditioning": [
@@ -292,7 +266,7 @@
       "steps": 20,
       "denoise": 1,
       "model": [
-        "268",
+        "105:170",
         0
       ]
     },
@@ -450,7 +424,7 @@
   "105:258": {
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
-      "preset_prompt": "MiniMax › NSFW R2VA",
+      "preset_prompt": "MiniMax \u203a NSFW R2VA",
       "camera_tag": "[ROLL]",
       "prompt": "",
       "max_tokens": 8192,
@@ -467,7 +441,7 @@
     },
     "class_type": "QwenVL_Unified",
     "_meta": {
-      "title": "🧠 QwenVL Unified (HF / GGUF)"
+      "title": "\ud83e\udde0 QwenVL Unified (HF / GGUF)"
     }
   },
   "105:262": {
