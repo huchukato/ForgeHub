@@ -36,6 +36,7 @@
       "target": "node",
       "default": "Pony",
       "options": [
+        "None",
         "Pony",
         "Illustrious"
       ]
