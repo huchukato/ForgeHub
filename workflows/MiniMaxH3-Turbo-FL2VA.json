@@ -3,10 +3,7 @@
     "inputs": {
       "frame_rate": 48,
       "loop_count": 0,
-      "filename_prefix": [
-        "262",
-        4
-      ],
+      "filename_prefix": "video/MMH3_FL2VA_%date:yyyy-MM-dd%",
       "format": "video/webm",
       "pix_fmt": "yuv420p",
       "crf": 32,
@@ -30,7 +27,7 @@
   },
   "137": {
     "inputs": {
-      "text": "How the reference pictures align with the target video \u2014 Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 5.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] A dimly lit bedroom at night, bathed in cool blue moonlight filtering through unseen windows. A shirtless young man with short brown hair embraces a young woman with long, dark curly hair. She wears a delicate brown spaghetti-strap top and a thin gold chain necklace around her neck. At the start, they are locked in a passionate kiss, her left hand resting gently on his bare shoulder while his arms encircle her waist. As the scene unfolds over five seconds, the kiss deepens and intensifies. Her left hand slides from his shoulder up along his neck, her fingers gently grasping his jawline. Simultaneously, his right hand moves from her hip to wrap securely around the back of her neck, his fingers interlacing with hers at the nape of her neck. Her head tilts slightly back in surrender, eyelids fluttering closed as she leans fully into him. His gaze remains fixed on her lips, eyes half-lidded with desire. The camera executes a slow, smooth push-in, moving steadily closer to their faces, compressing the background while maintaining sharp focus on their interlocked hands and the intimate geometry of their embrace. The blue light casts soft shadows across their skin, highlighting the subtle rise and fall of their chests with each shared breath. By the final moment, they remain locked in this deepened embrace, hands now firmly clasped behind her neck, the camera having closed in to frame them in an intimate medium close-up.\n\noverall_soundscape: The room hums with the low, steady thrum of a refrigerator and distant traffic outside. Her breathing quickens noticeably, becoming shallow and rhythmic, syncing with his deeper inhales. Their lips press together with audible, soft wetness, the sound of skin on skin punctuated by the faint rustle of her top straps shifting against her shoulders. His hand gripping the back of her neck creates a subtle, muffled sound of fabric stretching. Their hearts beat in a synchronized, thunderous rhythm that seems to amplify in the quiet room.\n\nnon_diegetic_music: N/A",
+      "text": "How the reference pictures align with the target video — Picture 1 (from [Shot 1]) aligns with the 0.00-second mark of the target video; Picture 2 (from [Shot 1]) aligns with the 5.00-second mark of the target video.\n\nintegrated_multimodal_description: [Shot 1] A dimly lit bedroom at night, bathed in cool blue moonlight filtering through unseen windows. A shirtless young man with short brown hair embraces a young woman with long, dark curly hair. She wears a delicate brown spaghetti-strap top and a thin gold chain necklace around her neck. At the start, they are locked in a passionate kiss, her left hand resting gently on his bare shoulder while his arms encircle her waist. As the scene unfolds over five seconds, the kiss deepens and intensifies. Her left hand slides from his shoulder up along his neck, her fingers gently grasping his jawline. Simultaneously, his right hand moves from her hip to wrap securely around the back of her neck, his fingers interlacing with hers at the nape of her neck. Her head tilts slightly back in surrender, eyelids fluttering closed as she leans fully into him. His gaze remains fixed on her lips, eyes half-lidded with desire. The camera executes a slow, smooth push-in, moving steadily closer to their faces, compressing the background while maintaining sharp focus on their interlocked hands and the intimate geometry of their embrace. The blue light casts soft shadows across their skin, highlighting the subtle rise and fall of their chests with each shared breath. By the final moment, they remain locked in this deepened embrace, hands now firmly clasped behind her neck, the camera having closed in to frame them in an intimate medium close-up.\n\noverall_soundscape: The room hums with the low, steady thrum of a refrigerator and distant traffic outside. Her breathing quickens noticeably, becoming shallow and rhythmic, syncing with his deeper inhales. Their lips press together with audible, soft wetness, the sound of skin on skin punctuated by the faint rustle of her top straps shifting against her shoulders. His hand gripping the back of her neck creates a subtle, muffled sound of fabric stretching. Their hearts beat in a synchronized, thunderous rhythm that seems to amplify in the quiet room.\n\nnon_diegetic_music: N/A",
       "anything": [
         "105:255",
         0
@@ -45,7 +42,7 @@
     "inputs": {
       "model": "MiniMax H3",
       "aspect_ratio": "16:9",
-      "resolution": "Native \u2014 1344\u00d7768",
+      "resolution": "Native — 1344×768",
       "divisible_by": 32,
       "upscale": false,
       "upscale_method": "lanczos",
@@ -371,7 +368,7 @@
   "105:255": {
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
-      "preset_prompt": "MiniMax \u203a NSFW FL2VA",
+      "preset_prompt": "MiniMax › NSFW FL2VA",
       "camera_tag": "None",
       "prompt": "kissing",
       "max_tokens": 8192,
@@ -392,7 +389,7 @@
     },
     "class_type": "QwenVL_Unified",
     "_meta": {
-      "title": "\ud83e\udde0 QwenVL Unified (HF / GGUF)"
+      "title": "🧠 QwenVL Unified (HF / GGUF)"
     }
   },
   "105:23": {
@@ -464,7 +461,7 @@
     },
     "class_type": "UpscalerTensorrt",
     "_meta": {
-      "title": "Upscaler Tensorrt \u26a1"
+      "title": "Upscaler Tensorrt ⚡"
     }
   },
   "253:177": {

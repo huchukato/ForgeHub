@@ -3,10 +3,7 @@
     "inputs": {
       "frame_rate": 48,
       "loop_count": 0,
-      "filename_prefix": [
-        "261",
-        4
-      ],
+      "filename_prefix": "video/MMH3_R2VA_%date:yyyy-MM-dd%",
       "format": "video/h264-mp4",
       "pix_fmt": "yuv420p",
       "crf": 20,
@@ -45,7 +42,7 @@
     "inputs": {
       "model": "MiniMax H3",
       "aspect_ratio": "3:4",
-      "resolution": "Native \u2014 864\u00d71184",
+      "resolution": "Native — 864×1184",
       "divisible_by": 32,
       "upscale": false,
       "upscale_method": "lanczos",
@@ -377,7 +374,7 @@
   "105:258": {
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
-      "preset_prompt": "MiniMax \u203a NSFW R2VA",
+      "preset_prompt": "MiniMax › NSFW R2VA",
       "camera_tag": "None",
       "prompt": "",
       "max_tokens": 8192,
@@ -398,7 +395,7 @@
     },
     "class_type": "QwenVL_Unified",
     "_meta": {
-      "title": "\ud83e\udde0 QwenVL Unified (HF / GGUF)"
+      "title": "🧠 QwenVL Unified (HF / GGUF)"
     }
   },
   "105:262": {
@@ -454,7 +451,7 @@
     },
     "class_type": "UpscalerTensorrt",
     "_meta": {
-      "title": "Upscaler Tensorrt \u26a1"
+      "title": "Upscaler Tensorrt ⚡"
     }
   },
   "254:177": {
