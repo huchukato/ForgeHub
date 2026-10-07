@@ -2,6 +2,7 @@ import { MessageSquare, RefreshCw, Settings, X, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ForgeHubClient, RunpodEndpoint } from "../api";
 import { Button, Label, Select, TextInput } from "./ui";
+import { LANGUAGES, Language, useLang, useT } from "../i18n";
 
 const LLM_SERVICES = [
   { id: "openrouter", label: "OpenRouter", url: "https://openrouter.ai/api/v1" },
@@ -26,6 +27,8 @@ interface Props {
 }
 
 export default function SettingsDialog({ client, open, onClose, onSaved }: Props) {
+  const t = useT();
+  const { lang, setLang } = useLang();
   const [endpointId, setEndpointId] = useState("");
   const [apiKey, setApiKey] = useState("");
   const [keySet, setKeySet] = useState(false);
@@ -49,7 +52,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
       const eps = await client.getRunpodEndpoints(key || undefined);
       setEndpoints(eps);
       if (eps.length === 0) {
-        setDetectMsg("No endpoints found on this account");
+        setDetectMsg(t.noEndpoints);
       } else if (eps.length === 1) {
         setEndpointId(eps[0].id);
         setDetectMsg(`Selected ${eps[0].name || eps[0].id}`);
@@ -127,9 +130,20 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
       >
         <div className="mb-5 flex items-center justify-between">
           <div className="flex items-center gap-2 text-[14px] font-bold tracking-tight">
-            <Settings size={15} className="text-accent" /> Settings
+            <Settings size={15} className="text-accent" /> {t.settings}
           </div>
           <button onClick={onClose} className="rounded-md p-1.5 text-muted transition-colors hover:bg-panel-hover hover:text-text"><X size={16} /></button>
+        </div>
+
+        <div className="mb-5 flex items-center justify-between gap-3 rounded-lg border border-border bg-panel px-3 py-2">
+          <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">{t.language}</span>
+          <Select
+            value={lang}
+            onChange={(e) => setLang(e.target.value as Language)}
+            className="w-36 py-1 text-[12px]"
+          >
+            {LANGUAGES.map((l) => <option key={l.id} value={l.id}>{l.label}</option>)}
+          </Select>
         </div>
 
         <div className="mb-3 flex items-center gap-2 border-b border-border pb-2 text-[11px] font-bold uppercase tracking-[0.08em] text-muted">
@@ -139,7 +153,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
           RunPod Serverless
         </div>
         <Label>
-          API Key {keySet && <span className="normal-case text-accent">(set — empty = keep)</span>}
+          {t.apiKey} {keySet && <span className="normal-case text-accent">{t.apiKeySet}</span>}
         </Label>
         <TextInput
           type="password"
@@ -150,18 +164,18 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
         />
         <div className="mb-3 text-[11px]">
           <a href="https://console.runpod.io/user/settings" target="_blank" rel="noreferrer" className="text-accent hover:underline">
-            Get your API key →
+            {t.getApiKey}
           </a>
         </div>
         <div className="flex items-center justify-between">
-          <Label>Endpoint ID</Label>
+          <Label>{t.endpointId}</Label>
           <button
             onClick={() => detect()}
             disabled={detecting}
             className="flex items-center gap-1 text-[11px] font-semibold text-accent hover:underline disabled:opacity-50"
           >
             <RefreshCw size={10} className={detecting ? "animate-spin" : ""} />
-            {detecting ? "Detecting…" : "Detect from account"}
+            {detecting ? t.detecting : t.detect}
           </button>
         </div>
         {endpoints.length > 1 && (
@@ -170,7 +184,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
             onChange={(e) => setEndpointId(e.target.value)}
             className="mb-2 font-mono"
           >
-            <option value="">— pick an endpoint —</option>
+            <option value="">{t.pickEndpoint}</option>
             {endpoints.map((ep) => (
               <option key={ep.id} value={ep.id}>
                 {ep.name || ep.id}{ep.gpus ? ` · ${ep.gpus}` : ""} ({ep.id})
@@ -191,9 +205,9 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
           <span className="flex h-5 w-5 items-center justify-center rounded-md border border-accent/40 bg-accent/15 text-accent">
             <MessageSquare size={11} />
           </span>
-          Prompt assist (LLM)
+          {t.promptAssist} (LLM)
         </div>
-        <Label>Service</Label>
+        <Label>{t.service}</Label>
         <div className="mb-3">
           <Select value={service} onChange={(e) => onService(e.target.value)}>
             {LLM_SERVICES.map((s) => <option key={s.id} value={s.id}>{s.label}</option>)}
@@ -201,7 +215,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
         </div>
         {service === "custom" && (
           <>
-            <Label>OpenAI-compatible endpoint</Label>
+            <Label>{t.openaiCompat}</Label>
             <TextInput
               value={llmUrl}
               onChange={(e) => setLlmUrl(e.target.value.trim())}
@@ -212,7 +226,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
           </>
         )}
         <Label>
-          Model
+          {t.model}
           {modelsLoading && <RefreshCw size={10} className="ml-1 inline animate-spin" />}
         </Label>
         {models.length > 0 ? (
@@ -229,9 +243,9 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
               }}
               className="mb-1 font-mono"
             >
-              <option value="">— select a model —</option>
+              <option value="">{t.selectModel}</option>
               {models.map((m) => <option key={m} value={m}>{m}</option>)}
-              <option value="__custom__">Custom (type manually)</option>
+              <option value="__custom__">{t.customModel}</option>
             </Select>
             {(llmModel === "" || !models.includes(llmModel)) && (
               <TextInput
@@ -251,11 +265,11 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
           />
         )}
         {!llmKeySet && serviceNeedsKey() && (
-          <div className="mb-2 text-[10px] text-muted">Salva la API key sotto per elencare i modelli.</div>
+          <div className="mb-2 text-[10px] text-muted">{t.saveKeyHint}</div>
         )}
         <div className="mb-3" />
         <Label>
-          API Key {llmKeySet && <span className="normal-case text-accent">(set — empty = keep)</span>}
+          {t.apiKey} {llmKeySet && <span className="normal-case text-accent">{t.apiKeySet}</span>}
         </Label>
         <TextInput
           type="password"
@@ -267,7 +281,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
         {KEY_URLS[service] && (
           <div className="mb-3 text-[11px]">
             <a href={KEY_URLS[service]} target="_blank" rel="noreferrer" className="text-accent hover:underline">
-              Get your API key →
+              {t.getApiKey}
             </a>
           </div>
         )}
@@ -275,7 +289,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
         {error && <div className="mb-3 rounded-lg bg-danger/10 px-3 py-2 text-[12px] text-danger">{error}</div>}
 
         <div className="flex justify-end gap-2">
-          <Button variant="ghost" onClick={onClose}>Cancel</Button>
+          <Button variant="ghost" onClick={onClose}>{t.cancel}</Button>
           <Button
             disabled={saving}
             onClick={async () => {
@@ -302,7 +316,7 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
               }
             }}
           >
-            {saving ? "Saving…" : "Save"}
+            {saving ? t.saving : t.save}
           </Button>
         </div>
       </div>

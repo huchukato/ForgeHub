@@ -2,7 +2,7 @@
   "id": "mmh3-i2va",
   "name": "MiniMax H3 I2VA",
   "category": "video",
-  "description": "Image → video con audio (MiniMax H3 turbo, serverless INT8)",
+  "description": "Image \u2192 video con audio (MiniMax H3 turbo, serverless INT8)",
   "handler": "mmh3",
   "remote_file": "MiniMaxH3-Turbo-I2VA.json",
   "endpoint_id": "s0iopnieywyu7k",
@@ -93,11 +93,12 @@
       "label": "Enhancer preset",
       "type": "select",
       "target": "job",
-      "default": "MiniMax › NSFW I2VA",
+      "default": "MiniMax \u203a NSFW I2VA",
       "options": [
-        "MiniMax › NSFW I2VA",
-        "MiniMax › SFW I2VA"
-      ]
+        "MiniMax \u203a NSFW I2VA",
+        "MiniMax \u203a SFW I2VA"
+      ],
+      "parent": "enhance"
     },
     {
       "key": "205:aspect_ratio",
@@ -164,7 +165,8 @@
         "RealESRGAN_x4plus",
         "RealESRGAN_x4plus_anime_6B",
         "realesrgan-x4minus"
-      ]
+      ],
+      "parent": "upscale"
     },
     {
       "key": "upscale_target",
@@ -180,7 +182,8 @@
         "2K",
         "4K",
         "custom"
-      ]
+      ],
+      "parent": "upscale"
     }
   ]
 }

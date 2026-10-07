@@ -2,6 +2,7 @@ import { Camera, Check, ChevronLeft, ChevronRight, Download, Film, ImageDown, Im
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { OutputFile } from "../api";
+import { useT } from "../i18n";
 
 interface Props {
   outputs: OutputFile[];
@@ -60,12 +61,14 @@ function nextPresentedFrame(v: HTMLVideoElement): Promise<void> {
 }
 
 export default function OutputsGallery({ outputs, open, onClose, canReference, onUseAsInput, onDelete, onChanged }: Props) {
+  const t = useT();
   const [lightbox, setLightbox] = useState<OutputFile | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [capturing, setCapturing] = useState<"current" | "last" | null>(null);
   const [selecting, setSelecting] = useState(false);
   const [selected, setSelected] = useState<Set<string>>(new Set());
   const [batchDeleting, setBatchDeleting] = useState(false);
+  const [batchDownloading, setBatchDownloading] = useState(false);
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -160,6 +163,32 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
     setSelected(new Set());
   }
 
+  function toggleSelectAll() {
+    setSelected((prev) =>
+      prev.size === outputs.length ? new Set() : new Set(outputs.map(keyOf)),
+    );
+  }
+
+  async function downloadSelected() {
+    const targets = outputs.filter((o) => selected.has(keyOf(o)));
+    if (!targets.length) return;
+    setBatchDownloading(true);
+    try {
+      for (const o of targets) {
+        const a = document.createElement("a");
+        a.href = o.url;
+        a.download = o.filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        // Browsers throttle/ignore back-to-back programmatic downloads.
+        await new Promise((r) => setTimeout(r, 250));
+      }
+    } finally {
+      setBatchDownloading(false);
+    }
+  }
+
   async function removeSelected() {
     const targets = outputs.filter((o) => selected.has(keyOf(o)));
     if (!targets.length) return;
@@ -185,13 +214,13 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
     <div className="flex w-[400px] shrink-0 flex-col border-l border-border bg-bg-elev/70 backdrop-blur-md">
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div className="flex items-center gap-2 text-[13px] font-semibold tracking-tight">
-          <Images size={14} className="text-accent" /> Outputs
+          <Images size={14} className="text-accent" /> {t.outputsTitle}
           <span className="rounded-md border border-border bg-panel px-1.5 text-[10px] tabular-nums text-muted">{outputs.length}</span>
         </div>
         <div className="flex items-center gap-1">
           <button
             onClick={() => (selecting ? exitSelect() : setSelecting(true))}
-            title={selecting ? "Exit selection" : "Select multiple"}
+            title={selecting ? t.exitSelection : t.selectMultiple}
             className={`rounded-md p-1.5 transition-all duration-150 ${
               selecting ? "bg-accent/15 text-accent" : "text-muted hover:bg-panel-hover hover:text-text"
             }`}
@@ -204,7 +233,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
       <div className="flex-1 overflow-y-auto p-3">
       {outputs.length === 0 && (
         <div className="rounded-xl border border-dashed border-border-strong bg-panel/40 p-6 text-center text-[12px] text-faint">
-          Generated outputs will appear here.
+          {t.outputsEmptyLib}
         </div>
       )}
       <div className="grid grid-cols-2 gap-2">
@@ -259,7 +288,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
                   <button
                     onClick={(e) => useAsInput(e, o)}
                     className="pointer-events-auto rounded-md bg-black/60 p-1 text-white/80 backdrop-blur-sm transition-colors hover:text-accent"
-                    title="Use as input image"
+                    title={t.useAsInput}
                   >
                     <ImageDown size={11} />
                   </button>
@@ -269,7 +298,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
                   download={o.filename}
                   onClick={(e) => e.stopPropagation()}
                   className="pointer-events-auto rounded-md bg-black/60 p-1 text-white/80 backdrop-blur-sm transition-colors hover:text-white"
-                  title="Download"
+                  title={t.download}
                 >
                   <Download size={11} />
                 </a>
@@ -277,7 +306,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
                   onClick={(e) => remove(e, o)}
                   disabled={deleting === o.filename}
                   className="pointer-events-auto rounded-md bg-black/60 p-1 text-white/80 backdrop-blur-sm transition-colors hover:text-danger"
-                  title="Delete"
+                  title={t.delete}
                 >
                   <Trash2 size={11} />
                 </button>
@@ -292,13 +321,27 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
 
       {selecting && (
         <div className="flex items-center justify-between gap-2 border-t border-border bg-panel/60 px-4 py-2.5">
-          <span className="text-[11px] font-medium tabular-nums text-muted">{selected.size} selected</span>
-          <div className="flex gap-2">
+          <button
+            onClick={toggleSelectAll}
+            className="rounded-lg border border-border px-2.5 py-1 text-[11px] text-muted transition-colors hover:border-accent/50 hover:text-text"
+          >
+            {selected.size === outputs.length ? t.deselectAll : t.selectAll}
+          </button>
+          <div className="flex items-center gap-2">
+            <span className="text-[11px] font-medium tabular-nums text-muted">{selected.size}</span>
+            <button
+              onClick={downloadSelected}
+              disabled={selected.size === 0 || batchDownloading}
+              className="flex items-center gap-1 rounded-lg border border-accent/40 bg-accent/15 px-2.5 py-1 text-[11px] font-semibold text-accent transition-colors hover:bg-accent/25 disabled:opacity-40"
+            >
+              <Download size={11} />
+              {batchDownloading ? "…" : t.download}
+            </button>
             <button
               onClick={exitSelect}
               className="rounded-lg border border-border px-2.5 py-1 text-[11px] text-muted transition-colors hover:border-border-strong hover:text-text"
             >
-              Cancel
+              {t.cancel}
             </button>
             <button
               onClick={removeSelected}
@@ -306,7 +349,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
               className="flex items-center gap-1 rounded-lg border border-danger/40 bg-danger/15 px-2.5 py-1 text-[11px] font-semibold text-danger transition-colors hover:bg-danger/25 disabled:opacity-40"
             >
               <Trash2 size={11} />
-              {batchDeleting ? "Deleting…" : "Delete"}
+              {batchDeleting ? "…" : t.delete}
             </button>
           </div>
         </div>
@@ -326,14 +369,14 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
               <button
                 onClick={(e) => { e.stopPropagation(); step(-1); }}
                 className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full border border-border bg-panel/80 p-2 text-muted backdrop-blur-md transition-all hover:border-accent/50 hover:text-text"
-                title="Previous (←)"
+                title={t.previous}
               >
                 <ChevronLeft size={20} />
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); step(1); }}
                 className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full border border-border bg-panel/80 p-2 text-muted backdrop-blur-md transition-all hover:border-accent/50 hover:text-text"
-                title="Next (→)"
+                title={t.next}
               >
                 <ChevronRight size={20} />
               </button>
@@ -358,7 +401,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
                     className="flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 font-medium text-accent transition-colors hover:bg-accent/20 hover:shadow-[0_0_12px_rgb(124_92_255/0.2)] disabled:opacity-50"
                   >
                     <Camera size={15} />
-                    {capturing === "current" ? "Capturing…" : "Set current frame"}
+                    {capturing === "current" ? t.capturing : t.setCurrentFrame}
                   </button>
                   <button
                     onClick={() => captureFrame("last")}
@@ -366,7 +409,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
                     className="flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 font-medium text-accent transition-colors hover:bg-accent/20 hover:shadow-[0_0_12px_rgb(124_92_255/0.2)] disabled:opacity-50"
                   >
                     <SkipForward size={15} />
-                    {capturing === "last" ? "Capturing…" : "Set last frame as reference"}
+                    {capturing === "last" ? t.capturing : t.setLastFrame}
                   </button>
                 </>
               )}
@@ -376,7 +419,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
                   className="flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 font-medium text-accent transition-colors hover:bg-accent/20 hover:shadow-[0_0_12px_rgb(124_92_255/0.2)]"
                 >
                   <ImageDown size={15} />
-                  Use as reference
+                  {t.useAsRef}
                 </button>
               )}
               <a

@@ -381,6 +381,9 @@ async def wildcard_values(key: str = ""):
 
 @app.post("/execute")
 async def execute(request: ExecuteRequest) -> ExecuteResponse:
+    # Raw parameters (prompt still carrying __wildcards__) get embedded into the
+    # output files as generation metadata — the files are the prompt history.
+    raw_parameters = dict(request.parameters or {})
     request = request.model_copy(update={"parameters": _expand_wildcards(request.parameters)})
     catalog = _get_catalog()
     result = catalog.get_workflow(request.workflow_id)
@@ -412,7 +415,10 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
         job_input["video"] = request.video
 
     try:
-        job_id = await backend.queue(workflow, node_params, job_input, client_id=request.client_id)
+        job_id = await backend.queue(
+            workflow, node_params, job_input, client_id=request.client_id,
+            job_meta={"workflow": meta.id, "parameters": raw_parameters},
+        )
         return ExecuteResponse(prompt_id=job_id, status="queued")
     except HTTPException:
         raise
@@ -447,7 +453,7 @@ async def list_outputs():
         return {"outputs": []}
     items = []
     for p in sorted(base.rglob("*"), key=lambda x: x.stat().st_mtime, reverse=True):
-        if not p.is_file():
+        if not p.is_file() or p.name.startswith(".") or p.name.endswith(".meta.json"):
             continue
         rel = p.relative_to(base)
         item = {
@@ -466,6 +472,49 @@ async def list_outputs():
         if len(items) >= 200:
             break
     return {"outputs": items}
+
+
+@app.get("/outputs/meta")
+async def outputs_meta(limit: int = 30):
+    """Prompt history — generation metadata read back from the output files."""
+    from forgehub_backend.files import read_output_meta
+    base = SETTINGS.storage_dir / "outputs"
+    if not base.is_dir():
+        return {"entries": []}
+    entries = []
+    for p in sorted(base.rglob("*"), key=lambda x: x.stat().st_mtime, reverse=True):
+        if not p.is_file() or p.name.startswith(".") or p.name.endswith(".meta.json"):
+            continue
+        meta = read_output_meta(p)
+        if not meta:
+            continue
+        rel = p.relative_to(base)
+        params = meta.get("parameters") or {}
+        entries.append({
+            "filename": p.name,
+            "subfolder": str(rel.parent) if str(rel.parent) != "." else "",
+            "workflow": meta.get("workflow") or "",
+            "prompt": str(params.get("prompt") or ""),
+            "parameters": params,
+            "texts": meta.get("texts") or {},
+            "created": meta.get("created") or "",
+        })
+        if len(entries) >= limit:
+            break
+    return {"entries": entries}
+
+
+@app.get("/outputs/{filename}/meta")
+async def output_meta(filename: str, subfolder: str = ""):
+    from forgehub_backend.files import output_path, read_output_meta
+    try:
+        path = output_path(filename, subfolder, "output")
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Output not found")
+    meta = read_output_meta(path)
+    if meta is None:
+        raise HTTPException(status_code=404, detail="No embedded metadata")
+    return meta
 
 
 @app.get("/outputs/{filename}")

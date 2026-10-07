@@ -77,18 +77,19 @@
       "label": "Enhancer preset",
       "type": "select",
       "target": "job",
-      "default": "IMG › Qwen Edit",
+      "default": "IMG \u203a Qwen Edit",
       "options": [
-        "IMG › Qwen Edit",
-        "IMG › Pony→Natural",
-        "IMG › Detailed",
-        "IMG › Ultra",
-        "IMG › Cinematic",
-        "IMG › Simple",
-        "IMG › Tags",
-        "IMG › Analysis",
-        "VID › Summary"
-      ]
+        "IMG \u203a Qwen Edit",
+        "IMG \u203a Pony\u2192Natural",
+        "IMG \u203a Detailed",
+        "IMG \u203a Ultra",
+        "IMG \u203a Cinematic",
+        "IMG \u203a Simple",
+        "IMG \u203a Tags",
+        "IMG \u203a Analysis",
+        "VID \u203a Summary"
+      ],
+      "parent": "enhance"
     },
     {
       "key": "image_size",

@@ -6,7 +6,7 @@ import urllib.parse
 from typing import Any
 
 from forgehub_backend.config import SETTINGS
-from forgehub_backend.files import read_uploaded_b64, save_output_b64
+from forgehub_backend.files import read_uploaded_b64, save_output_b64, write_output_meta
 from forgehub_backend.models import ExecutionStatus, OutputFile
 from forgehub_backend.runpod_client import RunPodClient
 
@@ -92,6 +92,7 @@ class RunPodServerlessBackend:
         self.client = client or RunPodClient()
         self._clients: dict[str, RunPodClient] = {}
         self._job_endpoints: dict[str, str] = {}
+        self._job_meta: dict[str, dict[str, Any]] = {}
 
     def _client_for(self, endpoint_id: str | None) -> RunPodClient:
         if not endpoint_id or endpoint_id == SETTINGS.runpod_endpoint_id:
@@ -102,7 +103,8 @@ class RunPodServerlessBackend:
         return client
 
     async def queue(self, workflow: dict[str, Any], parameters: dict[str, Any],
-                    job_input: dict[str, Any] | None = None, client_id: str | None = None) -> str:
+                    job_input: dict[str, Any] | None = None, client_id: str | None = None,
+                    job_meta: dict[str, Any] | None = None) -> str:
         payload = dict(job_input or {})
         endpoint_id = payload.pop("endpoint_id", "")
         graph_params = {k: v for k, v in parameters.items() if ":" in k}
@@ -126,6 +128,8 @@ class RunPodServerlessBackend:
                     payload["video"] = _as_b64(payload["video"])
         job_id = await self._client_for(endpoint_id).run(payload)
         self._job_endpoints[job_id] = endpoint_id
+        if job_meta:
+            self._job_meta[job_id] = job_meta
         return job_id
 
     async def status(self, job_id: str) -> ExecutionStatus:
@@ -149,6 +153,14 @@ class RunPodServerlessBackend:
             )
         job_out = result.get("output") or {}
         texts = {k: str(v) for k, v in (job_out.get("texts") or {}).items()}
+        job_meta = self._job_meta.pop(job_id, {}) or {}
+        meta = {
+            "app": "forgehub",
+            "workflow": job_meta.get("workflow", ""),
+            "created": result.get("completedTime") or "",
+            "parameters": job_meta.get("parameters", {}),
+            "texts": texts,
+        }
         outputs: list[OutputFile] = []
         for item in job_out.get("outputs", []):
             filename = item.get("filename", "output.bin")
@@ -156,6 +168,10 @@ class RunPodServerlessBackend:
                 saved = save_output_b64(filename, item.get("b64", ""))
             except Exception:
                 continue
+            try:
+                write_output_meta(saved, meta)
+            except Exception:
+                pass
             outputs.append(OutputFile(
                 filename=saved.name,
                 subfolder="",

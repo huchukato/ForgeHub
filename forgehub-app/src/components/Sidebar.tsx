@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Clapperboard, Image as ImageIcon, Package, Search, Sparkles, Video } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { Workflow } from "../api";
+import { useT } from "../i18n";
 
 const CATEGORY_ICONS: Record<string, React.ReactNode> = {
   video: <Video size={13} />,
@@ -19,6 +20,7 @@ interface Props {
 }
 
 export default function Sidebar({ workflows, selectedId, onSelect, endpointId }: Props) {
+  const t = useT();
   const [query, setQuery] = useState("");
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
@@ -47,7 +49,7 @@ export default function Sidebar({ workflows, selectedId, onSelect, endpointId }:
             <div className="bg-gradient-to-r from-text to-accent-hover bg-clip-text text-[15px] font-bold tracking-tight text-transparent">
               ForgeHub
             </div>
-            <div className="text-[11px] tracking-wide text-faint">Serverless ComfyUI</div>
+            <div className="text-[11px] tracking-wide text-faint">{t.tagline}</div>
           </div>
         </div>
         <div className="relative mt-4">
@@ -55,7 +57,7 @@ export default function Sidebar({ workflows, selectedId, onSelect, endpointId }:
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            placeholder="Search workflows…"
+            placeholder={t.searchWorkflows}
             className="w-full rounded-lg border border-border bg-panel py-1.5 pl-8 pr-3 text-[12px] text-text outline-none transition-all placeholder:text-faint hover:border-border-strong focus:border-accent/70 focus:shadow-[var(--shadow-glow)]"
           />
         </div>
@@ -66,7 +68,7 @@ export default function Sidebar({ workflows, selectedId, onSelect, endpointId }:
           <div key={cat} className="mb-3">
             <div className="flex items-center gap-1.5 px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-faint">
               {CATEGORY_ICONS[cat] ?? CATEGORY_ICONS.other}
-              {cat}
+              {(t.categories as Record<string, string>)[cat] ?? cat}
               <span className="ml-auto rounded-md border border-border bg-panel px-1.5 text-[10px] text-muted">
                 {list.length}
               </span>
@@ -94,7 +96,7 @@ export default function Sidebar({ workflows, selectedId, onSelect, endpointId }:
           </div>
         ))}
         {filtered.length === 0 && (
-          <div className="px-3 py-8 text-center text-[12px] text-faint">No workflows found</div>
+          <div className="px-3 py-8 text-center text-[12px] text-faint">{t.noWorkflows}</div>
         )}
       </div>
 

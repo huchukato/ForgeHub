@@ -2,7 +2,7 @@
   "id": "qwen21-t2i",
   "name": "Qwen Image 2.1 Text to Image",
   "category": "image",
-  "description": "Text→image con wildcard Pony + enhancer QwenVL (Qwen Image 2.1 UC INT8, serverless)",
+  "description": "Text\u2192image con wildcard Pony + enhancer QwenVL (Qwen Image 2.1 UC INT8, serverless)",
   "handler": "qwen21",
   "remote_file": "QwenImage21-T2I-Wildcards.json",
   "endpoint_id": "rm1dvsnh3gxlew",
@@ -43,12 +43,13 @@
       "default": "Qwen Image T2I",
       "options": [
         "Qwen Image T2I",
-        "Pony→Natural",
+        "Pony\u2192Natural",
         "Enhance",
         "Detailed Visual",
         "Creative Rewrite",
         "Artistic Style"
-      ]
+      ],
+      "parent": "enhance"
     },
     {
       "key": "544:484:style_tag",

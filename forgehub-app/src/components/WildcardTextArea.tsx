@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ForgeHubClient } from "../api";
+import { useT } from "../i18n";
 import { TextArea } from "./ui";
 
 interface Props {
@@ -15,6 +16,7 @@ interface Props {
 // → (o click sulla chevron) apre le opzioni della wildcard selezionata e
 // permette di inserire un valore letterale invece del placeholder random.
 export default function WildcardTextArea({ client, value, onChange, presetPrefix }: Props) {
+  const t = useT();
   const [catalog, setCatalog] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [tokenStart, setTokenStart] = useState(-1);
@@ -175,7 +177,7 @@ export default function WildcardTextArea({ client, value, onChange, presetPrefix
         ref={areaRef}
         value={value}
         className={presets.length ? "!border-0 !bg-transparent" : undefined}
-        placeholder="Prompt — type __ for wildcards (e.g. __pmp/act*__)"
+        placeholder={t.promptPlaceholder}
         onChange={(e) => {
           onChange(e.target.value);
           updateSuggestions(e.target.value, e.target.selectionStart ?? e.target.value.length);
@@ -259,7 +261,7 @@ export default function WildcardTextArea({ client, value, onChange, presetPrefix
                       const cursor = areaRef.current?.selectionStart ?? value.length;
                       openBrowse(w, { start: tokenStart, end: cursor });
                     }}
-                    title="Sfoglia opzioni"
+                    title={t.browseOptions}
                     className="mr-1 shrink-0 rounded p-1 text-faint opacity-0 transition-all hover:bg-accent/20 hover:text-accent group-hover/wrow:opacity-100"
                   >
                     <ChevronRight size={12} />

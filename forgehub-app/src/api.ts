@@ -64,6 +64,16 @@ export interface OutputFile {
   mtime?: number;
 }
 
+export interface OutputMetaEntry {
+  filename: string;
+  subfolder: string;
+  workflow: string;
+  prompt: string;
+  parameters: Record<string, unknown>;
+  texts: Record<string, string>;
+  created: string;
+}
+
 export interface RunpodEndpoint {
   id: string;
   name: string;
@@ -165,6 +175,11 @@ export class ForgeHubClient {
   async listOutputs(): Promise<OutputFile[]> {
     const data = await this.request<{ outputs: OutputFile[] }>("/outputs");
     return this.absOutputs(data.outputs);
+  }
+
+  async listOutputMeta(limit = 30): Promise<OutputMetaEntry[]> {
+    const data = await this.request<{ entries: OutputMetaEntry[] }>(`/outputs/meta?limit=${limit}`);
+    return data.entries;
   }
 
   async deleteOutput(o: OutputFile): Promise<void> {

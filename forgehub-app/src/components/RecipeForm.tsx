@@ -1,8 +1,17 @@
-import { Film, ImagePlus, X } from "lucide-react";
-import { useEffect, useRef } from "react";
-import type { ForgeHubClient, WorkflowParam } from "../api";
+import { ChevronRight, Film, History, ImagePlus, X } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import type { ForgeHubClient, OutputMetaEntry, WorkflowParam } from "../api";
 import { Card, Label, Select, TextArea, TextInput, Toggle } from "./ui";
 import WildcardTextArea from "./WildcardTextArea";
+import { Translations, useT } from "../i18n";
+
+const SEC_TITLES: Record<string, keyof Translations> = {
+  "Prompt": "secPrompt",
+  "Enhancer (QwenVL)": "secEnhancer",
+  "Generation": "secGeneration",
+  "Post-processing": "secPost",
+  "Parameters": "secParameters",
+};
 
 // Aspect-ratio → size presets for the `image_size` param (Pixaroma-style picker).
 const SIZE_PRESETS: Record<string, string[]> = {
@@ -100,6 +109,9 @@ const isOnOffSelect = (p: WorkflowParam) =>
   new Set(p.options).size === 2 &&
   (p.options ?? []).every((o) => o === "on" || o === "off");
 
+// Anything rendered as a switch — on/off selects and bools — pairs two per row.
+const isToggle = (p: WorkflowParam) => isOnOffSelect(p) || p.type === "bool";
+
 // Numeric and plain-select params pack two per row; everything else gets a full row.
 const isCompact = (p: WorkflowParam) => p.type === "int" || p.type === "float" || p.type === "select";
 
@@ -111,10 +123,26 @@ interface Props {
   imageSlots: Record<string, string[]>;
   setImageSlots: React.Dispatch<React.SetStateAction<Record<string, string[]>>>;
   onError: (msg: string) => void;
+  // ShowText trace of the last finished job ("Wildcards expanded", "Final prompt").
+  jobTexts?: Record<string, string>;
 }
 
-export default function RecipeForm({ client, parameters, values, setValue, imageSlots, setImageSlots, onError }: Props) {
+export default function RecipeForm({ client, parameters, values, setValue, imageSlots, setImageSlots, onError, jobTexts = {} }: Props) {
+  const t = useT();
   const fileRefs = useRef<Record<string, HTMLInputElement | null>>({});
+  const [historyOpen, setHistoryOpen] = useState(false);
+  const [history, setHistory] = useState<OutputMetaEntry[] | null>(null);
+
+  const toggleHistory = async () => {
+    setHistoryOpen((o) => !o);
+    if (history === null) {
+      try {
+        setHistory(await client.listOutputMeta(20));
+      } catch {
+        setHistory([]);
+      }
+    }
+  };
 
   // Video resolution fields ("*:aspect_ratio" + "*:resolution") stay in sync:
   // changing the ratio rewrites the label with the same tier at the new size.
@@ -156,7 +184,7 @@ export default function RecipeForm({ client, parameters, values, setValue, image
                 src={client.abs(`/outputs/${f}?type=input`)}
                 alt={f}
                 title={f}
-                className="h-24 w-auto max-w-44 rounded-lg border border-border object-cover shadow-[var(--shadow-panel)]"
+                className="h-36 w-auto max-w-60 rounded-lg border border-border object-cover shadow-[var(--shadow-panel)]"
               />
               <button
                 onClick={() => setImageSlots((prev) => ({ ...prev, [p.key]: files.filter((_, j) => j !== i) }))}
@@ -181,9 +209,9 @@ export default function RecipeForm({ client, parameters, values, setValue, image
               />
               <button
                 onClick={() => fileRefs.current[p.key]?.click()}
-                className="flex h-24 w-24 items-center justify-center rounded-lg border border-dashed border-border-strong bg-bg-elev/50 text-muted transition-all duration-150 hover:border-accent/60 hover:bg-accent/5 hover:text-accent hover:shadow-[0_0_12px_rgb(124_92_255/0.12)]"
+                className="flex h-36 w-36 items-center justify-center rounded-lg border border-dashed border-border-strong bg-bg-elev/50 text-muted transition-all duration-150 hover:border-accent/60 hover:bg-accent/5 hover:text-accent hover:shadow-[0_0_12px_rgb(124_92_255/0.12)]"
               >
-                <ImagePlus size={20} />
+                <ImagePlus size={24} />
               </button>
             </>
           )}
@@ -261,7 +289,7 @@ export default function RecipeForm({ client, parameters, values, setValue, image
             onClick={() => fileRefs.current[p.key]?.click()}
             className="flex items-center gap-1.5 rounded-lg border border-dashed border-border-strong bg-bg-elev/50 px-3 py-1.5 text-xs text-muted transition-all duration-150 hover:border-accent/60 hover:text-accent"
           >
-            <ImagePlus size={14} /> {fname ? "Cambia" : "Carica video"}
+            <ImagePlus size={14} /> {fname ? t.changeVideo : t.uploadVideo}
           </button>
         </div>
       );
@@ -291,7 +319,8 @@ export default function RecipeForm({ client, parameters, values, setValue, image
   // toggle is "on", in a compact two-column panel under the toggle row.
   const childPanel = (parentKey: string) => {
     const kids = parameters.filter((p) => p.parent === parentKey);
-    if (!kids.length || values[parentKey] !== "on") return null;
+    const pv = values[parentKey];
+    if (!kids.length || (pv !== "on" && pv !== true)) return null;
     return (
       <div className="grid grid-cols-2 gap-3 rounded-lg border border-border/60 bg-bg-elev/30 p-3">
         {kids.map((k) => (
@@ -309,9 +338,9 @@ export default function RecipeForm({ client, parameters, values, setValue, image
     for (let i = 0; i < params.length; i++) {
       const p = params[i];
       if (p.parent) continue; // shown inside its parent's childPanel
-      if (isOnOffSelect(p)) {
+      if (isToggle(p)) {
         const toggles = [p];
-        while (i + 1 < params.length && isOnOffSelect(params[i + 1]) && toggles.length < 2) {
+        while (i + 1 < params.length && isToggle(params[i + 1]) && toggles.length < 2) {
           toggles.push(params[++i]);
         }
         rows.push(
@@ -328,15 +357,6 @@ export default function RecipeForm({ client, parameters, values, setValue, image
           const panel = childPanel(t.key);
           if (panel) rows.push(panel);
         }
-        continue;
-      }
-      if (p.type === "bool") {
-        rows.push(
-          <div key={p.key} className="flex items-center justify-between">
-            <Label>{p.label || p.key}</Label>
-            {renderField(p)}
-          </div>,
-        );
         continue;
       }
       if (isCompact(p)) {
@@ -372,28 +392,99 @@ export default function RecipeForm({ client, parameters, values, setValue, image
         <Card key={s.title}>
           <div className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
             <span className="h-3 w-[3px] rounded-full bg-gradient-to-b from-accent to-magenta" />
-            {s.title}
+            {SEC_TITLES[s.title] ? String(t[SEC_TITLES[s.title]]) : s.title}
             {s.title.startsWith("Enhancer") && values.enhance !== false && (
               <span className="rounded-md border border-accent/40 bg-accent/15 px-2 py-0.5 text-[9px] normal-case tracking-normal text-accent-hover">
-                prompt goes through QwenVL-Mod
+                {t.enhancerBadge}
+              </span>
+            )}
+            {s.title === "Prompt" && (
+              <span className="relative ml-auto">
+                <button
+                  onClick={toggleHistory}
+                  title={t.promptTrace}
+                  className={`flex items-center gap-1 rounded-md border px-2 py-1 text-[10px] font-medium normal-case tracking-normal transition-colors ${
+                    historyOpen
+                      ? "border-accent/60 bg-accent/15 text-accent"
+                      : "border-border text-muted hover:border-border-strong hover:text-text"
+                  }`}
+                >
+                  <History size={11} />
+                  {t.history}
+                </button>
+                {historyOpen && (
+                  <>
+                    <button className="fixed inset-0 z-20 cursor-default" onClick={() => setHistoryOpen(false)} />
+                    <div className="absolute right-0 top-full z-30 mt-1.5 max-h-80 w-96 overflow-y-auto rounded-xl border border-border bg-panel p-1.5 shadow-[var(--shadow-panel)]">
+                      {history === null ? (
+                        <div className="px-3 py-4 text-center text-[11px] text-muted">{t.historyLoading}</div>
+                      ) : history.length === 0 ? (
+                        <div className="px-3 py-4 text-center text-[11px] text-muted">{t.historyEmpty}</div>
+                      ) : (
+                        history.map((e, i) => (
+                          <button
+                            key={`${e.subfolder}/${e.filename}-${i}`}
+                            onClick={() => { setValue("prompt", e.prompt); setHistoryOpen(false); }}
+                            title={e.filename}
+                            className="block w-full rounded-lg px-2.5 py-2 text-left transition-colors hover:bg-panel-hover"
+                          >
+                            <div className="line-clamp-2 text-[11px] leading-snug text-text">{e.prompt || t.noPrompt}</div>
+                            <div className="mt-1 flex items-center gap-2 text-[9px] text-faint">
+                              <span className="truncate">{e.workflow}</span>
+                              <span className="ml-auto shrink-0 truncate">{e.filename}</span>
+                            </div>
+                          </button>
+                        ))
+                      )}
+                    </div>
+                  </>
+                )}
               </span>
             )}
           </div>
           <div className="space-y-3">{renderRows(s.params)}</div>
+          {s.title === "Prompt" && (
+            <div className="mt-3 space-y-2 border-t border-border/60 pt-3">
+              {Object.keys(jobTexts).length === 0 ? (
+                <details className="group rounded-lg border border-border/60 bg-bg-elev/40">
+                  <summary className="flex cursor-pointer select-none items-center gap-2 px-3 py-2 text-[12px] font-medium text-faint transition-colors hover:text-muted">
+                    <ChevronRight size={12} className="transition-transform group-open:rotate-90" />
+                    {t.promptTrace}
+                    <span className="ml-auto text-[9px] uppercase tracking-wide">{t.traceFills}</span>
+                  </summary>
+                  <div className="border-t border-border/60 px-3 py-2 text-[11px] italic text-faint">
+                    {t.traceBody}
+                  </div>
+                </details>
+              ) : (
+                Object.entries(jobTexts).map(([label, text]) => (
+                  <details key={label} className="group rounded-lg border border-border bg-bg-elev transition-colors open:border-border-strong">
+                    <summary className="flex cursor-pointer select-none items-center gap-2 px-3 py-2 text-[12px] font-medium text-muted transition-colors hover:text-text">
+                      <ChevronRight size={12} className="transition-transform group-open:rotate-90" />
+                      {label}
+                    </summary>
+                    <pre className="max-h-48 overflow-y-auto whitespace-pre-wrap break-words border-t border-border px-3 py-2 font-mono text-[11px] leading-relaxed text-text/80">
+                      {text}
+                    </pre>
+                  </details>
+                ))
+              )}
+            </div>
+          )}
         </Card>
       ))}
       {rest.length > 0 && (
         <Card>
           <div className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
             <span className="h-3 w-[3px] rounded-full bg-gradient-to-b from-accent to-magenta" />
-            Parameters
+            {t.secParameters}
           </div>
           <div className="space-y-3">{renderRows(rest)}</div>
         </Card>
       )}
       {parameters.length === 0 && (
         <div className="rounded-xl border border-dashed border-border p-8 text-center text-[12px] text-muted">
-          No parameters declared in this workflow's .meta.json.
+          {t.noParams}
         </div>
       )}
     </div>

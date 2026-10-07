@@ -1,4 +1,4 @@
-import { ChevronRight, Images, MessageSquare, Play, Settings, Square } from "lucide-react";
+import { Images, MessageSquare, Music, Play, Settings, Square } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ForgeHubClient, OutputFile, Workflow } from "./api";
 import ChatDrawer from "./components/ChatDrawer";
@@ -6,8 +6,16 @@ import OutputsGallery from "./components/OutputsGallery";
 import RecipeForm from "./components/RecipeForm";
 import SettingsDialog from "./components/SettingsDialog";
 import Sidebar from "./components/Sidebar";
+import { LangContext, Language, getStoredLang, storeLang, useT } from "./i18n";
 
 export default function App() {
+  const [lang, setLangState] = useState<Language>(getStoredLang);
+  const setLang = (l: Language) => {
+    setLangState(l);
+    storeLang(l);
+  };
+  const t = useT();
+
   const [backendUrl] = useState(
     () =>
       // Inside Electron the bundled backend is authoritative — a stale
@@ -26,17 +34,47 @@ export default function App() {
   const [values, setValues] = useState<Record<string, unknown>>({});
   const [imageSlots, setImageSlots] = useState<Record<string, string[]>>({});
 
-  const [jobs, setJobs] = useState<Record<string, { state: string; elapsedS: number }>>({});
+  const [jobs, setJobs] = useState<Record<string, { state: string; startedAt: number }>>({});
   const pollers = useRef<Record<string, number>>({});
+  const [now, setNow] = useState(Date.now());
 
   const [outputs, setOutputs] = useState<OutputFile[]>([]);
   const [jobTexts, setJobTexts] = useState<Record<string, string>>({});
-  const [lastOutputs, setLastOutputs] = useState<OutputFile[]>([]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
 
   const workflow = workflows.find((w) => w.id === selectedId) || null;
+
+  // Two-note completion chime — Web Audio, no asset needed.
+  const playDone = () => {
+    try {
+      const ctx = new AudioContext();
+      [660, 990].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0.0001, ctx.currentTime + i * 0.12);
+        gain.gain.exponentialRampToValueAtTime(0.12, ctx.currentTime + i * 0.12 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + i * 0.12 + 0.35);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(ctx.currentTime + i * 0.12);
+        osc.stop(ctx.currentTime + i * 0.12 + 0.4);
+      });
+    } catch {
+      /* audio blocked — ignore */
+    }
+  };
+
+  const fmtElapsed = (s: number) => {
+    const h = Math.floor(s / 3600);
+    const m = Math.floor((s % 3600) / 60);
+    const sec = s % 60;
+    return h
+      ? `${h}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`
+      : `${m}:${String(sec).padStart(2, "0")}`;
+  };
 
   // Bootstrap: workflows + settings + output history
   useEffect(() => {
@@ -97,24 +135,34 @@ export default function App() {
     }
   };
 
+  const jobsActive = Object.keys(jobs).length > 0;
+
+  // Local wall-clock ticker — RunPod's delayTime/executionTime are unreliable
+  // for UX purposes, so elapsed time is measured from submission.
+  useEffect(() => {
+    if (!jobsActive) return;
+    setNow(Date.now());
+    const t = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(t);
+  }, [jobsActive]);
+
   const startPolling = (jobId: string) => {
-    setJobs((prev) => ({ ...prev, [jobId]: { state: "IN_QUEUE", elapsedS: 0 } }));
+    setJobs((prev) => ({ ...prev, [jobId]: { state: "IN_QUEUE", startedAt: Date.now() } }));
     pollers.current[jobId] = window.setInterval(async () => {
       try {
         const st = await client.getExecutionStatus(jobId);
         if (st.status === "running") {
-          setJobs((prev) => ({
-            ...prev,
-            [jobId]: { state: st.remote_status ?? "RUNNING", elapsedS: Math.round((st.elapsed_ms ?? 0) / 1000) },
-          }));
+          setJobs((prev) =>
+            prev[jobId] ? { ...prev, [jobId]: { ...prev[jobId], state: st.remote_status ?? "RUNNING" } } : prev,
+          );
           return;
         }
         window.clearInterval(pollers.current[jobId]);
         setJobs((prev) => { const { [jobId]: _, ...rest } = prev; return rest; });
         if (st.status === "success") {
           setOutputs((prev) => [...st.outputs, ...prev]);
-          setLastOutputs(st.outputs);
           if (st.texts && Object.keys(st.texts).length) setJobTexts(st.texts);
+          playDone();
         } else if (st.status !== "cancelled") {
           setError(st.error || "Esecuzione fallita");
         }
@@ -150,7 +198,7 @@ const stopJobs = async () => {
 const execute = async () => {
     if (!workflow) return;
     setError("");
-    setLastOutputs([]);
+    setJobTexts({});
     try {
       const params: Record<string, unknown> = {};
       const images: string[] = [];
@@ -177,6 +225,7 @@ const execute = async () => {
   };
 
   return (
+    <LangContext.Provider value={{ lang, setLang }}>
     <div className="flex h-full text-text">
       <Sidebar
         workflows={workflows}
@@ -198,9 +247,9 @@ const execute = async () => {
           </div>
           <div className="flex items-center gap-2">
             {([
-              { icon: <Images size={15} />, title: "Outputs", active: galleryOpen, onClick: () => setGalleryOpen((o) => !o), badge: outputs.length },
-              { icon: <MessageSquare size={15} />, title: "Prompt assist", active: chatOpen, onClick: () => setChatOpen((o) => !o) },
-              { icon: <Settings size={15} />, title: "Settings", active: settingsOpen, onClick: () => setSettingsOpen(true) },
+              { icon: <Images size={15} />, title: t.outputsTitle, active: galleryOpen, onClick: () => setGalleryOpen((o) => !o), badge: outputs.length },
+              { icon: <MessageSquare size={15} />, title: t.promptAssist, active: chatOpen, onClick: () => setChatOpen((o) => !o) },
+              { icon: <Settings size={15} />, title: t.settings, active: settingsOpen, onClick: () => setSettingsOpen(true) },
             ]).map((b) => (
               <button
                 key={b.title}
@@ -226,7 +275,7 @@ const execute = async () => {
               className="ml-1 flex items-center gap-2 rounded-lg bg-gradient-to-b from-accent-hover to-accent px-5 py-2 text-[13px] font-bold text-white shadow-[0_1px_0_rgb(255_255_255/0.18)_inset,0_4px_18px_rgb(124_92_255/0.35)] transition-all duration-150 hover:shadow-[0_1px_0_rgb(255_255_255/0.25)_inset,0_6px_26px_rgb(124_92_255/0.5)] hover:brightness-110 active:scale-[0.98] disabled:cursor-default disabled:opacity-50 disabled:shadow-none"
             >
               <Play size={14} />
-              Execute
+              {t.execute}
             </button>
           </div>
         </header>
@@ -238,17 +287,19 @@ const execute = async () => {
               <span className="flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-accent" style={{ animation: "fh-pulse 1.6s ease-in-out infinite" }} />
                 {Object.keys(jobs).length} job{Object.keys(jobs).length > 1 ? "s" : ""} —{" "}
-                {Object.values(jobs).some((j) => j.state === "IN_PROGRESS") ? "generating" : "queued / cold start"}
+                {Object.values(jobs).some((j) => j.state === "IN_PROGRESS") ? t.jobsGenerating : t.jobsQueued}
               </span>
               <span className="flex items-center gap-2">
-                <span className="tabular-nums">{Math.max(...Object.values(jobs).map((j) => j.elapsedS))}s</span>
+                <span className="tabular-nums">
+                  {fmtElapsed(Math.max(...Object.values(jobs).map((j) => Math.floor((now - j.startedAt) / 1000))))}
+                </span>
                 <button
                   onClick={stopJobs}
-                  title="Cancel running generation"
+                  title={t.stop}
                   className="flex items-center gap-1 rounded-md border border-danger/40 bg-danger/10 px-2 py-1 text-[10px] font-semibold text-danger transition-colors hover:bg-danger/20"
                 >
                   <Square size={9} />
-                  Stop
+                  {t.stop}
                 </button>
               </span>
             </div>
@@ -265,65 +316,77 @@ const execute = async () => {
 
         {/* Main */}
         <main className="flex-1 overflow-y-auto p-6">
-          <div className="mx-auto max-w-3xl space-y-5">
-            {error && (
-              <div className="rounded-xl border border-danger/40 bg-danger/10 px-4 py-3 text-[13px] text-danger shadow-[var(--shadow-panel)]" style={{ animation: "fh-fade-up .25s ease-out" }}>
-                {error}
-              </div>
-            )}
-            {lastOutputs.length > 0 && (
+          <div className="mx-auto flex max-w-[1440px] items-start gap-6">
+            {/* Recent outputs — fills the empty gutter left of the form */}
+            <aside className="sticky top-0 hidden w-72 shrink-0 xl:block 2xl:w-80">
               <div className="rounded-xl border border-border bg-panel p-4 shadow-[var(--shadow-panel)]">
-                <div className="mb-3 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
-                  <span className="h-1 w-1 rounded-full bg-success" />
-                  Output
+                <div className="mb-3 flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
+                    <span className="h-3 w-[3px] rounded-full bg-gradient-to-b from-accent to-magenta" />
+                    {t.outputsTitle}
+                  </div>
+                  <button
+                    onClick={() => setGalleryOpen(true)}
+                    className="flex items-center gap-1 rounded-md border border-border px-2 py-1 text-[10px] font-medium text-muted transition-colors hover:border-accent/50 hover:text-text"
+                  >
+                    <Images size={11} />
+                    {t.library}
+                  </button>
                 </div>
-                <div className="space-y-3">
-                  {lastOutputs.map((o) => (
-                    /\.(mp4|webm|mov)$/i.test(o.filename) ? (
-                      <video key={o.filename} src={o.url} controls className="w-full rounded-lg border border-border" />
-                    ) : /\.(wav|mp3|flac|ogg)$/i.test(o.filename) ? (
-                      <audio key={o.filename} src={o.url} controls className="w-full" />
-                    ) : (
-                      <img key={o.filename} src={o.url} alt={o.filename} className="w-full rounded-lg border border-border" />
-                    )
-                  ))}
-                </div>
+                {outputs.length === 0 ? (
+                  <div className="rounded-lg border border-dashed border-border py-10 text-center text-[11px] leading-relaxed text-faint whitespace-pre-line">
+                    {t.outputsEmpty}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-2 gap-2">
+                    {outputs.slice(0, 12).map((o) => {
+                      const isAudio = /\.(wav|mp3|flac|ogg)$/i.test(o.filename);
+                      const src = o.thumb ?? o.url;
+                      return (
+                        <button
+                          key={`${o.subfolder}/${o.filename}`}
+                          onClick={() => setGalleryOpen(true)}
+                          title={o.filename}
+                          className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-bg-elev transition-all duration-150 hover:border-accent/60 hover:shadow-[0_0_14px_rgb(124_92_255/0.15)]"
+                        >
+                          {isAudio ? (
+                            <span className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-muted">
+                              <Music size={18} />
+                              <span className="px-1.5 text-[9px] leading-tight line-clamp-2">{o.filename}</span>
+                            </span>
+                          ) : (
+                            <img src={src} alt={o.filename} loading="lazy" className="h-full w-full object-cover" />
+                          )}
+                        </button>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
-            )}
-            {Object.keys(jobTexts).length > 0 && (
-              <div className="rounded-xl border border-border bg-panel p-4 shadow-[var(--shadow-panel)]">
-                <div className="mb-3 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
-                  Prompt trace
+            </aside>
+
+            <div className="mx-auto w-full min-w-0 max-w-3xl space-y-5">
+              {error && (
+                <div className="rounded-xl border border-danger/40 bg-danger/10 px-4 py-3 text-[13px] text-danger shadow-[var(--shadow-panel)]" style={{ animation: "fh-fade-up .25s ease-out" }}>
+                  {error}
                 </div>
-                <div className="space-y-2">
-                  {Object.entries(jobTexts).map(([label, text]) => (
-                    <details key={label} className="group rounded-lg border border-border bg-bg-elev transition-colors open:border-border-strong">
-                      <summary className="flex cursor-pointer select-none items-center gap-2 px-3 py-2 text-[12px] font-medium text-muted transition-colors hover:text-text">
-                        <ChevronRight size={12} className="transition-transform group-open:rotate-90" />
-                        {label}
-                      </summary>
-                      <pre className="max-h-48 overflow-y-auto whitespace-pre-wrap break-words border-t border-border px-3 py-2 font-mono text-[11px] leading-relaxed text-text/80">
-                        {text}
-                      </pre>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            )}
-            {workflow && (
-              <RecipeForm
-                client={client}
-                parameters={workflow.parameters || []}
-                values={values}
-                setValue={setValue}
-                imageSlots={imageSlots}
-                setImageSlots={setImageSlots}
-                onError={setError}
-              />
-            )}
-            {!workflow && !error && (
-              <div className="py-20 text-center text-[13px] text-muted">Loading workflows…</div>
-            )}
+              )}
+              {workflow && (
+                <RecipeForm
+                  client={client}
+                  parameters={workflow.parameters || []}
+                  values={values}
+                  setValue={setValue}
+                  imageSlots={imageSlots}
+                  setImageSlots={setImageSlots}
+                  onError={setError}
+                  jobTexts={jobTexts}
+                />
+              )}
+              {!workflow && !error && (
+                <div className="py-20 text-center text-[13px] text-muted">{t.loadingWorkflows}</div>
+              )}
+            </div>
           </div>
         </main>
       </div>
@@ -352,5 +415,6 @@ const execute = async () => {
         onSaved={setEndpointId}
       />
     </div>
+    </LangContext.Provider>
   );
 }

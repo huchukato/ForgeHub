@@ -3,9 +3,12 @@
 import base64
 import hashlib
 import io
+import json
 import re
+import struct
 import subprocess
 import uuid
+import zlib
 from pathlib import Path
 
 from PIL import Image
@@ -71,6 +74,120 @@ def save_output_b64(filename: str, b64: str, subfolder: str = "") -> Path:
     return target
 
 
+# --- Generation metadata embedded in output files -----------------------------
+# The raw request parameters (prompt still containing __wildcards__), workflow
+# id and the ShowText trace (expanded prompt, final QwenVL prompt) are embedded
+# so the files themselves are the prompt history.
+
+META_KEYWORD = "forgehub"
+_EMBEDDABLE_CONTAINER = (".mp4", ".mov", ".webm", ".mkv", ".mp3", ".wav", ".flac", ".ogg", ".m4a")
+_META_SUFFIX = ".meta.json"
+
+
+def _png_text_chunk(keyword: str, text: str) -> bytes:
+    data = keyword.encode("latin-1") + b"\x00" + text.encode("utf-8")
+    return struct.pack(">I", len(data)) + b"tEXt" + data + struct.pack(">I", zlib.crc32(b"tEXt" + data))
+
+
+def _embed_png(path: Path, payload: str) -> bool:
+    raw = path.read_bytes()
+    if not raw.startswith(b"\x89PNG\r\n\x1a\n") or len(raw) < 12:
+        return False
+    # Insert the new tEXt chunk just before the trailing IEND (12 bytes).
+    path.write_bytes(raw[:-12] + _png_text_chunk(META_KEYWORD, payload) + raw[-12:])
+    return True
+
+
+def _embed_container(path: Path, payload: str) -> bool:
+    tmp = path.with_name(f"{path.stem}.embed_tmp{path.suffix}")
+    try:
+        r = subprocess.run(
+            ["ffmpeg", "-y", "-i", str(path), "-map", "0", "-c", "copy",
+             "-metadata", f"{META_KEYWORD}={payload}", str(tmp)],
+            capture_output=True, timeout=180,
+        )
+        if r.returncode != 0:
+            tmp.unlink(missing_ok=True)
+            return False
+        tmp.replace(path)
+        return True
+    except Exception:
+        tmp.unlink(missing_ok=True)
+        return False
+
+
+def _read_png_meta(path: Path) -> dict | None:
+    try:
+        data = path.read_bytes()
+        if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+            return None
+        off = 8
+        while off + 8 <= len(data):
+            length = struct.unpack(">I", data[off:off + 4])[0]
+            ctype = data[off + 4:off + 8]
+            if ctype == b"tEXt":
+                body = data[off + 8:off + 8 + length]
+                kw, _, val = body.partition(b"\x00")
+                if kw.decode("latin-1", errors="replace") == META_KEYWORD:
+                    return json.loads(val.decode("utf-8"))
+            off += 12 + length
+            if ctype == b"IEND":
+                break
+    except Exception:
+        return None
+    return None
+
+
+def _read_container_meta(path: Path) -> dict | None:
+    try:
+        r = subprocess.run(
+            ["ffprobe", "-v", "quiet", "-show_entries", "format_tags",
+             "-of", "json", str(path)],
+            capture_output=True, timeout=15,
+        )
+        tags = json.loads(r.stdout).get("format", {}).get("tags", {})
+        for key, val in tags.items():
+            if key.lower() == META_KEYWORD:
+                return json.loads(val)
+    except Exception:
+        return None
+    return None
+
+
+def write_output_meta(path: Path, meta: dict) -> None:
+    """Embed generation metadata in the output file; sidecar as fallback."""
+    payload = json.dumps(meta, ensure_ascii=False)
+    ext = path.suffix.lower()
+    ok = False
+    try:
+        if ext == ".png":
+            ok = _embed_png(path, payload)
+        elif ext in _EMBEDDABLE_CONTAINER:
+            ok = _embed_container(path, payload)
+    except Exception:
+        ok = False
+    if not ok:
+        (path.parent / f"{path.name}{_META_SUFFIX}").write_text(payload, encoding="utf-8")
+
+
+def read_output_meta(path: Path) -> dict | None:
+    """Read embedded/sidecar metadata for an output file."""
+    ext = path.suffix.lower()
+    meta = None
+    if ext == ".png":
+        meta = _read_png_meta(path)
+    elif ext in _EMBEDDABLE_CONTAINER:
+        meta = _read_container_meta(path)
+    if meta is None:
+        sidecar = path.parent / f"{path.name}{_META_SUFFIX}"
+        if sidecar.is_file():
+            try:
+                meta = json.loads(sidecar.read_text(encoding="utf-8"))
+            except Exception:
+                meta = None
+    return meta
+
+
 def save_uploaded_b64(data: str, original_name: str = "upload.png") -> str:
     """Store an upload under storage/uploads and return the filename."""
     if data.startswith("data:"):
@@ -114,6 +231,7 @@ def delete_output_file(filename: str, subfolder: str = "") -> None:
     if not path.is_file():
         raise FileNotFoundError(f"Output not found: {filename}")
     path.unlink()
+    (path.parent / f"{path.name}{_META_SUFFIX}").unlink(missing_ok=True)
     thumb_dir = SETTINGS.storage_dir / "thumbs"
     if thumb_dir.is_dir():
         for t in thumb_dir.glob(f"{_thumb_name(path)}_*.jpg"):

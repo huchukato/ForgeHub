@@ -2,7 +2,7 @@
   "id": "mmh3-fl2va",
   "name": "MiniMax H3 FL2VA",
   "category": "video",
-  "description": "First/last frame → video con audio (MiniMax H3 turbo, serverless INT8)",
+  "description": "First/last frame \u2192 video con audio (MiniMax H3 turbo, serverless INT8)",
   "handler": "mmh3",
   "remote_file": "MiniMaxH3-Turbo-FL2VA.json",
   "endpoint_id": "s0iopnieywyu7k",
@@ -93,13 +93,14 @@
       "label": "Enhancer preset",
       "type": "select",
       "target": "job",
-      "default": "MiniMax › NSFW FL2VA",
+      "default": "MiniMax \u203a NSFW FL2VA",
       "options": [
-        "MiniMax › NSFW FL2VA",
-        "MiniMax › NSFW FL2VA Loop",
-        "MiniMax › SFW FL2VA",
-        "MiniMax › SFW FL2VA Loop"
-      ]
+        "MiniMax \u203a NSFW FL2VA",
+        "MiniMax \u203a NSFW FL2VA Loop",
+        "MiniMax \u203a SFW FL2VA",
+        "MiniMax \u203a SFW FL2VA Loop"
+      ],
+      "parent": "enhance"
     },
     {
       "key": "226:aspect_ratio",
@@ -166,7 +167,8 @@
         "RealESRGAN_x4plus",
         "RealESRGAN_x4plus_anime_6B",
         "realesrgan-x4minus"
-      ]
+      ],
+      "parent": "upscale"
     },
     {
       "key": "upscale_target",
@@ -182,7 +184,8 @@
         "2K",
         "4K",
         "custom"
-      ]
+      ],
+      "parent": "upscale"
     }
   ]
 }

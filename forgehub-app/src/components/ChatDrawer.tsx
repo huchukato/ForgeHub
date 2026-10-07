@@ -1,6 +1,7 @@
 import { MessageSquare, Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ChatMessage, ForgeHubClient } from "../api";
+import { useT } from "../i18n";
 
 interface Props {
   client: ForgeHubClient;
@@ -25,6 +26,7 @@ function friendlyError(e: unknown): string {
 }
 
 export default function ChatDrawer({ client, workflowId, open, onClose }: Props) {
+  const t = useT();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [busy, setBusy] = useState(false);
@@ -102,7 +104,7 @@ export default function ChatDrawer({ client, workflowId, open, onClose }: Props)
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && send()}
-            placeholder="Type…"
+            placeholder={t.typePlaceholder}
             className="flex-1 rounded-lg border border-border bg-bg-elev px-3 py-2 text-[13px] outline-none transition-all placeholder:text-faint hover:border-border-strong focus:border-accent/70 focus:shadow-[var(--shadow-glow)]"
           />
           <button
