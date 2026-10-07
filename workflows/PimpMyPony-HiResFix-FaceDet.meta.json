@@ -153,6 +153,7 @@
       "key": "92:152:model_name",
       "label": "Upscaler (hires)",
       "type": "select",
+      "parent": "enable_hires",
       "target": "node",
       "default": "4xUltrasharp_4xUltrasharpV10.pth",
       "options": [
@@ -165,6 +166,7 @@
       "key": "92:152:percent",
       "label": "Hires rescale % (50 = 2x netto)",
       "type": "int",
+      "parent": "enable_hires",
       "target": "node",
       "default": 50
     },
@@ -172,6 +174,7 @@
       "key": "92:153:denoise",
       "label": "Hires refine denoise",
       "type": "float",
+      "parent": "enable_hires",
       "target": "node",
       "default": 0.4
     },
@@ -179,6 +182,7 @@
       "key": "92:153:steps",
       "label": "Hires refine steps",
       "type": "int",
+      "parent": "enable_hires",
       "target": "node",
       "default": 12
     },
@@ -186,6 +190,7 @@
       "key": "92:135:denoise",
       "label": "Detailer denoise",
       "type": "float",
+      "parent": "enable_facedet",
       "target": "node",
       "default": 0.35
     },
@@ -193,6 +198,7 @@
       "key": "92:135:steps",
       "label": "Detailer steps",
       "type": "int",
+      "parent": "enable_facedet",
       "target": "node",
       "default": 20
     },
@@ -200,6 +206,7 @@
       "key": "92:133:bbox_threshold",
       "label": "Face detect threshold",
       "type": "float",
+      "parent": "enable_facedet",
       "target": "node",
       "default": 0.5
     }

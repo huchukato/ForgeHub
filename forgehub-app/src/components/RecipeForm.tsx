@@ -93,6 +93,16 @@ const SECTIONS: Array<{ title: string; keys: string[] }> = [
   { title: "Post-processing", keys: ["upscale", "upscale_model", "upscale_target", "rife"] },
 ];
 
+// A select whose only options are on/off is really a boolean toggle.
+const isOnOffSelect = (p: WorkflowParam) =>
+  p.type === "select" &&
+  (p.options ?? []).length === 2 &&
+  new Set(p.options).size === 2 &&
+  (p.options ?? []).every((o) => o === "on" || o === "off");
+
+// Numeric and plain-select params pack two per row; everything else gets a full row.
+const isCompact = (p: WorkflowParam) => p.type === "int" || p.type === "float" || p.type === "select";
+
 interface Props {
   client: ForgeHubClient;
   parameters: WorkflowParam[];
@@ -195,6 +205,9 @@ export default function RecipeForm({ client, parameters, values, setValue, image
         </Select>
       );
     }
+    if (isOnOffSelect(p)) {
+      return <Toggle checked={v === "on"} onChange={(nv) => setValue(p.key, nv ? "on" : "off")} />;
+    }
     if (p.type === "select") {
       return (
         <Select value={String(v ?? "")} onChange={(e) => setValue(p.key, e.target.value)}>
@@ -274,6 +287,85 @@ export default function RecipeForm({ client, parameters, values, setValue, image
   const sectioned = new Set(sections.flatMap((s) => s.params.map((p) => p.key)));
   const rest = parameters.filter((p) => !sectioned.has(p.key));
 
+  // Tuning params declared with "parent": "<toggleKey>" appear only while that
+  // toggle is "on", in a compact two-column panel under the toggle row.
+  const childPanel = (parentKey: string) => {
+    const kids = parameters.filter((p) => p.parent === parentKey);
+    if (!kids.length || values[parentKey] !== "on") return null;
+    return (
+      <div className="grid grid-cols-2 gap-3 rounded-lg border border-border/60 bg-bg-elev/30 p-3">
+        {kids.map((k) => (
+          <div key={k.key} className={isCompact(k) ? "" : "col-span-2"}>
+            <Label>{k.label || k.key}</Label>
+            {renderField(k)}
+          </div>
+        ))}
+      </div>
+    );
+  };
+
+  const renderRows = (params: WorkflowParam[]) => {
+    const rows: React.ReactNode[] = [];
+    for (let i = 0; i < params.length; i++) {
+      const p = params[i];
+      if (p.parent) continue; // shown inside its parent's childPanel
+      if (isOnOffSelect(p)) {
+        const toggles = [p];
+        while (i + 1 < params.length && isOnOffSelect(params[i + 1]) && toggles.length < 2) {
+          toggles.push(params[++i]);
+        }
+        rows.push(
+          <div key={p.key} className={`grid gap-3 ${toggles.length > 1 ? "grid-cols-2" : ""}`}>
+            {toggles.map((t) => (
+              <div key={t.key} className="flex items-center justify-between gap-3 rounded-lg border border-border bg-bg-elev/40 px-3 py-2.5">
+                <span className="text-[12px] text-muted leading-tight">{t.label || t.key}</span>
+                {renderField(t)}
+              </div>
+            ))}
+          </div>,
+        );
+        for (const t of toggles) {
+          const panel = childPanel(t.key);
+          if (panel) rows.push(panel);
+        }
+        continue;
+      }
+      if (p.type === "bool") {
+        rows.push(
+          <div key={p.key} className="flex items-center justify-between">
+            <Label>{p.label || p.key}</Label>
+            {renderField(p)}
+          </div>,
+        );
+        continue;
+      }
+      if (isCompact(p)) {
+        const group = [p];
+        while (i + 1 < params.length && !params[i + 1].parent && isCompact(params[i + 1]) && group.length < 2) {
+          group.push(params[++i]);
+        }
+        rows.push(
+          <div key={p.key} className={`grid gap-3 ${group.length > 1 ? "grid-cols-2" : ""}`}>
+            {group.map((g) => (
+              <div key={g.key}>
+                <Label>{g.label || g.key}</Label>
+                {renderField(g)}
+              </div>
+            ))}
+          </div>,
+        );
+        continue;
+      }
+      rows.push(
+        <div key={p.key}>
+          <Label>{p.label || p.key}</Label>
+          {renderField(p)}
+        </div>,
+      );
+    }
+    return rows;
+  };
+
   return (
     <div className="space-y-4">
       {sections.map((s) => (
@@ -287,14 +379,7 @@ export default function RecipeForm({ client, parameters, values, setValue, image
               </span>
             )}
           </div>
-          <div className="space-y-3">
-            {s.params.map((p) => (
-              <div key={p.key} className={p.type === "bool" ? "flex items-center justify-between" : ""}>
-                {(p.label || p.key).toLowerCase() !== s.title.toLowerCase() && <Label>{p.label || p.key}</Label>}
-                {renderField(p)}
-              </div>
-            ))}
-          </div>
+          <div className="space-y-3">{renderRows(s.params)}</div>
         </Card>
       ))}
       {rest.length > 0 && (
@@ -303,14 +388,7 @@ export default function RecipeForm({ client, parameters, values, setValue, image
             <span className="h-3 w-[3px] rounded-full bg-gradient-to-b from-accent to-magenta" />
             Parameters
           </div>
-          <div className="space-y-3">
-            {rest.map((p) => (
-              <div key={p.key} className={p.type === "bool" ? "flex items-center justify-between" : ""}>
-                <Label>{p.label || p.key}</Label>
-                {renderField(p)}
-              </div>
-            ))}
-          </div>
+          <div className="space-y-3">{renderRows(rest)}</div>
         </Card>
       )}
       {parameters.length === 0 && (
