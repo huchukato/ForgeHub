@@ -15,7 +15,8 @@
       "key": "prompt",
       "label": "Prompt",
       "type": "text",
-      "target": "job"
+      "target": "job",
+      "wildcard_prefix": "vid/"
     },
     {
       "key": "images",

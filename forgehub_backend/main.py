@@ -20,6 +20,7 @@ from forgehub_backend.executor import get_backend
 from forgehub_backend.files import (
     delete_output_file,
     read_output_file,
+    save_uploaded_b64,
     save_uploaded_image,
     thumbnail_path,
 )
@@ -308,13 +309,17 @@ async def chat(request: ChatRequest) -> ChatResponse:
 
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
-    if not file.content_type or not file.content_type.startswith("image/"):
-        raise HTTPException(status_code=400, detail="Only image uploads are supported")
+    ct = file.content_type or ""
+    if not (ct.startswith("image/") or ct.startswith("video/")):
+        raise HTTPException(status_code=400, detail="Only image/video uploads are supported")
     data = await file.read()
     if len(data) > SETTINGS.max_upload_mb * 1024 * 1024:
-        raise HTTPException(status_code=413, detail="Image too large")
-    b64 = base64.b64encode(data).decode("ascii")
-    filename = save_uploaded_image(b64, file.filename or "upload.png")
+        raise HTTPException(status_code=413, detail="File too large")
+    if ct.startswith("video/"):
+        filename = save_uploaded_b64(base64.b64encode(data).decode("ascii"), file.filename or "upload.mp4")
+    else:
+        b64 = base64.b64encode(data).decode("ascii")
+        filename = save_uploaded_image(b64, file.filename or "upload.png")
     return {"filename": filename, "url": f"/outputs/{filename}?type=input"}
 
 

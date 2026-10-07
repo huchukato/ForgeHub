@@ -1,31 +1,22 @@
 {
-  "126": {
+  "92": {
     "inputs": {
-      "frame_rate": 48,
-      "loop_count": 0,
       "filename_prefix": [
         "261",
         4
       ],
-      "format": "video/h264-mp4",
-      "pix_fmt": "yuv420p",
-      "crf": 20,
-      "save_metadata": false,
-      "trim_to_audio": false,
-      "pingpong": false,
-      "save_output": true,
-      "images": [
-        "254:177",
-        0
-      ],
-      "audio": [
-        "105:23",
+      "format": "auto",
+      "format.codec": "auto",
+      "codec": "auto",
+      "video-preview": "",
+      "video": [
+        "105:91",
         0
       ]
     },
-    "class_type": "VHS_VideoCombine",
+    "class_type": "SaveVideo",
     "_meta": {
-      "title": "48FPS"
+      "title": "Save Video at 24 FPS"
     }
   },
   "220": {
@@ -61,22 +52,12 @@
   },
   "259": {
     "inputs": {
-      "image": "PMP/FD_2026-09-25/162549_00001_.png [output]",
-      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"PMP/FD_2026-09-25/162549_00001_.png [output]\"}"
+      "image": "PMP/FD_2026-10-07_010.jpg [output]",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"PMP/FD_2026-10-07_010.jpg [output]\"}"
     },
     "class_type": "PixaromaLoadImageMini",
     "_meta": {
       "title": "Reference 1"
-    }
-  },
-  "260": {
-    "inputs": {
-      "image": "Qwen21_2026-09-25_001%.jpg [output]",
-      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"Qwen21_2026-09-25_001%.jpg [output]\"}"
-    },
-    "class_type": "PixaromaLoadImageMini",
-    "_meta": {
-      "title": "Reference 2"
     }
   },
   "261": {
@@ -112,13 +93,24 @@
     }
   },
   "266": {
-    "inputs": {},
-    "class_type": "PixaromaGroupSwitch",
+    "inputs": {
+      "label_json": "{\"text\":\"MiniMax H3\",\"fontSize\":98,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#3bd172\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
     "_meta": {
-      "title": "Output"
+      "title": "Label Pixaroma"
     }
   },
   "267": {
+    "inputs": {
+      "label_json": "{\"text\":\"T2V+I2V+R2V+V2V + Qwen3.x Prompting + RIFE + Upscale\",\"fontSize\":17,\"fontFamily\":\"Courier New\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#818cf8\",\"padding\":10,\"borderRadius\":6,\"opacity\":0.7,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "268": {
     "inputs": {
       "max_resolution": 1024,
       "jpeg_quality": 80,
@@ -142,6 +134,39 @@
     "class_type": "ModelPreviewOverrideKJ",
     "_meta": {
       "title": "Model Preview Override"
+    }
+  },
+  "270": {
+    "inputs": {
+      "label_json": "{\"text\":\"SINGULARITY\",\"fontSize\":44,\"fontFamily\":\"Impact\",\"fontColor\":\"#4ade80\",\"textAlign\":\"left\",\"backgroundColor\":\"transparent\",\"padding\":10,\"borderRadius\":9,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "273": {
+    "inputs": {
+      "image": "Qwen21_2026-09-25_001%.jpg [output]",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"Qwen21_2026-09-25_001%.jpg [output]\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "Reference 2"
+    }
+  },
+  "275": {
+    "class_type": "LoraLoaderModelOnly",
+    "inputs": {
+      "lora_name": "h3-realism-people-t2v-i2v-r2v.safetensors",
+      "strength_model": 0.0,
+      "model": [
+        "105:269",
+        0
+      ]
+    },
+    "_meta": {
+      "title": "Style LoRA (realism / char_swap)"
     }
   },
   "105:10": {
@@ -220,7 +245,7 @@
   "105:16": {
     "inputs": {
       "model": [
-        "267",
+        "268",
         0
       ],
       "conditioning": [
@@ -235,7 +260,7 @@
   },
   "105:15": {
     "inputs": {
-      "noise_seed": 298562555333764
+      "noise_seed": 254650373981327
     },
     "class_type": "RandomNoise",
     "_meta": {
@@ -267,7 +292,7 @@
       "steps": 20,
       "denoise": 1,
       "model": [
-        "267",
+        "268",
         0
       ]
     },
@@ -368,7 +393,15 @@
         0
       ],
       "ref_images.ref_image_1": [
-        "260",
+        "272",
+        0
+      ],
+      "ref_images.ref_image_2": [
+        "273",
+        0
+      ],
+      "ref_videos.ref_video_0": [
+        "274",
         0
       ]
     },
@@ -418,21 +451,17 @@
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
       "preset_prompt": "MiniMax › NSFW R2VA",
-      "camera_tag": "None",
+      "camera_tag": "[ROLL]",
       "prompt": "",
       "max_tokens": 8192,
       "keep_model_loaded": false,
-      "seed": 1,
+      "seed": 2276705724,
       "keep_last_prompt": false,
       "passthrough": false,
       "frame_count": 16,
       "duration": "5s",
       "image": [
         "261",
-        0
-      ],
-      "image2": [
-        "260",
         0
       ]
     },
@@ -445,7 +474,7 @@
     "inputs": {
       "attention": "comfy kitchen attention",
       "model": [
-        "105:263",
+        "275",
         0
       ]
     },
@@ -454,71 +483,7 @@
       "title": "Backend di attenzione del modello"
     }
   },
-  "254:176": {
-    "inputs": {
-      "model": "rife425_ensemble_False_scale_1_sim",
-      "precision": "fp16",
-      "resolution_profile": "large",
-      "batch_size": 1
-    },
-    "class_type": "AutoLoadRifeTensorrtModel",
-    "_meta": {
-      "title": "(Down)load RIFE TensorRT Model"
-    }
-  },
-  "254:186": {
-    "inputs": {
-      "model": "2xLexicaRRDBNet",
-      "precision": "fp16",
-      "batch_size": 2
-    },
-    "class_type": "LoadUpscalerTensorrtModel",
-    "_meta": {
-      "title": "Load Upscale Tensorrt Model"
-    }
-  },
-  "254:185": {
-    "inputs": {
-      "resize_to": "2K",
-      "batch_size": 2,
-      "resize_width": 2048,
-      "resize_height": 2048,
-      "images": [
-        "105:10",
-        0
-      ],
-      "upscaler_trt_model": [
-        "254:186",
-        0
-      ]
-    },
-    "class_type": "UpscalerTensorrt",
-    "_meta": {
-      "title": "Upscaler Tensorrt ⚡"
-    }
-  },
-  "254:177": {
-    "inputs": {
-      "clear_cache_after_n_frames": 100,
-      "multiplier": 2,
-      "keep_model_loaded": false,
-      "batch_size": 1,
-      "multiplier_list": "",
-      "frames": [
-        "254:185",
-        0
-      ],
-      "rife_trt_model": [
-        "254:176",
-        0
-      ]
-    },
-    "class_type": "AutoRifeTensorrt",
-    "_meta": {
-      "title": "Auto RIFE TensorRT"
-    }
-  },
-  "105:263": {
+  "105:269": {
     "class_type": "LoraLoaderModelOnly",
     "inputs": {
       "lora_name": "minimax_h3_ref2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
@@ -527,6 +492,30 @@
         "105:6",
         0
       ]
+    }
+  },
+  "272": {
+    "inputs": {
+      "image": "Qwen21_2026-09-25_001%.jpg [output]",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"Qwen21_2026-09-25_001%.jpg [output]\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "Reference 2"
+    }
+  },
+  "274": {
+    "class_type": "PixaromaLoadVideo",
+    "inputs": {
+      "video": "",
+      "max_frames": 0,
+      "force_fps": 24.0,
+      "skip_first_frames": 0,
+      "custom_width": 0,
+      "custom_height": 0
+    },
+    "_meta": {
+      "title": "Load Video Pixaroma (ref)"
     }
   }
 }

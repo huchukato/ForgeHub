@@ -1,4 +1,4 @@
-import { ImagePlus, X } from "lucide-react";
+import { Film, ImagePlus, X } from "lucide-react";
 import { useEffect, useRef } from "react";
 import type { ForgeHubClient, WorkflowParam } from "../api";
 import { Card, Label, Select, TextArea, TextInput, Toggle } from "./ui";
@@ -212,12 +212,45 @@ export default function RecipeForm({ client, parameters, values, setValue, image
       );
     }
     if (p.type === "video") {
+      const fname = String(v ?? "");
       return (
-        <TextInput
-          value={String(v ?? "")}
-          placeholder="file video (upload)"
-          onChange={(e) => setValue(p.key, e.target.value)}
-        />
+        <div className="flex items-center gap-2">
+          {fname && (
+            <div className="group relative flex items-center gap-1.5 rounded-lg border border-border bg-bg-elev/50 px-2.5 py-1.5 text-xs text-muted">
+              <Film size={12} className="text-accent" />
+              <span className="max-w-48 truncate">{fname}</span>
+              <button
+                onClick={() => setValue(p.key, "")}
+                className="rounded-full bg-danger p-0.5 text-white opacity-0 transition-opacity group-hover:opacity-100"
+              >
+                <X size={10} />
+              </button>
+            </div>
+          )}
+          <input
+            ref={(el) => { fileRefs.current[p.key] = el; }}
+            type="file"
+            accept="video/*"
+            className="hidden"
+            onChange={async (e) => {
+              const f = e.target.files?.[0];
+              e.target.value = "";
+              if (!f) return;
+              try {
+                const res = await client.uploadImage(f);
+                setValue(p.key, res.filename);
+              } catch (err) {
+                onError(String(err));
+              }
+            }}
+          />
+          <button
+            onClick={() => fileRefs.current[p.key]?.click()}
+            className="flex items-center gap-1.5 rounded-lg border border-dashed border-border-strong bg-bg-elev/50 px-3 py-1.5 text-xs text-muted transition-all duration-150 hover:border-accent/60 hover:text-accent"
+          >
+            <ImagePlus size={14} /> {fname ? "Cambia" : "Carica video"}
+          </button>
+        </div>
       );
     }
     // text — prompt gets the wildcard-autocomplete textarea

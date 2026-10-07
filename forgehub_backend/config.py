@@ -15,7 +15,7 @@ class Settings:
         self.app_host = os.getenv("FORGEHUB_HOST", "0.0.0.0")
         self.app_port = int(os.getenv("FORGEHUB_PORT", "8484"))
         self.workflow_dir = Path(os.getenv("FORGEHUB_WORKFLOW_DIR", "/workspace/workflows"))
-        self.max_upload_mb = int(os.getenv("FORGEHUB_MAX_UPLOAD_MB", "32"))
+        self.max_upload_mb = int(os.getenv("FORGEHUB_MAX_UPLOAD_MB", "256"))
         self.max_chat_images = int(os.getenv("FORGEHUB_MAX_CHAT_IMAGES", "3"))
         self.max_image_pixels = int(os.getenv("FORGEHUB_MAX_IMAGE_PIXELS", "1024"))
         self.cors_origins = [origin.strip() for origin in os.getenv("FORGEHUB_CORS_ORIGINS", "*").split(",") if origin.strip()]

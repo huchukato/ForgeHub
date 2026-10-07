@@ -1,10 +1,10 @@
 {
-  "id": "mmh3-r2va",
-  "name": "MiniMax H3 R2VA",
+  "id": "mmh3-singularity-r2va",
+  "name": "MiniMax H3 Singularity R2VA",
   "category": "video",
-  "description": "Reference → video con audio (Singularity ref2va, serverless INT8)",
+  "description": "Reference → video con audio (Singularity fusion, serverless INT8)",
   "handler": "mmh3",
-  "remote_file": "MiniMaxH3-Turbo-R2VA.json",
+  "remote_file": "MiniMaxH3-Singularity-R2VA.json",
   "endpoint_id": "qrmygqi9xiflap",
   "outputs": [
     "video",
@@ -20,10 +20,28 @@
     },
     {
       "key": "images",
-      "label": "Reference",
+      "label": "Reference images (max 3)",
       "type": "images",
       "target": "job",
-      "max": 2
+      "max": 3
+    },
+    {
+      "key": "video",
+      "label": "Reference video (optional)",
+      "type": "video",
+      "target": "job"
+    },
+    {
+      "key": "lora",
+      "label": "Style LoRA",
+      "type": "select",
+      "target": "job",
+      "default": "none",
+      "options": [
+        "none",
+        "realism",
+        "char_swap"
+      ]
     },
     {
       "key": "seconds",

@@ -21,3 +21,6 @@ backend-build/
 
 # Runtime data (outputs, uploads, saved settings incl. API key)
 data/
+
+# Stray pyinstaller dist dir (root)
+build/
