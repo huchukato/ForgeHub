@@ -2,6 +2,7 @@
 
 import base64
 import json
+import time
 from contextlib import asynccontextmanager
 from urllib.parse import quote
 from pathlib import Path
@@ -393,8 +394,16 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
     backend = app.state.backend
 
     job_params, node_params = _split_parameters(request, meta)
+    bypass = [
+        nid for group, ids in meta.bypass_groups.items()
+        if str(job_params.pop(f"enable_{group}", "on")).lower() in ("off", "false", "0")
+        for nid in ids
+    ]
     job_input: dict[str, Any] = {**request.extra_data, **job_params}
+    if bypass:
+        job_input["bypass_nodes"] = bypass
     job_input["workflow"] = meta.remote_file or f"{meta.id}.json"
+    job_input["job_name"] = f"{meta.id}-{time.strftime('%m%d-%H%M%S')}"
     if meta.endpoint_id:
         job_input["endpoint_id"] = meta.endpoint_id
     if request.images:
@@ -552,7 +561,10 @@ async def apply_chat_actions(payload: dict[str, Any]):
     backend = app.state.backend
     job_input = {}
     if SETTINGS.execution_mode == "serverless":
-        job_input = {"workflow": meta.remote_file or f"{meta.id}.json"}
+        job_input = {
+            "workflow": meta.remote_file or f"{meta.id}.json",
+            "job_name": f"{meta.id}-{time.strftime('%m%d-%H%M%S')}",
+        }
         if meta.endpoint_id:
             job_input["endpoint_id"] = meta.endpoint_id
     job_id = await backend.queue(workflow, parameters, job_input)

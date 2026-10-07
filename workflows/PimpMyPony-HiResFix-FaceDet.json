@@ -1,0 +1,299 @@
+{
+  "82": {
+    "inputs": {
+      "text": "score_9, score_8_up, score_7_up, white background, 1girl, kido saori, light purple hair, very long hair, bangs, aqua eyes, large breasts, __pmp/prmpt/clths/types_general__",
+      "seed": 5618475788141,
+      "populated_text": "score_9, score_8_up, score_7_up, white background, 1girl, kido saori, light purple hair, very long hair, bangs, aqua eyes, large breasts, beachwear",
+      "mode": "populate",
+      "deduplicate": "score_9, score_8_up, score_7_up, masterwork, masterpiece, best quality, detailed, depth of field, high detail, very aesthetic, dynamic pose, dynamic angle, pier, day, dim lighting, sidelighting, colored shadow, 1girl, tifa lockhart, final fantasy vii, black hair, red eyes, large breasts, gag, areola slip, 1boy, large penis, veiny penis, from above, looking up, handjob, allfours, open mouth, oral sex, deepthroat, veined penis, cum, cum on tongue, ",
+      "downvote_factor": 0.5,
+      "base_model": "None"
+    },
+    "class_type": "WildcardProcessor",
+    "_meta": {
+      "title": "🃏 Wildcard Processor"
+    }
+  },
+  "139": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma"
+    }
+  },
+  "140": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma"
+    }
+  },
+  "143": {
+    "inputs": {
+      "label_json": "{\"text\":\"Pimp My Pony\",\"fontSize\":119,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#ec4899\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "144": {
+    "inputs": {
+      "label_json": "{\"text\":\"PonyXL / Illustrious Text To Image + HiResFix + FaceDetailer\",\"fontSize\":29,\"fontFamily\":\"Courier New\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#f472b6\",\"padding\":10,\"borderRadius\":6,\"opacity\":0.7,\"fontWeight\":\"normal\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "148": {
+    "inputs": {
+      "images": [
+        "92:136",
+        1
+      ],
+      "SaveImageState": "{\"version\":1,\"folder\":\"PMP\",\"pattern\":\"FD_%date:yyyy-MM-dd%_%counter%\",\"format\":\"jpg\",\"quality\":100,\"embedWorkflow\":true,\"civitaiMeta\":false,\"saveOnRun\":true,\"dateStyle\":\"yyyy-MM-dd\",\"counterDigits\":3,\"folded\":true,\"hideBarWhenFolded\":false,\"webpLossless\":false,\"inputSubfolders\":false,\"showOpen\":true,\"showCopy\":true,\"showFolder\":true,\"showPng\":true,\"showJpg\":true,\"showWebp\":true}"
+    },
+    "class_type": "PixaromaSaveImage",
+    "_meta": {
+      "title": "Save Image Pixaroma"
+    }
+  },
+  "150": {
+    "inputs": {
+      "note_json": "{\"version\":1,\"content\":\"<h1 style=\\\"color: #ff8c42\\\">PIMPMYPONY TXT2IMG — WILDCARDS + FACE DETAILER</h1>\\n<p>PonyXL / Illustrious Text-to-Image with TagForge wildcards and built-in <b>Easy-Use Face Detailer</b> (no Impact Pack needed).</p>\\n\\n<h2>🖥️ Civitai Model</h2>\\n<ul>\\n<li><a href=\\\"https://civitai.com/models/1195827?modelVersionId=2628215\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">PimpMyPony - Real Anime</a></li>\\n<li><a href=\\\"https://civitai.com/models/1195827?modelVersionId=2611135\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">PimpMyPony - InCase Style</a></li>\\n<li><a href=\\\"https://civitai.com/models/1195827?modelVersionId=1346446\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">PimpMyPony - Semi Real Anime</a></li>\\n</ul>\\n<p>The workflow ships with <code>ilustmix_v111.safetensors</code> — any Pony/Illustrious XL checkpoint works.</p>\\n<hr>\\n\\n<h2>😊 FACE DETAILER (Easy-Use — no Impact Pack)</h2>\\n<p>Runs on <code>UltralyticsDetector → PreDetailerFix → DetailerFix</code> from <b>ComfyUI-Easy-Use</b>.</p>\\n<p><b>Required detector models:</b></p>\\n<ul>\\n<li><code>face_yolov8m.pt</code> → <code>ComfyUI/models/ultralytics/bbox/</code><br>\\n<a href=\\\"https://huggingface.co/Bingsu/adetailer/resolve/main/face_yolov8m.pt\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">🔗 download</a></li>\\n<li><code>sam_vit_b_01ec64.pth</code> → <code>ComfyUI/models/sams/</code><br>\\n<a href=\\\"https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth\\\" target=\\\"_blank\\\" rel=\\\"noopener noreferrer\\\">🔗 download</a></li>\\n</ul>\\n<hr>\\n\\n<h2>🎛️ AutoTag Node with Wildcards included</h2>\\n<p>Install it from ComfyUI Manager or clone the repo:</p>\\n<pre>cd ComfyUI/custom_nodes\\ngit clone https://github.com/huchukato/ComfyUI-TagForge.git</pre>\\n\\n<p>✨ <b>Wildcard Sub-Selection</b> (a1111-sd-webui-tagcomplete style):</p>\\n<ul>\\n<li>Type <code>__</code> to see available wildcards</li>\\n<li>Select a wildcard with arrow keys and press Enter → inserts <code>__wildcard_name__</code></li>\\n<li>Auto-show options → immediately displays all options from that wildcard</li>\\n<li>Select an option and press Enter → replaces wildcard with chosen option</li>\\n<li>ESC → keeps inserted wildcard and closes options</li>\\n</ul>\\n\\n<p>🌟 <b>Features</b></p>\\n<ul>\\n<li>Smart parsing: wildcards with complex paths (e.g. <code>__pmp/blwjob/blwjb__</code>)</li>\\n<li>Line-by-line options: each line in wildcard file becomes a separate option</li>\\n<li>Text overflow handling: long options truncated with hover expansion</li>\\n<li>Full compatibility with existing wildcard files and formats</li>\\n<li>Multiple sources: repository, ComfyUI/models and DynamicPrompts</li>\\n</ul>\\n\\n<p>📁 <b>Wildcard Sources</b> (in priority order):</p>\\n<ol>\\n<li>Repository wildcards/ folder</li>\\n<li>ComfyUI models/wildcards/</li>\\n<li>ComfyUI custom_nodes/wildcards/</li>\\n<li>DynamicPrompts wildcards/</li>\\n<li>Extra model paths configuration</li>\\n</ol>\\n<p><i>This extension is based on ComfyUI-Custom-Scripts.</i></p>\\n<hr>\\n\\n<h2>📁 Manual Wildcard Setup (Optional)</h2>\\n<p>To use wildcards with Easy-Use you may need to copy the wildcards folder:</p>\\n<pre>cp -r /path/to/ComfyUI-TagForge/wildcards \\\\\\n    /path/to/ComfyUI/custom_nodes/ComfyUI-Easy-Use/wildcards/</pre>\\n<p>Then <b>restart ComfyUI</b> to load the new wildcards.</p>\",\"buttonColor\":\"#f66744\",\"lineColor\":\"#f66744\",\"width\":517.0199082421873,\"height\":814.8184835546876}"
+    },
+    "class_type": "PixaromaNote",
+    "_meta": {
+      "title": "README"
+    }
+  },
+  "157": {
+    "inputs": {
+      "image1": [
+        "92:132",
+        1
+      ],
+      "image2": [
+        "92:136",
+        1
+      ]
+    },
+    "class_type": "PixaromaCompare",
+    "_meta": {
+      "title": "Image Compare Pixaroma"
+    }
+  },
+  "162": {
+    "inputs": {
+      "images": [
+        "92:132",
+        1
+      ],
+      "SaveImageState": "{\"version\":1,\"folder\":\"PMP\",\"pattern\":\"RAW_%date:yyyy-MM-dd%_%counter%\",\"format\":\"jpg\",\"quality\":100,\"embedWorkflow\":true,\"civitaiMeta\":false,\"saveOnRun\":false,\"dateStyle\":\"yyyy-MM-dd\",\"counterDigits\":3,\"folded\":true,\"hideBarWhenFolded\":false,\"webpLossless\":false,\"inputSubfolders\":false,\"showOpen\":true,\"showCopy\":true,\"showFolder\":true,\"showPng\":true,\"showJpg\":true,\"showWebp\":true,\"patternRaw\":\"RAW_%date:yyyy-MM-dd%_%counter%\"}"
+    },
+    "class_type": "PixaromaSaveImage",
+    "_meta": {
+      "title": "Raw Image"
+    }
+  },
+  "163": {
+    "inputs": {
+      "images": [
+        "92:153",
+        1
+      ],
+      "SaveImageState": "{\"version\":1,\"folder\":\"PMP\",\"pattern\":\"HRF_%date:yyyy-MM-dd%_%counter%\",\"format\":\"jpg\",\"quality\":100,\"embedWorkflow\":true,\"civitaiMeta\":false,\"saveOnRun\":false,\"dateStyle\":\"yyyy-MM-dd\",\"counterDigits\":3,\"folded\":true,\"hideBarWhenFolded\":false,\"webpLossless\":false,\"inputSubfolders\":false,\"showOpen\":true,\"showCopy\":true,\"showFolder\":true,\"showPng\":true,\"showJpg\":true,\"showWebp\":true,\"patternRaw\":\"HRF_%date:yyyy-MM-dd%_%counter%\"}"
+    },
+    "class_type": "PixaromaSaveImage",
+    "_meta": {
+      "title": "HiResFix"
+    }
+  },
+  "164": {
+    "inputs": {
+      "images": [
+        "92:136",
+        1
+      ],
+      "SaveImageState": "{\"version\":1,\"folder\":\"PMP\",\"pattern\":\"FD_%date:yyyy-MM-dd%_%counter%\",\"format\":\"jpg\",\"quality\":100,\"embedWorkflow\":true,\"civitaiMeta\":false,\"saveOnRun\":false,\"dateStyle\":\"yyyy-MM-dd\",\"counterDigits\":3,\"folded\":true,\"hideBarWhenFolded\":false,\"webpLossless\":false,\"inputSubfolders\":false,\"showOpen\":true,\"showCopy\":true,\"showFolder\":true,\"showPng\":true,\"showJpg\":true,\"showWebp\":true,\"patternRaw\":\"FD_%date:yyyy-MM-dd%_%counter%\"}"
+    },
+    "class_type": "PixaromaSaveImage",
+    "_meta": {
+      "title": "Face Detailer"
+    }
+  },
+  "92:131": {
+    "inputs": {
+      "ckpt_name": "pimpmypony_pmpSemiRealAnime.safetensors",
+      "config_name": "Default",
+      "vae_name": "Baked VAE",
+      "clip_skip": -2,
+      "lora_name": "None",
+      "lora_model_strength": 1,
+      "lora_clip_strength": 1,
+      "resolution": "832 x 1216",
+      "empty_latent_width": 512,
+      "empty_latent_height": 512,
+      "positive": [
+        "82",
+        0
+      ],
+      "positive_token_normalization": "none",
+      "positive_weight_interpretation": "comfy",
+      "negative": "score_6, score_5, score_4, worst quality, low quality, ugly, malformed, bad anatomy, grayscale",
+      "negative_token_normalization": "none",
+      "negative_weight_interpretation": "comfy",
+      "batch_size": 1,
+      "a1111_prompt_style": false
+    },
+    "class_type": "easy fullLoader",
+    "_meta": {
+      "title": "EasyLoader (Full)"
+    }
+  },
+  "92:132": {
+    "inputs": {
+      "steps": 30,
+      "cfg": 4.5,
+      "sampler_name": "euler_ancestral",
+      "scheduler": "karras",
+      "denoise": 1,
+      "image_output": "Hide",
+      "link_id": 0,
+      "save_prefix": "ComfyUI",
+      "seed": 114240455744071,
+      "pipe": [
+        "92:131",
+        0
+      ]
+    },
+    "class_type": "easy fullkSampler",
+    "_meta": {
+      "title": "EasyKSampler (Full)"
+    }
+  },
+  "92:133": {
+    "inputs": {
+      "model_name": "bbox/face_yolov8m.pt",
+      "bbox_threshold": 0.5,
+      "bbox_dilation": 10,
+      "bbox_crop_factor": 3
+    },
+    "class_type": "easy ultralyticsDetectorPipe",
+    "_meta": {
+      "title": "UltralyticsDetector (Pipe)"
+    }
+  },
+  "92:134": {
+    "inputs": {
+      "model_name": "sam_vit_b_01ec64.pth",
+      "device_mode": "AUTO",
+      "sam_detection_hint": "center-1",
+      "sam_dilation": 0,
+      "sam_threshold": 0.93,
+      "sam_bbox_expansion": 0,
+      "sam_mask_hint_threshold": 0.7,
+      "sam_mask_hint_use_negative": "False"
+    },
+    "class_type": "easy samLoaderPipe",
+    "_meta": {
+      "title": "SAMLoader (Pipe)"
+    }
+  },
+  "92:135": {
+    "inputs": {
+      "guide_size": 512,
+      "guide_size_for": true,
+      "max_size": 768,
+      "seed": 2773739466069,
+      "steps": 20,
+      "cfg": 7,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 0.35,
+      "feather": 5,
+      "noise_mask": true,
+      "force_inpaint": true,
+      "drop_size": 10,
+      "wildcard": "",
+      "cycle": 1,
+      "pipe": [
+        "92:153",
+        0
+      ],
+      "bbox_segm_pipe": [
+        "92:133",
+        0
+      ],
+      "sam_pipe": [
+        "92:134",
+        0
+      ]
+    },
+    "class_type": "easy preDetailerFix",
+    "_meta": {
+      "title": "PreDetailerFix"
+    }
+  },
+  "92:136": {
+    "inputs": {
+      "image_output": "Hide",
+      "link_id": 0,
+      "save_prefix": "ComfyUI",
+      "pipe": [
+        "92:135",
+        0
+      ]
+    },
+    "class_type": "easy detailerFix",
+    "_meta": {
+      "title": "DetailerFix"
+    }
+  },
+  "92:152": {
+    "inputs": {
+      "model_name": "4xUltrasharp_4xUltrasharpV10.pth",
+      "rescale_after_model": true,
+      "rescale_method": "lanczos",
+      "rescale": "by percentage",
+      "percent": 50,
+      "width": 1024,
+      "height": 1024,
+      "longer_side": 1024,
+      "crop": "disabled",
+      "image_output": "Hide",
+      "link_id": 0,
+      "save_prefix": "ComfyUI",
+      "pipe": [
+        "92:132",
+        0
+      ]
+    },
+    "class_type": "easy hiresFix",
+    "_meta": {
+      "title": "HiresFix"
+    }
+  },
+  "92:153": {
+    "inputs": {
+      "steps": 12,
+      "cfg": 6,
+      "sampler_name": "euler",
+      "scheduler": "simple",
+      "denoise": 0.4,
+      "image_output": "Hide",
+      "link_id": 0,
+      "save_prefix": "ComfyUI",
+      "seed": 212530159271302,
+      "pipe": [
+        "92:152",
+        0
+      ]
+    },
+    "class_type": "easy fullkSampler",
+    "_meta": {
+      "title": "EasyKSampler (Full)"
+    }
+  }
+}

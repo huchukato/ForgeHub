@@ -1,14 +1,29 @@
 {
-  "id": "pimpmypony-facedet",
-  "name": "PimpMyPony Face Detailer",
+  "id": "pimpmypony-hiresfix-facedet",
+  "name": "PimpMyPony HiRes + FaceDet",
   "category": "image",
-  "description": "Pony / Illustrious text-to-image with wildcards + YOLO/SAM face detailer pass (serverless)",
+  "description": "Pony / Illustrious T2I con wildcards — hires fix e face detailer attivabili a gruppi (serverless)",
   "handler": "pony",
-  "remote_file": "PimpMyPony-FaceDet.json",
+  "remote_file": "PimpMyPony-HiResFix-FaceDet.json",
   "endpoint_id": "rm1dvsnh3gxlew",
   "outputs": [
     "image"
   ],
+  "bypass_groups": {
+    "hires": [
+      "92:152",
+      "92:153",
+      "163"
+    ],
+    "facedet": [
+      "92:133",
+      "92:134",
+      "92:135",
+      "92:136",
+      "157",
+      "164"
+    ]
+  },
   "parameters": [
     {
       "key": "prompt",
@@ -42,15 +57,38 @@
       ]
     },
     {
+      "key": "enable_hires",
+      "label": "Hires fix (4x → lanczos 50% + refine)",
+      "type": "select",
+      "target": "job",
+      "default": "on",
+      "options": [
+        "on",
+        "off"
+      ]
+    },
+    {
+      "key": "enable_facedet",
+      "label": "Face detailer (YOLO + SAM)",
+      "type": "select",
+      "target": "job",
+      "default": "on",
+      "options": [
+        "on",
+        "off"
+      ]
+    },
+    {
       "key": "92:131:ckpt_name",
       "label": "Checkpoint",
       "type": "select",
       "target": "node",
-      "default": "pimpmypony_pmpInCaseEnhanced.safetensors",
+      "default": "pimpmypony_pmpSemiRealAnime.safetensors",
       "options": [
+        "pimpmypony_pmpSemiRealAnime.safetensors",
         "pimpmypony_pmpInCaseEnhanced.safetensors",
-        "ilustmix_v111.safetensors",
-        "pimpmypony_pmpIncaseStyle.safetensors"
+        "pimpmypony_pmpIncaseStyle.safetensors",
+        "ilustmix_v111.safetensors"
       ]
     },
     {
@@ -58,7 +96,7 @@
       "label": "Image size",
       "type": "select",
       "target": "node",
-      "default": "896 x 1152",
+      "default": "832 x 1216",
       "options": [
         "1024 x 1024",
         "1152 x 896",
@@ -81,7 +119,7 @@
       "label": "CFG",
       "type": "float",
       "target": "node",
-      "default": 6
+      "default": 4.5
     },
     {
       "key": "92:132:sampler_name",
@@ -110,6 +148,39 @@
         "simple",
         "sgm_uniform"
       ]
+    },
+    {
+      "key": "92:152:model_name",
+      "label": "Upscaler (hires)",
+      "type": "select",
+      "target": "node",
+      "default": "4xUltrasharp_4xUltrasharpV10.pth",
+      "options": [
+        "4xUltrasharp_4xUltrasharpV10.pth",
+        "4x-AnimeSharp.pth",
+        "RealESRGAN_x4plus.pth"
+      ]
+    },
+    {
+      "key": "92:152:percent",
+      "label": "Hires rescale % (50 = 2x netto)",
+      "type": "int",
+      "target": "node",
+      "default": 50
+    },
+    {
+      "key": "92:153:denoise",
+      "label": "Hires refine denoise",
+      "type": "float",
+      "target": "node",
+      "default": 0.4
+    },
+    {
+      "key": "92:153:steps",
+      "label": "Hires refine steps",
+      "type": "int",
+      "target": "node",
+      "default": 12
     },
     {
       "key": "92:135:denoise",

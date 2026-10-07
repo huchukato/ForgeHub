@@ -29,6 +29,42 @@ def _apply_parameters(workflow: dict[str, Any], parameters: dict[str, Any]) -> d
     return workflow
 
 
+def _bypass_nodes(prompt: dict[str, Any], node_ids: list[str]) -> dict[str, Any]:
+    """Physically remove bypassed-group nodes and rewire consumers.
+
+    ComfyUI ignores "mode" in API format — the UI strips bypassed nodes
+    itself before submitting. We do the same: each removed node forwards its
+    `pipe` input (or first link input) so surviving downstream links keep a
+    live source. Chains of adjacent dead nodes resolve transitively."""
+    prompt = copy.deepcopy(prompt)
+    dead = {str(n) for n in node_ids}
+    through: dict[str, Any] = {}
+    for nid in dead:
+        inputs = (prompt.get(nid) or {}).get("inputs") or {}
+        src = inputs.get("pipe")
+        if not isinstance(src, list):
+            src = next((v for v in inputs.values() if isinstance(v, list)), None)
+        through[nid] = src
+    for nid in dead:
+        prompt.pop(nid, None)
+    for node in prompt.values():
+        inputs = node.get("inputs")
+        if not isinstance(inputs, dict):
+            continue
+        for key, val in list(inputs.items()):
+            if not (isinstance(val, list) and val and str(val[0]) in dead):
+                continue
+            seen = set()
+            while isinstance(val, list) and val and str(val[0]) in dead and str(val[0]) not in seen:
+                seen.add(str(val[0]))
+                val = through.get(str(val[0]))
+            if val is None:
+                del inputs[key]
+            else:
+                inputs[key] = val
+    return prompt
+
+
 def _as_b64(value: str) -> str:
     """Pass through data:/base64 payloads; resolve stored upload filenames."""
     if value.startswith("data:"):
@@ -77,6 +113,9 @@ class RunPodServerlessBackend:
         # standard patch pass (media upload, unet/lora needles, config presets)
         # on it, so the worker needs no baked workflow templates.
         patched = _apply_parameters(workflow, graph_params)
+        bypass_ids = payload.pop("bypass_nodes", None)
+        if bypass_ids:
+            patched = _bypass_nodes(patched, bypass_ids)
         if patched:
             payload["prompt_graph"] = patched
         for media_key in ("images", "video"):

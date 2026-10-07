@@ -253,7 +253,7 @@
   },
   "105:156": {
     "inputs": {
-      "sampler_name": "res_multistep"
+      "sampler_name": "euler"
     },
     "class_type": "KSamplerSelect",
     "_meta": {
@@ -262,8 +262,8 @@
   },
   "105:9": {
     "inputs": {
-      "scheduler": "simple",
-      "steps": 20,
+      "scheduler": "beta",
+      "steps": 6,
       "denoise": 1,
       "model": [
         "105:170",
@@ -273,20 +273,6 @@
     "class_type": "BasicScheduler",
     "_meta": {
       "title": "Scheduler Base"
-    }
-  },
-  "105:170": {
-    "inputs": {
-      "shift_video": 12,
-      "shift_audio": 3,
-      "model": [
-        "105:255",
-        0
-      ]
-    },
-    "class_type": "MiniMaxH3SigmaShift",
-    "_meta": {
-      "title": "ModelSamplingMiniMaxH3"
     }
   },
   "105:107": {
@@ -437,6 +423,18 @@
       "image": [
         "261",
         0
+      ],
+      "image2": [
+        "272",
+        0
+      ],
+      "image3": [
+        "273",
+        0
+      ],
+      "video": [
+        "274",
+        0
       ]
     },
     "class_type": "QwenVL_Unified",
@@ -460,7 +458,7 @@
   "105:269": {
     "class_type": "LoraLoaderModelOnly",
     "inputs": {
-      "lora_name": "minimax_h3_ref2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
+      "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
       "strength_model": 1.0,
       "model": [
         "105:6",
@@ -490,6 +488,17 @@
     },
     "_meta": {
       "title": "Load Video Pixaroma (ref)"
+    }
+  },
+  "105:170": {
+    "class_type": "MiniMaxH3SigmaShift",
+    "inputs": {
+      "shift_video": 1.0,
+      "shift_audio": 1.0,
+      "model": [
+        "105:255",
+        0
+      ]
     }
   }
 }
