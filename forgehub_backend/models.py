@@ -9,7 +9,7 @@ class WorkflowParameter(BaseModel):
     key: str
     label: str = ""
     type: str = "text"  # text | int | float | select | images | video
-    target: str = "job"  # "job" | "node:<id>:<widget>"
+    target: str = "job"  # "job" | "node:<id>:<widget>" | "prompt" (appended to prompt)
     options: list[str] = Field(default_factory=list)
     max: int | None = None
     default: Any = None

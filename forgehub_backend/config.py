@@ -26,6 +26,14 @@ class Settings:
         self.runpod_base_url = f"https://api.runpod.ai/v2/{self.runpod_endpoint_id}"
         self.runpod_poll_interval = float(os.getenv("RUNPOD_POLL_INTERVAL", "5"))
         self.runpod_job_timeout = int(os.getenv("RUNPOD_JOB_TIMEOUT", "1800"))
+        # Optional S3-compatible offload for large outputs (job outputs over
+        # ~10MB come back as presigned URLs instead of base64 — RunPod drops
+        # results over ~20MB). Points at the endpoint's network volume S3 API.
+        self.runpod_s3_endpoint = os.getenv("RUNPOD_S3_ENDPOINT_URL", "")
+        self.runpod_s3_bucket = os.getenv("RUNPOD_S3_BUCKET", "")
+        self.runpod_s3_access_id = os.getenv("RUNPOD_S3_ACCESS_ID", "")
+        self.runpod_s3_access_secret = os.getenv("RUNPOD_S3_ACCESS_SECRET", "")
+        self.runpod_s3_region = os.getenv("RUNPOD_S3_REGION", "")
         # Local storage for serverless outputs and uploads (base64 payloads
         # have no ComfyUI filesystem behind them).
         self.storage_dir = Path(os.getenv("FORGEHUB_STORAGE_DIR", "data/storage"))

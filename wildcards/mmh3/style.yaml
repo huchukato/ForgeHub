@@ -1,0 +1,32 @@
+# MiniMax H3 video styles — official H3 vocabulary (base-en.txt §4.1 + MiniMax-H3 repo skills).
+# Use __mmh3/style__ or __mmh3/style/<name>__. Each entry is an observable descriptor.
+mmh3:
+  style:
+    matchref:
+    - "match the reference images' art style exactly — same illustration, linework and cel-shading"
+    - "preserve the reference image's exact rendering style across every shot"
+    cinematic:
+    - "cinematic look, anamorphic framing, filmic color grading and shallow depth of field"
+    - "cinematic realism, dramatic lighting, lens flares and motion blur"
+    liveaction:
+    - "live-action footage, natural skin tones, realistic textures and practical lighting"
+    - "documentary-style live-action, natural light and handheld realism"
+    anime2d:
+    - "2D-animated style, clean linework, flat cel-shading and vivid colors"
+    - "modern anime film look, painterly backgrounds and soft cel-shading"
+    cg3d:
+    - "3D CG render, subsurface skin shading, ray-traced lighting and smooth surfaces"
+    - "stylized 3D animated film look, soft global illumination and rounded forms"
+    claymation:
+    - "claymation stop-motion, visible clay fingerprints, miniature sets and stepped frame timing"
+    watercolor:
+    - "watercolor painting look, soft pigment bleeds, paper texture and translucent washes"
+    vintage:
+    - "vintage film look, warm faded tones, halation, grain and gentle gate weave"
+    - "90s videotape aesthetic, chroma bleed, scanline softness and warm cast"
+    papercraft:
+    - "papercraft stop-motion, layered cut-paper sets, visible paper edges and miniature depth"
+    collage:
+    - "paper collage look, flat cut-out shapes, mixed textures and bold graphic composition"
+    handdrawn:
+    - "hand-drawn sketch style, pencil linework, rough hatching and loose organic strokes"

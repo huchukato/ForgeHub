@@ -80,7 +80,18 @@ class RunPodClient:
 
     async def run(self, job_input: dict[str, Any]) -> str:
         """Queue a job; returns the RunPod job id."""
-        result = await self._request("POST", "/run", json={"input": job_input})
+        body: dict[str, Any] = {"input": job_input}
+        if SETTINGS.runpod_s3_endpoint and SETTINGS.runpod_s3_bucket:
+            s3 = {
+                "accessId": SETTINGS.runpod_s3_access_id,
+                "accessSecret": SETTINGS.runpod_s3_access_secret,
+                "bucketName": SETTINGS.runpod_s3_bucket,
+                "endpointUrl": SETTINGS.runpod_s3_endpoint,
+            }
+            if SETTINGS.runpod_s3_region:
+                s3["region"] = SETTINGS.runpod_s3_region
+            body["s3Config"] = s3
+        result = await self._request("POST", "/run", json=body)
         job_id = result.get("id")
         if not job_id:
             raise RuntimeError(f"RunPod /run did not return a job id: {result}")

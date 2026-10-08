@@ -2,7 +2,7 @@
  "id": "mmh3-singularity-r2va",
  "name": "MiniMax H3 Singularity R2VA",
  "category": "video",
- "description": "Reference \u2192 video con audio (Singularity fusion, serverless INT8)",
+ "description": "Reference → video con audio (Singularity fusion, serverless INT8)",
  "handler": "mmh3",
  "remote_file": "MiniMaxH3-Singularity-R2VA.json",
  "endpoint_id": "",
@@ -16,7 +16,7 @@
    "label": "Prompt",
    "type": "text",
    "target": "job",
-   "wildcard_prefix": "vid/"
+   "wildcard_prefix": "mmh3/"
   },
   {
    "key": "images",
@@ -71,32 +71,21 @@
    ]
   },
   {
-   "key": "camera_tag",
-   "label": "Camera tag",
+   "key": "style",
+   "label": "Video style",
    "type": "select",
-   "target": "job",
+   "target": "prompt",
    "default": "None",
    "options": [
     "None",
-    "[STATIC_CAMERA]",
-    "[LOCKED_OFF]",
-    "[SLOW_ZOOM_IN]",
-    "[SLOW_ZOOM_OUT]",
-    "[FAST_ZOOM_IN]",
-    "[FAST_ZOOM_OUT]",
-    "[PAN_LEFT]",
-    "[PAN_RIGHT]",
-    "[TILT_UP]",
-    "[TILT_DOWN]",
-    "[DOLLY_IN]",
-    "[DOLLY_OUT]",
-    "[TRACKING_LEFT]",
-    "[TRACKING_RIGHT]",
-    "[CRANE_UP]",
-    "[CRANE_DOWN]",
-    "[ORBIT]",
-    "[HANDHELD]",
-    "[ROLL]"
+    "Visual style: match the reference images' art style exactly — same illustration, linework and cel-shading",
+    "Visual style: cinematic live-action, photorealistic",
+    "Visual style: 2D-animated, clean linework and cel-shading",
+    "Visual style: 3D CG render, polished",
+    "Visual style: claymation stop-motion",
+    "Visual style: watercolor painting look",
+    "Visual style: vintage film, grain and warm tones",
+    "Visual style: __mmh3/style__"
    ]
   },
   {
@@ -111,10 +100,10 @@
    "label": "Enhancer preset",
    "type": "select",
    "target": "job",
-   "default": "MiniMax \u203a NSFW R2VA",
+   "default": "MiniMax › NSFW R2VA",
    "options": [
-    "MiniMax \u203a NSFW R2VA",
-    "MiniMax \u203a SFW R2VA"
+    "MiniMax › NSFW R2VA",
+    "MiniMax › SFW R2VA"
    ],
    "parent": "enhance"
   },

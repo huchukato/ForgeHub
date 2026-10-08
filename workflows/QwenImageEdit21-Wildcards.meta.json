@@ -37,35 +37,6 @@
    ]
   },
   {
-   "key": "camera_tag",
-   "label": "Camera tag",
-   "type": "select",
-   "target": "job",
-   "default": "None",
-   "options": [
-    "None",
-    "[STATIC_CAMERA]",
-    "[LOCKED_OFF]",
-    "[SLOW_ZOOM_IN]",
-    "[SLOW_ZOOM_OUT]",
-    "[FAST_ZOOM_IN]",
-    "[FAST_ZOOM_OUT]",
-    "[PAN_LEFT]",
-    "[PAN_RIGHT]",
-    "[TILT_UP]",
-    "[TILT_DOWN]",
-    "[DOLLY_IN]",
-    "[DOLLY_OUT]",
-    "[TRACKING_LEFT]",
-    "[TRACKING_RIGHT]",
-    "[CRANE_UP]",
-    "[CRANE_DOWN]",
-    "[ORBIT]",
-    "[HANDHELD]",
-    "[ROLL]"
-   ]
-  },
-  {
    "key": "enhance",
    "label": "Enhancer QwenVL",
    "type": "bool",

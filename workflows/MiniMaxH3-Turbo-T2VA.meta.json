@@ -2,7 +2,7 @@
  "id": "mmh3-t2va",
  "name": "MiniMax H3 T2VA",
  "category": "video",
- "description": "Text \u2192 video con audio (MiniMax H3 turbo, serverless INT8)",
+ "description": "Text → video con audio (MiniMax H3 turbo, serverless INT8)",
  "handler": "mmh3",
  "remote_file": "MiniMaxH3-Turbo-T2VA.json",
  "endpoint_id": "",
@@ -16,7 +16,7 @@
    "label": "Prompt",
    "type": "text",
    "target": "job",
-   "wildcard_prefix": "vid/"
+   "wildcard_prefix": "mmh3/"
   },
   {
    "key": "seconds",
@@ -46,35 +46,6 @@
    ]
   },
   {
-   "key": "camera_tag",
-   "label": "Camera tag",
-   "type": "select",
-   "target": "job",
-   "default": "None",
-   "options": [
-    "None",
-    "[STATIC_CAMERA]",
-    "[LOCKED_OFF]",
-    "[SLOW_ZOOM_IN]",
-    "[SLOW_ZOOM_OUT]",
-    "[FAST_ZOOM_IN]",
-    "[FAST_ZOOM_OUT]",
-    "[PAN_LEFT]",
-    "[PAN_RIGHT]",
-    "[TILT_UP]",
-    "[TILT_DOWN]",
-    "[DOLLY_IN]",
-    "[DOLLY_OUT]",
-    "[TRACKING_LEFT]",
-    "[TRACKING_RIGHT]",
-    "[CRANE_UP]",
-    "[CRANE_DOWN]",
-    "[ORBIT]",
-    "[HANDHELD]",
-    "[ROLL]"
-   ]
-  },
-  {
    "key": "enhance",
    "label": "Enhancer QwenVL",
    "type": "bool",
@@ -86,10 +57,10 @@
    "label": "Enhancer preset",
    "type": "select",
    "target": "job",
-   "default": "MiniMax \u203a NSFW T2V",
+   "default": "MiniMax › NSFW T2V",
    "options": [
-    "MiniMax \u203a NSFW T2V",
-    "MiniMax \u203a SFW T2V"
+    "MiniMax › NSFW T2V",
+    "MiniMax › SFW T2V"
    ],
    "parent": "enhance"
   },

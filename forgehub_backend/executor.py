@@ -1,12 +1,13 @@
 """Workflow execution against a RunPod serverless endpoint (/run + /status)."""
 
+import asyncio
 import base64
 import copy
 import urllib.parse
 from typing import Any
 
 from forgehub_backend.config import SETTINGS
-from forgehub_backend.files import read_output_meta, read_uploaded_b64, save_output_b64, write_output_meta
+from forgehub_backend.files import read_output_meta, read_uploaded_b64, save_output_b64, save_output_url, write_output_meta
 from forgehub_backend.models import ExecutionStatus, OutputFile
 from forgehub_backend.runpod_client import RunPodClient
 
@@ -170,7 +171,10 @@ class RunPodServerlessBackend:
         for item in job_out.get("outputs", []):
             filename = item.get("filename", "output.bin")
             try:
-                saved = save_output_b64(filename, item.get("b64", ""))
+                if item.get("url"):
+                    saved = await asyncio.to_thread(save_output_url, filename, item["url"])
+                else:
+                    saved = save_output_b64(filename, item.get("b64", ""))
             except Exception:
                 continue
             try:

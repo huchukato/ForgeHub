@@ -7,6 +7,7 @@ import json
 import re
 import struct
 import subprocess
+import urllib.request
 import uuid
 import zlib
 from pathlib import Path
@@ -52,8 +53,7 @@ def _output_base(type_: str) -> Path:
     return (SETTINGS.storage_dir / ("uploads" if type_ == "input" else "outputs")).resolve()
 
 
-def save_output_b64(filename: str, b64: str, subfolder: str = "") -> Path:
-    """Decode a base64 payload from a serverless job and store it locally."""
+def _store_output(filename: str, data: bytes, subfolder: str = "") -> Path:
     target_dir = SETTINGS.storage_dir / "outputs" / subfolder if subfolder else SETTINGS.storage_dir / "outputs"
     target_dir.mkdir(parents=True, exist_ok=True)
     base = _safe_filename(filename)
@@ -70,8 +70,19 @@ def save_output_b64(filename: str, b64: str, subfolder: str = "") -> Path:
             counter += 1
     if target_dir.resolve() not in target.parents and target != target_dir.resolve():
         raise ValueError(f"Path escapes storage directory: {filename}")
-    target.write_bytes(base64.b64decode(b64))
+    target.write_bytes(data)
     return target
+
+
+def save_output_b64(filename: str, b64: str, subfolder: str = "") -> Path:
+    """Decode a base64 payload from a serverless job and store it locally."""
+    return _store_output(filename, base64.b64decode(b64), subfolder)
+
+
+def save_output_url(filename: str, url: str) -> Path:
+    """Download a presigned output URL (S3 offload for large files) and store it."""
+    with urllib.request.urlopen(url, timeout=600) as resp:
+        return _store_output(filename, resp.read())
 
 
 # --- Generation metadata embedded in output files -----------------------------

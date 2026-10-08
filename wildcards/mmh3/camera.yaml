@@ -1,0 +1,55 @@
+# MiniMax H3 camera moves — native H3 vocabulary (base-en.txt §4.3 + spec §9).
+# Inject inline per-shot: __mmh3/camera__ or __mmh3/camera/<move>__
+# Entries are full native clauses; subject binding is left to the enhancer.
+mmh3:
+  camera:
+    static:
+    - "the camera holds a static shot"
+    - "the camera remains locked off"
+    push:
+    - "the camera pushes in with small amplitude at slow speed"
+    - "the camera pushes in with large amplitude at fast speed"
+    - "the camera pushes in at normal speed"
+    pull:
+    - "the camera pulls out with small amplitude at slow speed"
+    - "the camera pulls out with large amplitude, revealing the space"
+    - "the camera pulls out at fast speed"
+    pan:
+    - "the camera pans left with large amplitude"
+    - "the camera pans right with large amplitude"
+    - "the camera pans slowly to the side"
+    truck:
+    - "the camera trucks left at fast speed"
+    - "the camera trucks right, tracking alongside"
+    - "the camera trucks laterally at slow speed"
+    tilt:
+    - "the camera tilts up with small amplitude"
+    - "the camera tilts down with small amplitude"
+    pedestal:
+    - "the camera pedestals up at slow speed, rising above the scene"
+    - "the camera pedestals down at slow speed"
+    zoom:
+    - "the camera zooms in with small amplitude at slow speed"
+    - "the camera zooms out with large amplitude"
+    arc:
+    - "the camera arcs around the subject with large amplitude at slow speed"
+    - "the camera moves in an arc around the subject at fast speed"
+    tracking:
+    - "the camera performs a tracking shot, following the subject's movement"
+    - "the camera tracks the subject at matching speed"
+    shake:
+    - "the camera shakes slightly, handheld feel"
+    - "the camera shakes strongly during the impact"
+    roll:
+    - "the camera rolls clockwise around the lens axis"
+    - "the camera rolls counterclockwise with small amplitude"
+    pov:
+    - "the shot switches to the subject's POV"
+    swoop:
+    - "the camera swoops through the scene on a curved diving trajectory"
+    whippan:
+    - "the camera whip-pans sharply to the side"
+    dive:
+    - "the camera dives down from an elevated viewpoint at fast speed"
+    barrelroll:
+    - "the camera performs a barrel roll around the lens axis while moving forward"
