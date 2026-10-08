@@ -33,6 +33,7 @@ async def list_endpoints(api_key: str | None = None) -> list[dict[str, Any]]:
             "name": ep.get("name", ""),
             "gpus": ep.get("gpuIds") or ep.get("gpuTypeIds") or "",
             "workers": ep.get("workersMax"),
+            "createdAt": ep.get("createdAt", ""),
         }
         for ep in (data if isinstance(data, list) else data.get("endpoints", []))
     ]

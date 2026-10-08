@@ -5,7 +5,7 @@
  "description": "Image edit / character sheet (Qwen Image 2.1 UC INT8, serverless)",
  "handler": "qwen21",
  "remote_file": "QwenImageEdit21-Wildcards.json",
- "endpoint_id": "t5ag8gwv0tchl6",
+ "endpoint_id": "",
  "outputs": [
   "image"
  ],
@@ -156,5 +156,6 @@
    "target": "node",
    "default": 0.7
   }
- ]
+ ],
+ "endpoint_name": "Qwen Image 2.1"
 }

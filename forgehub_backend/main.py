@@ -219,6 +219,23 @@ async def put_settings(body: dict):
     return await get_settings()
 
 
+async def _resolve_endpoint_id(meta) -> str:
+    if meta.endpoint_id:
+        return meta.endpoint_id
+    if not meta.endpoint_name:
+        return ""
+    from forgehub_backend.runpod_client import list_endpoints
+    try:
+        eps = await list_endpoints()
+    except Exception as exc:
+        raise HTTPException(status_code=502, detail=f"Cannot resolve endpoint '{meta.endpoint_name}': {exc}")
+    matches = [e for e in eps if meta.endpoint_name.lower() in e.get("name", "").lower()]
+    if not matches:
+        raise HTTPException(status_code=400, detail=f"No RunPod endpoint matching '{meta.endpoint_name}' — deploy the worker from the Hub or set endpoint_id in meta.json")
+    matches.sort(key=lambda e: e.get("createdAt", ""), reverse=True)
+    return matches[0]["id"]
+
+
 @app.get("/runpod/endpoints")
 async def runpod_endpoints(api_key: str = ""):
     from forgehub_backend.runpod_client import list_endpoints
@@ -392,7 +409,7 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
     workflow, meta = result
     if meta.format == "ui":
         raise HTTPException(status_code=422, detail="UI-format workflows are not supported; re-export the workflow in ComfyUI API format.")
-    if meta.requires_endpoint and not meta.endpoint_id:
+    if meta.requires_endpoint and not meta.endpoint_id and not meta.endpoint_name:
         raise HTTPException(status_code=400, detail=f"Workflow '{meta.id}' requires a dedicated RunPod endpoint — set endpoint_id in its meta.json")
     backend = app.state.backend
 
@@ -407,8 +424,9 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
         job_input["bypass_nodes"] = bypass
     job_input["workflow"] = meta.remote_file or f"{meta.id}.json"
     job_input["job_name"] = f"{meta.id}-{time.strftime('%m%d-%H%M%S')}"
-    if meta.endpoint_id:
-        job_input["endpoint_id"] = meta.endpoint_id
+    endpoint_id = await _resolve_endpoint_id(meta)
+    if endpoint_id:
+        job_input["endpoint_id"] = endpoint_id
     if request.images:
         job_input["images"] = request.images
     if request.video:
@@ -614,8 +632,9 @@ async def apply_chat_actions(payload: dict[str, Any]):
             "workflow": meta.remote_file or f"{meta.id}.json",
             "job_name": f"{meta.id}-{time.strftime('%m%d-%H%M%S')}",
         }
-        if meta.endpoint_id:
-            job_input["endpoint_id"] = meta.endpoint_id
+        ep_id = await _resolve_endpoint_id(meta)
+        if ep_id:
+            job_input["endpoint_id"] = ep_id
     job_id = await backend.queue(workflow, parameters, job_input)
     return {
         "status": "queued",

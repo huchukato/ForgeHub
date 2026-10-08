@@ -17,9 +17,13 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 - Recipe-aware chat behavior and faster warm jobs.
 - Output naming: `MMH3_<type>_<date>` prefixes; fixed Pony output pattern (was `Qwen21_`).
 
+### Added
+- **Endpoint auto-resolution by name** — recipes declare `endpoint_name` instead of a hardcoded `endpoint_id`; the backend resolves the live endpoint ID from the RunPod account at submit time, picking the most recently created match. Recreating or redeploying endpoints from the RunPod Hub no longer breaks ForgeHub.
+
 ### Fixed
 - `ModelPreviewOverrideKJ` bypassed in R2VA workflows (missing `taeh3` on the volume).
 - Upscaler model links updated to `upscale_models/` path.
+- **Endpoint refresh crash on packaged builds** — bundled `certifi` CA data in the PyInstaller backend (`--collect-data certifi`); HTTPS calls to `rest.runpod.io` previously failed with `SSLCertVerificationError`, surfacing as an internal server error on endpoint detection.
 
 ## [0.1.5] and earlier
 

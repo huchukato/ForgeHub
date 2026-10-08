@@ -5,7 +5,7 @@
  "description": "Pony / Illustrious T2I con wildcards \u2014 hires fix e face detailer attivabili a gruppi (serverless)",
  "handler": "pony",
  "remote_file": "PimpMyPony-HiResFix-FaceDet.json",
- "endpoint_id": "t5ag8gwv0tchl6",
+ "endpoint_id": "",
  "outputs": [
   "image"
  ],
@@ -207,5 +207,6 @@
    "target": "node",
    "default": 0.5
   }
- ]
+ ],
+ "endpoint_name": "Qwen Image 2.1"
 }

@@ -5,7 +5,7 @@
  "description": "Text\u2192image con wildcard Pony + enhancer QwenVL (Qwen Image 2.1 UC INT8, serverless)",
  "handler": "qwen21",
  "remote_file": "QwenImage21-T2I-Wildcards.json",
- "endpoint_id": "t5ag8gwv0tchl6",
+ "endpoint_id": "",
  "outputs": [
   "image"
  ],
@@ -125,5 +125,6 @@
     "2048"
    ]
   }
- ]
+ ],
+ "endpoint_name": "Qwen Image 2.1"
 }

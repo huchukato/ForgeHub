@@ -5,7 +5,7 @@
  "description": "Reference \u2192 video con audio (Singularity ref2va, serverless INT8)",
  "handler": "mmh3",
  "remote_file": "MiniMaxH3-Turbo-R2VA.json",
- "endpoint_id": "s0iopnieywyu7k",
+ "endpoint_id": "",
  "outputs": [
   "video",
   "audio"
@@ -207,5 +207,6 @@
    "target": "node",
    "default": 20
   }
- ]
+ ],
+ "endpoint_name": "MiniMax H3"
 }

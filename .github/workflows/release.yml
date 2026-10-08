@@ -32,7 +32,7 @@ jobs:
           pyinstaller packaging/backend_entry.py \
             --name forgehub-backend --onefile --noconfirm --clean \
             --distpath backend-dist --workpath backend-build \
-            --paths . --collect-submodules uvicorn
+            --paths . --collect-submodules uvicorn --collect-data certifi
 
       - name: Install and build
         working-directory: forgehub-app
