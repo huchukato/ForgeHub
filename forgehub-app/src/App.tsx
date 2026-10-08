@@ -1,4 +1,4 @@
-import { Images, MessageSquare, Music, Play, Settings, Square } from "lucide-react";
+import { Download, Images, MessageSquare, Music, Play, Settings, Square } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ForgeHubClient, OutputFile, Workflow } from "./api";
 import ChatDrawer from "./components/ChatDrawer";
@@ -40,6 +40,7 @@ export default function App() {
 
   const [outputs, setOutputs] = useState<OutputFile[]>([]);
   const [jobTexts, setJobTexts] = useState<Record<string, string>>({});
+  const [previewKey, setPreviewKey] = useState<string | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -161,6 +162,7 @@ export default function App() {
         setJobs((prev) => { const { [jobId]: _, ...rest } = prev; return rest; });
         if (st.status === "success") {
           setOutputs((prev) => [...st.outputs, ...prev]);
+          setPreviewKey(null); // follow the freshest output
           if (st.texts && Object.keys(st.texts).length) setJobTexts(st.texts);
           playDone();
         } else if (st.status !== "cancelled") {
@@ -317,10 +319,10 @@ const execute = async () => {
         {/* Main */}
         <main className="flex-1 overflow-y-auto p-6">
           <div className="mx-auto flex max-w-[1440px] items-start gap-6">
-            {/* Recent outputs — fills the empty gutter left of the form */}
-            <aside className="sticky top-0 hidden w-72 shrink-0 xl:block 2xl:w-80">
-              <div className="rounded-xl border border-border bg-panel p-4 shadow-[var(--shadow-panel)]">
-                <div className="mb-3 flex items-center justify-between">
+            {/* Latest output hero + recent filmstrip — fills the left gutter */}
+            <aside className="sticky top-0 hidden w-[380px] shrink-0 xl:block 2xl:w-[440px]">
+              <div className="rounded-xl border border-border bg-panel p-3 shadow-[var(--shadow-panel)]">
+                <div className="mb-2 flex items-center justify-between px-1">
                   <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
                     <span className="h-3 w-[3px] rounded-full bg-gradient-to-b from-accent to-magenta" />
                     {t.outputsTitle}
@@ -334,33 +336,86 @@ const execute = async () => {
                   </button>
                 </div>
                 {outputs.length === 0 ? (
-                  <div className="rounded-lg border border-dashed border-border py-10 text-center text-[11px] leading-relaxed text-faint whitespace-pre-line">
+                  <div className="rounded-lg border border-dashed border-border py-14 text-center text-[11px] leading-relaxed text-faint whitespace-pre-line">
                     {t.outputsEmpty}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-2 gap-2">
-                    {outputs.slice(0, 12).map((o) => {
-                      const isAudio = /\.(wav|mp3|flac|ogg)$/i.test(o.filename);
-                      const src = o.thumb ?? o.url;
+                  <>
+                    {(() => {
+                      const hero = outputs.find((o) => `${o.subfolder}/${o.filename}` === previewKey) ?? outputs[0];
+                      const heroVideo = /\.(mp4|webm|mov)$/i.test(hero.filename);
+                      const heroAudio = /\.(wav|mp3|flac|ogg)$/i.test(hero.filename);
                       return (
-                        <button
-                          key={`${o.subfolder}/${o.filename}`}
-                          onClick={() => setGalleryOpen(true)}
-                          title={o.filename}
-                          className="group relative aspect-square overflow-hidden rounded-lg border border-border bg-bg-elev transition-all duration-150 hover:border-accent/60 hover:shadow-[0_0_14px_rgb(124_92_255/0.15)]"
-                        >
-                          {isAudio ? (
-                            <span className="flex h-full w-full flex-col items-center justify-center gap-1.5 text-muted">
-                              <Music size={18} />
-                              <span className="px-1.5 text-[9px] leading-tight line-clamp-2">{o.filename}</span>
+                        <div className="overflow-hidden rounded-lg border border-border bg-bg">
+                          {heroVideo ? (
+                            <video src={hero.url} controls className="max-h-[52vh] w-full object-contain" />
+                          ) : heroAudio ? (
+                            <span className="flex h-40 w-full flex-col items-center justify-center gap-2 text-muted">
+                              <Music size={22} />
+                              <audio src={hero.url} controls className="w-4/5" />
                             </span>
                           ) : (
-                            <img src={src} alt={o.filename} loading="lazy" className="h-full w-full object-cover" />
+                            <img src={hero.url} alt={hero.filename} className="max-h-[52vh] w-full object-contain" />
                           )}
-                        </button>
+                          <div className="flex items-center gap-2 border-t border-border/60 bg-panel/60 px-2.5 py-1.5">
+                            <span className="min-w-0 flex-1 truncate font-mono text-[10px] text-muted">{hero.filename}</span>
+                            <a
+                              href={hero.url}
+                              download={hero.filename}
+                              onClick={(e) => e.stopPropagation()}
+                              title={t.download}
+                              className="rounded p-1 text-muted transition-colors hover:text-accent"
+                            >
+                              <Download size={12} />
+                            </a>
+                            <button
+                              onClick={() => setGalleryOpen(true)}
+                              title={t.library}
+                              className="rounded p-1 text-muted transition-colors hover:text-accent"
+                            >
+                              <Images size={12} />
+                            </button>
+                          </div>
+                        </div>
                       );
-                    })}
-                  </div>
+                    })()}
+                    {outputs.length > 1 && (
+                      <div className="mt-2 flex gap-1.5 overflow-x-auto pb-1">
+                        {outputs.slice(0, 8).map((o) => {
+                          const k = `${o.subfolder}/${o.filename}`;
+                          const active = k === (previewKey ?? `${outputs[0].subfolder}/${outputs[0].filename}`);
+                          const isAudio = /\.(wav|mp3|flac|ogg)$/i.test(o.filename);
+                          return (
+                            <button
+                              key={k}
+                              onClick={() => setPreviewKey(k)}
+                              title={o.filename}
+                              className={`relative h-14 w-14 shrink-0 overflow-hidden rounded-md border transition-all duration-150 ${
+                                active
+                                  ? "border-accent ring-1 ring-accent shadow-[0_0_10px_rgb(124_92_255/0.35)]"
+                                  : "border-border opacity-70 hover:opacity-100 hover:border-border-strong"
+                              }`}
+                            >
+                              {isAudio ? (
+                                <span className="flex h-full w-full items-center justify-center text-muted"><Music size={14} /></span>
+                              ) : (
+                                <img src={o.thumb ?? o.url} alt={o.filename} loading="lazy" className="h-full w-full object-cover" />
+                              )}
+                            </button>
+                          );
+                        })}
+                        {outputs.length > 8 && (
+                          <button
+                            onClick={() => setGalleryOpen(true)}
+                            title={t.library}
+                            className="flex h-14 w-14 shrink-0 items-center justify-center rounded-md border border-dashed border-border text-[10px] font-semibold text-muted transition-colors hover:border-accent/60 hover:text-accent"
+                          >
+                            +{outputs.length - 8}
+                          </button>
+                        )}
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </aside>
