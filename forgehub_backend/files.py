@@ -170,6 +170,71 @@ def write_output_meta(path: Path, meta: dict) -> None:
         (path.parent / f"{path.name}{_META_SUFFIX}").write_text(payload, encoding="utf-8")
 
 
+def _read_comfy_prompt(path: Path) -> dict | None:
+    """Extract the ComfyUI API-prompt JSON embedded by the save node."""
+    try:
+        data = path.read_bytes()
+    except Exception:
+        return None
+    ext = path.suffix.lower()
+    decoder = json.JSONDecoder()
+    if ext in (".jpg", ".jpeg"):
+        i = data.find(b"Prompt:{")
+        if i < 0:
+            return None
+        try:
+            obj, _ = decoder.raw_decode(data[i + 7:].decode("utf-8", "replace"))
+            return obj
+        except Exception:
+            return None
+    if ext == ".png":
+        if not data.startswith(b"\x89PNG\r\n\x1a\n"):
+            return None
+        off = 8
+        try:
+            while off + 8 <= len(data):
+                length = struct.unpack(">I", data[off:off + 4])[0]
+                ctype = data[off + 4:off + 8]
+                if ctype == b"tEXt":
+                    body = data[off + 8:off + 8 + length]
+                    kw, _, val = body.partition(b"\x00")
+                    if kw.decode("latin-1", errors="replace") == "prompt":
+                        obj, _ = decoder.raw_decode(val.decode("utf-8"))
+                        return obj
+                off += 12 + length
+                if ctype == b"IEND":
+                    break
+        except Exception:
+            return None
+    return None
+
+
+_PRESET_POSITIVE = {
+    "Pony": "score_9, score_8_up, score_7_up",
+    "Illustrious": "masterwork, masterpiece, best quality, detailed, high detail, very aesthetic",
+}
+
+
+def _expanded_prompt(prompt_json: dict) -> str:
+    """The resolved text the sampler actually consumed (wildcards expanded
+    plus the model-preset prefix WildcardProcessor adds at run time —
+    populated_text stores only the expansion)."""
+    texts = []
+    for node in prompt_json.values():
+        if not isinstance(node, dict):
+            continue
+        inputs = node.get("inputs") or {}
+        val = inputs.get("populated_text")
+        if not (isinstance(val, str) and val.strip()):
+            continue
+        prefix = _PRESET_POSITIVE.get(inputs.get("base_model") or "", "")
+        val = val.lstrip()
+        if prefix and not val.startswith(prefix):
+            val = f"{prefix}, {val}"
+        texts.append(val)
+    return "\n\n".join(texts)
+
+
 def read_output_meta(path: Path) -> dict | None:
     """Read embedded/sidecar metadata for an output file."""
     ext = path.suffix.lower()
@@ -185,6 +250,12 @@ def read_output_meta(path: Path) -> dict | None:
                 meta = json.loads(sidecar.read_text(encoding="utf-8"))
             except Exception:
                 meta = None
+    if ext in (".jpg", ".jpeg", ".png"):
+        pj = _read_comfy_prompt(path)
+        expanded = _expanded_prompt(pj) if pj else ""
+        if expanded:
+            meta = meta or {"app": "forgehub", "parameters": {}, "texts": {}}
+            meta["prompt_expanded"] = expanded
     return meta
 
 

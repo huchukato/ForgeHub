@@ -143,13 +143,6 @@
    ]
   },
   {
-   "key": "515:545:negative_prompt",
-   "label": "Negative prompt",
-   "type": "text",
-   "target": "node",
-   "default": "ugly, bad quality, low quality, blurry"
-  },
-  {
    "key": "515:546:strength_model",
    "label": "Detailer LoRA strength (0 = off)",
    "type": "float",

@@ -3,6 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { ForgeHubClient, OutputFile, Workflow } from "./api";
 import ChatDrawer from "./components/ChatDrawer";
 import OutputsGallery from "./components/OutputsGallery";
+import OutputLightbox from "./components/OutputLightbox";
 import RecipeForm from "./components/RecipeForm";
 import SettingsDialog from "./components/SettingsDialog";
 import Sidebar from "./components/Sidebar";
@@ -44,6 +45,7 @@ export default function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
+  const [heroLightbox, setHeroLightbox] = useState<OutputFile | null>(null);
 
   const workflow = workflows.find((w) => w.id === selectedId) || null;
 
@@ -320,7 +322,7 @@ const execute = async () => {
         <main className="flex-1 overflow-y-auto p-6">
           <div className="mx-auto flex max-w-[1440px] items-start gap-6">
             {/* Latest output hero + recent filmstrip — fills the left gutter */}
-            <aside className="sticky top-0 hidden w-[380px] shrink-0 xl:block 2xl:w-[440px]">
+            <aside className="sticky top-0 hidden w-[460px] shrink-0 xl:block 2xl:w-[540px]">
               <div className="rounded-xl border border-border bg-panel p-3 shadow-[var(--shadow-panel)]">
                 <div className="mb-2 flex items-center justify-between px-1">
                   <div className="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
@@ -348,14 +350,16 @@ const execute = async () => {
                       return (
                         <div className="overflow-hidden rounded-lg border border-border bg-bg">
                           {heroVideo ? (
-                            <video src={hero.url} controls className="max-h-[52vh] w-full object-contain" />
+                            <video src={hero.url} controls className="max-h-[68vh] w-full object-contain" />
                           ) : heroAudio ? (
                             <span className="flex h-40 w-full flex-col items-center justify-center gap-2 text-muted">
                               <Music size={22} />
                               <audio src={hero.url} controls className="w-4/5" />
                             </span>
                           ) : (
-                            <img src={hero.url} alt={hero.filename} className="max-h-[52vh] w-full object-contain" />
+                            <button onClick={() => setHeroLightbox(hero)} title={hero.filename} className="block w-full cursor-zoom-in">
+                              <img src={hero.url} alt={hero.filename} className="max-h-[68vh] w-full object-contain" />
+                            </button>
                           )}
                           <div className="flex items-center gap-2 border-t border-border/60 bg-panel/60 px-2.5 py-1.5">
                             <span className="min-w-0 flex-1 truncate font-mono text-[10px] text-muted">{hero.filename}</span>
@@ -368,13 +372,6 @@ const execute = async () => {
                             >
                               <Download size={12} />
                             </a>
-                            <button
-                              onClick={() => setGalleryOpen(true)}
-                              title={t.library}
-                              className="rounded p-1 text-muted transition-colors hover:text-accent"
-                            >
-                              <Images size={12} />
-                            </button>
                           </div>
                         </div>
                       );
@@ -454,6 +451,15 @@ const execute = async () => {
         onUseAsInput={useAsInput}
         onDelete={(o) => client.deleteOutput(o)}
         onChanged={() => client.listOutputs().then(setOutputs).catch(() => {})}
+      />
+
+      <OutputLightbox
+        output={heroLightbox}
+        outputs={outputs}
+        onClose={() => setHeroLightbox(null)}
+        onNavigate={setHeroLightbox}
+        canReference={!!imageParam}
+        onUseAsInput={useAsInput}
       />
 
       <ChatDrawer

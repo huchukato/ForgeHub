@@ -6,7 +6,7 @@ import urllib.parse
 from typing import Any
 
 from forgehub_backend.config import SETTINGS
-from forgehub_backend.files import read_uploaded_b64, save_output_b64, write_output_meta
+from forgehub_backend.files import read_output_meta, read_uploaded_b64, save_output_b64, write_output_meta
 from forgehub_backend.models import ExecutionStatus, OutputFile
 from forgehub_backend.runpod_client import RunPodClient
 
@@ -162,7 +162,11 @@ class RunPodServerlessBackend:
             "parameters": job_meta.get("parameters", {}),
             "texts": texts,
         }
+        expanded_job = (job_meta.get("parameters_expanded") or {}).get("prompt")
+        if isinstance(expanded_job, str) and expanded_job.strip():
+            meta["prompt_expanded"] = expanded_job
         outputs: list[OutputFile] = []
+        saved_paths = []
         for item in job_out.get("outputs", []):
             filename = item.get("filename", "output.bin")
             try:
@@ -173,12 +177,18 @@ class RunPodServerlessBackend:
                 write_output_meta(saved, meta)
             except Exception:
                 pass
+            saved_paths.append(saved)
             outputs.append(OutputFile(
                 filename=saved.name,
                 subfolder="",
                 type="output",
                 url=f"/outputs/{urllib.parse.quote(saved.name)}",
             ))
+        for saved in saved_paths:
+            expanded = (read_output_meta(saved) or {}).get("prompt_expanded")
+            if isinstance(expanded, str) and expanded.strip():
+                texts.setdefault("Expanded prompt", expanded)
+                break
         return ExecutionStatus(prompt_id=job_id, status="success", outputs=outputs, texts=texts)
 
     async def cancel(self, job_id: str) -> None:

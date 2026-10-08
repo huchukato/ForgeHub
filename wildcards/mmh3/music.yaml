@@ -1,0 +1,28 @@
+# MiniMax H3 background music wildcards — fill non_diegetic_music.
+# Use __mmh3/music__ to request a random style, or __mmh3/music/<name>__.
+mmh3:
+  music:
+    orchestral:
+    - "an epic orchestral score with soaring strings and brass"
+    - "a cinematic orchestral soundtrack, slow build with strings and timpani"
+    - "a heroic orchestral theme, triumphant brass and full strings"
+    electronic:
+    - "a slow ambient synthwave track with warm analog pads"
+    - "a dark synthwave background score with pulsing bass"
+    - "a deep house beat, relaxed and atmospheric"
+    - "a tense electronic drone with deep bass pulses"
+    piano:
+    - "soft piano notes at a slow tempo, minimal and emotional"
+    - "a gentle piano melody joined by sustained low strings"
+    jazz:
+    - "a smooth jazz background track with upright bass and brushed drums"
+    - "a slow smoky jazz lounge tune with soft saxophone"
+    lofi:
+    - "a lo-fi hip hop beat, warm vinyl crackle and relaxed tempo"
+    - "a chill lo-fi track with soft keys and a laid-back groove"
+    ambient:
+    - "a subtle ambient pad, barely audible atmospheric drone"
+    - "ethereal ambient music with soft sustained textures"
+    tension:
+    - "a suspenseful cinematic score, sparse strings and low pulses"
+    - "a tense underscore with heartbeat-like percussion"

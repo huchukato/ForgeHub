@@ -84,10 +84,7 @@
         "544:484",
         0
       ],
-      "negative_prompt": [
-        "512",
-        1
-      ],
+      "negative_prompt": "",
       "resolution": [
         "546",
         0

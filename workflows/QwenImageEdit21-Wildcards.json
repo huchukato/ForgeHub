@@ -236,7 +236,7 @@
         "515:547",
         0
       ],
-      "negative_prompt": "ugly, bad quality, low quality, blurry",
+      "negative_prompt": "",
       "resolution": [
         "568",
         0

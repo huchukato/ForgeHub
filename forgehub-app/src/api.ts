@@ -69,6 +69,7 @@ export interface OutputMetaEntry {
   subfolder: string;
   workflow: string;
   prompt: string;
+  prompt_expanded?: string;
   parameters: Record<string, unknown>;
   texts: Record<string, string>;
   created: string;

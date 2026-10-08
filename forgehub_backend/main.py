@@ -435,7 +435,8 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
     try:
         job_id = await backend.queue(
             workflow, node_params, job_input, client_id=request.client_id,
-            job_meta={"workflow": meta.id, "parameters": raw_parameters},
+            job_meta={"workflow": meta.id, "parameters": raw_parameters,
+                      "parameters_expanded": job_params},
         )
         return ExecuteResponse(prompt_id=job_id, status="queued")
     except HTTPException:
@@ -513,6 +514,7 @@ async def outputs_meta(limit: int = 30):
             "subfolder": str(rel.parent) if str(rel.parent) != "." else "",
             "workflow": meta.get("workflow") or "",
             "prompt": str(params.get("prompt") or ""),
+            "prompt_expanded": str(meta.get("prompt_expanded") or ""),
             "parameters": params,
             "texts": meta.get("texts") or {},
             "created": meta.get("created") or "",

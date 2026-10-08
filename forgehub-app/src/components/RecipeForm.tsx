@@ -425,10 +425,13 @@ export default function RecipeForm({ client, parameters, values, setValue, image
                           <button
                             key={`${e.subfolder}/${e.filename}-${i}`}
                             onClick={() => { setValue("prompt", e.prompt); setHistoryOpen(false); }}
-                            title={e.filename}
+                            title={e.prompt || e.filename}
                             className="block w-full rounded-lg px-2.5 py-2 text-left transition-colors hover:bg-panel-hover"
                           >
-                            <div className="line-clamp-2 text-[11px] leading-snug text-text">{e.prompt || t.noPrompt}</div>
+                            <div className="line-clamp-2 text-[11px] leading-snug text-text">{e.prompt_expanded || e.prompt || t.noPrompt}</div>
+                            {e.prompt_expanded && e.prompt_expanded !== e.prompt && (
+                              <div className="mt-0.5 line-clamp-1 text-[10px] leading-snug text-faint">{e.prompt}</div>
+                            )}
                             <div className="mt-1 flex items-center gap-2 text-[9px] text-faint">
                               <span className="truncate">{e.workflow}</span>
                               <span className="ml-auto shrink-0 truncate">{e.filename}</span>
