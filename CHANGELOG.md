@@ -12,13 +12,14 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 - **`_bypass_nodes` executor support** — recipes can bypass/remove workflow nodes server-side.
 - **Unified Pony recipe** (`PimpMyPony-HiResFix-FaceDet`) — wildcards + HiResFix + FaceDetailer in a single workflow; `pmpIncaseStyle` checkpoint option; `None` wildcard preset.
 - **Video wildcards** (`vid/*`).
+- **Endpoint auto-resolution by name** — recipes declare `endpoint_name` instead of a hardcoded `endpoint_id`; the backend resolves the live endpoint ID from the RunPod account at submit time, picking the most recently created match. Recreating or redeploying endpoints from the RunPod Hub no longer breaks ForgeHub.
+- **Outputs panel rework** — hero preview of the latest output with a recent-outputs filmstrip below; media library stays a separate drawer.
+- **Prompt trace & history** — wildcard-expanded and final prompts in collapsible boxes under the prompt; history populated from output metadata.
+- **Multi-language UI** — English, Italian and Spanish translations; switches instead of on/off dropdowns; advanced fields hidden until the parent feature is enabled; multi-select download in the media library; completion sound; embedded prompt/params metadata in outputs.
 
 ### Changed
 - Recipe-aware chat behavior and faster warm jobs.
 - Output naming: `MMH3_<type>_<date>` prefixes; fixed Pony output pattern (was `Qwen21_`).
-
-### Added
-- **Endpoint auto-resolution by name** — recipes declare `endpoint_name` instead of a hardcoded `endpoint_id`; the backend resolves the live endpoint ID from the RunPod account at submit time, picking the most recently created match. Recreating or redeploying endpoints from the RunPod Hub no longer breaks ForgeHub.
 
 ### Fixed
 - `ModelPreviewOverrideKJ` bypassed in R2VA workflows (missing `taeh3` on the volume).
