@@ -54,6 +54,7 @@ def _bypass_nodes(prompt: dict[str, Any], node_ids: list[str]) -> dict[str, Any]
         for key, val in list(inputs.items()):
             if not (isinstance(val, list) and val and str(val[0]) in dead):
                 continue
+            out_idx = val[1] if len(val) > 1 else 0
             seen = set()
             while isinstance(val, list) and val and str(val[0]) in dead and str(val[0]) not in seen:
                 seen.add(str(val[0]))
@@ -61,7 +62,7 @@ def _bypass_nodes(prompt: dict[str, Any], node_ids: list[str]) -> dict[str, Any]
             if val is None:
                 del inputs[key]
             else:
-                inputs[key] = val
+                inputs[key] = [val[0], out_idx]
     return prompt
 
 

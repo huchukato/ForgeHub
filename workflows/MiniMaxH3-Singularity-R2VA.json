@@ -1,22 +1,31 @@
 {
-  "92": {
+  "126": {
     "inputs": {
+      "frame_rate": 48,
+      "loop_count": 0,
       "filename_prefix": [
         "261",
         4
       ],
-      "format": "auto",
-      "format.codec": "auto",
-      "codec": "auto",
-      "video-preview": "",
-      "video": [
-        "105:91",
+      "format": "video/h264-mp4",
+      "pix_fmt": "yuv420p",
+      "crf": 20,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "254:177",
+        0
+      ],
+      "audio": [
+        "105:23",
         0
       ]
     },
-    "class_type": "SaveVideo",
+    "class_type": "VHS_VideoCombine",
     "_meta": {
-      "title": "Save Video at 24 FPS"
+      "title": "48FPS"
     }
   },
   "220": {
@@ -52,12 +61,22 @@
   },
   "259": {
     "inputs": {
-      "image": "PMP/FD_2026-10-07_010.jpg [output]",
-      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"PMP/FD_2026-10-07_010.jpg [output]\"}"
+      "image": "square.jpeg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"square.jpeg\"}"
     },
     "class_type": "PixaromaLoadImageMini",
     "_meta": {
       "title": "Reference 1"
+    }
+  },
+  "260": {
+    "inputs": {
+      "image": "Qwen21_2026-10-07_007%.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"Qwen21_2026-10-07_007%.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "Reference 2"
     }
   },
   "261": {
@@ -81,9 +100,9 @@
   },
   "265": {
     "inputs": {
-      "text": "subject_definitions:\n<Subject 1> is a voluptuous blonde woman with heterochromatic blue eyes and gradient hair transitioning from platinum to electric blue to soft pink. She wears a revealing red satin bikini-style swimsuit with white faux-fur trim and a gold choker, standing knee-deep in a dark forest pond at night.\n\nsummary:\nreference generation \u2014 one continuous NEW scene featuring the referenced subject(s): a cinematic night-time forest bathing sequence where the subject wades through glowing blue water, her movements fluid and deliberate as she interacts with the natural surroundings.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 1]): fully_preserved - heterochromatic blue eyes, gradient hair, red satin swimsuit with white faux-fur trim, gold choker, knee-deep in pond, night forest setting.\n\ndetailed_description:\nThe target video uses a cinematic anime style with vibrant lighting and dynamic water effects.\n[Shot 1] A slow camera roll (rotation around the lens axis) captures the subject wading through dark blue forest water under starlight. At 00:00, she lifts her hand to brush wet hair from her face, her heterochromatic blue eyes scanning the surroundings with focused intensity. Water ripples around her legs, reflecting moonlight. Her red satin swimsuit clings to her curves, the white faux-fur trim contrasting against the dark water. As the camera rolls, she turns her head slightly, her gradient hair (platinum to electric blue to pink) flowing naturally in the breeze. At 00:03, she pauses, pressing her palm against the water's surface, creating concentric ripples. Her expression shifts from curious to contemplative, lips parting slightly as she inhales the cool night air. The forest background features tall silhouetted trees and floating lily pads, all bathed in deep blue ambient light with occasional bioluminescent specks drifting through the water.\n\noverall_soundscape:\nA soft female voice in a calm, contemplative tone speaks in clear English, synchronized with her breathing and movements. The soundscape includes gentle water lapping against her legs, distant forest rustling, and faint nocturnal insect chirps.\n\nnon_diegetic_music:\nN/A",
+      "text": "subject_definitions:\n<Subject 1> is a vibrant, modern 3D render of the text \"MINIMAX H3 SINGULARITY\" with glowing neon circuitry, digital waveforms, and a deep purple cosmic backdrop \u2014 used as a stylized title card. <Picture 1> is a high-contrast, cinematic tech-logo graphic.\n\n<Subject 2> is Jinx, a young woman with electric blue pigtails, pink eyes, cloud-pattern tattoos across her arms and legs, wearing a pink halter top, brown corset, plaid mini-skirt, black arm guards, and combat boots. <Picture 2> is a full character sheet displaying multiple angles and expressions.\n\n<Subject 3> is Tifa Lockhart, a fit young woman with long straight black hair, red eyes, wearing a white ribbed crop top, black utility skirt with straps, black leggings, red combat boots, and red fingerless gloves. <Picture 3> is a full character sheet displaying multiple angles and expressions.\n\nsummary:\nA continuous 5s scene in a sleek modern living room: the apartment door opens to reveal only hands and then close-ups of Jinx and Tifa smiling at each other; their shadows embrace and kiss on the floor as the camera falls; they tumble onto a couch, kiss passionately, Jinx grabs a pillow printed with the Minimax H3 Singularity logo and hurls it at the camera; the lens spins and lands on the pillow at floor level, revealing the logo clearly; an off-screen male voice delivers the tagline as fade to black.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 4]): fully_preserved \u2014 the pillow\u2019s printed logo is in sharp focus, centered, matching the reference\u2019s typography, glow, and circuitry details.\n<Subject 2> (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved \u2014 blue pigtails, pink eyes, tattoos, and outfit remain exact; expressions shift naturally from shy smiles to passionate intimacy.\n<Subject 3> (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved \u2014 black hair, red eyes, white crop, black skirt, and red gloves stay consistent; her playful push and kiss match her confident demeanor.\n\ndetailed_description:\nThe target video uses a modern 3D anime-rendered style with cinematic lighting and shallow depth of field.\n[Shot 1] 00:00.000 \u2014 The apartment door swings inward; a close-up captures a hand gripping the handle, then cuts to tight shots of Jinx and Tifa\u2019s faces as they lock eyes and smile warmly. Soft footsteps echo in the quiet room.\n[Shot 2] 00:02.500 \u2014 The camera tilts down to the floor, framing their elongated shadows. They embrace and press lips together in shadowed intimacy; the camera is knocked loose, tumbling forward with a soft thud.\n[Shot 3] 00:03.200 \u2014 From the floor\u2019s perspective, the two girls are now on a sleek dark couch, kissing and touching. Jinx reaches for the pillow from Shot 1, snatches it, and tosses it forcefully toward the lens.\n[Shot 4] 00:04.000 \u2014 The camera spins rightward from impact, landing on the pillow at floor level. The Minimax H3 Singularity logo is crisp, glowing, and perfectly centered. An off-screen male voice delivers: \"Singularity. One model to rule them all.\" Fade to black. An off-screen voice says: \"Singularty. One model to rule them all.\"\n\noverall_soundscape:\nSoft ambient hum of a modern apartment, gentle footsteps, fabric rustle when Jinx grabs the pillow, a soft camera thud, and a smooth, confident off-screen male voice with a slight tech-modern accent, delivering the tagline in crisp, cinematic timing.\n\nnon_diegetic_music:\nN/A",
       "source": [
-        "105:258",
+        "105:276",
         0
       ]
     },
@@ -119,28 +138,30 @@
       "title": "Label Pixaroma"
     }
   },
-  "273": {
+  "272": {
     "inputs": {
-      "image": "Qwen21_2026-09-25_001%.jpg [output]",
-      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"Qwen21_2026-09-25_001%.jpg [output]\"}"
+      "image": "Qwen21_2026-10-07_001__6.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"Qwen21_2026-10-07_001__6.jpg\"}"
     },
     "class_type": "PixaromaLoadImageMini",
     "_meta": {
-      "title": "Reference 2"
+      "title": "Reference 3"
+    }
+  },
+  "273": {
+    "inputs": {},
+    "class_type": "PixaromaGroupSwitch",
+    "_meta": {
+      "title": "Output"
     }
   },
   "275": {
-    "class_type": "LoraLoaderModelOnly",
     "inputs": {
-      "lora_name": "h3-realism-people-t2v-i2v-r2v.safetensors",
-      "strength_model": 0.0,
-      "model": [
-        "105:269",
-        0
-      ]
+      "label_json": "{\"text\":\"ONE MODEL TO RULE THEM ALL\",\"fontSize\":18,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"transparent\",\"padding\":10,\"borderRadius\":6,\"opacity\":0.9,\"fontWeight\":\"bold\",\"lineHeight\":1}"
     },
+    "class_type": "PixaromaLabel",
     "_meta": {
-      "title": "Style LoRA (realism / char_swap)"
+      "title": "Label Pixaroma"
     }
   },
   "105:10": {
@@ -209,7 +230,7 @@
   },
   "105:111": {
     "inputs": {
-      "value": 5
+      "value": 10
     },
     "class_type": "PrimitiveFloat",
     "_meta": {
@@ -219,7 +240,7 @@
   "105:16": {
     "inputs": {
       "model": [
-        "105:170",
+        "105:255",
         0
       ],
       "conditioning": [
@@ -234,7 +255,7 @@
   },
   "105:15": {
     "inputs": {
-      "noise_seed": 254650373981327
+      "noise_seed": 415292446726339
     },
     "class_type": "RandomNoise",
     "_meta": {
@@ -266,7 +287,7 @@
       "steps": 6,
       "denoise": 1,
       "model": [
-        "105:170",
+        "105:255",
         0
       ]
     },
@@ -320,7 +341,7 @@
   "105:224": {
     "inputs": {
       "prompt": [
-        "105:258",
+        "105:276",
         0
       ],
       "width": [
@@ -353,15 +374,11 @@
         0
       ],
       "ref_images.ref_image_1": [
-        "272",
+        "260",
         0
       ],
       "ref_images.ref_image_2": [
-        "273",
-        0
-      ],
-      "ref_videos.ref_video_0": [
-        "274",
+        "272",
         0
       ]
     },
@@ -370,10 +387,24 @@
       "title": "MiniMax H3 Riferimento a Video"
     }
   },
+  "105:213": {
+    "inputs": {
+      "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+      "strength_model": 1,
+      "model": [
+        "105:6",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Carica LoRA"
+    }
+  },
   "105:255": {
     "inputs": {
       "selection": "sol-attn",
-      "selection.tau": 1.3,
+      "selection.tau": 1,
       "start_percent": 0.2,
       "end_percent": 1,
       "dense_blocks": "",
@@ -407,15 +438,28 @@
       "title": "Decodifica audio VAE"
     }
   },
-  "105:258": {
+  "105:262": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "105:213",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  },
+  "105:276": {
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
       "preset_prompt": "MiniMax \u203a NSFW R2VA",
-      "camera_tag": "[ROLL]",
-      "prompt": "",
-      "max_tokens": 2048,
-      "keep_model_loaded": true,
-      "seed": 2276705724,
+      "camera_tag": "None",
+      "prompt": "(S1) E l'immagine stampata \\ cucita su un cuscino su un divano, in un soggiorno moderno\n(S2) \u00e8 una character sheet di Jinx\n(S3) \u00e8 un character sheet di Tifa Lockhart\nLa scena inizia con la porta dell'appartamento che si apre e la camera focussed sulla manila. La camera si allontana ed entrano (S2) e (S3), ma non si vedono per intero, l'inquadratura \u00e8 stretta, si vede la mano che apre la porta e poi i due visi che si guardano e sorridono. si sentono i loro passi. la camera punta in basso sulle ombre delle due ragazze che ora si abbracciano e si baciano, ma noi vediamo solo le ombre. (S3) spinge (S2) sul divano, nel farlo colpisce la camera che cade a terra. Ora la camera \u00e8 a terra, un po' storta, e vediamo (S2) ed (S3) sul divano che si baciano e si toccano. (S2) prende il cuscino (S1) e lo lancia. (S1) finisce sulla camera che si ruota a destra per il colpa e ora inquadra il cuscino a terra e si vede chiaramente l'immagine. Una voce maschile fuori campo dice [D]Singularty. One model to rule them all.[/D]. Fade to black e fine. ",
+      "max_tokens": 8192,
+      "keep_model_loaded": false,
+      "seed": 3227859527,
       "keep_last_prompt": false,
       "passthrough": false,
       "frame_count": 16,
@@ -425,15 +469,11 @@
         0
       ],
       "image2": [
-        "272",
+        "260",
         0
       ],
       "image3": [
-        "273",
-        0
-      ],
-      "video": [
-        "274",
+        "272",
         0
       ]
     },
@@ -442,63 +482,68 @@
       "title": "\ud83e\udde0 QwenVL Unified (HF / GGUF)"
     }
   },
-  "105:262": {
+  "254:176": {
     "inputs": {
-      "attention": "comfy kitchen attention",
-      "model": [
-        "275",
+      "model": "rife425_ensemble_False_scale_1_sim",
+      "precision": "fp16",
+      "resolution_profile": "large",
+      "batch_size": 1
+    },
+    "class_type": "AutoLoadRifeTensorrtModel",
+    "_meta": {
+      "title": "(Down)load RIFE TensorRT Model"
+    }
+  },
+  "254:186": {
+    "inputs": {
+      "model": "2xLexicaRRDBNet",
+      "precision": "fp16",
+      "batch_size": 2
+    },
+    "class_type": "LoadUpscalerTensorrtModel",
+    "_meta": {
+      "title": "Load Upscale Tensorrt Model"
+    }
+  },
+  "254:185": {
+    "inputs": {
+      "resize_to": "2x",
+      "batch_size": 2,
+      "resize_width": 2048,
+      "resize_height": 2048,
+      "images": [
+        "105:10",
+        0
+      ],
+      "upscaler_trt_model": [
+        "254:186",
         0
       ]
     },
-    "class_type": "ModelAttentionBackend",
+    "class_type": "UpscalerTensorrt",
     "_meta": {
-      "title": "Backend di attenzione del modello"
+      "title": "Upscaler Tensorrt \u26a1"
     }
   },
-  "105:269": {
-    "class_type": "LoraLoaderModelOnly",
+  "254:177": {
     "inputs": {
-      "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
-      "strength_model": 1.0,
-      "model": [
-        "105:6",
+      "clear_cache_after_n_frames": 100,
+      "multiplier": 2,
+      "keep_model_loaded": false,
+      "batch_size": 1,
+      "multiplier_list": "",
+      "frames": [
+        "254:185",
+        0
+      ],
+      "rife_trt_model": [
+        "254:176",
         0
       ]
-    }
-  },
-  "272": {
-    "inputs": {
-      "image": "Qwen21_2026-09-25_001%.jpg [output]",
-      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"Qwen21_2026-09-25_001%.jpg [output]\"}"
     },
-    "class_type": "PixaromaLoadImageMini",
+    "class_type": "AutoRifeTensorrt",
     "_meta": {
-      "title": "Reference 2"
-    }
-  },
-  "274": {
-    "class_type": "PixaromaLoadVideo",
-    "inputs": {
-      "video": "",
-      "max_frames": 0,
-      "force_fps": 24.0,
-      "skip_first_frames": 0,
-      "custom_width": 0,
-      "custom_height": 0
-    },
-    "_meta": {
-      "title": "Load Video Pixaroma (ref)"
-    }
-  },
-  "105:170": {
-    "class_type": "MiniMaxH3SigmaShift",
-    "inputs": {
-      "shift_video": 1.0,
-      "shift_audio": 1.0,
-      "model": [
-        "105:255",
-        0
-      ]
+      "title": "Auto RIFE TensorRT"
     }
   }
 }

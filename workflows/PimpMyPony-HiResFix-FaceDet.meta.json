@@ -1,214 +1,211 @@
 {
-  "id": "pimpmypony-hiresfix-facedet",
-  "name": "PimpMyPony HiRes + FaceDet",
-  "category": "image",
-  "description": "Pony / Illustrious T2I con wildcards — hires fix e face detailer attivabili a gruppi (serverless)",
-  "handler": "pony",
-  "remote_file": "PimpMyPony-HiResFix-FaceDet.json",
-  "endpoint_id": "rm1dvsnh3gxlew",
-  "outputs": [
-    "image"
+ "id": "pimpmypony-hiresfix-facedet",
+ "name": "PimpMyPony HiRes + FaceDet",
+ "category": "image",
+ "description": "Pony / Illustrious T2I con wildcards \u2014 hires fix e face detailer attivabili a gruppi (serverless)",
+ "handler": "pony",
+ "remote_file": "PimpMyPony-HiResFix-FaceDet.json",
+ "endpoint_id": "t5ag8gwv0tchl6",
+ "outputs": [
+  "image"
+ ],
+ "bypass_groups": {
+  "hires": [
+   "92:152",
+   "92:153"
   ],
-  "bypass_groups": {
-    "hires": [
-      "92:152",
-      "92:153",
-      "163"
-    ],
-    "facedet": [
-      "92:133",
-      "92:134",
-      "92:135",
-      "92:136",
-      "157",
-      "164"
-    ]
-  },
-  "parameters": [
-    {
-      "key": "prompt",
-      "label": "Prompt (wildcard __name__ o tag Pony)",
-      "type": "text",
-      "target": "job",
-      "wildcard_prefix": "pmp/"
-    },
-    {
-      "key": "82:mode",
-      "label": "Wildcard mode",
-      "type": "select",
-      "target": "node",
-      "default": "populate",
-      "options": [
-        "populate",
-        "fixed",
-        "reproduce"
-      ]
-    },
-    {
-      "key": "82:base_model",
-      "label": "Wildcard preset",
-      "type": "select",
-      "target": "node",
-      "default": "Pony",
-      "options": [
-        "None",
-        "Pony",
-        "Illustrious"
-      ]
-    },
-    {
-      "key": "enable_hires",
-      "label": "Hires fix (4x → lanczos 50% + refine)",
-      "type": "select",
-      "target": "job",
-      "default": "on",
-      "options": [
-        "on",
-        "off"
-      ]
-    },
-    {
-      "key": "enable_facedet",
-      "label": "Face detailer (YOLO + SAM)",
-      "type": "select",
-      "target": "job",
-      "default": "on",
-      "options": [
-        "on",
-        "off"
-      ]
-    },
-    {
-      "key": "92:131:ckpt_name",
-      "label": "Checkpoint",
-      "type": "select",
-      "target": "node",
-      "default": "pimpmypony_pmpSemiRealAnime.safetensors",
-      "options": [
-        "pimpmypony_pmpSemiRealAnime.safetensors",
-        "pimpmypony_pmpInCaseEnhanced.safetensors",
-        "pimpmypony_pmpIncaseStyle.safetensors",
-        "ilustmix_v111.safetensors"
-      ]
-    },
-    {
-      "key": "92:131:resolution",
-      "label": "Image size",
-      "type": "select",
-      "target": "node",
-      "default": "832 x 1216",
-      "options": [
-        "1024 x 1024",
-        "1152 x 896",
-        "896 x 1152",
-        "1216 x 832",
-        "832 x 1216",
-        "1344 x 768",
-        "768 x 1344"
-      ]
-    },
-    {
-      "key": "92:132:steps",
-      "label": "Steps",
-      "type": "int",
-      "target": "node",
-      "default": 30
-    },
-    {
-      "key": "92:132:cfg",
-      "label": "CFG",
-      "type": "float",
-      "target": "node",
-      "default": 4.5
-    },
-    {
-      "key": "92:132:sampler_name",
-      "label": "Sampler",
-      "type": "select",
-      "target": "node",
-      "default": "euler_ancestral",
-      "options": [
-        "dpmpp_2m_sde",
-        "dpmpp_2m",
-        "dpmpp_3m_sde",
-        "euler",
-        "euler_ancestral"
-      ]
-    },
-    {
-      "key": "92:132:scheduler",
-      "label": "Scheduler",
-      "type": "select",
-      "target": "node",
-      "default": "karras",
-      "options": [
-        "karras",
-        "normal",
-        "exponential",
-        "simple",
-        "sgm_uniform"
-      ]
-    },
-    {
-      "key": "92:152:model_name",
-      "label": "Upscaler (hires)",
-      "type": "select",
-      "parent": "enable_hires",
-      "target": "node",
-      "default": "4xUltrasharp_4xUltrasharpV10.pth",
-      "options": [
-        "4xUltrasharp_4xUltrasharpV10.pth",
-        "4x-AnimeSharp.pth",
-        "RealESRGAN_x4plus.pth"
-      ]
-    },
-    {
-      "key": "92:152:percent",
-      "label": "Hires rescale % (50 = 2x netto)",
-      "type": "int",
-      "parent": "enable_hires",
-      "target": "node",
-      "default": 50
-    },
-    {
-      "key": "92:153:denoise",
-      "label": "Hires refine denoise",
-      "type": "float",
-      "parent": "enable_hires",
-      "target": "node",
-      "default": 0.4
-    },
-    {
-      "key": "92:153:steps",
-      "label": "Hires refine steps",
-      "type": "int",
-      "parent": "enable_hires",
-      "target": "node",
-      "default": 12
-    },
-    {
-      "key": "92:135:denoise",
-      "label": "Detailer denoise",
-      "type": "float",
-      "parent": "enable_facedet",
-      "target": "node",
-      "default": 0.35
-    },
-    {
-      "key": "92:135:steps",
-      "label": "Detailer steps",
-      "type": "int",
-      "parent": "enable_facedet",
-      "target": "node",
-      "default": 20
-    },
-    {
-      "key": "92:133:bbox_threshold",
-      "label": "Face detect threshold",
-      "type": "float",
-      "parent": "enable_facedet",
-      "target": "node",
-      "default": 0.5
-    }
+  "facedet": [
+   "92:133",
+   "92:134",
+   "92:135",
+   "92:136"
   ]
+ },
+ "parameters": [
+  {
+   "key": "prompt",
+   "label": "Prompt (wildcard __name__ o tag Pony)",
+   "type": "text",
+   "target": "job",
+   "wildcard_prefix": "pmp/"
+  },
+  {
+   "key": "82:mode",
+   "label": "Wildcard mode",
+   "type": "select",
+   "target": "node",
+   "default": "populate",
+   "options": [
+    "populate",
+    "fixed",
+    "reproduce"
+   ]
+  },
+  {
+   "key": "82:base_model",
+   "label": "Wildcard preset",
+   "type": "select",
+   "target": "node",
+   "default": "Pony",
+   "options": [
+    "None",
+    "Pony",
+    "Illustrious"
+   ]
+  },
+  {
+   "key": "enable_hires",
+   "label": "Hires fix (4x \u2192 lanczos 50% + refine)",
+   "type": "select",
+   "target": "job",
+   "default": "on",
+   "options": [
+    "on",
+    "off"
+   ]
+  },
+  {
+   "key": "enable_facedet",
+   "label": "Face detailer (YOLO + SAM)",
+   "type": "select",
+   "target": "job",
+   "default": "on",
+   "options": [
+    "on",
+    "off"
+   ]
+  },
+  {
+   "key": "92:131:ckpt_name",
+   "label": "Checkpoint",
+   "type": "select",
+   "target": "node",
+   "default": "pimpmypony_pmpSemiRealAnime.safetensors",
+   "options": [
+    "pimpmypony_pmpSemiRealAnime.safetensors",
+    "pimpmypony_pmpInCaseEnhanced.safetensors",
+    "pimpmypony_pmpIncaseStyle.safetensors",
+    "ilustmix_v111.safetensors"
+   ]
+  },
+  {
+   "key": "92:131:resolution",
+   "label": "Image size",
+   "type": "select",
+   "target": "node",
+   "default": "832 x 1216",
+   "options": [
+    "1024 x 1024",
+    "1152 x 896",
+    "896 x 1152",
+    "1216 x 832",
+    "832 x 1216",
+    "1344 x 768",
+    "768 x 1344"
+   ]
+  },
+  {
+   "key": "92:132:steps",
+   "label": "Steps",
+   "type": "int",
+   "target": "node",
+   "default": 30
+  },
+  {
+   "key": "92:132:cfg",
+   "label": "CFG",
+   "type": "float",
+   "target": "node",
+   "default": 4.5
+  },
+  {
+   "key": "92:132:sampler_name",
+   "label": "Sampler",
+   "type": "select",
+   "target": "node",
+   "default": "euler_ancestral",
+   "options": [
+    "dpmpp_2m_sde",
+    "dpmpp_2m",
+    "dpmpp_3m_sde",
+    "euler",
+    "euler_ancestral"
+   ]
+  },
+  {
+   "key": "92:132:scheduler",
+   "label": "Scheduler",
+   "type": "select",
+   "target": "node",
+   "default": "karras",
+   "options": [
+    "karras",
+    "normal",
+    "exponential",
+    "simple",
+    "sgm_uniform"
+   ]
+  },
+  {
+   "key": "92:152:model_name",
+   "label": "Upscaler (hires)",
+   "type": "select",
+   "parent": "enable_hires",
+   "target": "node",
+   "default": "4xUltrasharp_4xUltrasharpV10.pth",
+   "options": [
+    "4xUltrasharp_4xUltrasharpV10.pth",
+    "4x-AnimeSharp.pth",
+    "RealESRGAN_x4plus.pth"
+   ]
+  },
+  {
+   "key": "92:152:percent",
+   "label": "Hires rescale % (50 = 2x netto)",
+   "type": "int",
+   "parent": "enable_hires",
+   "target": "node",
+   "default": 50
+  },
+  {
+   "key": "92:153:denoise",
+   "label": "Hires refine denoise",
+   "type": "float",
+   "parent": "enable_hires",
+   "target": "node",
+   "default": 0.4
+  },
+  {
+   "key": "92:153:steps",
+   "label": "Hires refine steps",
+   "type": "int",
+   "parent": "enable_hires",
+   "target": "node",
+   "default": 12
+  },
+  {
+   "key": "92:135:denoise",
+   "label": "Detailer denoise",
+   "type": "float",
+   "parent": "enable_facedet",
+   "target": "node",
+   "default": 0.35
+  },
+  {
+   "key": "92:135:steps",
+   "label": "Detailer steps",
+   "type": "int",
+   "parent": "enable_facedet",
+   "target": "node",
+   "default": 20
+  },
+  {
+   "key": "92:133:bbox_threshold",
+   "label": "Face detect threshold",
+   "type": "float",
+   "parent": "enable_facedet",
+   "target": "node",
+   "default": 0.5
+  }
+ ]
 }
