@@ -2,9 +2,12 @@
 # Use __mmh3/style__ or __mmh3/style/<name>__. Each entry is an observable descriptor.
 mmh3:
   style:
-    matchref:
-    - "match the reference images' art style exactly — same illustration, linework and cel-shading"
-    - "preserve the reference image's exact rendering style across every shot"
+    matchref1:
+    - "match <Picture 1>'s art style exactly — same illustration, linework and cel-shading; other references contribute content only, not style"
+    - "preserve <Picture 1>'s exact rendering style across every shot; the other reference images are used for their content only"
+    matchref2:
+    - "match <Picture 2>'s art style exactly — same illustration, linework and cel-shading; other references contribute content only, not style"
+    - "preserve <Picture 2>'s exact rendering style across every shot; the other reference images are used for their content only"
     cinematic:
     - "cinematic look, anamorphic framing, filmic color grading and shallow depth of field"
     - "cinematic realism, dramatic lighting, lens flares and motion blur"
