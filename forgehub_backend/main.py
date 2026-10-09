@@ -2,6 +2,7 @@
 
 import base64
 import json
+import re
 import time
 from contextlib import asynccontextmanager
 from urllib.parse import quote
@@ -206,6 +207,10 @@ async def get_settings():
         "chat_llm_url": SETTINGS.chat_llm_url,
         "chat_llm_model": SETTINGS.chat_llm_model,
         "chat_llm_key_set": bool(SETTINGS.chat_llm_key),
+        "runpod_s3_access_id_set": bool(SETTINGS.runpod_s3_access_id),
+        "runpod_s3_access_secret_set": bool(SETTINGS.runpod_s3_access_secret),
+        "runpod_s3_bucket": SETTINGS.runpod_s3_bucket,
+        "runpod_s3_datacenter": SETTINGS.runpod_s3_datacenter,
     }
 
 
@@ -354,7 +359,7 @@ def _split_parameters(request: ExecuteRequest, meta: WorkflowMeta) -> tuple[dict
             job_params[key] = value
         elif target == "prompt":
             if str(value) not in ("", "None"):
-                prompt_parts.append(str(value))
+                prompt_parts.append(re.sub(r"^\[[^\]]*\]\s*-\s*", "", str(value)))
         elif target and target.startswith("node:"):
             node_params[target[5:]] = value
         elif ":" in key:

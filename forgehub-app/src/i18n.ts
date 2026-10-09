@@ -93,6 +93,12 @@ export interface Translations {
   selectModel: string;
   customModel: string;
   saveKeyHint: string;
+  s3Section: string;
+  s3Hint: string;
+  s3AccessId: string;
+  s3AccessSecret: string;
+  s3Volume: string;
+  s3Datacenter: string;
   save: string;
   saving: string;
 
@@ -195,6 +201,12 @@ export const translations: Record<Language, Translations> = {
     selectModel: "— select a model —",
     customModel: "Custom (type manually)",
     saveKeyHint: "Save the API key below to list models.",
+    s3Section: "Output storage (S3)",
+    s3Hint: "Needed to download large video outputs — they're offloaded to the endpoint's network volume. Create the credentials in the RunPod console.",
+    s3AccessId: "S3 Access ID",
+    s3AccessSecret: "S3 Access Secret",
+    s3Volume: "Network volume ID",
+    s3Datacenter: "Datacenter",
     save: "Save",
     saving: "Saving…",
 
@@ -294,6 +306,12 @@ export const translations: Record<Language, Translations> = {
     selectModel: "— scegli un modello —",
     customModel: "Custom (scrivi a mano)",
     saveKeyHint: "Salva la API key qui sotto per elencare i modelli.",
+    s3Section: "Storage output (S3)",
+    s3Hint: "Serve per scaricare i video grandi — vengono caricati sul network volume dell'endpoint. Le credenziali si creano nella console RunPod.",
+    s3AccessId: "S3 Access ID",
+    s3AccessSecret: "S3 Access Secret",
+    s3Volume: "Network volume ID",
+    s3Datacenter: "Datacenter",
     save: "Salva",
     saving: "Salvataggio…",
 
@@ -393,6 +411,12 @@ export const translations: Record<Language, Translations> = {
     selectModel: "— elige un modelo —",
     customModel: "Personalizado (escríbelo)",
     saveKeyHint: "Guarda la API key abajo para listar los modelos.",
+    s3Section: "Almacenamiento de salida (S3)",
+    s3Hint: "Necesario para descargar salidas de video grandes — se suben al network volume del endpoint. Crea las credenciales en la consola de RunPod.",
+    s3AccessId: "S3 Access ID",
+    s3AccessSecret: "S3 Access Secret",
+    s3Volume: "Network volume ID",
+    s3Datacenter: "Datacenter",
     save: "Guardar",
     saving: "Guardando…",
 

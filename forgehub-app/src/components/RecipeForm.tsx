@@ -96,7 +96,7 @@ function SizePicker({ value, onChange }: { value: string; onChange: (v: string) 
 
 // Param keys grouped into sections — everything else falls to "Parameters".
 const SECTIONS: Array<{ title: string; keys: string[] }> = [
-  { title: "Prompt", keys: ["prompt", "images", "video"] },
+  { title: "Prompt", keys: ["prompt", "style", "images", "video"] },
   { title: "Enhancer (QwenVL)", keys: ["enhance", "vl_preset", "camera_tag"] },
   { title: "Generation", keys: ["seconds", "config", "seed"] },
   { title: "Post-processing", keys: ["upscale", "upscale_model", "upscale_target", "rife"] },

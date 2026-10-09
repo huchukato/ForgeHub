@@ -19,6 +19,28 @@
    "wildcard_prefix": "mmh3/"
   },
   {
+   "key": "style",
+   "label": "Video style",
+   "type": "select",
+   "target": "prompt",
+   "default": "None",
+   "options": [
+    "None",
+    "[MATCHREF] - match the reference images' art style exactly — same illustration, linework and cel-shading",
+    "[CINEMATIC] - cinematic look, anamorphic framing, filmic color grading and shallow depth of field",
+    "[LIVEACTION] - live-action footage, natural skin tones, realistic textures and practical lighting",
+    "[ANIME2D] - 2D-animated style, clean linework, flat cel-shading and vivid colors",
+    "[CG3D] - 3D CG render, subsurface skin shading, ray-traced lighting and smooth surfaces",
+    "[CLAYMATION] - claymation stop-motion, visible clay fingerprints, miniature sets and stepped frame timing",
+    "[WATERCOLOR] - watercolor painting look, soft pigment bleeds, paper texture and translucent washes",
+    "[VINTAGE] - vintage film look, warm faded tones, halation, grain and gentle gate weave",
+    "[PAPERCRAFT] - papercraft stop-motion, layered cut-paper sets, visible paper edges and miniature depth",
+    "[COLLAGE] - paper collage look, flat cut-out shapes, mixed textures and bold graphic composition",
+    "[HANDDRAWN] - hand-drawn sketch style, pencil linework, rough hatching and loose organic strokes",
+    "[RANDOM] - __mmh3/style__"
+   ]
+  },
+  {
    "key": "images",
    "label": "Reference images (max 3)",
    "type": "images",
@@ -68,24 +90,6 @@
     "r2va_singularity_turbo",
     "10eros",
     "10eros_turbo"
-   ]
-  },
-  {
-   "key": "style",
-   "label": "Video style",
-   "type": "select",
-   "target": "prompt",
-   "default": "None",
-   "options": [
-    "None",
-    "Visual style: match the reference images' art style exactly — same illustration, linework and cel-shading",
-    "Visual style: cinematic live-action, photorealistic",
-    "Visual style: 2D-animated, clean linework and cel-shading",
-    "Visual style: 3D CG render, polished",
-    "Visual style: claymation stop-motion",
-    "Visual style: watercolor painting look",
-    "Visual style: vintage film, grain and warm tones",
-    "Visual style: __mmh3/style__"
    ]
   },
   {

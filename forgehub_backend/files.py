@@ -5,6 +5,7 @@ import hashlib
 import io
 import json
 import re
+import shutil
 import struct
 import subprocess
 import urllib.request
@@ -109,12 +110,30 @@ def _embed_png(path: Path, payload: str) -> bool:
     return True
 
 
+def _ffmpeg_bin() -> str:
+    """Locate ffmpeg: PATH first (dev), then common install paths (Electron apps
+    get a minimal PATH), then the imageio-ffmpeg bundled binary."""
+    exe = shutil.which("ffmpeg")
+    if exe:
+        return exe
+    for cand in ("/opt/homebrew/bin/ffmpeg", "/usr/local/bin/ffmpeg", "/usr/bin/ffmpeg"):
+        if Path(cand).is_file():
+            return cand
+    try:
+        import imageio_ffmpeg
+        return imageio_ffmpeg.get_ffmpeg_exe()
+    except Exception:
+        return "ffmpeg"
+
+
 def _embed_container(path: Path, payload: str) -> bool:
     tmp = path.with_name(f"{path.stem}.embed_tmp{path.suffix}")
+    # mp4/mov drop unknown metadata keys unless they go into the udta atom.
+    mov_tags = ["-movflags", "use_metadata_tags"] if path.suffix.lower() in (".mp4", ".mov", ".m4a") else []
     try:
         r = subprocess.run(
-            ["ffmpeg", "-y", "-i", str(path), "-map", "0", "-c", "copy",
-             "-metadata", f"{META_KEYWORD}={payload}", str(tmp)],
+            [_ffmpeg_bin(), "-y", "-i", str(path), "-map", "0", "-c", "copy",
+             *mov_tags, "-metadata", f"{META_KEYWORD}={payload}", str(tmp)],
             capture_output=True, timeout=180,
         )
         if r.returncode != 0:
@@ -149,10 +168,22 @@ def _read_png_meta(path: Path) -> dict | None:
     return None
 
 
+def _ffprobe_bin() -> str:
+    exe = shutil.which("ffprobe")
+    if exe:
+        return exe
+    for cand in ("/opt/homebrew/bin/ffprobe", "/usr/local/bin/ffprobe", "/usr/bin/ffprobe"):
+        if Path(cand).is_file():
+            return cand
+    ff = _ffmpeg_bin()
+    sib = str(Path(ff).with_name("ffprobe"))
+    return sib if Path(sib).is_file() else "ffprobe"
+
+
 def _read_container_meta(path: Path) -> dict | None:
     try:
         r = subprocess.run(
-            ["ffprobe", "-v", "quiet", "-show_entries", "format_tags",
+            [_ffprobe_bin(), "-v", "quiet", "-show_entries", "format_tags",
              "-of", "json", str(path)],
             capture_output=True, timeout=15,
         )
@@ -177,7 +208,7 @@ def write_output_meta(path: Path, meta: dict) -> None:
             ok = _embed_container(path, payload)
     except Exception:
         ok = False
-    if not ok:
+    if not ok or ext in _EMBEDDABLE_CONTAINER:
         (path.parent / f"{path.name}{_META_SUFFIX}").write_text(payload, encoding="utf-8")
 
 
@@ -348,7 +379,7 @@ def thumbnail_path(filename: str, subfolder: str = "") -> Path | None:
     try:
         if is_video:
             subprocess.run(
-                ["ffmpeg", "-y", "-ss", "0.5", "-i", str(path),
+                [_ffmpeg_bin(), "-y", "-ss", "0.5", "-i", str(path),
                  "-frames:v", "1", "-vf", "scale=480:-2", "-q:v", "5", str(tmp)],
                 check=True, capture_output=True, timeout=30,
             )

@@ -1,4 +1,4 @@
-import { MessageSquare, RefreshCw, Settings, X, Zap } from "lucide-react";
+import { HardDrive, MessageSquare, RefreshCw, Settings, X, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { ForgeHubClient, RunpodEndpoint } from "../api";
 import { Button, Label, Select, TextInput } from "./ui";
@@ -44,6 +44,12 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
   const [endpoints, setEndpoints] = useState<RunpodEndpoint[]>([]);
   const [detecting, setDetecting] = useState(false);
   const [detectMsg, setDetectMsg] = useState("");
+  const [s3AccessId, setS3AccessId] = useState("");
+  const [s3AccessSecret, setS3AccessSecret] = useState("");
+  const [s3IdSet, setS3IdSet] = useState(false);
+  const [s3SecretSet, setS3SecretSet] = useState(false);
+  const [s3Bucket, setS3Bucket] = useState("");
+  const [s3Datacenter, setS3Datacenter] = useState("");
 
   const detect = async (key = apiKey) => {
     setDetecting(true);
@@ -94,6 +100,12 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
       setLlmModel(s.chat_llm_model);
       setLlmKeySet(s.chat_llm_key_set);
       setLlmKey("");
+      setS3IdSet(s.runpod_s3_access_id_set);
+      setS3SecretSet(s.runpod_s3_access_secret_set);
+      setS3Bucket(s.runpod_s3_bucket);
+      setS3Datacenter(s.runpod_s3_datacenter);
+      setS3AccessId("");
+      setS3AccessSecret("");
       if (s.runpod_api_key_set && !s.runpod_endpoint_id) detect("");
       if (s.chat_llm_url && (s.chat_llm_key_set || !serviceNeedsKey(svc?.id ?? "custom"))) {
         fetchModels(s.chat_llm_url, s.chat_llm_key_set || !serviceNeedsKey(svc?.id ?? "custom"));
@@ -203,6 +215,53 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
 
         <div className="mb-3 mt-5 flex items-center gap-2 border-b border-border pb-2 text-[11px] font-bold uppercase tracking-[0.08em] text-muted">
           <span className="flex h-5 w-5 items-center justify-center rounded-md border border-accent/40 bg-accent/15 text-accent">
+            <HardDrive size={11} />
+          </span>
+          {t.s3Section}
+        </div>
+        <div className="mb-3 text-[11px] text-muted">
+          {t.s3Hint}{" "}
+          <a href="https://console.runpod.io/user/settings" target="_blank" rel="noreferrer" className="text-accent hover:underline">
+            {t.getApiKey}
+          </a>
+        </div>
+        <Label>
+          {t.s3AccessId} {s3IdSet && <span className="normal-case text-accent">{t.apiKeySet}</span>}
+        </Label>
+        <TextInput
+          type="password"
+          value={s3AccessId}
+          onChange={(e) => setS3AccessId(e.target.value.trim())}
+          placeholder="user_…"
+          className="mb-3 font-mono"
+        />
+        <Label>
+          {t.s3AccessSecret} {s3SecretSet && <span className="normal-case text-accent">{t.apiKeySet}</span>}
+        </Label>
+        <TextInput
+          type="password"
+          value={s3AccessSecret}
+          onChange={(e) => setS3AccessSecret(e.target.value.trim())}
+          placeholder="rps_…"
+          className="mb-3 font-mono"
+        />
+        <Label>{t.s3Volume}</Label>
+        <TextInput
+          value={s3Bucket}
+          onChange={(e) => setS3Bucket(e.target.value.trim())}
+          placeholder="tm2zlohk8s"
+          className="mb-3 font-mono"
+        />
+        <Label>{t.s3Datacenter}</Label>
+        <TextInput
+          value={s3Datacenter}
+          onChange={(e) => setS3Datacenter(e.target.value.trim().toLowerCase())}
+          placeholder="us-ne-1"
+          className="mb-4 font-mono"
+        />
+
+        <div className="mb-3 mt-5 flex items-center gap-2 border-b border-border pb-2 text-[11px] font-bold uppercase tracking-[0.08em] text-muted">
+          <span className="flex h-5 w-5 items-center justify-center rounded-md border border-accent/40 bg-accent/15 text-accent">
             <MessageSquare size={11} />
           </span>
           {t.promptAssist} (LLM)
@@ -302,11 +361,19 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
                   chat_llm_url: llmUrl,
                   chat_llm_model: llmModel,
                   chat_llm_key: llmKey || undefined,
+                  runpod_s3_access_id: s3AccessId || undefined,
+                  runpod_s3_access_secret: s3AccessSecret || undefined,
+                  runpod_s3_bucket: s3Bucket || undefined,
+                  runpod_s3_datacenter: s3Datacenter || undefined,
                 });
                 setKeySet(s.runpod_api_key_set);
                 setLlmKeySet(s.chat_llm_key_set);
+                setS3IdSet(s.runpod_s3_access_id_set);
+                setS3SecretSet(s.runpod_s3_access_secret_set);
                 setApiKey("");
                 setLlmKey("");
+                setS3AccessId("");
+                setS3AccessSecret("");
                 onSaved(s.runpod_endpoint_id);
                 onClose();
               } catch (e) {

@@ -3,6 +3,22 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.9] — 2026-10-09
+
+### Added
+- **Output lightbox** and expanded-prompt trace: the wildcard-resolved prompt is embedded in output metadata and shown next to the worker's final QwenVL prompt under the Prompt section.
+- **S3 offload for large outputs** — serverless `s3Config` passthrough with presigned-URL download, sidestepping the ~20 MB gateway cap; credentials configurable from Settings (access id, secret, bucket, region/datacenter).
+- **Prompt-target recipe params** — meta params with `target: "prompt"` are appended to the job prompt; bracketed display prefixes (`[CINEMATIC] - ...`) are stripped so the model receives clean prose.
+- **MiniMax H3 style dropdown** for Singularity R2VA with `__mmh3/*__` wildcards (`style`, `camera`, `music`, `nsfw`) — `[RANDOM]` expands `__mmh3/style__` directly.
+- Bundled `imageio-ffmpeg` in the packaged backend for container metadata embedding on machines without a system ffmpeg.
+
+### Changed
+- `vid/*` wildcards migrated to `mmh3/nsfw.yaml`; dropped the obsolete `camera_tag` widget.
+- Dropped the Qwen negative prompt.
+
+### Fixed
+- **Video output metadata lost on mp4** — ffmpeg silently drops custom tags in mp4 without `-movflags use_metadata_tags`, and no sidecar was written on success; a sidecar `.meta.json` is now always written for containers and ffprobe is located via PATH/common install paths, so the Expanded-prompt trace and history work on video outputs too.
+
 ## [0.1.8] — 2026-10-07
 
 ### Added

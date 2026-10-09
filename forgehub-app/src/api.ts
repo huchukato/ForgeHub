@@ -88,6 +88,10 @@ export interface ForgeHubSettings {
   chat_llm_url: string;
   chat_llm_model: string;
   chat_llm_key_set: boolean;
+  runpod_s3_access_id_set: boolean;
+  runpod_s3_access_secret_set: boolean;
+  runpod_s3_bucket: string;
+  runpod_s3_datacenter: string;
 }
 
 export interface ExecutionStatus {
@@ -149,7 +153,12 @@ export class ForgeHubClient {
   }
 
   async saveSettings(
-    body: Partial<ForgeHubSettings> & { runpod_api_key?: string; chat_llm_key?: string }
+    body: Partial<ForgeHubSettings> & {
+      runpod_api_key?: string;
+      chat_llm_key?: string;
+      runpod_s3_access_id?: string;
+      runpod_s3_access_secret?: string;
+    }
   ): Promise<ForgeHubSettings> {
     return this.request<ForgeHubSettings>("/settings", {
       method: "PUT",

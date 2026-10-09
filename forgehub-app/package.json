@@ -12,7 +12,7 @@
     "preview": "vite preview",
     "icon": "mkdir -p icons && iconutil -c icns ../img/icon.iconset -o icons/icon.icns",
     "electron:dev": "cross-env NODE_ENV=development electron dist-electron/electron/main.js",
-    "backend:bundle": "cd .. && uv run --with pyinstaller pyinstaller packaging/backend_entry.py --name forgehub-backend --onefile --noconfirm --distpath backend-dist --workpath backend-build --paths . --collect-submodules uvicorn --collect-data certifi",
+    "backend:bundle": "cd .. && uv run --with pyinstaller pyinstaller packaging/backend_entry.py --name forgehub-backend --onefile --noconfirm --distpath backend-dist --workpath backend-build --paths . --collect-submodules uvicorn --collect-data certifi --collect-binaries imageio_ffmpeg",
     "electron:build": "npm run build && npm run icon && npm run backend:bundle && electron-builder"
   },
   "dependencies": {

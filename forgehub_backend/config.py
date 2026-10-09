@@ -34,6 +34,9 @@ class Settings:
         self.runpod_s3_access_id = os.getenv("RUNPOD_S3_ACCESS_ID", "")
         self.runpod_s3_access_secret = os.getenv("RUNPOD_S3_ACCESS_SECRET", "")
         self.runpod_s3_region = os.getenv("RUNPOD_S3_REGION", "")
+        self.runpod_s3_datacenter = os.getenv("RUNPOD_S3_DATACENTER", "")
+        if not self.runpod_s3_endpoint and self.runpod_s3_datacenter:
+            self.runpod_s3_endpoint = f"https://s3api-{self.runpod_s3_datacenter.lower()}.runpod.io/"
         # Local storage for serverless outputs and uploads (base64 payloads
         # have no ComfyUI filesystem behind them).
         self.storage_dir = Path(os.getenv("FORGEHUB_STORAGE_DIR", "data/storage"))
@@ -71,6 +74,10 @@ _SETTINGS_KEYS = (
     "chat_llm_url",
     "chat_llm_model",
     "chat_llm_key",
+    "runpod_s3_access_id",
+    "runpod_s3_access_secret",
+    "runpod_s3_bucket",
+    "runpod_s3_datacenter",
 )
 
 
@@ -80,6 +87,8 @@ def apply_overrides(data: dict):
         if value:
             setattr(SETTINGS, key, value)
     SETTINGS.runpod_base_url = f"https://api.runpod.ai/v2/{SETTINGS.runpod_endpoint_id}"
+    if SETTINGS.runpod_s3_datacenter:
+        SETTINGS.runpod_s3_endpoint = f"https://s3api-{SETTINGS.runpod_s3_datacenter.lower()}.runpod.io/"
 
 
 def load_overrides():
