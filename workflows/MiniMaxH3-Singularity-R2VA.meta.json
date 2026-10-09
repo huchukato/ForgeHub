@@ -34,19 +34,19 @@
    "default": "None",
    "options": [
     "None",
-    "[MATCH REF1] - __mmh3/style/matchref1__",
-    "[MATCH REF2] - __mmh3/style/matchref2__",
-    "[CINEMATIC] - __mmh3/style/cinematic__",
-    "[LIVEACTION] - __mmh3/style/liveaction__",
-    "[ANIME2D] - __mmh3/style/anime2d__",
-    "[CG3D] - __mmh3/style/cg3d__",
-    "[CLAYMATION] - __mmh3/style/claymation__",
-    "[WATERCOLOR] - __mmh3/style/watercolor__",
-    "[VINTAGE] - __mmh3/style/vintage__",
-    "[PAPERCRAFT] - __mmh3/style/papercraft__",
-    "[COLLAGE] - __mmh3/style/collage__",
-    "[HANDDRAWN] - __mmh3/style/handdrawn__",
-    "[RANDOM] - __mmh3/style__"
+    "[MATCH REF1] - STYLE: __mmh3/style/matchref1__",
+    "[MATCH REF2] - STYLE: __mmh3/style/matchref2__",
+    "[CINEMATIC] - STYLE: __mmh3/style/cinematic__",
+    "[LIVEACTION] - STYLE: __mmh3/style/liveaction__",
+    "[ANIME2D] - STYLE: __mmh3/style/anime2d__",
+    "[CG3D] - STYLE: __mmh3/style/cg3d__",
+    "[CLAYMATION] - STYLE: __mmh3/style/claymation__",
+    "[WATERCOLOR] - STYLE: __mmh3/style/watercolor__",
+    "[VINTAGE] - STYLE: __mmh3/style/vintage__",
+    "[PAPERCRAFT] - STYLE: __mmh3/style/papercraft__",
+    "[COLLAGE] - STYLE: __mmh3/style/collage__",
+    "[HANDDRAWN] - STYLE: __mmh3/style/handdrawn__",
+    "[RANDOM] - STYLE: __mmh3/style__"
    ]
   },
   {

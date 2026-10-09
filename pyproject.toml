@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "forgehub-backend"
-version = "0.1.10"
+version = "0.1.11"
 description = "ForgeHub backend: orchestrate ComfyUI workflows via chat and API."
 requires-python = ">=3.10"
 dependencies = [

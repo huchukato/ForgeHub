@@ -3,6 +3,15 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.11] — 2026-10-09
+
+### Added
+- **`sectioned_prompt` recipe param** — the MiniMax H3 R2VA prompt is now a fixed-label template: SCENE / ENV / PROP / VFX / MUSIC / SOUND boxes (labels can't be deleted), each with wildcard autocomplete. Sections serialize as `FIELD:` lines so QwenVL routes every part into the right output section of the structured MiniMax prompt.
+
+### Changed
+- Style dropdown options now inject `STYLE: __mmh3/style/<name>__` — the resolved style lands as an explicit `STYLE:` field line in the prompt (deterministic routing) while keeping its `[TAG]` directive marker.
+- Bundled `mmh3/vfx` wildcards synced from Garage (10 categories: energy, explosion, sparks, smoke, dust, debris, liquid, rift, lightning, feedback).
+
 ## [0.1.10] — 2026-10-10
 
 ### Changed
