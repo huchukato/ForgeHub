@@ -3,6 +3,13 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.13] — 2026-10-09
+
+### Fixed
+- **S3 output downloads** — RunPod's S3-compatible API does not support presigned URLs, so large outputs (>10MB, offloaded to the network volume) silently failed to download and jobs appeared successful with no files. ForgeHub now signs the GET itself (SigV4) using the configured volume credentials.
+- **Silent output loss** — output download failures are logged and reported as job errors instead of being swallowed; a job that produced zero downloadable files now surfaces an error instead of an empty success.
+- **WAF-blocked downloads** — RunPod's edge rejects the default `Python-urllib` user agent (error 1010); requests now send an explicit user agent.
+
 ## [0.1.12] — 2026-10-09
 
 ### Added

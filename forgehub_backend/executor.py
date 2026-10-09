@@ -168,6 +168,7 @@ class RunPodServerlessBackend:
             meta["prompt_expanded"] = expanded_job
         outputs: list[OutputFile] = []
         saved_paths = []
+        download_errors = []
         for item in job_out.get("outputs", []):
             filename = item.get("filename", "output.bin")
             try:
@@ -175,7 +176,9 @@ class RunPodServerlessBackend:
                     saved = await asyncio.to_thread(save_output_url, filename, item["url"])
                 else:
                     saved = save_output_b64(filename, item.get("b64", ""))
-            except Exception:
+            except Exception as exc:
+                print(f"[executor] output download failed for {filename}: {exc}", flush=True)
+                download_errors.append(f"{filename}: {exc}")
                 continue
             try:
                 write_output_meta(saved, meta)
@@ -188,6 +191,11 @@ class RunPodServerlessBackend:
                 type="output",
                 url=f"/outputs/{urllib.parse.quote(saved.name)}",
             ))
+        if download_errors and not outputs:
+            return ExecutionStatus(
+                prompt_id=job_id, status="error",
+                error="Job completed but output download failed — " + "; ".join(download_errors),
+            )
         for saved in saved_paths:
             expanded = (read_output_meta(saved) or {}).get("prompt_expanded")
             if isinstance(expanded, str) and expanded.strip():

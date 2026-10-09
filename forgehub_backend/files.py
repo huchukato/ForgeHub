@@ -2,12 +2,14 @@
 
 import base64
 import hashlib
+import hmac
 import io
 import json
 import re
 import shutil
 import struct
 import subprocess
+import urllib.parse
 import urllib.request
 import uuid
 import zlib
@@ -80,9 +82,42 @@ def save_output_b64(filename: str, b64: str, subfolder: str = "") -> Path:
     return _store_output(filename, base64.b64decode(b64), subfolder)
 
 
+def _sigv4_get(url: str, access_id: str, secret: str, region: str) -> bytes:
+    """Signed S3 GET — RunPod's S3-compatible API does not support presigned
+    URLs, so the handler's URL only carries host+bucket+key and we sign here."""
+    import datetime
+    u = urllib.parse.urlparse(url)
+    host, path = u.netloc, u.path
+    now = datetime.datetime.now(datetime.timezone.utc)
+    amz_date, datestamp = now.strftime("%Y%m%dT%H%M%SZ"), now.strftime("%Y%m%d")
+    payload_hash = hashlib.sha256(b"").hexdigest()
+    headers = {"host": host, "x-amz-date": amz_date, "x-amz-content-sha256": payload_hash}
+    signed = ";".join(sorted(headers))
+    canon = f"GET\n{path}\n\n{''.join(f'{k}:{headers[k]}\n' for k in sorted(headers))}\n{signed}\n{payload_hash}"
+    scope = f"{datestamp}/{region}/s3/aws4_request"
+    sts = f"AWS4-HMAC-SHA256\n{amz_date}\n{scope}\n{hashlib.sha256(canon.encode()).hexdigest()}"
+    def _hmac(k, m):
+        return hmac.new(k, m.encode(), hashlib.sha256).digest()
+    sk = _hmac(_hmac(_hmac(_hmac(("AWS4" + secret).encode(), datestamp), region), "s3"), "aws4_request")
+    sig = hmac.new(sk, sts.encode(), hashlib.sha256).hexdigest()
+    auth = f"AWS4-HMAC-SHA256 Credential={access_id}/{scope}, SignedHeaders={signed}, Signature={sig}"
+    req = urllib.request.Request(url.split("?")[0], headers={
+        "Authorization": auth, "x-amz-date": amz_date,
+        "x-amz-content-sha256": payload_hash, "User-Agent": "forgehub"})
+    with urllib.request.urlopen(req, timeout=600) as resp:
+        return resp.read()
+
+
 def save_output_url(filename: str, url: str) -> Path:
-    """Download a presigned output URL (S3 offload for large files) and store it."""
-    with urllib.request.urlopen(url, timeout=600) as resp:
+    """Download an output URL (S3 offload for large files) and store it."""
+    host = urllib.parse.urlparse(url).netloc
+    s3_host = urllib.parse.urlparse(SETTINGS.runpod_s3_endpoint or "https://x").netloc
+    if s3_host and host == s3_host and SETTINGS.runpod_s3_access_id:
+        region = SETTINGS.runpod_s3_region or SETTINGS.runpod_s3_datacenter.lower() or "us-east-1"
+        data = _sigv4_get(url, SETTINGS.runpod_s3_access_id, SETTINGS.runpod_s3_access_secret, region)
+        return _store_output(filename, data)
+    req = urllib.request.Request(url, headers={"User-Agent": "forgehub"})
+    with urllib.request.urlopen(req, timeout=600) as resp:
         return _store_output(filename, resp.read())
 
 
