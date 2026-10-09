@@ -66,6 +66,7 @@ jobs:
         with:
           pattern: forgehub-*
           merge-multiple: true
+          path: dist
 
       - name: Extract changelog
         run: |
@@ -76,6 +77,6 @@ jobs:
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
-          files: "*"
+          files: "dist/*"
           body_path: release_notes.md
           generate_release_notes: true
