@@ -3,33 +3,33 @@
 mmh3:
   style:
     matchref1:
-    - "match <Picture 1>'s art style exactly — same illustration, linework and cel-shading; other references contribute content only, not style"
-    - "preserve <Picture 1>'s exact rendering style across every shot; the other reference images are used for their content only"
+    - "[MATCHREF1] match <Picture 1>'s art style exactly — same illustration, linework and cel-shading; other references contribute content only, not style"
+    - "[MATCHREF1] preserve <Picture 1>'s exact rendering style across every shot; the other reference images are used for their content only"
     matchref2:
-    - "match <Picture 2>'s art style exactly — same illustration, linework and cel-shading; other references contribute content only, not style"
-    - "preserve <Picture 2>'s exact rendering style across every shot; the other reference images are used for their content only"
+    - "[MATCHREF2] match <Picture 2>'s art style exactly — same illustration, linework and cel-shading; other references contribute content only, not style"
+    - "[MATCHREF2] preserve <Picture 2>'s exact rendering style across every shot; the other reference images are used for their content only"
     cinematic:
-    - "cinematic look, anamorphic framing, filmic color grading and shallow depth of field"
-    - "cinematic realism, dramatic lighting, lens flares and motion blur"
+    - "[CINEMATIC] cinematic look, anamorphic framing, filmic color grading and shallow depth of field"
+    - "[CINEMATIC] cinematic realism, dramatic lighting, lens flares and motion blur"
     liveaction:
-    - "live-action footage, natural skin tones, realistic textures and practical lighting"
-    - "documentary-style live-action, natural light and handheld realism"
+    - "[LIVEACTION] live-action footage, natural skin tones, realistic textures and practical lighting"
+    - "[LIVEACTION] documentary-style live-action, natural light and handheld realism"
     anime2d:
-    - "2D-animated style, clean linework, flat cel-shading and vivid colors"
-    - "modern anime film look, painterly backgrounds and soft cel-shading"
+    - "[ANIME2D] 2D-animated style, clean linework, flat cel-shading and vivid colors"
+    - "[ANIME2D] modern anime film look, painterly backgrounds and soft cel-shading"
     cg3d:
-    - "3D CG render, subsurface skin shading, ray-traced lighting and smooth surfaces"
-    - "stylized 3D animated film look, soft global illumination and rounded forms"
+    - "[CG3D] 3D CG render, subsurface skin shading, ray-traced lighting and smooth surfaces"
+    - "[CG3D] stylized 3D animated film look, soft global illumination and rounded forms"
     claymation:
-    - "claymation stop-motion, visible clay fingerprints, miniature sets and stepped frame timing"
+    - "[CLAYMATION] claymation stop-motion, visible clay fingerprints, miniature sets and stepped frame timing"
     watercolor:
-    - "watercolor painting look, soft pigment bleeds, paper texture and translucent washes"
+    - "[WATERCOLOR] watercolor painting look, soft pigment bleeds, paper texture and translucent washes"
     vintage:
-    - "vintage film look, warm faded tones, halation, grain and gentle gate weave"
-    - "90s videotape aesthetic, chroma bleed, scanline softness and warm cast"
+    - "[VINTAGE] vintage film look, warm faded tones, halation, grain and gentle gate weave"
+    - "[VINTAGE] 90s videotape aesthetic, chroma bleed, scanline softness and warm cast"
     papercraft:
-    - "papercraft stop-motion, layered cut-paper sets, visible paper edges and miniature depth"
+    - "[PAPERCRAFT] papercraft stop-motion, layered cut-paper sets, visible paper edges and miniature depth"
     collage:
-    - "paper collage look, flat cut-out shapes, mixed textures and bold graphic composition"
+    - "[COLLAGE] paper collage look, flat cut-out shapes, mixed textures and bold graphic composition"
     handdrawn:
-    - "hand-drawn sketch style, pencil linework, rough hatching and loose organic strokes"
+    - "[HANDDRAWN] hand-drawn sketch style, pencil linework, rough hatching and loose organic strokes"

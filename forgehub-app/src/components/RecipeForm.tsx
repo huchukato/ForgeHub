@@ -239,7 +239,10 @@ export default function RecipeForm({ client, parameters, values, setValue, image
     if (p.type === "select") {
       return (
         <Select value={String(v ?? "")} onChange={(e) => setValue(p.key, e.target.value)}>
-          {(p.options || []).map((o) => <option key={o} value={o}>{o}</option>)}
+          {(p.options || []).map((o) => {
+            const tag = /^\[[^\]]*\]\s*-\s*/.test(o) ? o.replace(/\s*-.*$/, "") : o;
+            return <option key={o} value={o} title={o}>{tag}</option>;
+          })}
         </Select>
       );
     }

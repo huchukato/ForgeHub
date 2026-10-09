@@ -3,6 +3,15 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.10] — 2026-10-10
+
+### Changed
+- **Style dropdown is now wildcard-driven** — every option injects `__mmh3/style/<name>__` instead of a hardcoded sentence, so entries stay in sync with Garage and pick a random phrasing per job; the dropdown shows the `[TAG]` label only (full value on hover).
+- Added `[MATCH REF1]` / `[MATCH REF2]` options to style-match a single reference picture (Picture 1 or 2) — other references contribute content only, not style.
+
+### Fixed
+- Synced bundled wildcards with Garage: `[MUSIC]` directive prefixes on all `mmh3/music` entries (routes music into `non_diegetic_music`), `[TAG]` directive prefixes on `mmh3/style`, `matchref` split into `matchref1`/`matchref2`, pmp drift.
+
 ## [0.1.9] — 2026-10-09
 
 ### Added
