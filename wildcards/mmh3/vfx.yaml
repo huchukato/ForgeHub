@@ -1,0 +1,35 @@
+# MiniMax H3 VFX & physical feedback — spec §10. Entries are full native clauses:
+# trigger + form + direction/motion + environmental interaction. [VFX] is a directive tag.
+# Use __mmh3/vfx__ or __mmh3/vfx/<name>__ — enhancer binds each to its visible trigger.
+mmh3:
+  vfx:
+    energy:
+    - "[VFX] a glowing energy bolt fires from the source, traveling fast along a straight path and bursting on impact with a bright flash"
+    - "[VFX] crackling energy gathers at the emission point, then releases in a directed beam that leaves a fading luminous trail"
+    explosion:
+    - "[VFX] an explosion erupts at the impact point, expanding fire and smoke outward, throwing debris along a ballistic arc as a pressure wave ripples through the surroundings"
+    - "[VFX] a sudden blast blooms from the ground, dust and sparks lift into the air and nearby surfaces flash with the explosion's light"
+    sparks:
+    - "[VFX] bright sparks burst from the contact point, scattering in a dense cone and decaying quickly as they fall"
+    - "[VFX] a thin spray of sparks jets sideways from the friction point, glowing white-hot then dimming within a second"
+    smoke:
+    - "[VFX] thick smoke billows from the source, expanding slowly and drifting with the wind as it diffuses into the light"
+    - "[VFX] a low column of smoke rises and bends sideways, its edges curling and thinning as ambient light passes through"
+    dust:
+    - "[VFX] dust kicks up from the ground around the impact, spreading in a rolling cloud that catches the light before settling"
+    - "[VFX] fine dust lifts with each step and hangs briefly in the air, visible in the shafts of light"
+    debris:
+    - "[VFX] fragments break free on impact, scattering outward with realistic momentum before clattering to the ground"
+    - "[VFX] small debris flies off in a radial pattern, tumbling through the air and bouncing once before coming to rest"
+    liquid:
+    - "[VFX] liquid sprays from the impact source in a fine arc, droplets catching the light before splashing and settling on the surface"
+    - "[VFX] a splash bursts upward on contact, heavy droplets falling back down and leaving a dark wet patch"
+    rift:
+    - "[VFX] a glowing rift tears open in the air, its edges flickering with unstable energy while swirling light churns inside"
+    - "[VFX] a portal forms as a widening ellipse of light, shimmering edges distorting the space around it before it collapses"
+    lightning:
+    - "[VFX] a lightning bolt forks down from the sky, branching mid-air and flashing the whole scene white for an instant"
+    - "[VFX] rapid flashes of lightning illuminate the clouds from within, each strike followed by a brief afterglow"
+    feedback:
+    - "[VFX] hair and clothing react to the sudden force, whipping sideways as dust lifts off nearby surfaces"
+    - "[VFX] the impact sends a visible recoil through the body, loose fabric snapping and small objects rattling nearby"

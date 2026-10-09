@@ -14,9 +14,17 @@
   {
    "key": "prompt",
    "label": "Prompt",
-   "type": "text",
+   "type": "sectioned_prompt",
    "target": "job",
-   "wildcard_prefix": "mmh3/"
+   "wildcard_prefix": "mmh3/",
+   "sections": [
+    {"name": "SCENE", "wildcard_prefix": "mmh3/"},
+    {"name": "ENV", "wildcard_prefix": "mmh3/"},
+    {"name": "PROP", "wildcard_prefix": "mmh3/"},
+    {"name": "VFX", "wildcard_prefix": "mmh3/vfx"},
+    {"name": "MUSIC", "wildcard_prefix": "mmh3/music"},
+    {"name": "SOUND", "wildcard_prefix": "mmh3/"}
+   ]
   },
   {
    "key": "style",

@@ -9,13 +9,14 @@ interface Props {
   value: string;
   onChange: (v: string) => void;
   presetPrefix?: string; // e.g. "qwen21/" → shows quick-insert chips for __prefix/*__ wildcards
+  compact?: boolean;
 }
 
 // Textarea with TagForge wildcard autocomplete: typing "__" opens a
 // dropdown filtrato sul token corrente; Enter/Tab/click inseriscono __key__.
 // → (o click sulla chevron) apre le opzioni della wildcard selezionata e
 // permette di inserire un valore letterale invece del placeholder random.
-export default function WildcardTextArea({ client, value, onChange, presetPrefix }: Props) {
+export default function WildcardTextArea({ client, value, onChange, presetPrefix, compact }: Props) {
   const t = useT();
   const [catalog, setCatalog] = useState<string[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
@@ -176,7 +177,10 @@ export default function WildcardTextArea({ client, value, onChange, presetPrefix
       <TextArea
         ref={areaRef}
         value={value}
-        className={presets.length ? "!border-0 !bg-transparent" : undefined}
+        className={[
+          compact ? "!min-h-[42px]" : "",
+          presets.length ? "!border-0 !bg-transparent" : "",
+        ].join(" ").trim() || undefined}
         placeholder={t.promptPlaceholder}
         onChange={(e) => {
           onChange(e.target.value);

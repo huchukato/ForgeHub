@@ -297,6 +297,39 @@ export default function RecipeForm({ client, parameters, values, setValue, image
         </div>
       );
     }
+    // sectioned_prompt — one labeled box per output section; serialized as
+    // `FIELD: content` lines (empty sections skipped) so QwenVL routes each
+    // part to the right MiniMax prompt field.
+    if (p.type === "sectioned_prompt" && p.sections?.length) {
+      const names = p.sections.map((s) => s.name);
+      const cur: Record<string, string> = {};
+      let active = names[0];
+      for (const line of String(v ?? "").split("\n")) {
+        const m = line.match(/^([A-Z_]+):\s?(.*)$/);
+        const isField = m !== null && names.includes(m[1]);
+        if (isField) active = m![1];
+        const chunk = isField ? m![2] : line;
+        cur[active] = cur[active] === undefined ? chunk : `${cur[active]}\n${chunk}`;
+      }
+      const join = (next: Record<string, string>) =>
+        names.filter((n) => (next[n] ?? "").trim()).map((n) => `${n}: ${next[n].trim()}`).join("\n");
+      return (
+        <div className="flex flex-col gap-2">
+          {p.sections.map((s) => (
+            <div key={s.name} className="flex flex-col gap-1">
+              <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-faint">{s.name}:</span>
+              <WildcardTextArea
+                client={client}
+                value={cur[s.name] ?? ""}
+                compact={s.name !== names[0]}
+                presetPrefix={s.wildcard_prefix ?? p.wildcard_prefix}
+                onChange={(nv) => setValue(p.key, join({ ...cur, [s.name]: nv }))}
+              />
+            </div>
+          ))}
+        </div>
+      );
+    }
     // text — prompt gets the wildcard-autocomplete textarea
     if (p.key === "prompt") {
       return <WildcardTextArea client={client} value={String(v ?? "")} presetPrefix={p.wildcard_prefix} onChange={(nv) => setValue(p.key, nv)} />;
