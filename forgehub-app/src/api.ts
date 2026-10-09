@@ -7,7 +7,7 @@ export interface WorkflowParam {
   max?: number;
   default?: unknown;
   wildcard_prefix?: string;
-  sections?: { name: string; wildcard_prefix?: string }[];
+  sections?: { name: string; wildcard_prefix?: string; hint?: string }[];
   parent?: string;
 }
 
@@ -20,6 +20,23 @@ export interface Workflow {
   parameters: WorkflowParam[];
   outputs: string[];
   handler?: string;
+}
+
+export interface UpdateInfo {
+  upToDate?: boolean;
+  error?: string;
+  current?: string;
+  latest?: string;
+  releaseUrl?: string;
+  downloadUrl?: string;
+  notes?: string;
+}
+
+export interface ForgehubBridge {
+  backendUrl?: string;
+  platform?: string;
+  checkForUpdates?: () => Promise<UpdateInfo>;
+  openExternal?: (url: string) => void;
 }
 
 export interface ChatChoice {

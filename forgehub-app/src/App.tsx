@@ -1,13 +1,13 @@
-import { Download, Images, MessageSquare, Music, Play, Settings, Square } from "lucide-react";
+import { Download, Images, MessageSquare, Music, Play, Settings, Square, X } from "lucide-react";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ForgeHubClient, OutputFile, Workflow } from "./api";
+import { ForgeHubClient, ForgehubBridge, OutputFile, UpdateInfo, Workflow } from "./api";
 import ChatDrawer from "./components/ChatDrawer";
 import OutputsGallery from "./components/OutputsGallery";
 import OutputLightbox from "./components/OutputLightbox";
 import RecipeForm from "./components/RecipeForm";
 import SettingsDialog from "./components/SettingsDialog";
 import Sidebar from "./components/Sidebar";
-import { LangContext, Language, getStoredLang, storeLang, useT } from "./i18n";
+import { LangContext, Language, format, getStoredLang, storeLang, useT } from "./i18n";
 
 export default function App() {
   const [lang, setLangState] = useState<Language>(getStoredLang);
@@ -46,8 +46,16 @@ export default function App() {
   const [chatOpen, setChatOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [heroLightbox, setHeroLightbox] = useState<OutputFile | null>(null);
+  const [update, setUpdate] = useState<UpdateInfo | null>(null);
 
   const workflow = workflows.find((w) => w.id === selectedId) || null;
+
+  const bridge = (window as { forgehub?: ForgehubBridge }).forgehub;
+  useEffect(() => {
+    bridge?.checkForUpdates?.()
+      .then((i) => { if (!i.upToDate && !i.error) setUpdate(i); })
+      .catch(() => {});
+  }, []);
 
   // Two-note completion chime — Web Audio, no asset needed.
   const playDone = () => {
@@ -283,6 +291,33 @@ const execute = async () => {
             </button>
           </div>
         </header>
+
+        {/* Update banner — appears when a newer GitHub release exists */}
+        {update && (
+          <div className="flex items-center justify-between border-b border-border bg-accent/10 px-6 py-2 text-[12px] backdrop-blur-md">
+            <span className="flex items-center gap-2 text-accent-hover">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+              {format(t.updateAvailable, update.latest)}
+            </span>
+            <span className="flex items-center gap-2">
+              <button
+                onClick={() => bridge?.openExternal?.(update.downloadUrl ?? update.releaseUrl ?? "")}
+                className="rounded-md border border-accent/50 bg-accent/15 px-2.5 py-1 text-[10px] font-semibold text-accent-hover transition-colors hover:bg-accent/25"
+              >
+                {t.updateDownload}
+              </button>
+              <button
+                onClick={() => bridge?.openExternal?.(update.releaseUrl ?? "")}
+                className="rounded-md border border-border px-2.5 py-1 text-[10px] font-medium text-muted transition-colors hover:text-text"
+              >
+                {t.updateDetails}
+              </button>
+              <button onClick={() => setUpdate(null)} className="rounded p-1 text-faint transition-colors hover:text-text">
+                <X size={12} />
+              </button>
+            </span>
+          </div>
+        )}
 
         {/* Active jobs — pinned under header, visible on any workflow */}
         {Object.keys(jobs).length > 0 && (

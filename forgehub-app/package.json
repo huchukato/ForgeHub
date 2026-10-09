@@ -1,6 +1,6 @@
 {
   "name": "forgehub-app",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "private": true,
   "description": "Desktop app for ComfyUI workflows on Runpod Serverless",
   "author": "huchukato",

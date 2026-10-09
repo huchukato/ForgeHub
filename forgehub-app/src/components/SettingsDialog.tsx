@@ -1,8 +1,8 @@
 import { HardDrive, MessageSquare, RefreshCw, Settings, X, Zap } from "lucide-react";
 import { useEffect, useState } from "react";
-import type { ForgeHubClient, RunpodEndpoint } from "../api";
+import type { ForgeHubClient, ForgehubBridge, RunpodEndpoint, UpdateInfo } from "../api";
 import { Button, Label, Select, TextInput } from "./ui";
-import { LANGUAGES, Language, useLang, useT } from "../i18n";
+import { LANGUAGES, Language, format, useLang, useT } from "../i18n";
 
 const LLM_SERVICES = [
   { id: "openrouter", label: "OpenRouter", url: "https://openrouter.ai/api/v1" },
@@ -50,6 +50,9 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
   const [s3SecretSet, setS3SecretSet] = useState(false);
   const [s3Bucket, setS3Bucket] = useState("");
   const [s3Datacenter, setS3Datacenter] = useState("");
+  const bridge = (window as { forgehub?: ForgehubBridge }).forgehub;
+  const [upd, setUpd] = useState<UpdateInfo | null>(null);
+  const [updChecking, setUpdChecking] = useState(false);
 
   const detect = async (key = apiKey) => {
     setDetecting(true);
@@ -157,6 +160,44 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
             {LANGUAGES.map((l) => <option key={l.id} value={l.id}>{l.label}</option>)}
           </Select>
         </div>
+
+        {bridge?.checkForUpdates && (
+          <div className="mb-5 flex items-center justify-between gap-3 rounded-lg border border-border bg-panel px-3 py-2">
+            <span className="text-[11px] font-semibold uppercase tracking-[0.08em] text-muted">
+              ForgeHub{upd?.current ? ` v${upd.current}` : ""}
+            </span>
+            <span className="flex items-center gap-2 text-[11px]">
+              {upd?.error && <span className="text-danger">{t.updateFailed}</span>}
+              {upd?.upToDate && <span className="text-muted">{format(t.updateUpToDate, upd.current)}</span>}
+              {upd && !upd.upToDate && !upd.error && (
+                <button
+                  onClick={() => bridge.openExternal?.(upd.downloadUrl ?? upd.releaseUrl ?? "")}
+                  className="font-semibold text-accent hover:underline"
+                >
+                  v{upd.latest} → {t.updateDownload}
+                </button>
+              )}
+              <button
+                onClick={async () => {
+                  setUpdChecking(true);
+                  setUpd(null);
+                  try {
+                    setUpd(await bridge.checkForUpdates!());
+                  } catch {
+                    setUpd({ error: "failed" });
+                  } finally {
+                    setUpdChecking(false);
+                  }
+                }}
+                disabled={updChecking}
+                className="flex items-center gap-1 font-semibold text-accent hover:underline disabled:opacity-50"
+              >
+                <RefreshCw size={10} className={updChecking ? "animate-spin" : ""} />
+                {t.updateCheck}
+              </button>
+            </span>
+          </div>
+        )}
 
         <div className="mb-3 flex items-center gap-2 border-b border-border pb-2 text-[11px] font-bold uppercase tracking-[0.08em] text-muted">
           <span className="flex h-5 w-5 items-center justify-center rounded-md border border-accent/40 bg-accent/15 text-accent">

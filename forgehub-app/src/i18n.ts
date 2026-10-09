@@ -102,6 +102,14 @@ export interface Translations {
   save: string;
   saving: string;
 
+  // Updates
+  updateAvailable: string;
+  updateDownload: string;
+  updateDetails: string;
+  updateCheck: string;
+  updateUpToDate: string;
+  updateFailed: string;
+
   // Wildcard textarea / chat
   promptPlaceholder: string;
   browseOptions: string;
@@ -209,6 +217,12 @@ export const translations: Record<Language, Translations> = {
     s3Datacenter: "Datacenter",
     save: "Save",
     saving: "Saving…",
+    updateAvailable: "ForgeHub v{0} is available",
+    updateDownload: "Download",
+    updateDetails: "Changelog",
+    updateCheck: "Check for updates",
+    updateUpToDate: "v{0} — up to date",
+    updateFailed: "Update check failed",
 
     promptPlaceholder: "Prompt — type __ for wildcards (e.g. __pmp/act*__)",
     browseOptions: "Browse options",
@@ -314,6 +328,12 @@ export const translations: Record<Language, Translations> = {
     s3Datacenter: "Datacenter",
     save: "Salva",
     saving: "Salvataggio…",
+    updateAvailable: "ForgeHub v{0} disponibile",
+    updateDownload: "Scarica",
+    updateDetails: "Novità",
+    updateCheck: "Controlla aggiornamenti",
+    updateUpToDate: "v{0} — aggiornato",
+    updateFailed: "Controllo aggiornamenti fallito",
 
     promptPlaceholder: "Prompt — scrivi __ per le wildcard (es. __pmp/act*__)",
     browseOptions: "Sfoglia opzioni",
@@ -419,6 +439,12 @@ export const translations: Record<Language, Translations> = {
     s3Datacenter: "Datacenter",
     save: "Guardar",
     saving: "Guardando…",
+    updateAvailable: "ForgeHub v{0} disponible",
+    updateDownload: "Descargar",
+    updateDetails: "Novedades",
+    updateCheck: "Buscar actualizaciones",
+    updateUpToDate: "v{0} — actualizado",
+    updateFailed: "Error al buscar actualizaciones",
 
     promptPlaceholder: "Prompt — escribe __ para wildcards (ej. __pmp/act*__)",
     browseOptions: "Ver opciones",

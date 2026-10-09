@@ -3,6 +3,16 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.12] — 2026-10-09
+
+### Added
+- **Update checker** — the app checks GitHub Releases at startup and shows a banner with a direct platform-matched download when a newer version exists; manual "Check for updates" row in Settings.
+- **Guided single-box prompt** (`sectioned_prompt` rework) — one text area pre-filled with `--NAME--` section markers (SUBJECTS / LOCATION / SUMMARY / SCENE / MUSIC / SOUND) plus a legend strip with per-section hints; click a legend chip to insert a missing marker.
+- **`prepend` flag** on prompt-target params — the style directive is injected at the top of the prompt, before the sectioned template.
+
+### Changed
+- Prompt template uses `--LOCATION--` (alias of `ENV`) and includes `--SUMMARY--`; the previous per-section boxes are replaced by the single guided text area.
+
 ## [0.1.11] — 2026-10-09
 
 ### Added

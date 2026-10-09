@@ -5,4 +5,6 @@ contextBridge.exposeInMainWorld("forgehub", {
   backendUrl: "http://127.0.0.1:8484",
   onBackendStatus: (cb: (msg: string) => void) =>
     ipcRenderer.on("backend-status", (_e, msg: string) => cb(msg)),
+  checkForUpdates: () => ipcRenderer.invoke("update:check"),
+  openExternal: (url: string) => ipcRenderer.send("update:open", url),
 });

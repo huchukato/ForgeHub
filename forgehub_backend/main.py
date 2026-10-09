@@ -352,22 +352,31 @@ def _split_parameters(request: ExecuteRequest, meta: WorkflowMeta) -> tuple[dict
     job_params: dict[str, Any] = {}
     node_params: dict[str, Any] = {}
     prompt_parts: list[str] = []
+    prepend_parts: list[str] = []
     targets = {p.get("key"): p.get("target", "job") for p in meta.parameters if isinstance(p, dict)}
+    prepends = {p.get("key") for p in meta.parameters if isinstance(p, dict) and p.get("prepend")}
     for key, value in request.parameters.items():
         target = targets.get(key)
         if target == "job":
             job_params[key] = value
         elif target == "prompt":
             if str(value) not in ("", "None"):
-                prompt_parts.append(re.sub(r"^\[[^\]]*\]\s*-\s*", "", str(value)))
+                (prepend_parts if key in prepends else prompt_parts).append(
+                    re.sub(r"^\[[^\]]*\]\s*-\s*", "", str(value))
+                )
         elif target and target.startswith("node:"):
             node_params[target[5:]] = value
         elif ":" in key:
             node_params[key] = value
         else:
             job_params[key] = value
-    if prompt_parts:
-        job_params["prompt"] = ((job_params.get("prompt") or "") + "\n\n" + "\n".join(prompt_parts)).strip()
+    if prepend_parts or prompt_parts:
+        parts = [*prepend_parts]
+        if job_params.get("prompt"):
+            parts.append(str(job_params["prompt"]).strip())
+        if prompt_parts:
+            parts.append("\n".join(prompt_parts))
+        job_params["prompt"] = "\n\n".join(parts)
     return job_params, node_params
 
 

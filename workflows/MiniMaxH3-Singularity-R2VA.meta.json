@@ -17,13 +17,16 @@
    "type": "sectioned_prompt",
    "target": "job",
    "wildcard_prefix": "mmh3/",
+   "default": "--SUBJECTS--\n\n\n--LOCATION--\n\n\n--SUMMARY--\n\n\n--SCENE--\n\n\n--MUSIC--\n\n\n--SOUND--\n",
    "sections": [
-    {"name": "SCENE", "wildcard_prefix": "mmh3/"},
-    {"name": "ENV", "wildcard_prefix": "mmh3/"},
-    {"name": "PROP", "wildcard_prefix": "mmh3/"},
-    {"name": "VFX", "wildcard_prefix": "mmh3/vfx"},
-    {"name": "MUSIC", "wildcard_prefix": "mmh3/music"},
-    {"name": "SOUND", "wildcard_prefix": "mmh3/"}
+    {"name": "SUBJECTS", "hint": "what each reference is — (S1) is…, (S2) is…"},
+    {"name": "SUMMARY", "hint": "one line — what the whole clip is (e.g. single continuous take)"},
+    {"name": "SCENE", "hint": "the action — numbered beats 1. 2. 3. become [Shot N]"},
+    {"name": "LOCATION", "hint": "location, architecture, atmosphere, lighting"},
+    {"name": "PROP", "hint": "persistent objects — vehicles, items, weapons"},
+    {"name": "VFX", "hint": "effects — explosions, energy, debris (or type __ for vfx wildcards)"},
+    {"name": "MUSIC", "hint": "soundtrack or diegetic music (or type __ for music wildcards)"},
+    {"name": "SOUND", "hint": "ambience & foley — engines, waves, wind (dialogue goes in SCENE)"}
    ]
   },
   {
@@ -31,6 +34,7 @@
    "label": "Video style",
    "type": "select",
    "target": "prompt",
+   "prepend": true,
    "default": "None",
    "options": [
     "None",

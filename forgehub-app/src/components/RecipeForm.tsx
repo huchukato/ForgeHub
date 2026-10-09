@@ -297,36 +297,43 @@ export default function RecipeForm({ client, parameters, values, setValue, image
         </div>
       );
     }
-    // sectioned_prompt — one labeled box per output section; serialized as
-    // `FIELD: content` lines (empty sections skipped) so QwenVL routes each
-    // part to the right MiniMax prompt field.
+    // sectioned_prompt — one text area; sections are `--NAME--` markers the
+    // user writes (or inserts via legend chips). The preset binds each block
+    // to the right MiniMax output section.
     if (p.type === "sectioned_prompt" && p.sections?.length) {
-      const names = p.sections.map((s) => s.name);
-      const cur: Record<string, string> = {};
-      let active = names[0];
-      for (const line of String(v ?? "").split("\n")) {
-        const m = line.match(/^([A-Z_]+):\s?(.*)$/);
-        const isField = m !== null && names.includes(m[1]);
-        if (isField) active = m![1];
-        const chunk = isField ? m![2] : line;
-        cur[active] = cur[active] === undefined ? chunk : `${cur[active]}\n${chunk}`;
-      }
-      const join = (next: Record<string, string>) =>
-        names.filter((n) => (next[n] ?? "").trim()).map((n) => `${n}: ${next[n].trim()}`).join("\n");
+      const cur = String(v ?? "");
+      const insertMarker = (name: string) => {
+        if (cur.includes(`--${name}--`)) return;
+        const sep = cur && !cur.endsWith("\n") ? "\n" : "";
+        setValue(p.key, `${cur}${sep}${sep && "\n"}--${name}--\n`);
+      };
       return (
         <div className="flex flex-col gap-2">
-          {p.sections.map((s) => (
-            <div key={s.name} className="flex flex-col gap-1">
-              <span className="font-mono text-[10px] font-semibold uppercase tracking-wider text-faint">{s.name}:</span>
-              <WildcardTextArea
-                client={client}
-                value={cur[s.name] ?? ""}
-                compact={s.name !== names[0]}
-                presetPrefix={s.wildcard_prefix ?? p.wildcard_prefix}
-                onChange={(nv) => setValue(p.key, join({ ...cur, [s.name]: nv }))}
-              />
-            </div>
-          ))}
+          <div className="flex flex-wrap gap-x-4 gap-y-1">
+            {p.sections.map((s) => {
+              const present = cur.includes(`--${s.name}--`);
+              return (
+                <button
+                  key={s.name}
+                  type="button"
+                  title={present ? undefined : `Insert --${s.name}--`}
+                  onClick={() => insertMarker(s.name)}
+                  className="flex items-baseline gap-1.5 font-mono text-[10px]"
+                >
+                  <span className={`font-semibold uppercase tracking-wider transition-colors ${present ? "text-accent" : "text-faint hover:text-accent"}`}>
+                    --{s.name}--
+                  </span>
+                  {s.hint && <span className="text-faint">{s.hint}</span>}
+                </button>
+              );
+            })}
+          </div>
+          <WildcardTextArea
+            client={client}
+            value={cur}
+            presetPrefix={p.wildcard_prefix}
+            onChange={(nv) => setValue(p.key, nv)}
+          />
         </div>
       );
     }
