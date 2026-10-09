@@ -60,13 +60,22 @@ jobs:
     permissions:
       contents: write
     steps:
+      - uses: actions/checkout@v4
+
       - uses: actions/download-artifact@v4
         with:
           pattern: forgehub-*
           merge-multiple: true
 
+      - name: Extract changelog
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          awk "/^## \[${VERSION}\]/{f=1;next} /^## \[/{f=0} f" CHANGELOG.md > release_notes.md
+          [ -s release_notes.md ] || echo "(no changelog entry for ${VERSION})" > release_notes.md
+
       - name: Create release
         uses: softprops/action-gh-release@v2
         with:
           files: "*"
+          body_path: release_notes.md
           generate_release_notes: true
