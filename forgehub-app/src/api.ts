@@ -7,7 +7,6 @@ export interface WorkflowParam {
   max?: number;
   default?: unknown;
   wildcard_prefix?: string;
-  sections?: { name: string; wildcard_prefix?: string; hint?: string }[];
   parent?: string;
 }
 

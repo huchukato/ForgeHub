@@ -3,6 +3,12 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.14] — 2026-10-11
+
+### Changed
+- **MiniMax H3 Singularity R2VA prompt back to freeform** — the `--NAME--` section template and legend strip are removed; the prompt is now a plain text area like every other workflow. The section markers still work if written manually (the enhancer preset understands them), but the GUI no longer imposes the R2VA-only structure on a model that also does I2VA and T2VA.
+- The `sectioned_prompt` param type is removed entirely.
+
 ## [0.1.13] — 2026-10-09
 
 ### Fixed
