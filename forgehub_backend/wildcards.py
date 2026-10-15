@@ -26,6 +26,12 @@ from forgehub_backend.config import SETTINGS
 
 def get_wildcard_dirs() -> List[str]:
     dirs = [p.strip() for p in SETTINGS.wildcard_dirs.split(":") if p.strip()]
+    if not os.getenv("FORGEHUB_WILDCARD_DIRS"):
+        synced = SETTINGS.storage_dir / "wildcards"
+        if (synced / ".garage-manifest").exists() and any(
+            f.is_file() and f.name != ".garage-manifest" for f in synced.rglob("*")
+        ):
+            dirs = [str(synced)]
     result = []
     seen = set()
     for directory in dirs:

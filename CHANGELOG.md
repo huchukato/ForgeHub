@@ -3,6 +3,11 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.15] — 2026-10-15
+
+### Added
+- **Garage wildcard boot-sync** — the backend mirror-syncs the ComfyUI-Garage wildcards into the user storage dir at startup (adds, updates, deletes stale files), so end-user installs track Garage changes without waiting for a ForgeHub release. The bundled wildcards remain as first-run bootstrap; an explicit `FORGEHUB_WILDCARD_DIRS` override keeps dev behavior unchanged (direct read, no sync).
+
 ## [0.1.14] — 2026-10-11
 
 ### Changed

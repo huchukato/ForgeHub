@@ -36,10 +36,12 @@ from forgehub_backend.models import (
     WorkflowMeta,
 )
 from forgehub_backend.workflow_catalog import WorkflowCatalog
+from forgehub_backend.wildcard_sync import start_wildcard_sync
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    start_wildcard_sync()
     catalog = WorkflowCatalog()
     app.state.catalog = catalog
     app.state.backend = get_backend()
