@@ -3,7 +3,10 @@
     "inputs": {
       "frame_rate": 48,
       "loop_count": 0,
-      "filename_prefix": "video/MMH3_FL2VA_%date:yyyy-MM-dd%",
+      "filename_prefix": [
+        "262",
+        4
+      ],
       "format": "video/webm",
       "pix_fmt": "yuv420p",
       "crf": 32,

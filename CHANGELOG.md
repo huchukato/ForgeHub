@@ -3,6 +3,14 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.17] — 2026-10-16
+
+### Fixed
+- **MiniMax H3 FL2VA/I2VA output filenames** — `VHS_VideoCombine.filename_prefix` is now wired to the input image's computed filename (`PixaromaImageInfo`, same pattern as Singularity-R2VA) instead of the `%date%` template, which the ComfyUI frontend resolves only for widget inputs: in API/serverless jobs it stayed literal and produced a broken `/view` lookup. Outputs are now named after the input first frame.
+
+### Changed
+- Regenerated `icon.ico` from the current iconset (the previous export carried a compression fringe).
+
 ## [0.1.16] — 2026-10-16
 
 ### Fixed
