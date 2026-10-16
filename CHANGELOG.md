@@ -3,6 +3,14 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.16] — 2026-10-16
+
+### Fixed
+- **Garage wildcard boot-sync now actually runs in the packaged desktop app** — Electron was setting `FORGEHUB_WILDCARD_DIRS`, the same variable that disables the sync, so 0.1.15 installs kept reading the stale bundled wildcards. The bundled dir is now passed as `FORGEHUB_BUNDLED_WILDCARDS` (first-run bootstrap / offline fallback only); the boot-sync starts normally and the synced storage copy takes precedence once available.
+
+### Changed
+- Bundled wildcards synced with Garage: dropped `qwen21/sheet2` and `pmp/prmpt.yaml`, fixed the `brstplng` solo/ff entries (removed smother/worship/bouncing/drop/suppress variants that spawned a second person and limb artifacts).
+
 ## [0.1.15] — 2026-10-15
 
 ### Added

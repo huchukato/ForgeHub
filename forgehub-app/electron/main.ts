@@ -67,7 +67,7 @@ async function startBackend(): Promise<void> {
       FORGEHUB_STORAGE_DIR: path.join(userData, "storage"),
       FORGEHUB_SETTINGS_FILE: path.join(userData, "settings.json"),
       FORGEHUB_WORKFLOW_DIR: path.join(process.resourcesPath, "workflows"),
-      FORGEHUB_WILDCARD_DIRS: path.join(process.resourcesPath, "wildcards"),
+      FORGEHUB_BUNDLED_WILDCARDS: path.join(process.resourcesPath, "wildcards"),
       FORGEHUB_FRONTEND_DIR: "",
     },
     stdio: ["ignore", logFd, logFd],

@@ -52,7 +52,8 @@ class Settings:
         self.chat_llm_key = os.getenv("FORGEHUB_CHAT_LLM_KEY", "")
         # TagForge wildcard directories (colon-separated) for prompt expansion
         # done server-side before the job reaches ComfyUI/RunPod.
-        self.wildcard_dirs = os.getenv("FORGEHUB_WILDCARD_DIRS") or (
+        self.wildcard_dirs = os.getenv("FORGEHUB_WILDCARD_DIRS") or os.getenv(
+            "FORGEHUB_BUNDLED_WILDCARDS") or (
             "wildcards" if Path("wildcards").is_dir() else "")
         # Directory with the built frontend (index.html + assets). When set and
         # valid, the backend serves the ForgeHub GUI at "/".
