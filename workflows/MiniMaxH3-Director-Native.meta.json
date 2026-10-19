@@ -1,8 +1,8 @@
 {
  "id": "mmh3-director-native",
- "name": "MiniMax H3 Director Storyboard",
+ "name": "MiniMax H3 Director Native",
  "category": "video",
- "description": "Charsheet + una idea per riga → storyboard video multi-scena con audio (Director, autoprompting QwenVL server-side)",
+ "description": "Charsheet + una idea per riga (segmenti) → video multi-scena con audio (Director timeline, autoprompting QwenVL server-side)",
  "handler": "mmh3",
  "remote_file": "MiniMaxH3-Director-Native.json",
  "endpoint_id": "",
@@ -50,6 +50,21 @@
     "5",
     "10",
     "15"
+   ]
+  },
+  {
+   "key": "image_size",
+   "label": "Resolution (aspect)",
+   "type": "select",
+   "target": "job",
+   "default": "1344x768 (16:9)",
+   "options": [
+    "1344x768 (16:9)",
+    "768x1344 (9:16)",
+    "1024x768 (4:3)",
+    "768x1024 (3:4)",
+    "960x960 (1:1)",
+    "1344x576 (21:9)"
    ]
   },
   {
