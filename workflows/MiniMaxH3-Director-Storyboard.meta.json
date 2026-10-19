@@ -61,8 +61,9 @@
    "label": "Resolution (MMH3 native presets)",
    "type": "select",
    "target": "job",
-   "default": "1344x768 (16:9)",
+   "default": "auto (segue le still)",
    "options": [
+    "auto (segue le still)",
     "1344x768 (16:9)",
     "768x1344 (9:16)",
     "1184x864 (4:3)",
