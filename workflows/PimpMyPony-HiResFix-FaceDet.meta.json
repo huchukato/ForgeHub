@@ -2,7 +2,7 @@
  "id": "pimpmypony-hiresfix-facedet",
  "name": "PimpMyPony HiRes + FaceDet",
  "category": "image",
- "description": "Pony / Illustrious T2I con wildcards \u2014 hires fix e face detailer attivabili a gruppi (serverless)",
+ "description": "Pony / Illustrious T2I con wildcards — hires fix e face detailer attivabili a gruppi (serverless)",
  "handler": "pony",
  "remote_file": "PimpMyPony-HiResFix-FaceDet.json",
  "endpoint_id": "",
@@ -22,6 +22,22 @@
   ]
  },
  "parameters": [
+  {
+   "key": "image_size",
+   "label": "Image size",
+   "type": "select",
+   "target": "job",
+   "default": "1024x1024 (1:1)",
+   "options": [
+    "1024x1024 (1:1)",
+    "1216x832 (3:2)",
+    "832x1216 (2:3)",
+    "1152x896 (4:3)",
+    "896x1152 (3:4)",
+    "1344x768 (16:9)",
+    "768x1344 (9:16)"
+   ]
+  },
   {
    "key": "prompt",
    "label": "Prompt (wildcard __name__ o tag Pony)",
@@ -55,7 +71,7 @@
   },
   {
    "key": "enable_hires",
-   "label": "Hires fix (4x \u2192 lanczos 50% + refine)",
+   "label": "Hires fix (4x → lanczos 50% + refine)",
    "type": "select",
    "target": "job",
    "default": "on",
@@ -86,22 +102,6 @@
     "pimpmypony_pmpInCaseEnhanced.safetensors",
     "pimpmypony_pmpIncaseStyle.safetensors",
     "ilustmix_v111.safetensors"
-   ]
-  },
-  {
-   "key": "92:131:resolution",
-   "label": "Image size",
-   "type": "select",
-   "target": "node",
-   "default": "832 x 1216",
-   "options": [
-    "1024 x 1024",
-    "1152 x 896",
-    "896 x 1152",
-    "1216 x 832",
-    "832 x 1216",
-    "1344 x 768",
-    "768 x 1344"
    ]
   },
   {
