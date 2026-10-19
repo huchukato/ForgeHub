@@ -54,17 +54,17 @@
   },
   {
    "key": "image_size",
-   "label": "Resolution (aspect)",
+   "label": "Resolution (MMH3 native presets)",
    "type": "select",
    "target": "job",
    "default": "1344x768 (16:9)",
    "options": [
     "1344x768 (16:9)",
     "768x1344 (9:16)",
-    "1024x768 (4:3)",
-    "768x1024 (3:4)",
-    "960x960 (1:1)",
-    "1344x576 (21:9)"
+    "1184x864 (4:3)",
+    "864x1184 (3:4)",
+    "1024x1024 (1:1)",
+    "1536x672 (21:9)"
    ]
   },
   {
