@@ -57,6 +57,60 @@
    ]
   },
   {
+   "key": "upscale",
+   "label": "Upscale",
+   "type": "bool",
+   "target": "job",
+   "default": true
+  },
+  {
+   "key": "upscale_model",
+   "label": "Upscale model",
+   "type": "select",
+   "target": "job",
+   "default": "2xLexicaRRDBNet",
+   "options": [
+    "2x-CGIMaster-v1",
+    "2x-AnimeSharpV3",
+    "2xLexicaRRDBNet",
+    "2xLexicaRRDBNet_Sharp",
+    "RealESRGAN_x2plus",
+    "4xUltrasharp_4xUltrasharpV10",
+    "4x-AnimeSharp",
+    "4xNomos2_hq_dat2",
+    "4xNomos2_otf_esrgan",
+    "4xLSDIRplusC",
+    "RealESRGAN_x4plus",
+    "RealESRGAN_x4plus_anime_6B",
+    "realesrgan-x4minus"
+   ],
+   "parent": "upscale"
+  },
+  {
+   "key": "upscale_target",
+   "label": "Upscale target",
+   "type": "select",
+   "target": "job",
+   "default": "2K",
+   "options": [
+    "2x",
+    "3x",
+    "4x",
+    "1080p",
+    "2K",
+    "4K",
+    "custom"
+   ],
+   "parent": "upscale"
+  },
+  {
+   "key": "rife",
+   "label": "RIFE 48fps (post)",
+   "type": "bool",
+   "target": "job",
+   "default": true
+  },
+  {
    "key": "14:format",
    "label": "Video format",
    "type": "select",
