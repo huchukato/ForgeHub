@@ -81,7 +81,7 @@
    ]
   },
   {
-   "key": "image_size",
+   "key": "video_size",
    "label": "Resolution (MMH3 native presets)",
    "type": "select",
    "target": "job",
