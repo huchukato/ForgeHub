@@ -38,6 +38,22 @@
    ]
   },
   {
+   "key": "image_size",
+   "label": "Resolution (MMH3 native presets)",
+   "type": "select",
+   "target": "job",
+   "default": "auto (segue l'aspect dell'immagine)",
+   "options": [
+    "auto (segue l'aspect dell'immagine)",
+    "1344x768 (16:9)",
+    "768x1344 (9:16)",
+    "1184x864 (4:3)",
+    "864x1184 (3:4)",
+    "1024x1024 (1:1)",
+    "1536x672 (21:9)"
+   ]
+  },
+  {
    "key": "config",
    "label": "Preset",
    "type": "select",
@@ -70,34 +86,6 @@
     "MiniMax › SFW I2VA"
    ],
    "parent": "enhance"
-  },
-  {
-   "key": "205:aspect_ratio",
-   "label": "Aspect ratio",
-   "type": "select",
-   "target": "node",
-   "default": "16:9",
-   "options": [
-    "16:9",
-    "4:3",
-    "1:1",
-    "3:4",
-    "9:16",
-    "21:9"
-   ]
-  },
-  {
-   "key": "205:resolution",
-   "label": "Resolution",
-   "type": "select",
-   "target": "node",
-   "default": "Native",
-   "options": [
-    "Fast Draft",
-    "Preview",
-    "High Detail",
-    "Native"
-   ]
   },
   {
    "key": "upscale",
