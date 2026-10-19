@@ -1,0 +1,75 @@
+{
+ "id": "mmh3-director-storyboard",
+ "name": "MiniMax H3 Director (single idea)",
+ "category": "video",
+ "description": "Charsheet + una idea → video singolo con audio: il QwenVL nel grafo trasforma l'idea in prompt R2VA completo (Director, autoprompting in-graph)",
+ "handler": "mmh3",
+ "remote_file": "MiniMaxH3-Director-Storyboard.json",
+ "endpoint_id": "",
+ "outputs": [
+  "video",
+  "audio"
+ ],
+ "parameters": [
+  {
+   "key": "images",
+   "label": "Character sheet / stills (up to 3)",
+   "type": "images",
+   "target": "job",
+   "max": 3
+  },
+  {
+   "key": "prompt",
+   "label": "Idea (scenes with timestamps, one per line)",
+   "type": "text",
+   "target": "job",
+   "wildcard_prefix": "mmh3/",
+   "default": "3 scenes in 10 seconds, one per still, in order:\nat 00:00 (S1) is in the villa living room at sunset — warm golden light from the glass wall, standing by the window, serene composed gaze; the scene opens exactly on still 1\nat 00:04 (S1) walks along the garden colonnade in the morning — crisp cool light, decisive pace, light wind on her long hair\nat 00:08 (S1) indoors at night — blue moonlight from the large window, close-up, determined gaze\nCinematic light, (S1) identity identical in every scene. No dialogue."
+  },
+  {
+   "key": "vl_preset",
+   "label": "Enhancer preset",
+   "type": "select",
+   "target": "job",
+   "default": "MiniMax › Director Storyboard",
+   "options": [
+    "MiniMax › Director Storyboard",
+    "MiniMax › Director Prose"
+   ]
+  },
+  {
+   "key": "enhance",
+   "label": "Enhancer QwenVL",
+   "type": "bool",
+   "target": "job",
+   "default": true
+  },
+  {
+   "key": "seconds",
+   "label": "Duration",
+   "type": "select",
+   "target": "job",
+   "default": "10",
+   "options": [
+    "5",
+    "10",
+    "15"
+   ]
+  },
+  {
+   "key": "14:format",
+   "label": "Video format",
+   "type": "select",
+   "target": "node",
+   "default": "auto",
+   "options": [
+    "auto",
+    "video/h264-mp4",
+    "video/hevc-mp4",
+    "video/av1-webm",
+    "video/webm"
+   ]
+  }
+ ],
+ "endpoint_name": "MiniMax H3"
+}

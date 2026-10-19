@@ -1,0 +1,506 @@
+{
+  "5": {
+    "inputs": {
+      "start_second": 0,
+      "end_second": 10,
+      "duration_seconds": 10,
+      "start_frame": 0,
+      "end_frame": 240,
+      "duration_frames": 240,
+      "timeline_data": "{\"mainTrackEnabled\":true,\"audioTrackEnabled\":true,\"motionTrackEnabled\":true,\"propHeight\":90,\"globalPropHeight\":126,\"showFilenames\":true,\"showPromptZones\":true,\"overrideAudio\":false,\"inpaint_audio\":true,\"global_prompt\":\"\",\"retake_global_prompt\":\"\",\"overall_soundscape\":\"\",\"non_diegetic_music\":\"\",\"prompt_override\":\"\",\"prompt_override_on\":false,\"retakeMode\":false,\"retakeStart\":24,\"retakeLength\":48,\"retakePrompt\":\"\",\"retakeStrength\":1,\"retakeVideo\":null,\"normalStartFrame\":0,\"normalDurationFrames\":240,\"reference_mode\":\"REF2VA\",\"prompt_format\":\"minimax\",\"analyzeProvider\":\"ollama\",\"analyzeBaseUrl\":\"\",\"analyzeModel\":\"\",\"summary\":\"\",\"task_type_override\":\"\",\"subjectSlotCount\":1,\"subjects\":[{\"images\":[],\"description\":\"\",\"shortName\":\"\",\"kind\":\"person\",\"retention\":\"fully_preserved\",\"retentionNote\":\"\",\"voice\":null}],\"segments\":[],\"motionSegments\":[],\"audioSegments\":[]}",
+      "local_prompts": "",
+      "segment_lengths": "",
+      "guide_strength": "",
+      "use_custom_audio": true,
+      "use_custom_motion": true,
+      "inpaint_audio": true,
+      "frame_rate": 24,
+      "display_mode": "seconds",
+      "custom_width": 1344,
+      "custom_height": 768,
+      "resize_method": "crop",
+      "divisible_by": 32,
+      "img_compression": 0,
+      "override_audio": false,
+      "ref_image_size": "match",
+      "shift_video": 12,
+      "shift_audio": 3,
+      "ref_image_notes": "",
+      "minimax_settings_ui": "",
+      "timeline_ui": "",
+      "minimax_prompt_preview": "",
+      "clip": [
+        "397:2",
+        0
+      ],
+      "vae": [
+        "397:3",
+        0
+      ],
+      "model": [
+        "397:413",
+        0
+      ],
+      "model_ref2va": [
+        "397:415",
+        0
+      ],
+      "audio_vae": [
+        "397:4",
+        0
+      ],
+      "ref_images": [
+        "393",
+        0
+      ],
+      "external_prompt": [
+        "416",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3DirectorCS",
+    "_meta": {
+      "title": "MiniMax H3 Director"
+    }
+  },
+  "14": {
+    "inputs": {
+      "filename_prefix": "video/MiniMax_H3_Director",
+      "format": "auto",
+      "format.codec": "auto",
+      "codec": "auto",
+      "video": [
+        "419:381:13",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "24 FPS"
+    }
+  },
+  "392": {
+    "inputs": {
+      "images.image0": [
+        "394",
+        0
+      ],
+      "images.image1": [
+        "395",
+        0
+      ]
+    },
+    "class_type": "BatchImagesNode",
+    "_meta": {
+      "title": "Batch Immagini"
+    }
+  },
+  "393": {
+    "inputs": {
+      "images.image0": [
+        "392",
+        0
+      ],
+      "images.image1": [
+        "396",
+        0
+      ]
+    },
+    "class_type": "BatchImagesNode",
+    "_meta": {
+      "title": "Batch Immagini"
+    }
+  },
+  "394": {
+    "inputs": {
+      "image": "whatdreamscost/Qwen21_2026-10-17_004%.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"whatdreamscost/Qwen21_2026-10-17_004%.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "[Shot 1]"
+    }
+  },
+  "395": {
+    "inputs": {
+      "image": "whatdreamscost/Qwen21_2026-10-17_005%.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"whatdreamscost/Qwen21_2026-10-17_005%.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "[Shot 2]"
+    }
+  },
+  "396": {
+    "inputs": {
+      "image": "whatdreamscost/Qwen21_2026-10-17_006%.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"whatdreamscost/Qwen21_2026-10-17_006%.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "[Shot 3]"
+    }
+  },
+  "398": {
+    "inputs": {
+      "label_json": "{\"text\":\"MiniMax H3\",\"fontSize\":98,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#581c87\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "399": {
+    "inputs": {
+      "label_json": "{\"text\":\"DIRECTOR\",\"fontSize\":53,\"fontFamily\":\"Impact\",\"fontColor\":\"#c075f6\",\"textAlign\":\"left\",\"backgroundColor\":\"transparent\",\"padding\":10,\"borderRadius\":9,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "403": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma"
+    }
+  },
+  "404": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma"
+    }
+  },
+  "405": {
+    "inputs": {},
+    "class_type": "PixaromaGroupSwitch",
+    "_meta": {
+      "title": "OPTIONS"
+    }
+  },
+  "416": {
+    "inputs": {
+      "text": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nsubject_definitions:\n<Subject 1> is a young woman with long flowing lavender hair, striking blue eyes, and an aristocratic bearing. She wears a white halter top with black geometric accents, a fitted black corset with diamond patterns, a short white skirt, thigh-high boots, and a teal jacket with plush purple fur lining draped over her shoulders. She wears diamond-shaped blue earrings and a matching blue gemstone pendant at her collarbone.\n<Picture 1> is the still of the opening moment (00:00) — a three-quarter profile shot of her standing on a rocky coastal cliff at twilight, wind gently lifting her hair and jacket, gazing serenely toward the horizon where the sea meets a violet-pink sky.\n<Picture 2> is the still of the next moment (00:04) — a rear tracking shot of her walking away down a sunlit colonnade lined with tall cypress trees, her posture upright and purposeful, sunlight casting sharp shadows across the stone path.\n<Picture 3> is the still of the final moment (00:08) — a tight close-up of her seated inside a dimly lit vehicle at night, moonlight streaming through the window to illuminate her face, her expression intense and resolute, eyes locked forward with palpable tension.\n<Environment>: The video transitions through three distinct settings: a windswept coastal cliff at twilight with violet skies and crashing waves; a formal, sun-drenched garden colonnade with classical columns and manicured cypress trees; and a confined, shadowy vehicle interior at night, lit only by cool moonlight.\n<Prop or VFX>: The plush purple fur lining of her jacket remains a consistent tactile element across all scenes, catching light differently in each environment.\n\nsummary:\nA 10-second cinematic sequence following one continuous character through three sharply defined moments: twilight contemplation on a cliff, purposeful movement through a garden colonnade, and tense stillness inside a night vehicle. Three storyboard stills anchor each shot exactly, with smooth camera transitions linking them into a unified narrative arc.\n\nretention_analysis:\n<Picture 1> (appears in [Shot 1]): fully_preserved — framing, pose, lighting, and content match the still exactly at the declared moment; the camera holds a steady three-quarter profile as the wind animates her hair and jacket.\n<Picture 2> (appears in [Shot 2]): fully_preserved — the rear tracking shot begins and ends on this keyframe, with the colonnade’s perspective and her walking posture locked precisely to the still.\n<Picture 3> (appears in [Shot 3]): fully_preserved — the close-up is anchored at the shot’s conclusion, with moonlight falloff, facial expression, and gemstone pendant matching the reference frame exactly.\n<Subject 1> (appears in [Shot 1], [Shot 2], [Shot 3]): fully_preserved — identity stays exact across shots: lavender hair, blue eyes, corset outfit, and jewelry remain consistent; only lighting and environment shift.\n\ndetailed_description:\nThe target video uses a cinematic anime-inspired live-action hybrid style with high-contrast lighting, deliberate camera movement, and aristocratic atmosphere.\n\n[Shot 1] at 00:00.000, the shot begins from <Picture 1>. A slow push-in captures her standing on a rocky cliff edge as twilight bleeds into night. The wind catches her lavender hair and teal jacket, creating soft motion against the stillness of the violet sky. Her gaze is calm, composed, almost meditative, as if she is watching something only she sees. The camera lingers on the interplay of warm horizon glow and cool shadow across her face before the cut.\n\n[Shot 2] At 00:04.000, the shot cuts to a rear tracking shot moving backward as she walks away down a sunlit colonnade. The shot’s keyframe corresponds to <Picture 2>. Tall cypress trees line the path, their dark green forms contrasting with the pale stone columns and bright morning light. Her steps are deliberate, her posture upright, suggesting purpose rather than leisure. The camera maintains a steady distance, emphasizing her solitude within the grand, classical architecture.\n\n[Shot 3] At 00:08.000, the scene shifts to a tight close-up inside a dimly lit vehicle. The shot ends on <Picture 3>. Cool moonlight streams through the window, illuminating her face in sharp relief while the rest of the interior fades into shadow. Her expression has hardened; the serenity of the first shot is gone, replaced by steely determination. The camera holds static, amplifying the tension as if she is waiting for something inevitable.\n\noverall_soundscape:\nAmbient wind rustling through grass and rocks in the first shot; distant ocean waves rolling softly. In the second shot, the sound of her footsteps on stone and a faint breeze through the colonnade. In the third shot, the low hum of a car engine and the distant drip of rain against the window. No dialogue is spoken; only subtle breathing and the weight of silence.\n\nnon_diegetic_music:\nA low, pulsing cello line underpinned by sparse piano chords, building subtly in intensity as the sequence progresses.",
+      "source": [
+        "397:411",
+        0
+      ]
+    },
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Show Text Pixaroma"
+    }
+  },
+  "428": {
+    "inputs": {
+      "label_json": "{\"text\":\"storyboard\",\"fontSize\":53,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"transparent\",\"padding\":10,\"borderRadius\":9,\"opacity\":1,\"fontWeight\":\"normal\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "429": {
+    "inputs": {
+      "note_json": "{\"version\": 1, \"content\": \"<h2>Director Storyboard (QwenVL)</h2><p><b>Pipeline</b>: character sheet &rarr; scene stills (Qwen 2.1, preset <i>IMG &rsaquo; Storyboard</i>) &rarr; multi-scene video with audio (MiniMax H3 Director).</p><h3>1 &middot; The stills</h3><p>Load your scene stills into the three <code>PixaromaLoadImageMini</code> nodes on the left, <b>in chronological order</b>: they feed the enhancer (image/2/3) and the Director (batch &rarr; ref_images). The order is the <Picture N> numbering.</p><h3>2 &middot; SETTINGS (subgraph)</h3><p>Inside: the models (fl2va + Singularity ref2va, 32B TE, video/audio VAEs), the QwenVL enhancer (GGUF Qwen3.5-9B) and the attention chains (kitchen + sol-attn) already applied to both paths. Only touch it to swap models.</p><h3>3 &middot; The prompt</h3><p>In the QwenVL node inside SETTINGS: preset <code>MiniMax &rsaquo; Director Storyboard</code> + your scene idea <b>with timestamps</b> (00:00 / 00:04 / 00:08 for 10s), one scene per still, in order. The generated prompt shows up in the <code>PixaromaShowText</code> node after the run.</p><h3>4 &middot; The Director</h3><p>Refs ON (ref2va), canvas 1344&times;768, duration 10s. The <b>COMPILED PROMPT panel is decorative</b> in this workflow: it shows the native compilation, but the prompt that actually runs is QwenVL's, injected via <code>external_prompt</code> which replaces it. Timeline, global prompt and subject slots stay empty.</p><h3>5 &middot; Output</h3><p>Sampler 20 steps (res_multistep/simple) &rarr; RIFE 48fps &rarr; mp4 with generated audio.</p><h3>Native variant</h3><p><code>MiniMaxH3-Director-Native</code> drives the Director by itself: drag the stills onto the MAIN timeline track (the position = the shot's timestamp), character sheet into subject slot @ref1, global prompt + per-segment prompts &mdash; the COMPILED PROMPT is what runs. Ref Size <code>max</code> recommended for identity.</p>\", \"buttonColor\": \"#f66744\", \"lineColor\": \"#f66744\", \"width\": 420, \"height\": 320}"
+    },
+    "class_type": "PixaromaNote",
+    "_meta": {
+      "title": "README"
+    }
+  },
+  "397:1": {
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Carica modello di diffusione"
+    }
+  },
+  "397:16": {
+    "inputs": {
+      "unet_name": "Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model (ref2v)"
+    }
+  },
+  "397:2": {
+    "inputs": {
+      "clip_name": "qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
+      "type": "minimax",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load Text Encoder Qwen3vl_32b"
+    }
+  },
+  "397:3": {
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE (video)"
+    }
+  },
+  "397:4": {
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE (audio)"
+    }
+  },
+  "397:411": {
+    "inputs": {
+      "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
+      "preset_prompt": "MiniMax › Director Storyboard",
+      "camera_tag": "None",
+      "prompt": "3 scene in 10 secondi, una per still, in ordine:\nalle 00:00 (S1) è nel salotto della villa al tramonto — luce dorata calda dalla vetrata, in piedi accanto alla finestra, sguardo sereno e composto; la scena si apre esattamente sulla still 1\nalle 00:04 (S1) cammina lungo il colonnato del giardino al mattino — luce fredda netta, passo deciso, vento leggero sui capelli lunghi; taglio di scena netto\nalle 00:08 (S1) di notte in un interno — luce lunare blu dal finestrone, primo piano, sguardo determinato, tensione solenne prima della rivelazione\nLuce cinematica, identità di (S1) identica in tutte le scene, atmosfera aristocratica e sospesa. Niente dialoghi.",
+      "max_tokens": 8192,
+      "keep_model_loaded": false,
+      "seed": 1279605119,
+      "keep_last_prompt": false,
+      "passthrough": false,
+      "frame_count": 16,
+      "duration": "10s",
+      "image": [
+        "394",
+        0
+      ],
+      "image2": [
+        "395",
+        0
+      ],
+      "image3": [
+        "396",
+        0
+      ]
+    },
+    "class_type": "QwenVL_Unified",
+    "_meta": {
+      "title": "🧠 QwenVL Unified (HF / GGUF)"
+    }
+  },
+  "397:412": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "397:1",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  },
+  "397:413": {
+    "inputs": {
+      "selection": "sol-attn",
+      "selection.tau": 1,
+      "start_percent": 0.2,
+      "end_percent": 1,
+      "dense_blocks": "",
+      "min_tokens": 12288,
+      "extra_tokens": 256,
+      "sink_conditioning": "exact_kv_and_rows",
+      "verbose": false,
+      "model": [
+        "397:412",
+        0
+      ]
+    },
+    "class_type": "BlockSparseAttention",
+    "_meta": {
+      "title": "Attenzione sparsa del modello"
+    }
+  },
+  "397:414": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "397:16",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  },
+  "397:415": {
+    "inputs": {
+      "selection": "sol-attn",
+      "selection.tau": 1,
+      "start_percent": 0.2,
+      "end_percent": 1,
+      "dense_blocks": "",
+      "min_tokens": 12288,
+      "extra_tokens": 256,
+      "sink_conditioning": "exact_kv_and_rows",
+      "verbose": false,
+      "model": [
+        "397:414",
+        0
+      ]
+    },
+    "class_type": "BlockSparseAttention",
+    "_meta": {
+      "title": "Attenzione sparsa del modello"
+    }
+  },
+  "419:380:6": {
+    "inputs": {
+      "noise_seed": 99250768152389
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "419:380:7": {
+    "inputs": {
+      "sampler_name": "res_multistep"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "419:380:8": {
+    "inputs": {
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1,
+      "model": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "Scheduler Base"
+    }
+  },
+  "419:380:9": {
+    "inputs": {
+      "model": [
+        "5",
+        0
+      ],
+      "conditioning": [
+        "5",
+        1
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "Guida Base"
+    }
+  },
+  "419:380:10": {
+    "inputs": {
+      "noise": [
+        "419:380:6",
+        0
+      ],
+      "guider": [
+        "419:380:9",
+        0
+      ],
+      "sampler": [
+        "419:380:7",
+        0
+      ],
+      "sigmas": [
+        "419:380:8",
+        0
+      ],
+      "latent_image": [
+        "5",
+        2
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "419:381:13": {
+    "inputs": {
+      "fps": [
+        "5",
+        4
+      ],
+      "bit_depth": 8,
+      "color_space": "sRGB",
+      "codec": "none",
+      "images": [
+        "419:381:11",
+        0
+      ],
+      "audio": [
+        "419:381:12",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Crea Video"
+    }
+  },
+  "419:381:12": {
+    "inputs": {
+      "samples": [
+        "419:380:10",
+        0
+      ],
+      "vae": [
+        "397:4",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "Decodifica audio VAE"
+    }
+  },
+  "419:381:11": {
+    "inputs": {
+      "samples": [
+        "419:380:10",
+        0
+      ],
+      "vae": [
+        "397:3",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decodifica VAE"
+    }
+  },
+  "419:421": {
+    "inputs": {
+      "video": [
+        "419:381:13",
+        0
+      ]
+    },
+    "class_type": "GetVideoComponents",
+    "_meta": {
+      "title": "Estrai Componenti Video"
+    }
+  }
+}

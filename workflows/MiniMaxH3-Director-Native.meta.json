@@ -1,0 +1,78 @@
+{
+ "id": "mmh3-director-native",
+ "name": "MiniMax H3 Director Storyboard",
+ "category": "video",
+ "description": "Charsheet + una idea per riga → storyboard video multi-scena con audio (Director, autoprompting QwenVL server-side)",
+ "handler": "mmh3",
+ "remote_file": "MiniMaxH3-Director-Native.json",
+ "endpoint_id": "",
+ "outputs": [
+  "video",
+  "audio"
+ ],
+ "parameters": [
+  {
+   "key": "images",
+   "label": "Character sheet",
+   "type": "images",
+   "target": "job",
+   "max": 1
+  },
+  {
+   "key": "prompt",
+   "label": "Segment ideas (one per line)",
+   "type": "text",
+   "target": "job",
+   "wildcard_prefix": "mmh3/",
+   "default": "She turns from the window, hair catching the golden light, and settles into a serene half-smile.\nShe walks slowly toward the camera through the warm room, glancing past the lens with a playful smile."
+  },
+  {
+   "key": "global_prompt",
+   "label": "Global prompt (style/scene prose)",
+   "type": "text",
+   "target": "job",
+   "default": "Warm cinematic realism, soft film grain; a quiet elegant atmosphere; her look stays exactly the same in every shot."
+  },
+  {
+   "key": "subject_description",
+   "label": "Subject description (optional — auto-Analyze if empty)",
+   "type": "text",
+   "target": "job",
+   "default": ""
+  },
+  {
+   "key": "seconds",
+   "label": "Total duration (split evenly across ideas)",
+   "type": "select",
+   "target": "job",
+   "default": "10",
+   "options": [
+    "5",
+    "10",
+    "15"
+   ]
+  },
+  {
+   "key": "enhance",
+   "label": "Enhance segments (QwenVL autoprompting)",
+   "type": "bool",
+   "target": "job",
+   "default": true
+  },
+  {
+   "key": "14:format",
+   "label": "Video format",
+   "type": "select",
+   "target": "node",
+   "default": "auto",
+   "options": [
+    "auto",
+    "video/h264-mp4",
+    "video/hevc-mp4",
+    "video/av1-webm",
+    "video/webm"
+   ]
+  }
+ ],
+ "endpoint_name": "MiniMax H3"
+}

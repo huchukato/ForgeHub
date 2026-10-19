@@ -1,0 +1,383 @@
+{
+  "5": {
+    "inputs": {
+      "start_second": 0,
+      "end_second": 10,
+      "duration_seconds": 10,
+      "start_frame": 0,
+      "end_frame": 240,
+      "duration_frames": 240,
+      "timeline_data": "{\"mainTrackEnabled\":true,\"audioTrackEnabled\":true,\"motionTrackEnabled\":true,\"propHeight\":90,\"globalPropHeight\":126,\"showFilenames\":true,\"showPromptZones\":true,\"overrideAudio\":false,\"inpaint_audio\":true,\"global_prompt\":\"Arcane-style cinematic realism, painterly textures and dramatic rim lighting; a chaotic, electric atmosphere in a neon-lit Zaun workshop; her look stays exactly the same in every shot.\",\"retake_global_prompt\":\"\",\"overall_soundscape\":\"\",\"non_diegetic_music\":\"\",\"prompt_override\":\"\",\"prompt_override_on\":false,\"retakeMode\":false,\"retakeStart\":24,\"retakeLength\":48,\"retakePrompt\":\"\",\"retakeStrength\":1,\"retakeVideo\":null,\"normalStartFrame\":0,\"normalDurationFrames\":240,\"reference_mode\":\"REF2VA\",\"prompt_format\":\"minimax\",\"analyzeProvider\":\"qwenvl\",\"analyzeBaseUrl\":\"\",\"analyzeModel\":\"\",\"summary\":\"\",\"task_type_override\":\"\",\"subjectSlotCount\":1,\"subjects\":[{\"images\":[{\"name\":\"whatdreamscost/mmxref_Qwen21_2026-10-07_007__1792441928474.jpg\"}],\"description\":\"Vibrant blue hair styled in a long side braid, striking pink eyes, curvaceous build, wearing a pink halter top with a brown corset, plaid skirt, and brown boots.\",\"shortName\":\"\",\"kind\":\"person\",\"retention\":\"fully_preserved\",\"retentionNote\":\"blue braided hair, pink eyes, curvaceous build, pink halter top, brown corset, plaid skirt, brown boots, cloud tattoos on arms and legs.\",\"voice\":null}],\"segments\":[{\"id\":\"1792439042779dbc4e\",\"start\":0,\"length\":120,\"prompt\":\"Fast whip-pan settling on her as she spins around from a workbench, long blue braids swinging; she grins wide, eyes glittering with mischief, sparks drifting in the neon haze.\",\"type\":\"text\",\"isEndFrame\":false},{\"id\":\"1792441997891mcf49\",\"start\":120,\"length\":120,\"prompt\":\"Low-angle tracking shot as she strides toward the camera through the workshop, braids trailing behind her; she kicks a scrap of metal aside and laughs, pink and cyan neon flickering across her face.\",\"type\":\"text\"}],\"motionSegments\":[],\"audioSegments\":[]}",
+      "local_prompts": "Fast whip-pan settling on her as she spins around from a workbench, long blue braids swinging; she grins wide, eyes glittering with mischief, sparks drifting in the neon haze. | Low-angle tracking shot as she strides toward the camera through the workshop, braids trailing behind her; she kicks a scrap of metal aside and laughs, pink and cyan neon flickering across her face.",
+      "segment_lengths": "120,120",
+      "guide_strength": "",
+      "use_custom_audio": true,
+      "use_custom_motion": true,
+      "inpaint_audio": true,
+      "frame_rate": 24,
+      "display_mode": "seconds",
+      "custom_width": 1344,
+      "custom_height": 768,
+      "resize_method": "crop",
+      "divisible_by": 32,
+      "img_compression": 0,
+      "override_audio": false,
+      "ref_image_size": "max",
+      "shift_video": 12,
+      "shift_audio": 3,
+      "ref_image_notes": "",
+      "minimax_settings_ui": "",
+      "timeline_ui": "",
+      "minimax_prompt_preview": "",
+      "clip": [
+        "397:2",
+        0
+      ],
+      "vae": [
+        "397:3",
+        0
+      ],
+      "model": [
+        "397:413",
+        0
+      ],
+      "model_ref2va": [
+        "397:415",
+        0
+      ],
+      "audio_vae": [
+        "397:4",
+        0
+      ]
+    },
+    "class_type": "MiniMaxH3DirectorCS",
+    "_meta": {
+      "title": "MiniMax H3 Director"
+    }
+  },
+  "14": {
+    "inputs": {
+      "filename_prefix": "video/MiniMax_H3_Director",
+      "format": "auto",
+      "format.codec": "auto",
+      "codec": "auto",
+      "video": [
+        "419:381:13",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "24 FPS"
+    }
+  },
+  "398": {
+    "inputs": {
+      "label_json": "{\"text\":\"MiniMax H3\",\"fontSize\":98,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#581c87\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "399": {
+    "inputs": {
+      "label_json": "{\"text\":\"DIRECTOR\",\"fontSize\":53,\"fontFamily\":\"Impact\",\"fontColor\":\"#c075f6\",\"textAlign\":\"left\",\"backgroundColor\":\"transparent\",\"padding\":10,\"borderRadius\":9,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "403": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma"
+    }
+  },
+  "404": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma"
+    }
+  },
+  "405": {
+    "inputs": {},
+    "class_type": "PixaromaGroupSwitch",
+    "_meta": {
+      "title": "OPTIONS"
+    }
+  },
+  "429": {
+    "inputs": {
+      "label_json": "{\"text\":\"native\",\"fontSize\":53,\"fontFamily\":\"Courier New\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"transparent\",\"padding\":10,\"borderRadius\":9,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "397:1": {
+    "inputs": {
+      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Carica modello di diffusione"
+    }
+  },
+  "397:16": {
+    "inputs": {
+      "unet_name": "Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Load Diffusion Model (ref2v)"
+    }
+  },
+  "397:2": {
+    "inputs": {
+      "clip_name": "qwen3vl_32b_heretic_minimax_h3_nvfp4.safetensors",
+      "type": "minimax",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Load Text Encoder Qwen3vl_32b"
+    }
+  },
+  "397:3": {
+    "inputs": {
+      "vae_name": "minimax_h3_video_vae_fp16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE (video)"
+    }
+  },
+  "397:4": {
+    "inputs": {
+      "vae_name": "minimax_h3_audio_vae_fp32.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load VAE (audio)"
+    }
+  },
+  "397:412": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "397:1",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  },
+  "397:413": {
+    "inputs": {
+      "selection": "sol-attn",
+      "selection.tau": 1,
+      "start_percent": 0.2,
+      "end_percent": 1,
+      "dense_blocks": "",
+      "min_tokens": 12288,
+      "extra_tokens": 256,
+      "sink_conditioning": "exact_kv_and_rows",
+      "verbose": false,
+      "model": [
+        "397:412",
+        0
+      ]
+    },
+    "class_type": "BlockSparseAttention",
+    "_meta": {
+      "title": "Attenzione sparsa del modello"
+    }
+  },
+  "397:414": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "397:16",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  },
+  "397:415": {
+    "inputs": {
+      "selection": "sol-attn",
+      "selection.tau": 1,
+      "start_percent": 0.2,
+      "end_percent": 1,
+      "dense_blocks": "",
+      "min_tokens": 12288,
+      "extra_tokens": 256,
+      "sink_conditioning": "exact_kv_and_rows",
+      "verbose": false,
+      "model": [
+        "397:414",
+        0
+      ]
+    },
+    "class_type": "BlockSparseAttention",
+    "_meta": {
+      "title": "Attenzione sparsa del modello"
+    }
+  },
+  "419:380:6": {
+    "inputs": {
+      "noise_seed": 761598362297879
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise"
+    }
+  },
+  "419:380:7": {
+    "inputs": {
+      "sampler_name": "res_multistep"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect"
+    }
+  },
+  "419:380:8": {
+    "inputs": {
+      "scheduler": "simple",
+      "steps": 20,
+      "denoise": 1,
+      "model": [
+        "5",
+        0
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "Scheduler Base"
+    }
+  },
+  "419:380:9": {
+    "inputs": {
+      "model": [
+        "5",
+        0
+      ],
+      "conditioning": [
+        "5",
+        1
+      ]
+    },
+    "class_type": "BasicGuider",
+    "_meta": {
+      "title": "Guida Base"
+    }
+  },
+  "419:380:10": {
+    "inputs": {
+      "noise": [
+        "419:380:6",
+        0
+      ],
+      "guider": [
+        "419:380:9",
+        0
+      ],
+      "sampler": [
+        "419:380:7",
+        0
+      ],
+      "sigmas": [
+        "419:380:8",
+        0
+      ],
+      "latent_image": [
+        "5",
+        2
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced"
+    }
+  },
+  "419:381:13": {
+    "inputs": {
+      "fps": [
+        "5",
+        4
+      ],
+      "bit_depth": 8,
+      "color_space": "sRGB",
+      "codec": "none",
+      "images": [
+        "419:381:11",
+        0
+      ],
+      "audio": [
+        "419:381:12",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Crea Video"
+    }
+  },
+  "419:381:12": {
+    "inputs": {
+      "samples": [
+        "419:380:10",
+        0
+      ],
+      "vae": [
+        "397:4",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeAudio",
+    "_meta": {
+      "title": "Decodifica audio VAE"
+    }
+  },
+  "419:381:11": {
+    "inputs": {
+      "samples": [
+        "419:380:10",
+        0
+      ],
+      "vae": [
+        "397:3",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decodifica VAE"
+    }
+  },
+  "419:421": {
+    "inputs": {
+      "video": [
+        "419:381:13",
+        0
+      ]
+    },
+    "class_type": "GetVideoComponents",
+    "_meta": {
+      "title": "Estrai Componenti Video"
+    }
+  }
+}
