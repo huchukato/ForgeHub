@@ -70,28 +70,6 @@
    ]
   },
   {
-   "key": "enable_hires",
-   "label": "Hires fix (4x → lanczos 50% + refine)",
-   "type": "select",
-   "target": "job",
-   "default": "on",
-   "options": [
-    "on",
-    "off"
-   ]
-  },
-  {
-   "key": "enable_facedet",
-   "label": "Face detailer (YOLO + SAM)",
-   "type": "select",
-   "target": "job",
-   "default": "on",
-   "options": [
-    "on",
-    "off"
-   ]
-  },
-  {
    "key": "92:131:ckpt_name",
    "label": "Checkpoint",
    "type": "select",
@@ -144,6 +122,28 @@
     "exponential",
     "simple",
     "sgm_uniform"
+   ]
+  },
+  {
+   "key": "enable_hires",
+   "label": "Hires fix (4x → lanczos 50% + refine)",
+   "type": "select",
+   "target": "job",
+   "default": "on",
+   "options": [
+    "on",
+    "off"
+   ]
+  },
+  {
+   "key": "enable_facedet",
+   "label": "Face detailer (YOLO + SAM)",
+   "type": "select",
+   "target": "job",
+   "default": "on",
+   "options": [
+    "on",
+    "off"
    ]
   },
   {
