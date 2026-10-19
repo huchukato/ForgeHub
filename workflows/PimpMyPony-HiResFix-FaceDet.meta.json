@@ -94,7 +94,7 @@
    "label": "CFG",
    "type": "float",
    "target": "node",
-   "default": 4.5
+   "default": 6
   },
   {
    "key": "92:132:sampler_name",
