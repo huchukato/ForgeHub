@@ -1,4 +1,4 @@
-import { ChevronRight, Film, History, ImagePlus, X } from "lucide-react";
+import { ChevronRight, Film, History, ImagePlus, Sparkles, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ForgeHubClient, OutputMetaEntry, WorkflowParam } from "../api";
 import { Card, Label, Select, TextArea, TextInput, Toggle } from "./ui";
@@ -48,19 +48,51 @@ function ratioOf(size: string): string | null {
   return null;
 }
 
-function SizePicker({ value, onChange }: { value: string; onChange: (v: string) => void }) {
-  const active = ratioOf(value) ?? "1:1";
+function SizePicker({ value, onChange, options }: { value: string; onChange: (v: string) => void; options?: string[] }) {
+  // Meta-driven when the options carry "WxH (ratio)" tags: the grid tiles and the
+  // size chips come from the meta, and an "auto…" option renders as the first tile
+  // (the model derives the canvas — no size chips for it). Untagged option lists
+  // fall back to the built-in SIZE_PRESETS (the qwen21 image sizes).
+  const autoOpt = (options ?? []).find((o) => /^auto/i.test(o.trim()));
+  const tagged = (options ?? []).filter((o) => /^\d+x\d+\s*\(/.test(o));
+  const useMeta = tagged.length > 0;
+  const groups: Record<string, string[]> = {};
+  if (useMeta) {
+    for (const o of tagged) {
+      const m = o.match(/^(\d+)x(\d+)\s*\((.+)\)\s*$/);
+      if (m) (groups[m[3]] ??= []).push(o);
+    }
+  }
+  const presets = useMeta ? groups : SIZE_PRESETS;
+  const isAuto = !!autoOpt && value.trim().toLowerCase().startsWith("auto");
+  const active = isAuto ? "__auto__" : (useMeta
+    ? (tagged.find((o) => o === value)?.match(/\((.+)\)/)?.[1] ?? Object.keys(groups)[0])
+    : (ratioOf(value) ?? "1:1"));
   return (
     <div>
       <div className="flex flex-wrap gap-1.5">
-        {Object.keys(SIZE_PRESETS).map((ratio) => {
+        {autoOpt && (
+          <button
+            type="button"
+            onClick={() => onChange(autoOpt)}
+            className={`flex w-16 flex-col items-center gap-1 rounded-lg border px-1 py-2 transition-all duration-150 ${
+              isAuto
+                ? "border-accent/60 bg-accent/10 text-accent shadow-[0_0_12px_rgb(124_92_255/0.15)]"
+                : "border-border bg-bg-elev text-muted hover:border-border-strong hover:bg-panel-hover hover:text-text"
+            }`}
+          >
+            <Sparkles size={14} className="text-current" />
+            <span className="text-[10px] font-semibold">Auto</span>
+          </button>
+        )}
+        {Object.keys(presets).map((ratio) => {
           const [rw, rh] = ratio.split(":").map(Number);
           const sel = ratio === active;
           return (
             <button
               key={ratio}
               type="button"
-              onClick={() => onChange(SIZE_PRESETS[ratio][0])}
+              onClick={() => onChange(useMeta ? presets[ratio][0] : SIZE_PRESETS[ratio][0])}
               className={`flex w-16 flex-col items-center gap-1 rounded-lg border px-1 py-2 transition-all duration-150 ${
                 sel
                   ? "border-accent/60 bg-accent/10 text-accent shadow-[0_0_12px_rgb(124_92_255/0.15)]"
@@ -76,22 +108,24 @@ function SizePicker({ value, onChange }: { value: string; onChange: (v: string) 
           );
         })}
       </div>
-      <div className="mt-2 flex flex-wrap gap-1.5">
-        {SIZE_PRESETS[active].map((s) => (
-          <button
-            key={s}
-            type="button"
-            onClick={() => onChange(s)}
-            className={`rounded-md border px-2 py-1 font-mono text-[11px] transition-all duration-150 ${
-              s === value
-                ? "border-accent/60 bg-accent/10 text-accent"
-                : "border-border bg-bg-elev text-muted hover:border-border-strong hover:bg-panel-hover hover:text-text"
-            }`}
-          >
-            {s.replace("x", "×")}
-          </button>
-        ))}
-      </div>
+      {!isAuto && (
+        <div className="mt-2 flex flex-wrap gap-1.5">
+          {presets[active].map((s) => (
+            <button
+              key={s}
+              type="button"
+              onClick={() => onChange(s)}
+              className={`rounded-md border px-2 py-1 font-mono text-[11px] transition-all duration-150 ${
+                s === value
+                  ? "border-accent/60 bg-accent/10 text-accent"
+                  : "border-border bg-bg-elev text-muted hover:border-border-strong hover:bg-panel-hover hover:text-text"
+              }`}
+            >
+              {s.replace("x", "×")}
+            </button>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
@@ -224,7 +258,7 @@ export default function RecipeForm({ client, parameters, values, setValue, image
       return <Toggle checked={v !== false} onChange={(nv) => setValue(p.key, nv)} />;
     }
     if (p.key === "image_size") {
-      return <SizePicker value={String(v ?? "1024x1024")} onChange={(nv) => setValue(p.key, nv)} />;
+      return <SizePicker value={String(v ?? "1024x1024")} options={p.options} onChange={(nv) => setValue(p.key, nv)} />;
     }
     if (p.key.endsWith(":resolution") && resRows) {
       const opts = resRows.map(videoLabel);

@@ -57,8 +57,8 @@
    ]
   },
   {
-   "key": "video_size",
-   "label": "Resolution (MMH3 native presets)",
+   "key": "image_size",
+   "label": "Resolution",
    "type": "select",
    "target": "job",
    "default": "auto (segue le still)",
