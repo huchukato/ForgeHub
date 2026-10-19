@@ -26,13 +26,15 @@ const SIZE_PRESETS: Record<string, string[]> = {
 };
 
 // MiniMax resolution node: [w, h, tier] per aspect ratio (ComfyUI-PerfectVideoResolution).
+// Tiers above Native are upscaler territory — H3's trained envelope ends at the
+// Native budget, so the picker offers only what the model renders well directly.
 const VIDEO_PRESETS: Record<string, [number, number, string][]> = {
-  "1:1": [[512,512,"Fast Draft"],[640,640,"Preview"],[768,768,"High Detail"],[1024,1024,"Native"],[1152,1152,"1.5K"],[1440,1440,"1080P Class"],[1536,1536,"2K"]],
-  "3:4": [[448,576,"Fast Draft"],[576,736,"Preview"],[672,896,"High Detail"],[864,1184,"Native"],[992,1344,"1.5K"],[1248,1664,"1080P Class"],[1344,1760,"2K"]],
-  "4:3": [[576,448,"Fast Draft"],[736,576,"Preview"],[896,672,"High Detail"],[1184,864,"Native"],[1344,992,"1.5K"],[1664,1248,"1080P Class"],[1760,1344,"2K"]],
-  "9:16": [[384,672,"Fast Draft"],[480,864,"Preview"],[576,1024,"High Detail"],[768,1344,"Native"],[864,1536,"1.5K"],[1088,1920,"1080P Class"],[1152,2048,"2K"]],
-  "16:9": [[672,384,"Fast Draft"],[864,480,"Preview"],[1024,576,"High Detail"],[1344,768,"Native"],[1536,864,"1.5K"],[1920,1088,"1080P Class"],[2048,1152,"2K"]],
-  "21:9": [[768,320,"Fast Draft"],[992,416,"Preview"],[1184,512,"High Detail"],[1536,672,"Native"],[1760,768,"1.5K"],[2208,960,"1080P Class"],[2336,992,"2K"]],
+  "1:1": [[512,512,"Fast Draft"],[640,640,"Preview"],[768,768,"High Detail"],[1024,1024,"Native"]],
+  "3:4": [[448,576,"Fast Draft"],[576,736,"Preview"],[672,896,"High Detail"],[864,1184,"Native"]],
+  "4:3": [[576,448,"Fast Draft"],[736,576,"Preview"],[896,672,"High Detail"],[1184,864,"Native"]],
+  "9:16": [[384,672,"Fast Draft"],[480,864,"Preview"],[576,1024,"High Detail"],[768,1344,"Native"]],
+  "16:9": [[672,384,"Fast Draft"],[864,480,"Preview"],[1024,576,"High Detail"],[1344,768,"Native"]],
+  "21:9": [[768,320,"Fast Draft"],[992,416,"Preview"],[1184,512,"High Detail"],[1536,672,"Native"]],
 };
 
 const videoLabel = (row: [number, number, string]) => `${row[2]} — ${row[0]}×${row[1]}`;
