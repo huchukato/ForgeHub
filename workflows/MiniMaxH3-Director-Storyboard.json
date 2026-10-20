@@ -184,7 +184,7 @@
   "inputs": {
    "text": "For the target video, at 0.00 seconds into the target video, <Picture 1> (from [Shot 1]) is fully referenced.\n\nsubject_definitions:\n<Subject 1> is a young woman with long flowing lavender hair, striking blue eyes, and an aristocratic bearing. She wears a white halter top with black geometric accents, a fitted black corset with diamond patterns, a short white skirt, thigh-high boots, and a teal jacket with plush purple fur lining draped over her shoulders. She wears diamond-shaped blue earrings and a matching blue gemstone pendant at her collarbone.\n<Picture 1> is the still of the opening moment (00:00) — a three-quarter profile shot of her standing on a rocky coastal cliff at twilight, wind gently lifting her hair and jacket, gazing serenely toward the horizon where the sea meets a violet-pink sky.\n<Picture 2> is the still of the next moment (00:04) — a rear tracking shot of her walking away down a sunlit colonnade lined with tall cypress trees, her posture upright and purposeful, sunlight casting sharp shadows across the stone path.\n<Picture 3> is the still of the final moment (00:08) — a tight close-up of her seated inside a dimly lit vehicle at night, moonlight streaming through the window to illuminate her face, her expression intense and resolute, eyes locked forward with palpable tension.\n<Environment>: The video transitions through three distinct settings: a windswept coastal cliff at twilight with violet skies and crashing waves; a formal, sun-drenched garden colonnade with classical columns and manicured cypress trees; and a confined, shadowy vehicle interior at night, lit only by cool moonlight.\n<Prop or VFX>: The plush purple fur lining of her jacket remains a consistent tactile element across all scenes, catching light differently in each environment.\n\nsummary:\nA 10-second cinematic sequence following one continuous character through three sharply defined moments: twilight contemplation on a cliff, purposeful movement through a garden colonnade, and tense stillness inside a night vehicle. Three storyboard stills anchor each shot exactly, with smooth camera transitions linking them into a unified narrative arc.\n\nretention_analysis:\n<Picture 1> (appears in [Shot 1]): fully_preserved — framing, pose, lighting, and content match the still exactly at the declared moment; the camera holds a steady three-quarter profile as the wind animates her hair and jacket.\n<Picture 2> (appears in [Shot 2]): fully_preserved — the rear tracking shot begins and ends on this keyframe, with the colonnade’s perspective and her walking posture locked precisely to the still.\n<Picture 3> (appears in [Shot 3]): fully_preserved — the close-up is anchored at the shot’s conclusion, with moonlight falloff, facial expression, and gemstone pendant matching the reference frame exactly.\n<Subject 1> (appears in [Shot 1], [Shot 2], [Shot 3]): fully_preserved — identity stays exact across shots: lavender hair, blue eyes, corset outfit, and jewelry remain consistent; only lighting and environment shift.\n\ndetailed_description:\nThe target video uses a cinematic anime-inspired live-action hybrid style with high-contrast lighting, deliberate camera movement, and aristocratic atmosphere.\n\n[Shot 1] at 00:00.000, the shot begins from <Picture 1>. A slow push-in captures her standing on a rocky cliff edge as twilight bleeds into night. The wind catches her lavender hair and teal jacket, creating soft motion against the stillness of the violet sky. Her gaze is calm, composed, almost meditative, as if she is watching something only she sees. The camera lingers on the interplay of warm horizon glow and cool shadow across her face before the cut.\n\n[Shot 2] At 00:04.000, the shot cuts to a rear tracking shot moving backward as she walks away down a sunlit colonnade. The shot’s keyframe corresponds to <Picture 2>. Tall cypress trees line the path, their dark green forms contrasting with the pale stone columns and bright morning light. Her steps are deliberate, her posture upright, suggesting purpose rather than leisure. The camera maintains a steady distance, emphasizing her solitude within the grand, classical architecture.\n\n[Shot 3] At 00:08.000, the scene shifts to a tight close-up inside a dimly lit vehicle. The shot ends on <Picture 3>. Cool moonlight streams through the window, illuminating her face in sharp relief while the rest of the interior fades into shadow. Her expression has hardened; the serenity of the first shot is gone, replaced by steely determination. The camera holds static, amplifying the tension as if she is waiting for something inevitable.\n\noverall_soundscape:\nAmbient wind rustling through grass and rocks in the first shot; distant ocean waves rolling softly. In the second shot, the sound of her footsteps on stone and a faint breeze through the colonnade. In the third shot, the low hum of a car engine and the distant drip of rain against the window. No dialogue is spoken; only subtle breathing and the weight of silence.\n\nnon_diegetic_music:\nA low, pulsing cello line underpinned by sparse piano chords, building subtly in intensity as the sequence progresses.",
    "source": [
-    "397:411",
+    "417",
     0
    ]
   },
@@ -593,6 +593,20 @@
   "class_type": "LoraLoaderModelOnly",
   "_meta": {
    "title": "Style LoRA"
+  }
+ },
+ "417": {
+  "inputs": {
+   "string_a": "",
+   "string_b": [
+    "397:411",
+    0
+   ],
+   "delimiter": "\n\n"
+  },
+  "class_type": "StringConcatenate",
+  "_meta": {
+   "title": "Style prepend"
   }
  }
 }
