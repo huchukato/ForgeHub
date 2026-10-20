@@ -53,6 +53,29 @@
    ]
   },
   {
+   "key": "config",
+   "label": "Preset (sampler/turbo LoRA)",
+   "type": "select",
+   "target": "job",
+   "default": "r2va_singularity",
+   "options": [
+    "r2va_singularity",
+    "r2va_singularity_turbo"
+   ]
+  },
+  {
+   "key": "lora",
+   "label": "Style LoRA",
+   "type": "select",
+   "target": "job",
+   "default": "none",
+   "options": [
+    "none",
+    "realism",
+    "char_swap"
+   ]
+  },
+  {
    "key": "image_size",
    "label": "Resolution",
    "type": "select",
