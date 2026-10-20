@@ -247,7 +247,7 @@
  },
  "419:380:7": {
   "inputs": {
-   "sampler_name": "res_multistep"
+   "sampler_name": "euler"
   },
   "class_type": "KSamplerSelect",
   "_meta": {
@@ -256,8 +256,8 @@
  },
  "419:380:8": {
   "inputs": {
-   "scheduler": "simple",
-   "steps": 20,
+   "scheduler": "beta",
+   "steps": 6,
    "denoise": 1,
    "model": [
     "5",

@@ -68,7 +68,7 @@
    "label": "Preset (sampler/turbo LoRA)",
    "type": "select",
    "target": "job",
-   "default": "r2va_singularity",
+   "default": "r2va_singularity_turbo",
    "options": [
     "r2va_singularity",
     "r2va_singularity_turbo"
