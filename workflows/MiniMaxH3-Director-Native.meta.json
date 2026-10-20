@@ -34,7 +34,7 @@
    "label": "Global prompt (style/scene prose)",
    "type": "text",
    "target": "job",
-   "default": "Warm cinematic realism, soft film grain; a quiet elegant atmosphere; her look stays exactly the same in every shot."
+   "default": "The subject's look, style, and color palette stay faithful to the reference in every shot."
   },
   {
    "key": "style",
