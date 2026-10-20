@@ -19,6 +19,17 @@
    "max": 1
   },
   {
+   "key": "reference_mode",
+   "label": "References",
+   "type": "select",
+   "target": "job",
+   "default": "REF2VA (Refs ON — the sheet drives identity)",
+   "options": [
+    "REF2VA (Refs ON — the sheet drives identity)",
+    "OFF (text only — fl2va path)"
+   ]
+  },
+  {
    "key": "global_prompt",
    "label": "Global prompt (style/scene prose)",
    "type": "text",
