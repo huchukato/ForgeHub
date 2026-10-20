@@ -2,7 +2,7 @@
  "id": "mmh3-t2va",
  "name": "MiniMax H3 T2VA",
  "category": "video",
- "description": "Text → video con audio (MiniMax H3 turbo, serverless INT8)",
+ "description": "Text → video with audio (MiniMax H3 turbo, serverless INT8)",
  "handler": "mmh3",
  "remote_file": "MiniMaxH3-Turbo-T2VA.json",
  "endpoint_id": "",

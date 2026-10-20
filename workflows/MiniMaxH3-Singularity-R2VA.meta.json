@@ -2,7 +2,7 @@
  "id": "mmh3-singularity-r2va",
  "name": "MiniMax H3 Singularity R2VA",
  "category": "video",
- "description": "Reference → video con audio (Singularity fusion, serverless INT8)",
+ "description": "Reference → video with audio (Singularity fusion, serverless INT8)",
  "handler": "mmh3",
  "remote_file": "MiniMaxH3-Singularity-R2VA.json",
  "endpoint_id": "",

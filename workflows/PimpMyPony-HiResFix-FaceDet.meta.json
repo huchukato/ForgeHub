@@ -2,7 +2,7 @@
  "id": "pimpmypony-hiresfix-facedet",
  "name": "PimpMyPony HiRes + FaceDet",
  "category": "image",
- "description": "Pony / Illustrious T2I con wildcards — hires fix e face detailer attivabili a gruppi (serverless)",
+ "description": "Pony / Illustrious T2I with wildcards — hires fix and face detailer toggleable in groups (serverless)",
  "handler": "pony",
  "remote_file": "PimpMyPony-HiResFix-FaceDet.json",
  "endpoint_id": "",

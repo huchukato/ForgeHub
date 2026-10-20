@@ -2,7 +2,7 @@
  "id": "mmh3-director-storyboard",
  "name": "MiniMax H3 Director Storyboard",
  "category": "video",
- "description": "Un prompt + fino a 3 frame storyboard (pre-generati in Qwen 2.1 col preset IMG › Storyboard) → video con audio: il QwenVL nel grafo trasforma l'idea in prompt R2VA completo",
+ "description": "One prompt + up to 3 storyboard frames (pre-generated in Qwen 2.1 with the IMG › Storyboard preset) → video with audio: the in-graph QwenVL turns the idea into a full R2VA prompt",
  "handler": "mmh3",
  "remote_file": "MiniMaxH3-Director-Storyboard.json",
  "endpoint_id": "",

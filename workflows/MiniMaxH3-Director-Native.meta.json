@@ -2,7 +2,7 @@
  "id": "mmh3-director-native",
  "name": "MiniMax H3 Director Native",
  "category": "video",
- "description": "Charsheet + una idea per riga (segmenti) → video multi-scena con audio (Director timeline, autoprompting QwenVL server-side)",
+ "description": "Charsheet + one idea per line (segments) → multi-scene video with audio (Director timeline, server-side QwenVL autoprompting)",
  "handler": "mmh3",
  "remote_file": "MiniMaxH3-Director-Native.json",
  "endpoint_id": "",
