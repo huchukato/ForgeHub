@@ -329,7 +329,7 @@
   "inputs": {
    "attention": "comfy kitchen attention",
    "model": [
-    "397:16",
+    "253:214",
     0
    ]
   },
@@ -370,7 +370,7 @@
  },
  "419:380:7": {
   "inputs": {
-   "sampler_name": "res_multistep"
+   "sampler_name": "euler"
   },
   "class_type": "KSamplerSelect",
   "_meta": {
@@ -379,8 +379,8 @@
  },
  "419:380:8": {
   "inputs": {
-   "scheduler": "simple",
-   "steps": 20,
+   "scheduler": "beta",
+   "steps": 6,
    "denoise": 1,
    "model": [
     "5",
@@ -565,6 +565,34 @@
   "class_type": "AutoRifeTensorrt",
   "_meta": {
    "title": "Auto RIFE TensorRT"
+  }
+ },
+ "253:213": {
+  "inputs": {
+   "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+   "strength_model": 1,
+   "model": [
+    "397:16",
+    0
+   ]
+  },
+  "class_type": "LoraLoaderModelOnly",
+  "_meta": {
+   "title": "Turbo LoRA (ref2v)"
+  }
+ },
+ "253:214": {
+  "inputs": {
+   "lora_name": "h3-realism-people-t2v-i2v-r2v.safetensors",
+   "strength_model": 1,
+   "model": [
+    "253:213",
+    0
+   ]
+  },
+  "class_type": "LoraLoaderModelOnly",
+  "_meta": {
+   "title": "Style LoRA"
   }
  }
 }
