@@ -35,7 +35,7 @@
     "inputs": {
       "text": "The camera remains locked-off, completely static throughout the entire clip. A woman with dark curly hair and a delicate necklace lies on her back on a bed, her eyes closed in pleasure. She is actively engaged in oral sex, her head tilted back as she performs the act with focused intensity. Her hands are positioned to support the partner above her, her fingers gently gripping the fabric of his shorts. The lighting is soft and warm, highlighting the contours of her face and the intimate nature of the moment. The background is softly blurred, keeping the focus on her and the action. As the scene progresses, her movements become slightly more animated, her expression shifting between pleasure and concentration. The air is thick with the sounds of their breathing, the occasional wet sound of skin contact, and the soft rustle of fabric as she adjusts her position. No dialogue is present, only the natural, unfiltered sounds of their interaction.",
       "anything": [
-        "398:382",
+        "398:423",
         0
       ]
     },
@@ -123,54 +123,10 @@
       "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
     }
   },
-  "398:393": {
-    "inputs": {
-      "clip_name": "gemma4_e2b_it_bf16.safetensors",
-      "type": "ltxv",
-      "device": "default"
-    },
-    "class_type": "CLIPLoader",
-    "_meta": {
-      "title": "Carica CLIP",
-      "cnr_id": "comfy-core",
-      "ver": "0.29.0"
-    }
-  },
-  "398:380": {
-    "inputs": {
-      "prompt": "",
-      "max_length": 600,
-      "sampling_mode": "on",
-      "sampling_mode.temperature": 0.7,
-      "sampling_mode.top_k": 64,
-      "sampling_mode.top_p": 0.95,
-      "sampling_mode.min_p": 0.05,
-      "sampling_mode.repetition_penalty": 1.15,
-      "sampling_mode.seed": 0,
-      "sampling_mode.presence_penalty": 0,
-      "thinking": false,
-      "use_default_template": true,
-      "mtp": "auto",
-      "clip": [
-        "398:393",
-        0
-      ],
-      "image": [
-        "398:350",
-        0
-      ]
-    },
-    "class_type": "TextGenerateLTX2Prompt",
-    "_meta": {
-      "title": "Genera Prompt LTX2",
-      "cnr_id": "comfy-core",
-      "ver": "0.16.3"
-    }
-  },
   "398:364": {
     "inputs": {
       "text": [
-        "398:382",
+        "398:423",
         0
       ],
       "clip": [
@@ -799,28 +755,6 @@
       "ver": "0.5.1"
     }
   },
-  "398:382": {
-    "inputs": {
-      "switch": [
-        "398:383",
-        0
-      ],
-      "on_false": [
-        "398:423",
-        0
-      ],
-      "on_true": [
-        "398:380",
-        0
-      ]
-    },
-    "class_type": "ComfySwitchNode",
-    "_meta": {
-      "title": "Interruttore If/Else",
-      "cnr_id": "comfy-core",
-      "ver": "0.22.0"
-    }
-  },
   "398:374": {
     "inputs": {
       "tile_size": 512,
@@ -859,17 +793,6 @@
       "title": "LTXV Audio VAE Decode",
       "cnr_id": "comfy-core",
       "ver": "0.7.0"
-    }
-  },
-  "398:383": {
-    "inputs": {
-      "value": false
-    },
-    "class_type": "PrimitiveBoolean",
-    "_meta": {
-      "title": "Boolean (Enable Prompt Enhance)",
-      "cnr_id": "comfy-core",
-      "ver": "0.22.0"
     }
   },
   "398:384": {
