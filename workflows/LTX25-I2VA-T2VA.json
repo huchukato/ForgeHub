@@ -15,7 +15,7 @@
       "pingpong": false,
       "save_output": true,
       "images": [
-        "418:200",
+        "418:177",
         0
       ],
       "audio": [
@@ -883,7 +883,7 @@
       "batch_size": 1,
       "multiplier_list": "",
       "frames": [
-        "398:374",
+        "418:200",
         0
       ],
       "rife_trt_model": [
@@ -920,7 +920,7 @@
       "resize_width": 2048,
       "resize_height": 2048,
       "images": [
-        "418:177",
+        "398:374",
         0
       ],
       "upscaler_trt_model": [
