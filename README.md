@@ -10,7 +10,7 @@
 
 A desktop app for orchestrating ComfyUI workflows on **Runpod Serverless** endpoints — wildcard prompts, QwenVL prompt enhancer, job queue and output gallery. Backend bundled: nothing else to install.
 
-Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio)
+Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio) · [runpod-ltx-25](https://github.com/huchukato/runpod-ltx-25) (LTX 2.5 video+audio: I2VA/T2VA, FL2VA, pose loops)
 
 ## 📥 Download (desktop app)
 
@@ -55,7 +55,9 @@ Prerequisites: only **Node.js** (for the frontend build) — everything else is 
 
 Jobs always run on a RunPod serverless endpoint: `/run` → `/status` poll → base64 output saved to `data/storage` and served from `/outputs/`. Set your API key + endpoint in Settings (or `.env`) — "Detect from account" lists your endpoints automatically.
 
-Wildcard expansion (`__pmp/…__`) and runtime selects happen backend-side — the `wildcards/` directory is bundled; override with `FORGEHUB_WILDCARD_DIRS` (colon-separated).
+Wildcard expansion (`__pmp/…__`, `__mmh3/…__`, `__ltx/…__`) and runtime selects happen backend-side — the `wildcards/` directory is bundled; override with `FORGEHUB_WILDCARD_DIRS` (colon-separated).
+
+The jobs bar shows the elapsed time plus an estimated cost (`~$X.XXX`) computed from the endpoint's GPU hourly rate.
 
 ## 🔧 Environment variables
 
