@@ -35,13 +35,14 @@ export default function App() {
   const [values, setValues] = useState<Record<string, unknown>>({});
   const [imageSlots, setImageSlots] = useState<Record<string, string[]>>({});
 
-  const [jobs, setJobs] = useState<Record<string, { state: string; startedAt: number }>>({});
+  const [jobs, setJobs] = useState<Record<string, { state: string; startedAt: number; cost?: number | null }>>({});
   const pollers = useRef<Record<string, number>>({});
   const [now, setNow] = useState(Date.now());
 
   const [outputs, setOutputs] = useState<OutputFile[]>([]);
   const [jobTexts, setJobTexts] = useState<Record<string, string>>({});
   const [previewKey, setPreviewKey] = useState<string | null>(null);
+  const [heroDims, setHeroDims] = useState<{ w: number; h: number } | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -49,6 +50,11 @@ export default function App() {
   const [update, setUpdate] = useState<UpdateInfo | null>(null);
 
   const workflow = workflows.find((w) => w.id === selectedId) || null;
+
+  // Hero preview dimensions — reset when the shown output changes so a stale
+  // size never flashes on the next image/video.
+  const heroKey = previewKey ?? (outputs[0] ? `${outputs[0].subfolder}/${outputs[0].filename}` : "");
+  useEffect(() => setHeroDims(null), [heroKey]);
 
   const bridge = (window as { forgehub?: ForgehubBridge }).forgehub;
   useEffect(() => {
@@ -164,7 +170,7 @@ export default function App() {
         const st = await client.getExecutionStatus(jobId);
         if (st.status === "running") {
           setJobs((prev) =>
-            prev[jobId] ? { ...prev, [jobId]: { ...prev[jobId], state: st.remote_status ?? "RUNNING" } } : prev,
+            prev[jobId] ? { ...prev, [jobId]: { ...prev[jobId], state: st.remote_status ?? "RUNNING", cost: st.cost_usd ?? prev[jobId].cost } } : prev,
           );
           return;
         }
@@ -331,6 +337,7 @@ const execute = async () => {
               <span className="flex items-center gap-2">
                 <span className="tabular-nums">
                   {fmtElapsed(Math.max(...Object.values(jobs).map((j) => Math.floor((now - j.startedAt) / 1000))))}
+                  {(() => { const c = Math.max(...Object.values(jobs).map((j) => j.cost ?? 0)); return c > 0 ? ` · ~$${c.toFixed(3)}` : ""; })()}
                 </span>
                 <button
                   onClick={stopJobs}
@@ -385,7 +392,7 @@ const execute = async () => {
                       return (
                         <div className="overflow-hidden rounded-lg border border-border bg-bg">
                           {heroVideo ? (
-                            <video src={hero.url} controls className="max-h-[68vh] w-full object-contain" />
+                            <video src={hero.url} controls onLoadedMetadata={(e) => setHeroDims({ w: e.currentTarget.videoWidth, h: e.currentTarget.videoHeight })} className="max-h-[68vh] w-full object-contain" />
                           ) : heroAudio ? (
                             <span className="flex h-40 w-full flex-col items-center justify-center gap-2 text-muted">
                               <Music size={22} />
@@ -393,11 +400,14 @@ const execute = async () => {
                             </span>
                           ) : (
                             <button onClick={() => setHeroLightbox(hero)} title={hero.filename} className="block w-full cursor-zoom-in">
-                              <img src={hero.url} alt={hero.filename} className="max-h-[68vh] w-full object-contain" />
+                              <img src={hero.url} alt={hero.filename} onLoad={(e) => setHeroDims({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })} className="max-h-[68vh] w-full object-contain" />
                             </button>
                           )}
                           <div className="flex items-center gap-2 border-t border-border/60 bg-panel/60 px-2.5 py-1.5">
                             <span className="min-w-0 flex-1 truncate font-mono text-[10px] text-muted">{hero.filename}</span>
+                            {heroDims && (
+                              <span className="shrink-0 rounded border border-border bg-bg-elev px-1 py-0.5 font-mono text-[10px] tabular-nums text-muted">{heroDims.w}×{heroDims.h}</span>
+                            )}
                             <a
                               href={hero.url}
                               download={hero.filename}
@@ -495,6 +505,8 @@ const execute = async () => {
         onNavigate={setHeroLightbox}
         canReference={!!imageParam}
         onUseAsInput={useAsInput}
+        onDelete={(o) => client.deleteOutput(o)}
+        onChanged={() => client.listOutputs().then(setOutputs).catch(() => {})}
       />
 
       <ChatDrawer

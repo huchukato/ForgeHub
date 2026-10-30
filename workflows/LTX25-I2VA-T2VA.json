@@ -33,7 +33,7 @@
   },
   "408": {
     "inputs": {
-      "text": "The camera remains locked-off, completely static throughout the entire clip. A woman with dark curly hair and a delicate necklace lies on her back on a bed, her eyes closed in pleasure. She is actively engaged in oral sex, her head tilted back as she performs the act with focused intensity. Her hands are positioned to support the partner above her, her fingers gently gripping the fabric of his shorts. The lighting is soft and warm, highlighting the contours of her face and the intimate nature of the moment. The background is softly blurred, keeping the focus on her and the action. As the scene progresses, her movements become slightly more animated, her expression shifting between pleasure and concentration. The air is thick with the sounds of their breathing, the occasional wet sound of skin contact, and the soft rustle of fabric as she adjusts her position. No dialogue is present, only the natural, unfiltered sounds of their interaction.",
+      "text": "",
       "anything": [
         "398:423",
         0
@@ -810,7 +810,7 @@
   "398:416": {
     "inputs": {
       "lora_name": "LTX_10Eros-v15_LoRA_fro99-avgrank103.safetensors",
-      "strength_model": 1.87,
+      "strength_model": 0.7,
       "model": [
         "398:384",
         0
@@ -934,6 +934,70 @@
       "cnr_id": "Auto-TensorRT-Upscaler",
       "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
       "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687"
+    }
+  },
+  "500": {
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Prompt concat"
+    },
+    "inputs": {
+      "string_a": "",
+      "string_b": [
+        "398:423",
+        0
+      ],
+      "delimiter": "\n\n"
+    }
+  },
+  "600": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Prompt (expanded + QwenVL)"
+    },
+    "inputs": {
+      "source": [
+        "500",
+        0
+      ],
+      "text": ""
+    }
+  },
+  "501": {
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Expanded prompt"
+    },
+    "inputs": {
+      "string_a": "",
+      "string_b": "",
+      "delimiter": ""
+    }
+  },
+  "601": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Wildcard expanded"
+    },
+    "inputs": {
+      "source": [
+        "501",
+        0
+      ],
+      "text": ""
+    }
+  },
+  "602": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Final prompt (QwenVL)"
+    },
+    "inputs": {
+      "source": [
+        "398:423",
+        0
+      ],
+      "text": ""
     }
   }
 }

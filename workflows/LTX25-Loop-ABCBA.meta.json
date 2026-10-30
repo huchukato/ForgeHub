@@ -17,7 +17,29 @@
    "label": "Prompt",
    "type": "text",
    "target": "job",
-   "wildcard_prefix": "mmh3/"
+   "wildcard_prefix": "ltx/"
+  },
+  {
+   "key": "style",
+   "label": "Video style",
+   "type": "select",
+   "target": "job",
+   "default": "None",
+   "options": [
+    "None",
+    "[MATCH IMG] - __ltx/style/matchimg__",
+    "[CINEMATIC] - __ltx/style/cinematic__",
+    "[LIVEACTION] - __ltx/style/liveaction__",
+    "[ANIME2D] - __ltx/style/anime2d__",
+    "[CG3D] - __ltx/style/cg3d__",
+    "[CLAYMATION] - __ltx/style/claymation__",
+    "[WATERCOLOR] - __ltx/style/watercolor__",
+    "[VINTAGE] - __ltx/style/vintage__",
+    "[PAPERCRAFT] - __ltx/style/papercraft__",
+    "[COLLAGE] - __ltx/style/collage__",
+    "[HANDDRAWN] - __ltx/style/handdrawn__",
+    "[RANDOM] - __ltx/style__"
+   ]
   },
   {
    "key": "images",
@@ -50,9 +72,7 @@
     "736x1312 (9:16)",
     "960x960 (1:1)",
     "1152x768 (3:2)",
-    "768x1152 (2:3)",
-    "1152x864 (4:3)",
-    "864x1152 (3:4)"
+    "768x1152 (2:3)"
    ]
   },
   {

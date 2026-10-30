@@ -33,7 +33,7 @@
   },
   "207": {
     "inputs": {
-      "text": "A close-up, static shot captures an intimate moment between two women in a dimly lit room bathed in soft pink and purple ambient light. The woman on top, with blonde hair and a gold earring, is nude except for black-and-white cow-print latex gloves that cover her arms and hands. She leans forward, her chest pressed against the other woman’s face, her gloved hand resting gently on the other’s shoulder. The woman below, with dark hair and wearing a black bikini top, lies back with her eyes closed, her hand clutching the top of the other woman’s arm. Over the five seconds, the blonde woman slowly lowers her head, her lips brushing against the dark-haired woman’s cheek in a tender, lingering kiss. Her gloved fingers shift slightly, tracing the curve of the other’s shoulder with deliberate, sensual motion. The dark-haired woman remains still, her expression relaxed and content, her breathing slow and steady. The camera holds perfectly still, maintaining the tight framing that emphasizes the closeness of their bodies and the intimacy of the moment. Soft ambient sounds fill the scene: the gentle rustle of skin against skin, the faint creak of the surface beneath them, and the soft, rhythmic sound of their synchronized breathing. No dialogue is spoken, only the quiet intimacy of their presence and the subtle, continuous movement of touch and closeness.",
+      "text": "",
       "anything": [
         "129:232",
         0
@@ -855,6 +855,70 @@
       "cnr_id": "Auto-TensorRT-Upscaler",
       "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
       "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687"
+    }
+  },
+  "500": {
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Prompt concat"
+    },
+    "inputs": {
+      "string_a": "",
+      "string_b": [
+        "129:232",
+        0
+      ],
+      "delimiter": "\n\n"
+    }
+  },
+  "600": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Prompt (expanded + QwenVL)"
+    },
+    "inputs": {
+      "source": [
+        "500",
+        0
+      ],
+      "text": ""
+    }
+  },
+  "501": {
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Expanded prompt"
+    },
+    "inputs": {
+      "string_a": "",
+      "string_b": "",
+      "delimiter": ""
+    }
+  },
+  "601": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Wildcard expanded"
+    },
+    "inputs": {
+      "source": [
+        "501",
+        0
+      ],
+      "text": ""
+    }
+  },
+  "602": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Final prompt (QwenVL)"
+    },
+    "inputs": {
+      "source": [
+        "129:232",
+        0
+      ],
+      "text": ""
     }
   }
 }

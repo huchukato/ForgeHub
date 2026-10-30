@@ -91,3 +91,4 @@ class ExecutionStatus(BaseModel):
     error: str | None = None
     remote_status: str | None = None
     elapsed_ms: int | None = None
+    cost_usd: float | None = None

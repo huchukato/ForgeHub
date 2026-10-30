@@ -1,5 +1,15 @@
 """Workflow execution against a RunPod serverless endpoint (/run + /status)."""
 
+# Serverless $/hr by GPU display name (Runpod catalog, Oct 2026).
+# Only pools we actually deploy on — extend as needed.
+GPU_HOURLY_USD = {
+    "NVIDIA RTX PRO 6000 Blackwell Server Edition": 3.49,
+    "NVIDIA RTX PRO 6000 Blackwell Workstation Edition": 3.49,
+    "NVIDIA RTX PRO 6000 Blackwell Max-Q Workstation Edition": 3.49,
+    "NVIDIA RTX 6000 Ada Generation": 1.14,
+    "NVIDIA L40": 1.14,
+}
+
 import asyncio
 import base64
 import copy
@@ -94,6 +104,8 @@ class RunPodServerlessBackend:
         self.client = client or RunPodClient()
         self._clients: dict[str, RunPodClient] = {}
         self._job_endpoints: dict[str, str] = {}
+        self._job_gpu_rate: dict[str, float] = {}
+        self._endpoint_rates: dict[str, float] = {}
         self._job_meta: dict[str, dict[str, Any]] = {}
 
     def _client_for(self, endpoint_id: str | None) -> RunPodClient:
@@ -134,7 +146,31 @@ class RunPodServerlessBackend:
             self._job_meta[job_id] = job_meta
         return job_id
 
+    async def _rate_for(self, endpoint_id: str | None) -> float | None:
+        """Serverless $/hr for the endpoint's GPU — cached per endpoint."""
+        if not endpoint_id:
+            return None
+        if endpoint_id in self._endpoint_rates:
+            return self._endpoint_rates[endpoint_id]
+        try:
+            from forgehub_backend.runpod_client import list_endpoints
+            for ep in await list_endpoints():
+                gpus = ep.get("gpus") or []
+                self._endpoint_rates[ep["id"]] = next(
+                    (GPU_HOURLY_USD[g] for g in gpus if g in GPU_HOURLY_USD), 0.0) or None
+        except Exception:
+            self._endpoint_rates[endpoint_id] = None
+        return self._endpoint_rates.get(endpoint_id)
+
+    def _cost(self, job_id: str, elapsed_ms: int) -> float | None:
+        rate = self._job_gpu_rate.get(job_id)
+        return round(elapsed_ms / 3_600_000 * rate, 4) if rate else None
+
     async def status(self, job_id: str) -> ExecutionStatus:
+        if job_id not in self._job_gpu_rate:
+            rate = await self._rate_for(self._job_endpoints.get(job_id))
+            if rate:
+                self._job_gpu_rate[job_id] = rate
         result = await self._client_for(self._job_endpoints.get(job_id)).status(job_id)
         state = result.get("status", "")
         if state in ("IN_QUEUE", "IN_PROGRESS"):
@@ -144,6 +180,7 @@ class RunPodServerlessBackend:
                 status="running",
                 remote_status=state,
                 elapsed_ms=elapsed,
+                cost_usd=self._cost(job_id, elapsed),
             )
         if state == "CANCELLED":
             return ExecutionStatus(prompt_id=job_id, status="cancelled")
@@ -201,7 +238,10 @@ class RunPodServerlessBackend:
             if isinstance(expanded, str) and expanded.strip():
                 texts.setdefault("Expanded prompt", expanded)
                 break
-        return ExecutionStatus(prompt_id=job_id, status="success", outputs=outputs, texts=texts)
+        return ExecutionStatus(
+                prompt_id=job_id, status="success", outputs=outputs, texts=texts,
+                cost_usd=self._cost(
+                    job_id, int(result.get("delayTime") or 0) + int(result.get("executionTime") or 0)))
 
     async def cancel(self, job_id: str) -> None:
         await self._client_for(self._job_endpoints.get(job_id)).cancel(job_id)

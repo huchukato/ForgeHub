@@ -1,4 +1,4 @@
-import { Camera, ChevronLeft, ChevronRight, Download, ImageDown, SkipForward, X } from "lucide-react";
+import { Camera, ChevronLeft, ChevronRight, Download, ImageDown, SkipForward, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { OutputFile } from "../api";
@@ -11,6 +11,8 @@ interface Props {
   onNavigate: (o: OutputFile) => void;
   canReference?: boolean;
   onUseAsInput?: (file: File) => Promise<void>;
+  onDelete?: (o: OutputFile) => Promise<void>;
+  onChanged?: () => void;
 }
 
 function isVideo(name: string) {
@@ -54,10 +56,14 @@ function nextPresentedFrame(v: HTMLVideoElement): Promise<void> {
   return Promise.race([wait, new Promise<void>((r) => setTimeout(r, 250))]).then(() => {});
 }
 
-export default function OutputLightbox({ output, outputs, onClose, onNavigate, canReference, onUseAsInput }: Props) {
+export default function OutputLightbox({ output, outputs, onClose, onNavigate, canReference, onUseAsInput, onDelete, onChanged }: Props) {
   const t = useT();
   const [capturing, setCapturing] = useState<"current" | "last" | null>(null);
+  const [deleting, setDeleting] = useState(false);
+  const [dims, setDims] = useState<{ w: number; h: number } | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => setDims(null), [output]);
 
   const lbIdx = output ? outputs.findIndex((o) => keyOf(o) === keyOf(output)) : -1;
 
@@ -86,6 +92,26 @@ export default function OutputLightbox({ output, outputs, onClose, onNavigate, c
       await onUseAsInput?.(new File([blob], o.filename, { type: blob.type }));
     } catch {
       /* parent surfaces errors */
+    }
+  }
+
+  async function remove() {
+    if (!output || !onDelete) return;
+    if (!window.confirm(`Delete ${output.filename}?`)) return;
+    setDeleting(true);
+    try {
+      await onDelete(output);
+      // Land on a neighbour so a cleanup pass doesn't reopen the viewer each time
+      if (outputs.length > 1 && lbIdx >= 0) {
+        onNavigate(outputs[(lbIdx + 1) % outputs.length]);
+      } else {
+        onClose();
+      }
+      onChanged?.();
+    } catch {
+      /* parent surfaces errors */
+    } finally {
+      setDeleting(false);
     }
   }
 
@@ -151,15 +177,18 @@ export default function OutputLightbox({ output, outputs, onClose, onNavigate, c
       )}
       <div onClick={(e) => e.stopPropagation()} className="max-h-full max-w-4xl">
         {isVideo(output.filename) ? (
-          <video ref={videoRef} src={output.url} controls autoPlay className="max-h-[80vh] rounded-xl ring-1 ring-border-strong shadow-[var(--shadow-pop)]" />
+          <video ref={videoRef} src={output.url} controls autoPlay onLoadedMetadata={(e) => setDims({ w: e.currentTarget.videoWidth, h: e.currentTarget.videoHeight })} className="max-h-[80vh] rounded-xl ring-1 ring-border-strong shadow-[var(--shadow-pop)]" />
         ) : (
-          <img src={output.url} alt={output.filename} className="max-h-[80vh] rounded-xl ring-1 ring-border-strong shadow-[var(--shadow-pop)]" />
+          <img src={output.url} alt={output.filename} onLoad={(e) => setDims({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })} className="max-h-[80vh] rounded-xl ring-1 ring-border-strong shadow-[var(--shadow-pop)]" />
         )}
         <div className="mx-auto mt-3 flex w-fit max-w-full flex-wrap items-center justify-center gap-2 rounded-xl border border-border bg-panel/90 px-3 py-2 text-[12px] text-muted shadow-[var(--shadow-pop)] backdrop-blur-md">
           {lbIdx >= 0 && outputs.length > 1 && (
             <span className="rounded-md border border-border bg-bg-elev px-1.5 py-0.5 text-[10px] tabular-nums text-faint">{lbIdx + 1}/{outputs.length}</span>
           )}
           <span className="max-w-64 truncate font-mono text-[11px]">{output.filename}</span>
+          {dims && (
+            <span className="rounded-md border border-border bg-bg-elev px-1.5 py-0.5 font-mono text-[10px] tabular-nums text-muted">{dims.w}×{dims.h}</span>
+          )}
           {canReference && isVideo(output.filename) && (
             <>
               <button
@@ -197,6 +226,16 @@ export default function OutputLightbox({ output, outputs, onClose, onNavigate, c
             <Download size={15} />
             Download
           </a>
+          {onDelete && (
+            <button
+              onClick={remove}
+              disabled={deleting}
+              className="flex items-center gap-2 rounded-lg border border-danger/40 bg-danger/15 px-3 py-2 font-medium text-danger transition-colors hover:bg-danger/25 disabled:opacity-40"
+            >
+              <Trash2 size={15} />
+              {t.delete}
+            </button>
+          )}
         </div>
       </div>
     </div>,

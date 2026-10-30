@@ -396,7 +396,16 @@ def _expand_wildcards(parameters: dict[str, Any]) -> dict[str, Any]:
             return WildcardLoader.process(value, seed=int(time.time() * 1000) % (2**63))
         return value
 
-    return {key: _expand(value) for key, value in parameters.items()}
+    expanded = {key: _expand(value) for key, value in parameters.items()}
+    # LTX style select rides as its own param but the worker's handler predates
+    # _job_style_text — fold it into the prompt here. Scoped by the __ltx/
+    # marker so mmh3's handler-side style path is untouched.
+    if "__ltx/" in str(parameters.get("style") or ""):
+        stxt = re.sub(r"^\[[^\]]*\]\s*-\s*", "", str(expanded.get("style") or "")).strip()
+        expanded.pop("style", None)
+        if stxt:
+            expanded["prompt"] = (stxt + "\n" + str(expanded.get("prompt") or "")).strip()
+    return expanded
 
 
 @app.get("/wildcards")

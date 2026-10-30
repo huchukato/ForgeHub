@@ -276,6 +276,8 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
         onNavigate={setLightbox}
         canReference={canReference}
         onUseAsInput={onUseAsInput}
+        onDelete={onDelete}
+        onChanged={onChanged}
       />
     </div>
   );

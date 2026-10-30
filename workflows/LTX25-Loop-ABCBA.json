@@ -17,6 +17,10 @@
       "images": [
         "219:177",
         0
+      ],
+      "audio": [
+        "129:107",
+        0
       ]
     },
     "class_type": "VHS_VideoCombine",
@@ -29,7 +33,7 @@
   },
   "207": {
     "inputs": {
-      "text": "In a dimly lit, purple-hued loft with exposed brick and scattered cups, a blonde woman in a high ponytail, black thigh-highs, and a glowing garter belt leans forward over a gray couch, her chest exposed, nipples pierced, mouth slightly open in anticipation. Behind her, a partner in a black long-sleeve top and sheer tights thrusts steadily from behind, hands gripping her hips firmly, pulling her back onto him with each rhythmic motion. The camera holds a tight, locked mid-shot from a slightly elevated angle, capturing the full arc of their bodies and the tension in every muscle. She rocks her hips in response, arching her back, fingers digging into the couch cushion, breath hitching in her throat. Her expression shifts from focused pleasure to overwhelmed ecstasy as the pace quickens, her head tilting further, eyes fluttering shut, lips parting into a soft gasp. The partner’s thrusts grow deeper and faster, his grip tightening, his body pressing closer, sweat glistening on their skin under the neon glow. As the climax approaches, she throws her head back, mouth wide open in a sharp cry, her entire frame trembling with intensity. He drives forward with one final, powerful thrust, burying himself deep, and releases inside her, his body shuddering against hers as the motion slows. The scene settles back into the initial rhythm, her chest rising and falling, his hands still resting on her hips, the purple light casting the same shadows as the start, ready to loop seamlessly into the next cycle of motion.",
+      "text": "",
       "anything": [
         "129:232",
         0
@@ -1106,6 +1110,70 @@
       "cnr_id": "Auto-TensorRT-Upscaler",
       "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
       "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687"
+    }
+  },
+  "500": {
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Prompt concat"
+    },
+    "inputs": {
+      "string_a": "",
+      "string_b": [
+        "129:232",
+        0
+      ],
+      "delimiter": "\n\n"
+    }
+  },
+  "600": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Prompt (expanded + QwenVL)"
+    },
+    "inputs": {
+      "source": [
+        "500",
+        0
+      ],
+      "text": ""
+    }
+  },
+  "501": {
+    "class_type": "StringConcatenate",
+    "_meta": {
+      "title": "Expanded prompt"
+    },
+    "inputs": {
+      "string_a": "",
+      "string_b": "",
+      "delimiter": ""
+    }
+  },
+  "601": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Wildcard expanded"
+    },
+    "inputs": {
+      "source": [
+        "501",
+        0
+      ],
+      "text": ""
+    }
+  },
+  "602": {
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Final prompt (QwenVL)"
+    },
+    "inputs": {
+      "source": [
+        "129:232",
+        0
+      ],
+      "text": ""
     }
   }
 }

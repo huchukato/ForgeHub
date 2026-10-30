@@ -119,6 +119,7 @@ export interface ExecutionStatus {
   error?: string;
   remote_status?: string;
   elapsed_ms?: number;
+  cost_usd?: number | null;
 }
 
 export class ForgeHubClient {
