@@ -3,6 +3,24 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.19] — 2026-10-30
+
+### Added
+- **LTX 2.5 workflow family deployed on RunPod serverless** — I2VA/T2VA (single QwenVL_Unified enhancer: image optional → I2V, absent → T2V text-only), FL2VA first/last-frame, and Loop-ABCBA pose loop (3 poses mirror to 5 keyframe slots, or 5 full choreography), on a dedicated endpoint with the shared network volume.
+- **Video style select on LTX workflows** — new `ltx/` wildcard namespace (style, camera, vfx, music, nsfw) with plain descriptive prose; the select folds into the prompt server-side before submission.
+- **Estimated job cost in the jobs bar** — elapsed time now shows `~$X.XXX` next to it, computed from the endpoint's GPU hourly rate; visible both during generation and at completion.
+- **Latent upscaler selector** — spatial vs temporal model for the stage-2 refine on LTX 2-stage workflows.
+- **Dual prompt trace on LTX graphs** — PixaromaShowText pair exposing the wildcard-expanded prompt and the final QwenVL prompt in the execution trace.
+
+### Changed
+- **LTX aspect ratios trimmed to the 5 official ones** (16:9, 9:16, 1:1, 3:2, 2:3) matching the LTX-2.5 spec, replacing the earlier 7-ratio set.
+
+### Fixed
+- **Loop-ABCBA VHS audio input rewired** to the audio VAE decode — outputs now carry the generated soundtrack instead of silent video.
+- **LTX post-processing chain order** (decoder → upscale → rife → save) — the I2VA-T2VA graph had rife/upscale swapped, which made the `upscale=false` toggle produce a dependency cycle.
+- **Gemma-4 12B text encoder download** — `hf download` failed on URL-encoded paths (`%20` double-encoded to `%2520`), so the model never landed on the volume and validation rejected the job.
+- **10Eros LoRA strength back to 0.7** on I2VA-T2VA (a leftover 1.87 experiment; the model's sweet spot is 0.35–1.0).
+
 ## [0.1.17] — 2026-10-16
 
 ### Fixed
