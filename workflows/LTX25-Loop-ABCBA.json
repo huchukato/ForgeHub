@@ -1,0 +1,1111 @@
+{
+  "198": {
+    "inputs": {
+      "frame_rate": 50,
+      "loop_count": 0,
+      "filename_prefix": [
+        "231",
+        4
+      ],
+      "format": "video/webm",
+      "pix_fmt": "yuv420p",
+      "crf": 20,
+      "save_metadata": true,
+      "trim_to_audio": false,
+      "pingpong": false,
+      "save_output": true,
+      "images": [
+        "219:177",
+        0
+      ]
+    },
+    "class_type": "VHS_VideoCombine",
+    "_meta": {
+      "title": "50FPS",
+      "cnr_id": "comfyui-videohelpersuite",
+      "aux_id": "Kosinkadink/ComfyUI-VideoHelperSuite",
+      "ver": "4ee72c065db22c9d96c2427954dc69e7b908444b"
+    }
+  },
+  "207": {
+    "inputs": {
+      "text": "In a dimly lit, purple-hued loft with exposed brick and scattered cups, a blonde woman in a high ponytail, black thigh-highs, and a glowing garter belt leans forward over a gray couch, her chest exposed, nipples pierced, mouth slightly open in anticipation. Behind her, a partner in a black long-sleeve top and sheer tights thrusts steadily from behind, hands gripping her hips firmly, pulling her back onto him with each rhythmic motion. The camera holds a tight, locked mid-shot from a slightly elevated angle, capturing the full arc of their bodies and the tension in every muscle. She rocks her hips in response, arching her back, fingers digging into the couch cushion, breath hitching in her throat. Her expression shifts from focused pleasure to overwhelmed ecstasy as the pace quickens, her head tilting further, eyes fluttering shut, lips parting into a soft gasp. The partner’s thrusts grow deeper and faster, his grip tightening, his body pressing closer, sweat glistening on their skin under the neon glow. As the climax approaches, she throws her head back, mouth wide open in a sharp cry, her entire frame trembling with intensity. He drives forward with one final, powerful thrust, burying himself deep, and releases inside her, his body shuddering against hers as the motion slows. The scene settles back into the initial rhythm, her chest rising and falling, his hands still resting on her hips, the purple light casting the same shadows as the start, ready to loop seamlessly into the next cycle of motion.",
+      "anything": [
+        "129:232",
+        0
+      ]
+    },
+    "class_type": "easy showAnything",
+    "_meta": {
+      "title": "QWEN AUTOPROMPT",
+      "cnr_id": "comfyui-easy-use",
+      "aux_id": "yolain/ComfyUI-Easy-Use",
+      "ver": "595e0738a9e3f8d0d9c4d875461b2d2c9e7559c7"
+    }
+  },
+  "220": {
+    "inputs": {
+      "model": "LTX",
+      "aspect_ratio": "16:9",
+      "resolution": "Native — 1312×736",
+      "divisible_by": 32,
+      "upscale": false,
+      "upscale_method": "lanczos",
+      "small_image_mode": "none",
+      "pad_color": "#000000",
+      "use_image_aspect": true
+    },
+    "class_type": "ComfyUI-PerfectVideoResolution",
+    "_meta": {
+      "title": "Perfect Video Resolution",
+      "cnr_id": "ComfyUI-PerfectVideoResolution",
+      "aux_id": "huchukato/ComfyUI-PerfectVideoResolution",
+      "ver": "ba74ae0362d318da2ab1bad5a5bab46b6a2cf5e4"
+    }
+  },
+  "227": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "bcd259fa9f7b89fc4776baed1579e8c4788d56d7"
+    }
+  },
+  "228": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "bcd259fa9f7b89fc4776baed1579e8c4788d56d7"
+    }
+  },
+  "229": {
+    "inputs": {
+      "image": "S02_EP13_Lucia_Update_Novaksus_283_anim_01_01_draft.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"S02_EP13_Lucia_Update_Novaksus_283_anim_01_01_draft.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "First Frame",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
+    }
+  },
+  "230": {
+    "inputs": {
+      "image": "S02_EP13_Lucia_Update_Novaksus_283_anim_01_01_draft.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"S02_EP13_Lucia_Update_Novaksus_283_anim_01_01_draft.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "Last Frame",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
+    }
+  },
+  "231": {
+    "inputs": {
+      "image_info": [
+        "229",
+        1
+      ]
+    },
+    "class_type": "PixaromaImageInfo",
+    "_meta": {
+      "title": "Image Info Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
+    }
+  },
+  "233": {
+    "inputs": {},
+    "class_type": "PixaromaGroupSwitch",
+    "_meta": {
+      "title": "Group Switch Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
+    }
+  },
+  "300": {
+    "inputs": {
+      "image": "S02_EP13_Lucia_Update_Novaksus_283_anim_01_02_draft.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"S02_EP13_Lucia_Update_Novaksus_283_anim_01_02_draft.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "Mid 1 (B)",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
+    }
+  },
+  "301": {
+    "inputs": {
+      "image": "S02_EP13_Lucia_Update_Novaksus_283_anim_01_03_draft.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"S02_EP13_Lucia_Update_Novaksus_283_anim_01_03_draft.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "Peak (C)",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
+    }
+  },
+  "302": {
+    "inputs": {
+      "image": "S02_EP13_Lucia_Update_Novaksus_283_anim_01_02_draft.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"S02_EP13_Lucia_Update_Novaksus_283_anim_01_02_draft.jpg\"}"
+    },
+    "class_type": "PixaromaLoadImageMini",
+    "_meta": {
+      "title": "Mid 2 (B)",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
+    }
+  },
+  "129:99": {
+    "inputs": {
+      "img_compression": 25,
+      "image": [
+        "129:125",
+        0
+      ]
+    },
+    "class_type": "LTXVPreprocess",
+    "_meta": {
+      "title": "LTXV Preprocess",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:100": {
+    "inputs": {
+      "noise_seed": 894106562597889
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:101": {
+    "inputs": {
+      "frames_number": [
+        "129:130",
+        1
+      ],
+      "frame_rate": [
+        "129:114",
+        0
+      ],
+      "batch_size": 1,
+      "audio_vae": [
+        "129:211",
+        0
+      ]
+    },
+    "class_type": "LTXVEmptyLatentAudio",
+    "_meta": {
+      "title": "Audio latent LTXV vuoto",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.68"
+    }
+  },
+  "129:102": {
+    "inputs": {
+      "value": 5
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Duration",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:104": {
+    "inputs": {
+      "img_compression": 25,
+      "image": [
+        "129:124",
+        0
+      ]
+    },
+    "class_type": "LTXVPreprocess",
+    "_meta": {
+      "title": "LTXV Preprocess",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:106": {
+    "inputs": {
+      "positive": [
+        "129:111",
+        0
+      ],
+      "negative": [
+        "129:111",
+        1
+      ],
+      "latent": [
+        "129:121",
+        0
+      ]
+    },
+    "class_type": "LTXVCropGuides",
+    "_meta": {
+      "title": "LTXVCropGuides",
+      "cnr_id": "comfy-core",
+      "ver": "0.8.2"
+    }
+  },
+  "129:108": {
+    "inputs": {
+      "width": [
+        "129:110",
+        0
+      ],
+      "height": [
+        "129:110",
+        1
+      ],
+      "length": [
+        "129:130",
+        1
+      ],
+      "batch_size": 1
+    },
+    "class_type": "EmptyLTXVLatentVideo",
+    "_meta": {
+      "title": "Video latent LTXV vuoto",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.60"
+    }
+  },
+  "129:109": {
+    "inputs": {
+      "frame_rate": [
+        "129:123",
+        0
+      ],
+      "positive": [
+        "129:128",
+        0
+      ],
+      "negative": [
+        "129:112",
+        0
+      ]
+    },
+    "class_type": "LTXVConditioning",
+    "_meta": {
+      "title": "LTXVConditioning",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.56"
+    }
+  },
+  "129:110": {
+    "inputs": {
+      "image": [
+        "129:124",
+        0
+      ]
+    },
+    "class_type": "GetImageSize",
+    "_meta": {
+      "title": "Ottieni Dimensione Immagine",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:111": {
+    "inputs": {
+      "frame_idx": -1,
+      "strength": 0.7,
+      "positive": [
+        "129:248",
+        0
+      ],
+      "negative": [
+        "129:248",
+        1
+      ],
+      "vae": [
+        "129:210",
+        0
+      ],
+      "latent": [
+        "129:248",
+        2
+      ],
+      "image": [
+        "129:99",
+        0
+      ]
+    },
+    "class_type": "LTXVAddGuide",
+    "_meta": {
+      "title": "Guide A — Last @ -1",
+      "cnr_id": "comfy-core",
+      "ver": "0.12.3"
+    }
+  },
+  "129:114": {
+    "inputs": {
+      "value": 25
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Frame Rate(int)",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:115": {
+    "inputs": {
+      "frame_idx": 0,
+      "strength": 0.7,
+      "positive": [
+        "129:109",
+        0
+      ],
+      "negative": [
+        "129:109",
+        1
+      ],
+      "vae": [
+        "129:210",
+        0
+      ],
+      "latent": [
+        "129:108",
+        0
+      ],
+      "image": [
+        "129:104",
+        0
+      ]
+    },
+    "class_type": "LTXVAddGuide",
+    "_meta": {
+      "title": "Guide A — First @ 0",
+      "cnr_id": "comfy-core",
+      "ver": "0.12.3"
+    }
+  },
+  "129:116": {
+    "inputs": {
+      "video_cfg": 1,
+      "audio_cfg": 1,
+      "model": [
+        "129:215",
+        0
+      ],
+      "positive": [
+        "129:111",
+        0
+      ],
+      "negative": [
+        "129:111",
+        1
+      ]
+    },
+    "class_type": "LTXVDualCFGGuider",
+    "_meta": {
+      "title": "LTXV Dual CFG Guider",
+      "cnr_id": "comfy-core",
+      "ver": "0.28.0"
+    }
+  },
+  "129:117": {
+    "inputs": {
+      "eta": 0,
+      "s_noise": 1
+    },
+    "class_type": "SamplerEulerAncestral",
+    "_meta": {
+      "title": "SamplerEulerAncestral",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:118": {
+    "inputs": {
+      "sigmas": "1., 0.99375, 0.9875, 0.98125, 0.975, 0.909375, 0.725, 0.421875, 0.0"
+    },
+    "class_type": "ManualSigmas",
+    "_meta": {
+      "title": "ManualSigmas",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:119": {
+    "inputs": {
+      "video_latent": [
+        "129:111",
+        2
+      ],
+      "audio_latent": [
+        "129:101",
+        0
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "Concatena AV Latent",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:120": {
+    "inputs": {
+      "noise": [
+        "129:100",
+        0
+      ],
+      "guider": [
+        "129:116",
+        0
+      ],
+      "sampler": [
+        "129:117",
+        0
+      ],
+      "sigmas": [
+        "129:118",
+        0
+      ],
+      "latent_image": [
+        "129:119",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:123": {
+    "inputs": {
+      "expression": "a",
+      "values.a": [
+        "129:114",
+        0
+      ]
+    },
+    "class_type": "ComfyMathExpression",
+    "_meta": {
+      "title": "Espressione Matematica",
+      "cnr_id": "comfy-core",
+      "ver": "0.17.0"
+    }
+  },
+  "129:124": {
+    "inputs": {
+      "resize_type": "scale dimensions",
+      "resize_type.width": [
+        "129:113",
+        0
+      ],
+      "resize_type.height": [
+        "129:98",
+        0
+      ],
+      "resize_type.crop": "center",
+      "scale_method": "nearest-exact",
+      "input": [
+        "229",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Ridimensiona Immagine/Maschera",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:125": {
+    "inputs": {
+      "resize_type": "scale dimensions",
+      "resize_type.width": [
+        "129:113",
+        0
+      ],
+      "resize_type.height": [
+        "129:98",
+        0
+      ],
+      "resize_type.crop": "center",
+      "scale_method": "nearest-exact",
+      "input": [
+        "230",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Ridimensiona Immagine/Maschera",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:113": {
+    "inputs": {
+      "value": [
+        "220",
+        0
+      ]
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "Width",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:98": {
+    "inputs": {
+      "value": [
+        "220",
+        1
+      ]
+    },
+    "class_type": "PrimitiveInt",
+    "_meta": {
+      "title": "height",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:112": {
+    "inputs": {
+      "text": "blurry, out of focus, overexposed, underexposed, low contrast, washed out colors, excessive noise, grainy texture, poor lighting, flickering, motion blur, distorted proportions, unnatural skin tones, deformed facial features, asymmetrical face, missing facial features, extra limbs, disfigured hands, wrong hand count, artifacts around text, unreadable text on shirt or hat, incorrect lettering on cap (“PNTR”), incorrect t-shirt slogan (“JUST DO IT”), missing microphone, misplaced microphone, inconsistent perspective, camera shake, incorrect depth of field, background too sharp, background clutter, distracting reflections, harsh shadows, inconsistent lighting direction, color banding, cartoonish rendering, 3D CGI look, unrealistic materials, uncanny valley effect, incorrect ethnicity, wrong gender, exaggerated expressions, smiling, laughing, exaggerated sadness, wrong gaze direction, eyes looking at camera, mismatched lip sync, silent or muted audio, distorted voice, robotic voice, echo, background noise, off-sync audio, missing sniff sounds, incorrect dialogue, added dialogue, repetitive speech, jittery movement, awkward pauses, incorrect timing, unnatural transitions, inconsistent framing, tilted camera, missing door or shelves, missing shallow depth of field, flat lighting, inconsistent tone, cinematic oversaturation, stylized filters, or AI artifacts.",
+      "clip": [
+        "129:214",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.56"
+    }
+  },
+  "129:122": {
+    "inputs": {
+      "fps": [
+        "129:123",
+        0
+      ],
+      "bit_depth": 8,
+      "color_space": "sRGB",
+      "codec": "none",
+      "images": [
+        "129:105",
+        0
+      ],
+      "audio": [
+        "129:107",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Crea Video",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:121": {
+    "inputs": {
+      "av_latent": [
+        "129:120",
+        1
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "Separa AV Latente",
+      "cnr_id": "comfy-core",
+      "ver": "0.5.1"
+    }
+  },
+  "129:130": {
+    "inputs": {
+      "expression": "a * b + 1",
+      "values.a": [
+        "129:102",
+        0
+      ],
+      "values.b": [
+        "129:114",
+        0
+      ]
+    },
+    "class_type": "ComfyMathExpression",
+    "_meta": {
+      "title": "Espressione Matematica",
+      "cnr_id": "comfy-core",
+      "ver": "0.18.1"
+    }
+  },
+  "129:105": {
+    "inputs": {
+      "tile_size": 768,
+      "overlap": 64,
+      "temporal_size": 4096,
+      "temporal_overlap": 64,
+      "samples": [
+        "129:106",
+        2
+      ],
+      "vae": [
+        "129:210",
+        0
+      ]
+    },
+    "class_type": "VAEDecodeTiled",
+    "_meta": {
+      "title": "Decodifica VAE (a blocchi)",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:107": {
+    "inputs": {
+      "samples": [
+        "129:121",
+        1
+      ],
+      "audio_vae": [
+        "129:211",
+        0
+      ]
+    },
+    "class_type": "LTXVAudioVAEDecode",
+    "_meta": {
+      "title": "LTXV Audio VAE Decode",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:214": {
+    "inputs": {
+      "clip_name": "gemma4-12b-uncensored-heretic-ltx2.5-comfy-int8-convrot.safetensors",
+      "type": "ltxv",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Carica CLIP",
+      "cnr_id": "comfy-core",
+      "ver": "0.33.1"
+    }
+  },
+  "129:215": {
+    "inputs": {
+      "lora_name": "LTX_10Eros-v15_LoRA_fro99-avgrank103.safetensors",
+      "strength_model": 0.7,
+      "model": [
+        "129:209",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Carica LoRA",
+      "cnr_id": "comfy-core",
+      "ver": "0.18.1"
+    }
+  },
+  "129:210": {
+    "inputs": {
+      "vae_name": "ltx-2.5-video-vae-conv-bf16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load Video VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.33.1"
+    }
+  },
+  "129:211": {
+    "inputs": {
+      "vae_name": "ltx-2.5-audio-vae-bf16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Load Audio VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.33.1"
+    }
+  },
+  "129:209": {
+    "inputs": {
+      "unet_name": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Carica modello di diffusione",
+      "cnr_id": "comfy-core",
+      "ver": "0.33.1"
+    }
+  },
+  "129:128": {
+    "inputs": {
+      "text": [
+        "129:232",
+        0
+      ],
+      "clip": [
+        "129:214",
+        0
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.56"
+    }
+  },
+  "129:232": {
+    "inputs": {
+      "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
+      "preset_prompt": "LTX › NSFW Loop",
+      "camera_tag": "None",
+      "prompt": "__mmh3/nsfw/loop/generic__, __pmp/act/dgy__,",
+      "max_tokens": 8192,
+      "keep_model_loaded": false,
+      "seed": 2389072428,
+      "keep_last_prompt": false,
+      "passthrough": false,
+      "frame_count": 16,
+      "duration": "5s",
+      "image": [
+        "229",
+        0
+      ],
+      "image2": [
+        "230",
+        0
+      ]
+    },
+    "class_type": "QwenVL_Unified",
+    "_meta": {
+      "title": "🧠 QwenVL Unified (HF / GGUF)",
+      "cnr_id": "ComfyUI-QwenVL-Mod",
+      "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+      "ver": "1ee8fa95cfe6742b62a563f414c67c6d685f2571"
+    }
+  },
+  "129:240": {
+    "inputs": {
+      "resize_type": "scale dimensions",
+      "resize_type.width": [
+        "129:113",
+        0
+      ],
+      "resize_type.height": [
+        "129:98",
+        0
+      ],
+      "resize_type.crop": "center",
+      "scale_method": "nearest-exact",
+      "input": [
+        "300",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Ridimensiona Immagine/Maschera",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:241": {
+    "inputs": {
+      "resize_type": "scale dimensions",
+      "resize_type.width": [
+        "129:113",
+        0
+      ],
+      "resize_type.height": [
+        "129:98",
+        0
+      ],
+      "resize_type.crop": "center",
+      "scale_method": "nearest-exact",
+      "input": [
+        "301",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Ridimensiona Immagine/Maschera",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:242": {
+    "inputs": {
+      "resize_type": "scale dimensions",
+      "resize_type.width": [
+        "129:113",
+        0
+      ],
+      "resize_type.height": [
+        "129:98",
+        0
+      ],
+      "resize_type.crop": "center",
+      "scale_method": "nearest-exact",
+      "input": [
+        "302",
+        0
+      ]
+    },
+    "class_type": "ResizeImageMaskNode",
+    "_meta": {
+      "title": "Ridimensiona Immagine/Maschera",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "129:243": {
+    "inputs": {
+      "img_compression": 25,
+      "image": [
+        "129:240",
+        0
+      ]
+    },
+    "class_type": "LTXVPreprocess",
+    "_meta": {
+      "title": "LTXV Preprocess",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:244": {
+    "inputs": {
+      "img_compression": 25,
+      "image": [
+        "129:241",
+        0
+      ]
+    },
+    "class_type": "LTXVPreprocess",
+    "_meta": {
+      "title": "LTXV Preprocess",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:245": {
+    "inputs": {
+      "img_compression": 25,
+      "image": [
+        "129:242",
+        0
+      ]
+    },
+    "class_type": "LTXVPreprocess",
+    "_meta": {
+      "title": "LTXV Preprocess",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "129:246": {
+    "inputs": {
+      "frame_idx": 32,
+      "strength": 0.5,
+      "positive": [
+        "129:115",
+        0
+      ],
+      "negative": [
+        "129:115",
+        1
+      ],
+      "vae": [
+        "129:210",
+        0
+      ],
+      "latent": [
+        "129:115",
+        2
+      ],
+      "image": [
+        "129:243",
+        0
+      ]
+    },
+    "class_type": "LTXVAddGuide",
+    "_meta": {
+      "title": "Guide B — Mid1 @ 32",
+      "cnr_id": "comfy-core",
+      "ver": "0.12.3"
+    }
+  },
+  "129:247": {
+    "inputs": {
+      "frame_idx": 64,
+      "strength": 0.6,
+      "positive": [
+        "129:246",
+        0
+      ],
+      "negative": [
+        "129:246",
+        1
+      ],
+      "vae": [
+        "129:210",
+        0
+      ],
+      "latent": [
+        "129:246",
+        2
+      ],
+      "image": [
+        "129:244",
+        0
+      ]
+    },
+    "class_type": "LTXVAddGuide",
+    "_meta": {
+      "title": "Guide C — Peak @ 64",
+      "cnr_id": "comfy-core",
+      "ver": "0.12.3"
+    }
+  },
+  "129:248": {
+    "inputs": {
+      "frame_idx": 96,
+      "strength": 0.5,
+      "positive": [
+        "129:247",
+        0
+      ],
+      "negative": [
+        "129:247",
+        1
+      ],
+      "vae": [
+        "129:210",
+        0
+      ],
+      "latent": [
+        "129:247",
+        2
+      ],
+      "image": [
+        "129:245",
+        0
+      ]
+    },
+    "class_type": "LTXVAddGuide",
+    "_meta": {
+      "title": "Guide B — Mid2 @ 96",
+      "cnr_id": "comfy-core",
+      "ver": "0.12.3"
+    }
+  },
+  "219:176": {
+    "inputs": {
+      "model": "rife425_ensemble_False_scale_1_sim",
+      "precision": "fp16",
+      "resolution_profile": "large",
+      "batch_size": 1
+    },
+    "class_type": "AutoLoadRifeTensorrtModel",
+    "_meta": {
+      "title": "(Down)load RIFE TensorRT Model",
+      "cnr_id": "Auto-TensorRT-RIFE",
+      "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+      "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92"
+    }
+  },
+  "219:177": {
+    "inputs": {
+      "clear_cache_after_n_frames": 100,
+      "multiplier": 2,
+      "keep_model_loaded": false,
+      "batch_size": 1,
+      "multiplier_list": "",
+      "frames": [
+        "219:218",
+        0
+      ],
+      "rife_trt_model": [
+        "219:176",
+        0
+      ]
+    },
+    "class_type": "AutoRifeTensorrt",
+    "_meta": {
+      "title": "Auto RIFE TensorRT",
+      "cnr_id": "Auto-TensorRT-RIFE",
+      "aux_id": "huchukato/ComfyUI-RIFE-TensorRT-Auto",
+      "ver": "120f2ca1b1e226d7e3c23917647d78a6a3318b92"
+    }
+  },
+  "219:217": {
+    "inputs": {
+      "model": "2xLexicaRRDBNet",
+      "precision": "fp16",
+      "batch_size": 2
+    },
+    "class_type": "LoadUpscalerTensorrtModel",
+    "_meta": {
+      "title": "Load Upscale Tensorrt Model",
+      "cnr_id": "Auto-TensorRT-Upscaler",
+      "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+      "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687"
+    }
+  },
+  "219:218": {
+    "inputs": {
+      "resize_to": "2K",
+      "batch_size": 2,
+      "resize_width": 2048,
+      "resize_height": 2048,
+      "images": [
+        "129:105",
+        0
+      ],
+      "upscaler_trt_model": [
+        "219:217",
+        0
+      ]
+    },
+    "class_type": "UpscalerTensorrt",
+    "_meta": {
+      "title": "Upscaler Tensorrt ⚡",
+      "cnr_id": "Auto-TensorRT-Upscaler",
+      "aux_id": "huchukato/ComfyUI-Upscaler-TensorRT-Auto",
+      "ver": "cc7141930a69268d37dc16067ed8e3bd8f46e687"
+    }
+  }
+}

@@ -1,0 +1,152 @@
+{
+ "id": "ltx-fl2va",
+ "name": "LTX 2.5 FL2VA",
+ "category": "video",
+ "description": "First/last frame → video with audio (LTX 2.5 22B distilled, serverless INT8) — the same still in both slots closes an A→A loop",
+ "handler": "ltx",
+ "remote_file": "LTX25-FL2VA.json",
+ "endpoint_id": "",
+ "endpoint_name": "LTX 2.5",
+ "outputs": [
+  "video",
+  "audio"
+ ],
+ "parameters": [
+  {
+   "key": "prompt",
+   "label": "Prompt",
+   "type": "text",
+   "target": "job",
+   "wildcard_prefix": "mmh3/"
+  },
+  {
+   "key": "images",
+   "label": "First / Last frame",
+   "type": "images",
+   "target": "job",
+   "max": 2
+  },
+  {
+   "key": "seconds",
+   "label": "Duration / QwenVL preset",
+   "type": "select",
+   "target": "job",
+   "default": "5",
+   "options": [
+    "5",
+    "10",
+    "20"
+   ]
+  },
+  {
+   "key": "image_size",
+   "label": "Resolution",
+   "type": "select",
+   "target": "job",
+   "default": "auto (tier del workflow)",
+   "options": [
+    "auto (tier del workflow)",
+    "1344x768 (16:9)",
+    "768x1344 (9:16)",
+    "1024x1024 (1:1)",
+    "1312x736 (16:9 native)"
+   ]
+  },
+  {
+   "key": "enhance",
+   "label": "Enhancer QwenVL",
+   "type": "bool",
+   "target": "job",
+   "default": true
+  },
+  {
+   "key": "vl_preset",
+   "label": "Enhancer preset",
+   "type": "select",
+   "target": "job",
+   "default": "LTX › NSFW FL2VA",
+   "options": [
+    "LTX › NSFW FL2VA",
+    "LTX › NSFW Loop",
+    "LTX › NSFW I2V"
+   ],
+   "parent": "enhance"
+  },
+  {
+   "key": "upscale",
+   "label": "Upscale",
+   "type": "bool",
+   "target": "job",
+   "default": true
+  },
+  {
+   "key": "rife",
+   "label": "RIFE 50fps (post)",
+   "type": "bool",
+   "target": "job",
+   "default": true
+  },
+  {
+   "key": "upscale_model",
+   "label": "Upscale model",
+   "type": "select",
+   "target": "job",
+   "default": "2xLexicaRRDBNet",
+   "options": [
+    "2x-CGIMaster-v1",
+    "2x-AnimeSharpV3",
+    "2xLexicaRRDBNet",
+    "2xLexicaRRDBNet_Sharp",
+    "RealESRGAN_x2plus",
+    "4xUltrasharp_4xUltrasharpV10",
+    "4x-AnimeSharp",
+    "4xNomos2_hq_dat2",
+    "4xNomos2_otf_esrgan",
+    "4xLSDIRplusC",
+    "RealESRGAN_x4plus",
+    "RealESRGAN_x4plus_anime_6B",
+    "realesrgan-x4minus"
+   ],
+   "parent": "upscale"
+  },
+  {
+   "key": "upscale_target",
+   "label": "Upscale target",
+   "type": "select",
+   "target": "job",
+   "default": "2K",
+   "options": [
+    "2x",
+    "3x",
+    "4x",
+    "1080p",
+    "2K",
+    "4K",
+    "custom"
+   ],
+   "parent": "upscale"
+  },
+  {
+   "key": "198:format",
+   "label": "Video format",
+   "type": "select",
+   "target": "node",
+   "default": "video/h264-mp4",
+   "options": [
+    "video/h264-mp4",
+    "video/hevc-mp4",
+    "video/av1-webm",
+    "video/webm",
+    "image/gif",
+    "image/webp"
+   ]
+  },
+  {
+   "key": "198:crf",
+   "label": "Video quality (CRF, lower=better)",
+   "type": "int",
+   "target": "node",
+   "default": 19
+  }
+ ]
+}
