@@ -1,4 +1,4 @@
-import { Check, Download, Film, ImageDown, Images, ListChecks, Play, Trash2, X } from "lucide-react";
+import { Check, Download, Film, ImageDown, Images, ListChecks, Music, Play, Trash2, X } from "lucide-react";
 import { useState } from "react";
 import type { OutputFile } from "../api";
 import { useT } from "../i18n";
@@ -9,13 +9,21 @@ interface Props {
   open: boolean;
   onClose: () => void;
   canReference?: boolean;
-  onUseAsInput?: (file: File) => Promise<void>;
+  onUseAsInput?: (file: File, remoteUrl?: string) => Promise<void>;
   onDelete?: (o: OutputFile) => Promise<void>;
   onChanged?: () => void;
 }
 
 function isVideo(name: string) {
   return /\.(mp4|webm|mov)$/i.test(name);
+}
+
+function isAudio(name: string) {
+  return /\.(mp3|wav|m4a|ogg|flac|aac)$/i.test(name);
+}
+
+function kindOf(o: OutputFile) {
+  return isVideo(o.filename) ? "video" : isAudio(o.filename) ? "audio" : "image";
 }
 
 function fmtSize(bytes?: number) {
@@ -29,6 +37,7 @@ function keyOf(o: OutputFile) {
 
 export default function OutputsGallery({ outputs, open, onClose, canReference, onUseAsInput, onDelete, onChanged }: Props) {
   const t = useT();
+  const [filter, setFilter] = useState<"all" | "image" | "video" | "audio">("all");
   const [lightbox, setLightbox] = useState<OutputFile | null>(null);
   const [deleting, setDeleting] = useState<string | null>(null);
   const [selecting, setSelecting] = useState(false);
@@ -36,13 +45,15 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
   const [batchDeleting, setBatchDeleting] = useState(false);
   const [batchDownloading, setBatchDownloading] = useState(false);
 
+  const visible = filter === "all" ? outputs : outputs.filter((o) => kindOf(o) === filter);
+
   if (!open) return null;
 
   async function useAsInput(e: React.MouseEvent | null, o: OutputFile) {
     e?.stopPropagation();
     try {
       const blob = await (await fetch(o.url)).blob();
-      await onUseAsInput?.(new File([blob], o.filename, { type: blob.type }));
+      await onUseAsInput?.(new File([blob], o.filename, { type: blob.type }), o.remote_url ?? undefined);
     } catch {
       /* parent surfaces errors */
     }
@@ -129,7 +140,19 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
       <div className="flex items-center justify-between border-b border-border px-4 py-3">
         <div className="flex items-center gap-2 text-[13px] font-semibold tracking-tight">
           <Images size={14} className="text-accent" /> {t.outputsTitle}
-          <span className="rounded-md border border-border bg-panel px-1.5 text-[10px] tabular-nums text-muted">{outputs.length}</span>
+          <span className="rounded-md border border-border bg-panel px-1.5 text-[10px] tabular-nums text-muted">{visible.length}</span>
+          <span className="ml-1 flex items-center gap-0.5 rounded-md border border-border bg-bg-elev/60 p-1">
+            {([["all", Images], ["image", ImageDown], ["video", Film], ["audio", Music]] as const).map(([k, Icon]) => (
+              <button
+                key={k}
+                onClick={() => setFilter(k)}
+                title={t[`filter_${k}`]}
+                className={`rounded-md px-2 py-1.5 transition-colors ${filter === k ? "bg-accent/15 text-accent" : "text-muted hover:text-text"}`}
+              >
+                <Icon size={14} />
+              </button>
+            ))}
+          </span>
         </div>
         <div className="flex items-center gap-1">
           <button
@@ -151,7 +174,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
         </div>
       )}
       <div className="grid grid-cols-2 gap-2">
-        {outputs.map((o, i) => {
+        {visible.map((o, i) => {
           const isSel = selected.has(keyOf(o));
           return (
           <div
@@ -171,6 +194,11 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
               ) : isVideo(o.filename) ? (
                 <div className="flex h-full w-full items-center justify-center text-muted">
                   <Film size={20} />
+                </div>
+              ) : isAudio(o.filename) ? (
+                <div className="flex h-full w-full flex-col items-center justify-center gap-1 px-1.5 text-muted">
+                  <Music size={18} />
+                  <span className="w-full truncate text-center text-[8px] text-faint">{o.filename}</span>
                 </div>
               ) : (
                 <img src={o.url} alt={o.filename} className="h-full w-full object-cover transition-transform duration-200 group-hover:scale-[1.03]" loading="lazy" />

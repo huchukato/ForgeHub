@@ -10,6 +10,7 @@ const LLM_SERVICES = [
   { id: "groq", label: "Groq", url: "https://api.groq.com/openai/v1" },
   { id: "runpod-qwen3", label: "RunPod · Qwen3 32B", url: "https://api.runpod.ai/v2/qwen3-32b-awq/openai/v1", runpodKey: true },
   { id: "runpod-kimi", label: "RunPod · Moonshot Kimi", url: "https://api.runpod.ai/v2/moonshot-kimi/openai/v1", runpodKey: true },
+  { id: "runpod-glm", label: "RunPod · GLM-5.3", url: "https://api.runpod.ai/v2/b1dd8hy2hqo1nb/openai/v1", runpodKey: true },
   { id: "ollama", label: "Ollama (local)", url: "http://127.0.0.1:11434/v1", noKey: true },
   { id: "lmstudio", label: "LM Studio (local)", url: "http://127.0.0.1:1234/v1", noKey: true },
   { id: "custom", label: "Custom (OpenAI-compatible)", url: "" },
@@ -104,8 +105,9 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
       setKeySet(s.runpod_api_key_set);
       setApiKey("");
       const svc = LLM_SERVICES.find((x) => x.url === s.chat_llm_url);
-      setService(svc?.id ?? (s.chat_llm_url ? "custom" : "openrouter"));
-      setLlmUrl(s.chat_llm_url);
+      const defSvc = LLM_SERVICES.find((x) => x.id === "runpod-kimi")!;
+      setService(svc?.id ?? (s.chat_llm_url ? "custom" : "runpod-kimi"));
+      setLlmUrl(s.chat_llm_url || defSvc.url);
       setLlmModel(s.chat_llm_model);
       setLlmKeySet(s.chat_llm_key_set);
       setLlmKey("");
@@ -118,6 +120,8 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
       if (s.runpod_api_key_set && !s.runpod_endpoint_id) detect("");
       if (s.chat_llm_url && (s.chat_llm_key_set || !serviceNeedsKey(svc?.id ?? "custom"))) {
         fetchModels(s.chat_llm_url, s.chat_llm_key_set || !serviceNeedsKey(svc?.id ?? "custom"));
+      } else if (!s.chat_llm_url && s.runpod_api_key_set) {
+        fetchModels(defSvc.url, true);
       }
     } catch {
       /* backend without /settings */

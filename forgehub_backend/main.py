@@ -336,12 +336,12 @@ async def chat(request: ChatRequest) -> ChatResponse:
 @app.post("/upload")
 async def upload_image(file: UploadFile = File(...)):
     ct = file.content_type or ""
-    if not (ct.startswith("image/") or ct.startswith("video/")):
-        raise HTTPException(status_code=400, detail="Only image/video uploads are supported")
+    if not (ct.startswith("image/") or ct.startswith("video/") or ct.startswith("audio/")):
+        raise HTTPException(status_code=400, detail="Only image/video/audio uploads are supported")
     data = await file.read()
     if len(data) > SETTINGS.max_upload_mb * 1024 * 1024:
         raise HTTPException(status_code=413, detail="File too large")
-    if ct.startswith("video/"):
+    if ct.startswith("video/") or ct.startswith("audio/"):
         filename = save_uploaded_b64(base64.b64encode(data).decode("ascii"), file.filename or "upload.mp4")
     else:
         b64 = base64.b64encode(data).decode("ascii")
@@ -446,6 +446,15 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
     backend = app.state.backend
 
     job_params, node_params = _split_parameters(request, meta)
+    for p in meta.parameters:
+        if not isinstance(p, dict):
+            continue
+        if p.get("splits") and p.get("key") in job_params:
+            m = re.match(r"^(\d+)x(\d+)", str(job_params.pop(p["key"])))
+            if m:
+                job_params.update(dict(zip(p["splits"], (int(g) for g in m.groups()))))
+        if p.get("cast") == "int" and job_params.get(p.get("key")) is not None:
+            job_params[p["key"]] = int(job_params[p["key"]])
     bypass = [
         nid for group, ids in meta.bypass_groups.items()
         if str(job_params.pop(f"enable_{group}", "on")).lower() in ("off", "false", "0")
@@ -460,7 +469,20 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
     if endpoint_id:
         job_input["endpoint_id"] = endpoint_id
     if request.images:
-        job_input["images"] = request.images
+        images_key = next(
+            (p["key"] for p in meta.parameters
+             if isinstance(p, dict) and p.get("type") == "images"),
+            "images",
+        )
+        if meta.public_endpoint and images_key != "images":
+            job_input[images_key] = (
+                request.images[0]
+                if next((p.get("max") for p in meta.parameters
+                         if isinstance(p, dict) and p.get("key") == images_key), 1) == 1
+                else request.images
+            )
+        else:
+            job_input["images"] = request.images
     if request.video:
         job_input["video"] = request.video
 

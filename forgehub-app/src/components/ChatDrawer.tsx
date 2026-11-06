@@ -1,4 +1,4 @@
-import { MessageSquare, Send, X } from "lucide-react";
+import { CornerDownLeft, MessageSquare, Send, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import type { ChatMessage, ForgeHubClient } from "../api";
 import { useT } from "../i18n";
@@ -8,6 +8,15 @@ interface Props {
   workflowId: string;
   open: boolean;
   onClose: () => void;
+  onInsertPrompt?: (text: string) => void;
+}
+
+/** Best-effort extraction of the prompt text from an assistant reply:
+ *  drops a leading "Prompt:" label, prefers a quoted span, trims quotes. */
+function extractPrompt(content: string): string {
+  const s = content.trim().replace(/^\*{0,2}Prompt\*{0,2}\s*:?\s*/i, "").trim();
+  const quoted = s.match(/["“]([^"”]{10,})["”]/);
+  return (quoted ? quoted[1] : s.split("\n\n")[0]).trim() || content.trim();
 }
 
 /** Turn "503: {"detail":"Chat request failed: ComfyUI 429: {...rate-limited...}"}"
@@ -25,7 +34,7 @@ function friendlyError(e: unknown): string {
   }
 }
 
-export default function ChatDrawer({ client, workflowId, open, onClose }: Props) {
+export default function ChatDrawer({ client, workflowId, open, onClose, onInsertPrompt }: Props) {
   const t = useT();
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
@@ -81,7 +90,15 @@ export default function ChatDrawer({ client, workflowId, open, onClose }: Props)
                 : "mr-8 rounded-xl rounded-bl-sm border border-border bg-panel px-3 py-2 text-[13px] shadow-[var(--shadow-panel)]"
             }
           >
-            {m.content}
+            <div>{m.content}</div>
+            {m.role === "assistant" && !m.error && onInsertPrompt && (
+              <button
+                onClick={() => onInsertPrompt(extractPrompt(m.content))}
+                className="mt-2 flex items-center gap-1 rounded-md border border-accent/40 bg-accent/10 px-2 py-1 text-[11px] text-accent transition-colors hover:bg-accent/20"
+              >
+                <CornerDownLeft size={11} /> Use as prompt
+              </button>
+            )}
           </div>
         ))}
         {busy && (

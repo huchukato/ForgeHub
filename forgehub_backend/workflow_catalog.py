@@ -185,6 +185,7 @@ class WorkflowCatalog:
                 results.append(meta)
             except Exception as exc:
                 print(f"[ForgeHub] Failed to load workflow {path}: {exc}")
+        results.sort(key=lambda m: (m.order if m.order is not None else 9999, m.name.lower()))
         return results
 
     def get_workflow(self, workflow_id: str) -> tuple[dict[str, Any], WorkflowMeta] | None:

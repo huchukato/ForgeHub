@@ -17,10 +17,29 @@
     },
     {
       "key": "voice_id",
-      "label": "Voice id",
-      "type": "text",
+      "label": "Voice",
+      "type": "select",
       "target": "job",
-      "default": "Wise_Woman"
+      "default": "Wise_Woman",
+      "options": [
+        "Wise_Woman",
+        "Friendly_Person",
+        "Inspirational_girl",
+        "Deep_Voice_Man",
+        "Calm_Woman",
+        "Casual_Guy",
+        "Lively_Girl",
+        "Patient_Man",
+        "Young_Knight",
+        "Determined_Man",
+        "Lovely_Girl",
+        "Decent_Boy",
+        "Imposing_Manner",
+        "Elegant_Man",
+        "Abbess",
+        "Sweet_Girl_2",
+        "Exuberant_Girl"
+      ]
     },
     {
       "key": "emotion",
@@ -51,5 +70,7 @@
       "target": "job",
       "default": 0
     }
-  ]
+  ],
+  "price_hint": "$0.05/1000 chars",
+  "order": 41
 }

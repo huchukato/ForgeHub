@@ -2,6 +2,7 @@ import { Download, Images, MessageSquare, Music, Play, Settings, Square, X } fro
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ForgeHubClient, ForgehubBridge, OutputFile, UpdateInfo, Workflow } from "./api";
 import ChatDrawer from "./components/ChatDrawer";
+import OnboardingWizard from "./components/OnboardingWizard";
 import OutputsGallery from "./components/OutputsGallery";
 import OutputLightbox from "./components/OutputLightbox";
 import RecipeForm from "./components/RecipeForm";
@@ -44,6 +45,7 @@ export default function App() {
   const [previewKey, setPreviewKey] = useState<string | null>(null);
   const [heroDims, setHeroDims] = useState<{ w: number; h: number } | null>(null);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [onboarding, setOnboarding] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [heroLightbox, setHeroLightbox] = useState<OutputFile | null>(null);
@@ -103,7 +105,10 @@ export default function App() {
       } catch (e) {
         setError(`Backend non raggiungibile: ${e}`);
       }
-      client.getSettings().then((s) => setEndpointId(s.runpod_endpoint_id)).catch(() => {});
+      client.getSettings().then((s) => {
+        setEndpointId(s.runpod_endpoint_id);
+        if (!s.runpod_api_key_set) setOnboarding(true);
+      }).catch(() => {});
       // Backend may still be starting up (electron cold start): retry listOutputs briefly.
       (async () => {
         for (let i = 0; i < 6; i++) {
@@ -137,16 +142,34 @@ export default function App() {
     setValues((prev) => ({ ...prev, [key]: value }));
 
   const imageParam = (workflow?.parameters || []).find((p) => p.type === "images");
+  const audioParam = (workflow?.parameters || []).find((p) => p.type === "audio");
+  const videoParam = (workflow?.parameters || []).find((p) => p.type === "video");
 
-  const useAsInput = async (file: File) => {
-    if (!imageParam) return;
+  const useAsInput = async (file: File, remoteUrl?: string) => {
+    const kind = file.type.startsWith("audio/") ? "audio" : file.type.startsWith("video/") ? "video" : "image";
     try {
+      const target = kind === "audio" ? audioParam : kind === "video" ? videoParam : imageParam;
+      if (!target) return;
+      if (remoteUrl && (kind !== "image" || workflow?.public_endpoint)) {
+        if (kind === "image") {
+          setImageSlots((prev) => ({
+            ...prev,
+            [target.key]: [...(prev[target.key] ?? []), remoteUrl].slice(-(target.max ?? 1)),
+          }));
+        } else {
+          setValue(target.key, remoteUrl);
+        }
+        return;
+      }
       const res = await client.uploadImage(file);
-      const max = imageParam.max ?? 1;
-      setImageSlots((prev) => ({
-        ...prev,
-        [imageParam.key]: [...(prev[imageParam.key] ?? []), res.filename].slice(-max),
-      }));
+      if (kind === "image") {
+        setImageSlots((prev) => ({
+          ...prev,
+          [target.key]: [...(prev[target.key] ?? []), res.filename].slice(-(target.max ?? 1)),
+        }));
+      } else {
+        setValue(target.key, res.filename);
+      }
     } catch (e) {
       setError(String(e));
     }
@@ -264,29 +287,38 @@ const execute = async () => {
             )}
           </div>
           <div className="flex items-center gap-2">
+            <a
+              href="https://buymeacoffee.com/huchukato"
+              target="_blank"
+              rel="noreferrer"
+              title="Buy me a coffee"
+              className="transition-transform hover:scale-105"
+            >
+              <img src="/bmc-button.png" alt="Buy me a coffee" className="h-8 w-auto rounded-lg shadow-[var(--shadow-panel)]" />
+            </a>
             {([
-              { icon: <Images size={15} />, title: t.outputsTitle, active: galleryOpen, onClick: () => setGalleryOpen((o) => !o), badge: outputs.length },
-              { icon: <MessageSquare size={15} />, title: t.promptAssist, active: chatOpen, onClick: () => setChatOpen((o) => !o) },
-              { icon: <Settings size={15} />, title: t.settings, active: settingsOpen, onClick: () => setSettingsOpen(true) },
+              { icon: <Images size={17} />, title: t.outputsTitle, active: galleryOpen, onClick: () => setGalleryOpen((o) => !o) },
+              { icon: <MessageSquare size={17} />, title: t.promptAssist, active: chatOpen, onClick: () => setChatOpen((o) => !o) },
+              { icon: <Settings size={17} />, title: t.settings, active: settingsOpen, onClick: () => setSettingsOpen(true) },
             ]).map((b) => (
               <button
                 key={b.title}
                 onClick={b.onClick}
                 title={b.title}
-                className={`relative rounded-lg border p-2 transition-all duration-150 ${
+                className={`relative rounded-lg border p-2.5 transition-all duration-150 ${
                   b.active
                     ? "border-accent/60 bg-accent/10 text-accent shadow-[0_0_14px_rgb(124_92_255/0.18)]"
                     : "border-border bg-panel text-muted hover:border-border-strong hover:bg-panel-hover hover:text-text"
                 }`}
               >
                 {b.icon}
-                {!!b.badge && (
-                  <span className="absolute -right-1.5 -top-1.5 rounded-full bg-accent px-1 text-[9px] font-bold text-white shadow-[0_0_8px_rgb(124_92_255/0.5)]">
-                    {b.badge}
-                  </span>
-                )}
               </button>
             ))}
+            {workflow?.price_hint && (
+              <span className="rounded-lg border border-border bg-panel px-2.5 py-1.5 text-[11px] tabular-nums text-muted" title="Per-use price (RunPod Public Endpoint)">
+                {workflow.price_hint}
+              </span>
+            )}
             <button
               onClick={execute}
               disabled={!workflow}
@@ -492,7 +524,7 @@ const execute = async () => {
         outputs={outputs}
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}
-        canReference={!!imageParam}
+        canReference={!!(imageParam || audioParam || videoParam)}
         onUseAsInput={useAsInput}
         onDelete={(o) => client.deleteOutput(o)}
         onChanged={() => client.listOutputs().then(setOutputs).catch(() => {})}
@@ -503,7 +535,7 @@ const execute = async () => {
         outputs={outputs}
         onClose={() => setHeroLightbox(null)}
         onNavigate={setHeroLightbox}
-        canReference={!!imageParam}
+        canReference={!!(imageParam || audioParam || videoParam)}
         onUseAsInput={useAsInput}
         onDelete={(o) => client.deleteOutput(o)}
         onChanged={() => client.listOutputs().then(setOutputs).catch(() => {})}
@@ -514,7 +546,14 @@ const execute = async () => {
         workflowId={selectedId}
         open={chatOpen}
         onClose={() => setChatOpen(false)}
+        onInsertPrompt={
+          (workflow?.parameters || []).some((p) => p.key === "prompt")
+            ? (text) => setValue("prompt", text)
+            : undefined
+        }
       />
+
+      {onboarding && <OnboardingWizard client={client} onDone={() => setOnboarding(false)} />}
 
       <SettingsDialog
         client={client}

@@ -30,6 +30,8 @@ class WorkflowMeta(BaseModel):
     endpoint_name: str = ""  # name pattern resolved to a live endpoint id at submit time
     requires_endpoint: bool = False  # set when meta declares endpoint_id (even empty): hidden until configured
     public_endpoint: bool = False  # RunPod Public Endpoint (no ComfyUI graph; output is output.result)
+    price_hint: str = ""  # static per-use price shown in UI (PEs bill fixed prices, not GPU time)
+    order: int | None = None  # sort weight inside the sidebar group (lower first)
     bypass_groups: dict[str, list[str]] = Field(default_factory=dict)  # group name → node ids removed when enable_<name>="off"
 
 
@@ -82,6 +84,7 @@ class OutputFile(BaseModel):
     subfolder: str
     type: str
     url: str
+    remote_url: str | None = None  # original Public Endpoint URL (chaining inputs; expires ~7d)
 
 
 class ExecutionStatus(BaseModel):

@@ -1,4 +1,4 @@
-import { Camera, ChevronLeft, ChevronRight, Download, ImageDown, SkipForward, Trash2, X } from "lucide-react";
+import { Camera, ChevronLeft, ChevronRight, Download, ImageDown, Music, SkipForward, Trash2, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import type { OutputFile } from "../api";
@@ -10,13 +10,17 @@ interface Props {
   onClose: () => void;
   onNavigate: (o: OutputFile) => void;
   canReference?: boolean;
-  onUseAsInput?: (file: File) => Promise<void>;
+  onUseAsInput?: (file: File, remoteUrl?: string) => Promise<void>;
   onDelete?: (o: OutputFile) => Promise<void>;
   onChanged?: () => void;
 }
 
 function isVideo(name: string) {
   return /\.(mp4|webm|mov)$/i.test(name);
+}
+
+function isAudio(name: string) {
+  return /\.(mp3|wav|m4a|ogg|flac|aac)$/i.test(name);
 }
 
 function keyOf(o: OutputFile) {
@@ -89,7 +93,7 @@ export default function OutputLightbox({ output, outputs, onClose, onNavigate, c
     e?.stopPropagation();
     try {
       const blob = await (await fetch(o.url)).blob();
-      await onUseAsInput?.(new File([blob], o.filename, { type: blob.type }));
+      await onUseAsInput?.(new File([blob], o.filename, { type: blob.type }), o.remote_url ?? undefined);
     } catch {
       /* parent surfaces errors */
     }
@@ -178,6 +182,11 @@ export default function OutputLightbox({ output, outputs, onClose, onNavigate, c
       <div onClick={(e) => e.stopPropagation()} className="max-h-full max-w-4xl">
         {isVideo(output.filename) ? (
           <video ref={videoRef} src={output.url} controls autoPlay onLoadedMetadata={(e) => setDims({ w: e.currentTarget.videoWidth, h: e.currentTarget.videoHeight })} className="max-h-[80vh] rounded-xl ring-1 ring-border-strong shadow-[var(--shadow-pop)]" />
+        ) : isAudio(output.filename) ? (
+          <div className="flex w-[min(70vw,560px)] flex-col items-center gap-4 rounded-xl border border-border bg-panel/90 px-6 py-8 shadow-[var(--shadow-pop)]">
+            <Music size={40} className="text-accent" />
+            <audio src={output.url} controls autoPlay className="w-full" />
+          </div>
         ) : (
           <img src={output.url} alt={output.filename} onLoad={(e) => setDims({ w: e.currentTarget.naturalWidth, h: e.currentTarget.naturalHeight })} className="max-h-[80vh] rounded-xl ring-1 ring-border-strong shadow-[var(--shadow-pop)]" />
         )}

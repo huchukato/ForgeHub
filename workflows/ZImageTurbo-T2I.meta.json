@@ -5,13 +5,53 @@
   "description": "Fast 6B text-to-image (RunPod Public Endpoint, $0.005/img)",
   "endpoint_id": "z-image-turbo",
   "public_endpoint": true,
-  "outputs": ["image"],
+  "outputs": [
+    "image"
+  ],
   "parameters": [
-    { "key": "prompt", "label": "Prompt (EN/中文)", "type": "text", "target": "job" },
-    { "key": "size", "label": "Size", "type": "select", "target": "job", "default": "1024*1024",
-      "options": ["512*512", "768*768", "1024*1024", "1280*1280", "1024*768", "768*1024", "1280*720", "720*1280"] },
-    { "key": "seed", "label": "Seed (-1 = random)", "type": "int", "target": "job", "default": -1 },
-    { "key": "output_format", "label": "Format", "type": "select", "target": "job", "default": "png",
-      "options": ["png", "jpeg", "webp"] }
-  ]
+    {
+      "key": "prompt",
+      "label": "Prompt (EN/中文)",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "size",
+      "label": "Size",
+      "type": "select",
+      "target": "job",
+      "default": "1024*1024",
+      "options": [
+        "512*512",
+        "768*768",
+        "1024*1024",
+        "1280*1280",
+        "1024*768",
+        "768*1024",
+        "1280*720",
+        "720*1280"
+      ]
+    },
+    {
+      "key": "seed",
+      "label": "Seed (-1 = random)",
+      "type": "int",
+      "target": "job",
+      "default": -1
+    },
+    {
+      "key": "output_format",
+      "label": "Format",
+      "type": "select",
+      "target": "job",
+      "default": "png",
+      "options": [
+        "png",
+        "jpeg",
+        "webp"
+      ]
+    }
+  ],
+  "price_hint": "$0.005/image",
+  "order": 10
 }

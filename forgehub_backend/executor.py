@@ -143,12 +143,10 @@ class RunPodServerlessBackend:
                 patched = _bypass_nodes(patched, bypass_ids)
             if patched:
                 payload["prompt_graph"] = patched
-        for media_key in ("images", "video"):
+        for media_key in ("images", "image", "video", "audio"):
             if payload.get(media_key):
-                if media_key == "images":
-                    payload["images"] = [_as_b64(v) for v in payload["images"]]
-                else:
-                    payload["video"] = _as_b64(payload["video"])
+                v = payload[media_key]
+                payload[media_key] = [_as_b64(x) for x in v] if isinstance(v, list) else _as_b64(v)
         job_id = await self._client_for(endpoint_id).run(payload)
         self._job_endpoints[job_id] = endpoint_id
         if job_meta:
@@ -255,6 +253,7 @@ class RunPodServerlessBackend:
                 subfolder="",
                 type="output",
                 url=f"/outputs/{urllib.parse.quote(saved.name)}",
+                remote_url=item.get("url"),
             ))
         if download_errors and not outputs:
             return ExecutionStatus(

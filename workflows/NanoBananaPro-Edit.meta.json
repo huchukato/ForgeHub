@@ -1,0 +1,68 @@
+{
+  "id": "nanobanana-pro-edit",
+  "name": "Nano Banana Pro Edit",
+  "category": "RunPod Cloud",
+  "description": "Google's top-tier multi-image edit (up to 14 refs, up to 4K) (RunPod Public Endpoint, $0.14-0.24)",
+  "endpoint_id": "nano-banana-pro-edit",
+  "public_endpoint": true,
+  "outputs": [
+    "image"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Edit instruction",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "images",
+      "label": "Reference images (up to 14)",
+      "type": "images",
+      "target": "job",
+      "max": 14
+    },
+    {
+      "key": "resolution",
+      "label": "Resolution",
+      "type": "select",
+      "target": "job",
+      "default": "2k",
+      "options": [
+        "1k",
+        "2k",
+        "4k"
+      ]
+    },
+    {
+      "key": "aspect_ratio",
+      "label": "Aspect ratio",
+      "type": "select",
+      "target": "job",
+      "options": [
+        "1:1",
+        "3:2",
+        "2:3",
+        "4:3",
+        "4:5",
+        "5:4",
+        "9:16",
+        "16:9",
+        "21:9"
+      ]
+    },
+    {
+      "key": "output_format",
+      "label": "Format",
+      "type": "select",
+      "target": "job",
+      "default": "png",
+      "options": [
+        "png",
+        "jpeg"
+      ]
+    }
+  ],
+  "price_hint": "$0.14 / $0.24 (2k/4k)",
+  "order": 21
+}

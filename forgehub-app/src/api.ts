@@ -19,6 +19,8 @@ export interface Workflow {
   parameters: WorkflowParam[];
   outputs: string[];
   handler?: string;
+  public_endpoint?: boolean;
+  price_hint?: string;
 }
 
 export interface UpdateInfo {
@@ -76,6 +78,7 @@ export interface OutputFile {
   subfolder: string;
   type: string;
   url: string;
+  remote_url?: string; // original PE URL — reusable as chained input (~7d expiry)
   thumb?: string;
   size?: number;
   mtime?: number;

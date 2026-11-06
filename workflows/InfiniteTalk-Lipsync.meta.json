@@ -1,0 +1,52 @@
+{
+  "id": "infinitetalk-lipsync",
+  "name": "InfiniteTalk Lip-sync",
+  "category": "RunPod Cloud",
+  "description": "Audio-driven talking/singing video from an image + audio file or URL (RunPod Public Endpoint, $0.25-0.50)",
+  "endpoint_id": "infinitetalk",
+  "public_endpoint": true,
+  "outputs": [
+    "video"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Prompt (scene + delivery)",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "image",
+      "label": "Source image",
+      "type": "images",
+      "target": "job",
+      "max": 1
+    },
+    {
+      "key": "audio",
+      "label": "Audio (URL or upload)",
+      "type": "audio",
+      "target": "job"
+    },
+    {
+      "key": "size",
+      "label": "Size",
+      "type": "select",
+      "target": "job",
+      "default": "480p",
+      "options": [
+        "480p",
+        "720p"
+      ]
+    },
+    {
+      "key": "enable_safety_checker",
+      "label": "Safety checker",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    }
+  ],
+  "price_hint": "$0.25 (480p) / $0.50 (720p)",
+  "order": 31
+}

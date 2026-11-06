@@ -3,6 +3,22 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.0] — 2026-11-06
+
+### Added
+- **More RunPod Public Endpoints** — Nano Banana Pro Edit ($0.14-0.24), Kling 2.6 Motion Control (image + motion video → lipsynced-style transfer), InfiniteTalk lip-sync (image + audio URL/upload → talking video), WAN-removed; `splits` param expands a size picker into `width`/`height`, `cast` coerces select values, `order` sorts workflows inside a sidebar group, `price_hint` shows the per-use list price next to Execute.
+- **Media params generalized** — `type:"audio"` (URL or upload) and `type:"video"` now accept a pasted URL or an uploaded file; uploaded media go base64, URLs pass through — PE→PE chaining works by clicking *Use as input* on an output (`remote_url` kept on files served by Public Endpoints).
+- **Onboarding wizard** — first launch (no RunPod API key) shows a 5-step guide: language, API key, network volume creation, Hub worker deploys, volume attach — with inline screenshots.
+- **Prompt assist routing** — per-workflow system prompts: TTS script writer for audio PEs, image-prompt assistant for image PEs (natural "first image" references, no synthetic tags); "Use as prompt" button inserts the reply into the Prompt field.
+- **Gallery filtering** — type filter (All / Images / Videos / Audio) with icon buttons; audio files get a music tile and an in-lightbox `<audio>` player.
+- **GLM-5.3 as prompt-assist service** — RunPod · GLM-5.3 joins Qwen3 and Kimi; Moonshot Kimi is now the default service (works out of the box with the RunPod API key).
+- **Buy Me a Coffee** link in the header; refreshed app icon, logo and background.
+
+### Changed
+- Toolbar buttons and wizard enlarged for readability; output-count badge removed from the toolbar icon.
+- Flux T2I metas: `negative_prompt` removed (guidance-distilled models ignore it), `image_size` picker with aspect-ratio grid, guidance defaults corrected (Dev 3.5, Schnell 0).
+- Minimax Speech `voice_id` is now a 17-voice dropdown.
+
 ## [0.1.20] — 2026-11-05
 
 ### Added

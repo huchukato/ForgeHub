@@ -27,6 +27,10 @@ export interface Translations {
   // App chrome
   execute: string;
   outputsTitle: string;
+  filter_all: string;
+  filter_image: string;
+  filter_video: string;
+  filter_audio: string;
   promptAssist: string;
   settings: string;
   library: string;
@@ -57,6 +61,8 @@ export interface Translations {
   traceBody: string;
   uploadVideo: string;
   changeVideo: string;
+  uploadAudio: string;
+  changeAudio: string;
   noParams: string;
 
   // Outputs gallery
@@ -148,6 +154,10 @@ export const translations: Record<Language, Translations> = {
 
     execute: "Execute",
     outputsTitle: "Outputs",
+    filter_all: "All",
+    filter_image: "Images",
+    filter_video: "Videos",
+    filter_audio: "Audio",
     promptAssist: "Prompt assist",
     settings: "Settings",
     library: "Library",
@@ -176,6 +186,8 @@ export const translations: Record<Language, Translations> = {
     traceBody: "Wildcard-expanded and QwenVL prompts appear here.",
     uploadVideo: "Upload video",
     changeVideo: "Change",
+    uploadAudio: "Upload audio",
+    changeAudio: "Change",
     noParams: "No parameters declared in this workflow's .meta.json.",
 
     selectMultiple: "Select multiple",
@@ -260,6 +272,10 @@ export const translations: Record<Language, Translations> = {
 
     execute: "Genera",
     outputsTitle: "Output",
+    filter_all: "Tutti",
+    filter_image: "Immagini",
+    filter_video: "Video",
+    filter_audio: "Audio",
     promptAssist: "Assist prompt",
     settings: "Impostazioni",
     library: "Libreria",
@@ -288,6 +304,8 @@ export const translations: Record<Language, Translations> = {
     traceBody: "Qui compaiono il prompt espanso (wildcard) e quello finale QwenVL.",
     uploadVideo: "Carica video",
     changeVideo: "Cambia",
+    uploadAudio: "Carica audio",
+    changeAudio: "Cambia",
     noParams: "Nessun parametro dichiarato nel .meta.json di questo workflow.",
 
     selectMultiple: "Selezione multipla",
@@ -372,6 +390,10 @@ export const translations: Record<Language, Translations> = {
 
     execute: "Generar",
     outputsTitle: "Salidas",
+    filter_all: "Todo",
+    filter_image: "Imágenes",
+    filter_video: "Vídeos",
+    filter_audio: "Audio",
     promptAssist: "Asistente de prompt",
     settings: "Ajustes",
     library: "Biblioteca",
@@ -400,6 +422,8 @@ export const translations: Record<Language, Translations> = {
     traceBody: "Aquí aparecen el prompt expandido (wildcards) y el final de QwenVL.",
     uploadVideo: "Subir vídeo",
     changeVideo: "Cambiar",
+    uploadAudio: "Subir audio",
+    changeAudio: "Cambiar",
     noParams: "No hay parámetros declarados en el .meta.json de este workflow.",
 
     selectMultiple: "Selección múltiple",

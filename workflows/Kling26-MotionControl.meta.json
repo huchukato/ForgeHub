@@ -1,0 +1,58 @@
+{
+  "id": "kling26-motion-control",
+  "name": "Kling 2.6 Motion Control",
+  "category": "RunPod Cloud",
+  "description": "Transfers motion from a reference video onto a character image (RunPod Public Endpoint, $0.21-0.63/video)",
+  "endpoint_id": "kling-v2-6-std-motion-control",
+  "public_endpoint": true,
+  "outputs": [
+    "video"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Prompt (optional motion hints)",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "image",
+      "label": "Character image",
+      "type": "images",
+      "target": "job",
+      "max": 1
+    },
+    {
+      "key": "video",
+      "label": "Motion reference video",
+      "type": "video",
+      "target": "job"
+    },
+    {
+      "key": "character_orientation",
+      "label": "Character orientation",
+      "type": "select",
+      "target": "job",
+      "default": "video",
+      "options": [
+        "video",
+        "image"
+      ]
+    },
+    {
+      "key": "negative_prompt",
+      "label": "Negative prompt",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "keep_original_sound",
+      "label": "Keep video audio",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    }
+  ],
+  "price_hint": "$0.21 / $0.42 / $0.63 (3s/6s/9s)",
+  "order": 30
+}
