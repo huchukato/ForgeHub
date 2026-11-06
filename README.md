@@ -99,4 +99,30 @@ JSON files in ComfyUI **API format** (`Export API`), with an optional `.meta.jso
 }
 ```
 
-Categories: `agent`, `video`, `image`, `audio`, `other`.
+Categories: free-form — use model names so the sidebar groups sensibly (e.g. `LTX 2.5`, `MiniMax H3`, `Qwen Image 2.1`, `Pony`, `RunPod Cloud`). Groups are collapsible in the sidebar.
+
+### RunPod Public Endpoints
+
+A meta can point at any [RunPod Public Endpoint](https://docs.runpod.io/public-endpoints/reference) — no dedicated endpoint, no ComfyUI graph, per-use billing on your RunPod account:
+
+```json
+{
+  "id": "nanobanana2-edit",
+  "name": "Nano Banana 2 Edit",
+  "category": "RunPod Cloud",
+  "endpoint_id": "google-nano-banana-2-edit",
+  "public_endpoint": true,
+  "outputs": ["image"],
+  "parameters": [
+    { "key": "prompt", "label": "Edit instruction", "type": "text", "target": "job" },
+    { "key": "images", "type": "images", "target": "job", "max": 14 },
+    { "key": "resolution", "type": "select", "target": "job",
+      "default": "1k", "options": ["1k", "2k", "4k"] }
+  ]
+}
+```
+
+- `public_endpoint: true` — the workflow `.json` is just `{}`; every `target: "job"` parameter is sent 1:1 in the job `input`, empty values are dropped, and `images` go base64.
+- The job output is normalized from the endpoint's shape (`output.result`, `output.image_url`, `output.audio_url` — URL or base64) and `output.cost` is shown as the real job price.
+- Bundled PE workflows: **Nano Banana 2 Edit**, **Z-Image Turbo**, **Flux Schnell**, **Flux Dev**, **Seedream 4.0** (image), **Chatterbox Turbo**, **Minimax Speech 02 HD** (audio).
+- Chat/prompt-assist can also run on RunPod LLMs — Settings → Prompt Assist → *RunPod · Qwen3 32B* or *RunPod · Moonshot Kimi* reuses your RunPod API key automatically.
