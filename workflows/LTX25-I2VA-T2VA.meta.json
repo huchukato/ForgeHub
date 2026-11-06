@@ -87,11 +87,11 @@
       "label": "Enhancer preset (I2V/T2V)",
       "type": "select",
       "target": "job",
-      "default": "LTX › NSFW I2V",
+      "default": "LTX › SFW I2V",
       "options": [
+        "LTX › SFW I2V",
+        "LTX › SFW T2V",
         "LTX › NSFW I2V",
-        "LTX › NSFW FL2VA",
-        "LTX › NSFW Loop",
         "LTX › NSFW T2V"
       ],
       "parent": "enhance"
