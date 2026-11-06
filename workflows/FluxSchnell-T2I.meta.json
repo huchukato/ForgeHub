@@ -1,0 +1,20 @@
+{
+  "id": "flux-schnell-t2i",
+  "name": "Flux Schnell T2I",
+  "category": "RunPod Cloud",
+  "description": "FLUX fast draft generation (RunPod Public Endpoint, $0.0024/MP)",
+  "endpoint_id": "black-forest-labs-flux-1-schnell",
+  "public_endpoint": true,
+  "outputs": ["image"],
+  "parameters": [
+    { "key": "prompt", "label": "Prompt", "type": "text", "target": "job" },
+    { "key": "negative_prompt", "label": "Negative prompt", "type": "text", "target": "job", "default": "" },
+    { "key": "width", "label": "Width (÷64)", "type": "int", "target": "job", "default": 1024 },
+    { "key": "height", "label": "Height (÷64)", "type": "int", "target": "job", "default": 1024 },
+    { "key": "num_inference_steps", "label": "Steps (1-8)", "type": "int", "target": "job", "default": 4 },
+    { "key": "guidance", "label": "Guidance", "type": "float", "target": "job", "default": 1 },
+    { "key": "seed", "label": "Seed (-1 = random)", "type": "int", "target": "job", "default": -1 },
+    { "key": "image_format", "label": "Format", "type": "select", "target": "job", "default": "jpeg",
+      "options": ["jpeg", "png"] }
+  ]
+}

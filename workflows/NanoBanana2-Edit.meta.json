@@ -1,0 +1,65 @@
+{
+  "id": "nanobanana2-edit",
+  "name": "Nano Banana 2 Edit",
+  "category": "RunPod Cloud",
+  "description": "Multi-image edit — Google Nano Banana 2 (RunPod Public Endpoint, per-image billing)",
+  "endpoint_id": "google-nano-banana-2-edit",
+  "public_endpoint": true,
+  "outputs": [
+    "image"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Edit instruction",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "images",
+      "label": "Reference images (best 1-3)",
+      "type": "images",
+      "target": "job",
+      "max": 14
+    },
+    {
+      "key": "resolution",
+      "label": "Resolution",
+      "type": "select",
+      "target": "job",
+      "default": "1k",
+      "options": [
+        "1k",
+        "2k",
+        "4k"
+      ]
+    },
+    {
+      "key": "aspect_ratio",
+      "label": "Aspect ratio (empty = auto)",
+      "type": "select",
+      "target": "job",
+      "default": "",
+      "options": [
+        "",
+        "1:1",
+        "3:2",
+        "2:3",
+        "4:5",
+        "16:9",
+        "9:16"
+      ]
+    },
+    {
+      "key": "output_format",
+      "label": "Format",
+      "type": "select",
+      "target": "job",
+      "default": "png",
+      "options": [
+        "png",
+        "jpeg"
+      ]
+    }
+  ]
+}

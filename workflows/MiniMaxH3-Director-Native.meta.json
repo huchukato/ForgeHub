@@ -1,205 +1,205 @@
 {
- "id": "mmh3-director-native",
- "name": "MiniMax H3 Director Native",
- "category": "video",
- "description": "Charsheet + one idea per line (segments) → multi-scene video with audio (Director timeline, server-side QwenVL autoprompting)",
- "handler": "mmh3",
- "remote_file": "MiniMaxH3-Director-Native.json",
- "endpoint_id": "",
- "outputs": [
-  "video",
-  "audio"
- ],
- "parameters": [
-  {
-   "key": "images",
-   "label": "Character sheet",
-   "type": "images",
-   "target": "job",
-   "max": 1
-  },
-  {
-   "key": "reference_mode",
-   "label": "References",
-   "type": "select",
-   "target": "job",
-   "default": "REF2VA (Refs ON — the sheet drives identity)",
-   "options": [
-    "REF2VA (Refs ON — the sheet drives identity)",
-    "OFF (text only — fl2va path)"
-   ]
-  },
-  {
-   "key": "global_prompt",
-   "label": "Global prompt (style/scene prose)",
-   "type": "text",
-   "target": "job",
-   "default": "The subject's look, style, and color palette stay faithful to the reference in every shot."
-  },
-  {
-   "key": "style",
-   "label": "Video style",
-   "type": "select",
-   "target": "job",
-   "default": "None",
-   "options": [
-    "None",
-    "[MATCH REF1] - STYLE: __mmh3/style/matchref1__",
-    "[MATCH REF2] - STYLE: __mmh3/style/matchref2__",
-    "[CINEMATIC] - STYLE: __mmh3/style/cinematic__",
-    "[LIVEACTION] - STYLE: __mmh3/style/liveaction__",
-    "[ANIME2D] - STYLE: __mmh3/style/anime2d__",
-    "[CG3D] - STYLE: __mmh3/style/cg3d__",
-    "[CLAYMATION] - STYLE: __mmh3/style/claymation__",
-    "[WATERCOLOR] - STYLE: __mmh3/style/watercolor__",
-    "[VINTAGE] - STYLE: __mmh3/style/vintage__",
-    "[PAPERCRAFT] - STYLE: __mmh3/style/papercraft__",
-    "[COLLAGE] - STYLE: __mmh3/style/collage__",
-    "[HANDDRAWN] - STYLE: __mmh3/style/handdrawn__",
-    "[RANDOM] - STYLE: __mmh3/style__"
-   ]
-  },
-  {
-   "key": "subject_description",
-   "label": "Subject description (optional — auto-Analyze if empty)",
-   "type": "text",
-   "target": "job",
-   "default": ""
-  },
-  {
-   "key": "prompt",
-   "label": "Segment ideas (one per line)",
-   "type": "text",
-   "target": "job",
-   "wildcard_prefix": "mmh3/",
-   "default": "She turns from the window, hair catching the golden light, and settles into a serene half-smile.\nShe walks slowly toward the camera through the warm room, glancing past the lens with a playful smile."
-  },
-  {
-   "key": "seconds",
-   "label": "Total duration (split evenly across ideas)",
-   "type": "select",
-   "target": "job",
-   "default": "10",
-   "options": [
-    "5",
-    "10",
-    "15"
-   ]
-  },
-  {
-   "key": "config",
-   "label": "Preset (sampler/turbo LoRA)",
-   "type": "select",
-   "target": "job",
-   "default": "r2va_singularity",
-   "options": [
-    "r2va_singularity",
-    "r2va_singularity_turbo"
-   ]
-  },
-  {
-   "key": "lora",
-   "label": "Style LoRA",
-   "type": "select",
-   "target": "job",
-   "default": "none",
-   "options": [
-    "none",
-    "realism",
-    "char_swap"
-   ]
-  },
-  {
-   "key": "image_size",
-   "label": "Resolution",
-   "type": "select",
-   "target": "job",
-   "default": "auto (segue le still)",
-   "options": [
-    "auto (segue le still)",
-    "1344x768 (16:9)",
-    "768x1344 (9:16)",
-    "1184x864 (4:3)",
-    "864x1184 (3:4)",
-    "1024x1024 (1:1)",
-    "1536x672 (21:9)"
-   ]
-  },
-  {
-   "key": "enhance",
-   "label": "Enhance segments (QwenVL autoprompting)",
-   "type": "bool",
-   "target": "job",
-   "default": true
-  },
-  {
-   "key": "upscale",
-   "label": "Upscale",
-   "type": "bool",
-   "target": "job",
-   "default": true
-  },
-  {
-   "key": "upscale_model",
-   "label": "Upscale model",
-   "type": "select",
-   "target": "job",
-   "default": "2xLexicaRRDBNet",
-   "options": [
-    "2x-CGIMaster-v1",
-    "2x-AnimeSharpV3",
-    "2xLexicaRRDBNet",
-    "2xLexicaRRDBNet_Sharp",
-    "RealESRGAN_x2plus",
-    "4xUltrasharp_4xUltrasharpV10",
-    "4x-AnimeSharp",
-    "4xNomos2_hq_dat2",
-    "4xNomos2_otf_esrgan",
-    "4xLSDIRplusC",
-    "RealESRGAN_x4plus",
-    "RealESRGAN_x4plus_anime_6B",
-    "realesrgan-x4minus"
-   ],
-   "parent": "upscale"
-  },
-  {
-   "key": "upscale_target",
-   "label": "Upscale target",
-   "type": "select",
-   "target": "job",
-   "default": "2K",
-   "options": [
-    "2x",
-    "3x",
-    "4x",
-    "1080p",
-    "2K",
-    "4K",
-    "custom"
-   ],
-   "parent": "upscale"
-  },
-  {
-   "key": "rife",
-   "label": "RIFE 48fps (post)",
-   "type": "bool",
-   "target": "job",
-   "default": true
-  },
-  {
-   "key": "14:format",
-   "label": "Video format",
-   "type": "select",
-   "target": "node",
-   "default": "auto",
-   "options": [
-    "auto",
-    "video/h264-mp4",
-    "video/hevc-mp4",
-    "video/av1-webm",
-    "video/webm"
-   ]
-  }
- ],
- "endpoint_name": "MiniMax H3"
+  "id": "mmh3-director-native",
+  "name": "MiniMax H3 Director Native",
+  "category": "MiniMax H3",
+  "description": "Charsheet + one idea per line (segments) → multi-scene video with audio (Director timeline, server-side QwenVL autoprompting)",
+  "handler": "mmh3",
+  "remote_file": "MiniMaxH3-Director-Native.json",
+  "endpoint_id": "",
+  "outputs": [
+    "video",
+    "audio"
+  ],
+  "parameters": [
+    {
+      "key": "images",
+      "label": "Character sheet",
+      "type": "images",
+      "target": "job",
+      "max": 1
+    },
+    {
+      "key": "reference_mode",
+      "label": "References",
+      "type": "select",
+      "target": "job",
+      "default": "REF2VA (Refs ON — the sheet drives identity)",
+      "options": [
+        "REF2VA (Refs ON — the sheet drives identity)",
+        "OFF (text only — fl2va path)"
+      ]
+    },
+    {
+      "key": "global_prompt",
+      "label": "Global prompt (style/scene prose)",
+      "type": "text",
+      "target": "job",
+      "default": "The subject's look, style, and color palette stay faithful to the reference in every shot."
+    },
+    {
+      "key": "style",
+      "label": "Video style",
+      "type": "select",
+      "target": "job",
+      "default": "None",
+      "options": [
+        "None",
+        "[MATCH REF1] - STYLE: __mmh3/style/matchref1__",
+        "[MATCH REF2] - STYLE: __mmh3/style/matchref2__",
+        "[CINEMATIC] - STYLE: __mmh3/style/cinematic__",
+        "[LIVEACTION] - STYLE: __mmh3/style/liveaction__",
+        "[ANIME2D] - STYLE: __mmh3/style/anime2d__",
+        "[CG3D] - STYLE: __mmh3/style/cg3d__",
+        "[CLAYMATION] - STYLE: __mmh3/style/claymation__",
+        "[WATERCOLOR] - STYLE: __mmh3/style/watercolor__",
+        "[VINTAGE] - STYLE: __mmh3/style/vintage__",
+        "[PAPERCRAFT] - STYLE: __mmh3/style/papercraft__",
+        "[COLLAGE] - STYLE: __mmh3/style/collage__",
+        "[HANDDRAWN] - STYLE: __mmh3/style/handdrawn__",
+        "[RANDOM] - STYLE: __mmh3/style__"
+      ]
+    },
+    {
+      "key": "subject_description",
+      "label": "Subject description (optional — auto-Analyze if empty)",
+      "type": "text",
+      "target": "job",
+      "default": ""
+    },
+    {
+      "key": "prompt",
+      "label": "Segment ideas (one per line)",
+      "type": "text",
+      "target": "job",
+      "wildcard_prefix": "mmh3/",
+      "default": "She turns from the window, hair catching the golden light, and settles into a serene half-smile.\nShe walks slowly toward the camera through the warm room, glancing past the lens with a playful smile."
+    },
+    {
+      "key": "seconds",
+      "label": "Total duration (split evenly across ideas)",
+      "type": "select",
+      "target": "job",
+      "default": "10",
+      "options": [
+        "5",
+        "10",
+        "15"
+      ]
+    },
+    {
+      "key": "config",
+      "label": "Preset (sampler/turbo LoRA)",
+      "type": "select",
+      "target": "job",
+      "default": "r2va_singularity",
+      "options": [
+        "r2va_singularity",
+        "r2va_singularity_turbo"
+      ]
+    },
+    {
+      "key": "lora",
+      "label": "Style LoRA",
+      "type": "select",
+      "target": "job",
+      "default": "none",
+      "options": [
+        "none",
+        "realism",
+        "char_swap"
+      ]
+    },
+    {
+      "key": "image_size",
+      "label": "Resolution",
+      "type": "select",
+      "target": "job",
+      "default": "auto (segue le still)",
+      "options": [
+        "auto (segue le still)",
+        "1344x768 (16:9)",
+        "768x1344 (9:16)",
+        "1184x864 (4:3)",
+        "864x1184 (3:4)",
+        "1024x1024 (1:1)",
+        "1536x672 (21:9)"
+      ]
+    },
+    {
+      "key": "enhance",
+      "label": "Enhance segments (QwenVL autoprompting)",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "upscale",
+      "label": "Upscale",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "upscale_model",
+      "label": "Upscale model",
+      "type": "select",
+      "target": "job",
+      "default": "2xLexicaRRDBNet",
+      "options": [
+        "2x-CGIMaster-v1",
+        "2x-AnimeSharpV3",
+        "2xLexicaRRDBNet",
+        "2xLexicaRRDBNet_Sharp",
+        "RealESRGAN_x2plus",
+        "4xUltrasharp_4xUltrasharpV10",
+        "4x-AnimeSharp",
+        "4xNomos2_hq_dat2",
+        "4xNomos2_otf_esrgan",
+        "4xLSDIRplusC",
+        "RealESRGAN_x4plus",
+        "RealESRGAN_x4plus_anime_6B",
+        "realesrgan-x4minus"
+      ],
+      "parent": "upscale"
+    },
+    {
+      "key": "upscale_target",
+      "label": "Upscale target",
+      "type": "select",
+      "target": "job",
+      "default": "2K",
+      "options": [
+        "2x",
+        "3x",
+        "4x",
+        "1080p",
+        "2K",
+        "4K",
+        "custom"
+      ],
+      "parent": "upscale"
+    },
+    {
+      "key": "rife",
+      "label": "RIFE 48fps (post)",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "14:format",
+      "label": "Video format",
+      "type": "select",
+      "target": "node",
+      "default": "auto",
+      "options": [
+        "auto",
+        "video/h264-mp4",
+        "video/hevc-mp4",
+        "video/av1-webm",
+        "video/webm"
+      ]
+    }
+  ],
+  "endpoint_name": "MiniMax H3"
 }

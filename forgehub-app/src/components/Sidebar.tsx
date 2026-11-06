@@ -1,16 +1,25 @@
 import clsx from "clsx";
-import { Clapperboard, Image as ImageIcon, Package, Search, Sparkles, Video } from "lucide-react";
+import { ChevronDown, ChevronRight, Clapperboard, Image as ImageIcon, Package, Search, Video } from "lucide-react";
 import { useMemo, useState } from "react";
 import type { Workflow } from "../api";
 import { useT } from "../i18n";
 
-const CATEGORY_ICONS: Record<string, React.ReactNode> = {
+const OUTPUT_ICONS: Record<string, React.ReactNode> = {
   video: <Video size={13} />,
   image: <ImageIcon size={13} />,
-  agent: <Sparkles size={13} />,
   audio: <Clapperboard size={13} />,
-  other: <Package size={13} />,
 };
+
+const COLLAPSED_KEY = "forgehub-collapsed-groups";
+
+function loadCollapsed(): Set<string> {
+  try {
+    const v = JSON.parse(localStorage.getItem(COLLAPSED_KEY) || "[]");
+    return new Set(Array.isArray(v) ? v : []);
+  } catch {
+    return new Set();
+  }
+}
 
 interface Props {
   workflows: Workflow[];
@@ -22,6 +31,18 @@ interface Props {
 export default function Sidebar({ workflows, selectedId, onSelect, endpointId }: Props) {
   const t = useT();
   const [query, setQuery] = useState("");
+  const [collapsed, setCollapsed] = useState<Set<string>>(loadCollapsed);
+
+  const toggleGroup = (cat: string) => {
+    setCollapsed((prev) => {
+      const next = new Set(prev);
+      if (next.has(cat)) next.delete(cat);
+      else next.add(cat);
+      localStorage.setItem(COLLAPSED_KEY, JSON.stringify([...next]));
+      return next;
+    });
+  };
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return workflows;
@@ -66,14 +87,18 @@ export default function Sidebar({ workflows, selectedId, onSelect, endpointId }:
       <div className="flex-1 overflow-y-auto p-2">
         {Object.entries(grouped).map(([cat, list]) => (
           <div key={cat} className="mb-3">
-            <div className="flex items-center gap-1.5 px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-faint">
-              {CATEGORY_ICONS[cat] ?? CATEGORY_ICONS.other}
+            <button
+              onClick={() => toggleGroup(cat)}
+              className="flex w-full items-center gap-1.5 rounded-md px-2 py-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-faint transition-colors hover:text-muted"
+            >
+              {collapsed.has(cat) && !query.trim() ? <ChevronRight size={11} /> : <ChevronDown size={11} />}
+              {OUTPUT_ICONS[list[0]?.outputs?.[0] || ""] ?? <Package size={13} />}
               {(t.categories as Record<string, string>)[cat] ?? cat}
               <span className="ml-auto rounded-md border border-border bg-panel px-1.5 text-[10px] text-muted">
                 {list.length}
               </span>
-            </div>
-            {list.map((w) => (
+            </button>
+            {!(collapsed.has(cat) && !query.trim()) && list.map((w) => (
               <button
                 key={w.id}
                 onClick={() => onSelect(w.id)}

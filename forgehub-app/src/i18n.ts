@@ -93,6 +93,7 @@ export interface Translations {
   selectModel: string;
   customModel: string;
   saveKeyHint: string;
+  runpodKeyHint: string;
   s3Section: string;
   s3Hint: string;
   s3AccessId: string;
@@ -209,6 +210,7 @@ export const translations: Record<Language, Translations> = {
     selectModel: "— select a model —",
     customModel: "Custom (type manually)",
     saveKeyHint: "Save the API key below to list models.",
+    runpodKeyHint: "Uses the RunPod API key above — billing is per-token on your RunPod account.",
     s3Section: "Output storage (S3)",
     s3Hint: "Needed to download large video outputs — they're offloaded to the endpoint's network volume. Create the credentials in the RunPod console.",
     s3AccessId: "S3 Access ID",
@@ -320,6 +322,7 @@ export const translations: Record<Language, Translations> = {
     selectModel: "— scegli un modello —",
     customModel: "Custom (scrivi a mano)",
     saveKeyHint: "Salva la API key qui sotto per elencare i modelli.",
+    runpodKeyHint: "Usa la API key RunPod qui sopra — il billing è per-token sul tuo account RunPod.",
     s3Section: "Storage output (S3)",
     s3Hint: "Serve per scaricare i video grandi — vengono caricati sul network volume dell'endpoint. Le credenziali si creano nella console RunPod.",
     s3AccessId: "S3 Access ID",
@@ -431,6 +434,7 @@ export const translations: Record<Language, Translations> = {
     selectModel: "— elige un modelo —",
     customModel: "Personalizado (escríbelo)",
     saveKeyHint: "Guarda la API key abajo para listar los modelos.",
+    runpodKeyHint: "Usa la API key de RunPod de arriba — el cobro es por token en tu cuenta RunPod.",
     s3Section: "Almacenamiento de salida (S3)",
     s3Hint: "Necesario para descargar salidas de video grandes — se suben al network volume del endpoint. Crea las credenciales en la consola de RunPod.",
     s3AccessId: "S3 Access ID",

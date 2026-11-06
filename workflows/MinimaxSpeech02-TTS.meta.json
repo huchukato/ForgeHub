@@ -1,0 +1,55 @@
+{
+  "id": "minimax-speech-tts",
+  "name": "Minimax Speech 02 HD",
+  "category": "RunPod Cloud",
+  "description": "HD text-to-speech with emotion control (RunPod Public Endpoint, $0.05/1K chars)",
+  "endpoint_id": "minimax-speech-02-hd",
+  "public_endpoint": true,
+  "outputs": [
+    "audio"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Text to speak",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "voice_id",
+      "label": "Voice id",
+      "type": "text",
+      "target": "job",
+      "default": "Wise_Woman"
+    },
+    {
+      "key": "emotion",
+      "label": "Emotion",
+      "type": "select",
+      "target": "job",
+      "default": "neutral",
+      "options": [
+        "neutral",
+        "happy",
+        "sad",
+        "angry",
+        "fearful",
+        "surprised"
+      ]
+    },
+    {
+      "key": "speed",
+      "label": "Speed",
+      "type": "float",
+      "target": "job",
+      "default": 1
+    },
+    {
+      "key": "pitch",
+      "label": "Pitch",
+      "type": "float",
+      "target": "job",
+      "default": 0
+    }
+  ]
+}

@@ -118,22 +118,31 @@ class RunPodServerlessBackend:
 
     async def queue(self, workflow: dict[str, Any], parameters: dict[str, Any],
                     job_input: dict[str, Any] | None = None, client_id: str | None = None,
-                    job_meta: dict[str, Any] | None = None) -> str:
+                    job_meta: dict[str, Any] | None = None,
+                    public_endpoint: bool = False) -> str:
         payload = dict(job_input or {})
         endpoint_id = payload.pop("endpoint_id", "")
         graph_params = {k: v for k, v in parameters.items() if ":" in k}
         for key, value in parameters.items():
             if ":" not in key:
                 payload[key] = value
-        # Ship the full API-format graph inside the job — the handler runs its
-        # standard patch pass (media upload, unet/lora needles, config presets)
-        # on it, so the worker needs no baked workflow templates.
-        patched = _apply_parameters(workflow, graph_params)
-        bypass_ids = payload.pop("bypass_nodes", None)
-        if bypass_ids:
-            patched = _bypass_nodes(patched, bypass_ids)
-        if patched:
-            payload["prompt_graph"] = patched
+        if public_endpoint:
+            # Public Endpoints take the declared input fields only — no graph,
+            # no bypass groups, no empty optional fields.
+            payload.pop("bypass_nodes", None)
+            for internal_key in ("workflow", "job_name"):
+                payload.pop(internal_key, None)
+            payload = {k: v for k, v in payload.items() if v is not None and v != ""}
+        else:
+            # Ship the full API-format graph inside the job — the handler runs its
+            # standard patch pass (media upload, unet/lora needles, config presets)
+            # on it, so the worker needs no baked workflow templates.
+            patched = _apply_parameters(workflow, graph_params)
+            bypass_ids = payload.pop("bypass_nodes", None)
+            if bypass_ids:
+                patched = _bypass_nodes(patched, bypass_ids)
+            if patched:
+                payload["prompt_graph"] = patched
         for media_key in ("images", "video"):
             if payload.get(media_key):
                 if media_key == "images":
@@ -191,6 +200,25 @@ class RunPodServerlessBackend:
                 error=result.get("error") or f"RunPod job {state.lower()}",
             )
         job_out = result.get("output") or {}
+        if not job_out.get("outputs"):
+            # Public Endpoint output shapes: output.result is an image/video URL
+            # (or base64 when enable_base64_output), TTS models return
+            # output.audio_url. output.cost is USD when present.
+            results = job_out.get("result")
+            if results is None:
+                results = [v for k, v in job_out.items()
+                           if k.endswith("_url") and isinstance(v, str)]
+            if isinstance(results, str):
+                results = [results]
+            if not isinstance(results, (list, tuple)):
+                results = []
+            job_out = dict(job_out)
+            job_out["outputs"] = [
+                {"filename": urllib.parse.urlparse(v).path.rsplit("/", 1)[-1] or "output.png", "url": v}
+                if isinstance(v, str) and v.startswith("http")
+                else {"filename": "output.png", "b64": v}
+                for v in results
+            ]
         texts = {k: str(v) for k, v in (job_out.get("texts") or {}).items()}
         job_meta = self._job_meta.pop(job_id, {}) or {}
         meta = {
@@ -240,7 +268,8 @@ class RunPodServerlessBackend:
                 break
         return ExecutionStatus(
                 prompt_id=job_id, status="success", outputs=outputs, texts=texts,
-                cost_usd=self._cost(
+                cost_usd=job_out.get("cost") if isinstance(job_out.get("cost"), (int, float))
+                else self._cost(
                     job_id, int(result.get("delayTime") or 0) + int(result.get("executionTime") or 0)))
 
     async def cancel(self, job_id: str) -> None:

@@ -1,0 +1,20 @@
+{
+  "id": "flux-dev-t2i",
+  "name": "Flux Dev T2I",
+  "category": "RunPod Cloud",
+  "description": "FLUX flagship quality generation (RunPod Public Endpoint, $0.02/MP)",
+  "endpoint_id": "black-forest-labs-flux-1-dev",
+  "public_endpoint": true,
+  "outputs": ["image"],
+  "parameters": [
+    { "key": "prompt", "label": "Prompt", "type": "text", "target": "job" },
+    { "key": "negative_prompt", "label": "Negative prompt", "type": "text", "target": "job", "default": "" },
+    { "key": "width", "label": "Width (÷64)", "type": "int", "target": "job", "default": 1024 },
+    { "key": "height", "label": "Height (÷64)", "type": "int", "target": "job", "default": 1024 },
+    { "key": "num_inference_steps", "label": "Steps (1-50)", "type": "int", "target": "job", "default": 28 },
+    { "key": "guidance", "label": "Guidance", "type": "float", "target": "job", "default": 7.5 },
+    { "key": "seed", "label": "Seed (-1 = random)", "type": "int", "target": "job", "default": -1 },
+    { "key": "image_format", "label": "Format", "type": "select", "target": "job", "default": "png",
+      "options": ["png", "jpeg"] }
+  ]
+}

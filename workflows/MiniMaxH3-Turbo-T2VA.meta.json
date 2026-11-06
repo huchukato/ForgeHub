@@ -1,184 +1,184 @@
 {
- "id": "mmh3-t2va",
- "name": "MiniMax H3 T2VA",
- "category": "video",
- "description": "Text → video with audio (MiniMax H3 turbo, serverless INT8)",
- "handler": "mmh3",
- "remote_file": "MiniMaxH3-Turbo-T2VA.json",
- "endpoint_id": "",
- "outputs": [
-  "video",
-  "audio"
- ],
- "parameters": [
-  {
-   "key": "prompt",
-   "label": "Prompt",
-   "type": "text",
-   "target": "job",
-   "wildcard_prefix": "mmh3/"
-  },
-  {
-   "key": "seconds",
-   "label": "Duration / QwenVL preset",
-   "type": "select",
-   "target": "job",
-   "default": "5",
-   "options": [
-    "5",
-    "10",
-    "15"
-   ]
-  },
-  {
-   "key": "image_size",
-   "label": "Resolution",
-   "type": "select",
-   "target": "job",
-   "default": "auto (segue l'aspect dell'immagine)",
-   "options": [
-    "auto (segue l'aspect dell'immagine)",
-    "1344x768 (16:9)",
-    "768x1344 (9:16)",
-    "1184x864 (4:3)",
-    "864x1184 (3:4)",
-    "1024x1024 (1:1)",
-    "1536x672 (21:9)"
-   ]
-  },
-  {
-   "key": "config",
-   "label": "Preset",
-   "type": "select",
-   "target": "job",
-   "default": "native_turbo",
-   "options": [
-    "native",
-    "native_turbo",
-    "r2va_native",
-    "r2va_native_turbo",
-    "10eros",
-    "10eros_turbo"
-   ]
-  },
-  {
-   "key": "enhance",
-   "label": "Enhancer QwenVL",
-   "type": "bool",
-   "target": "job",
-   "default": true
-  },
-  {
-   "key": "vl_preset",
-   "label": "Enhancer preset",
-   "type": "select",
-   "target": "job",
-   "default": "MiniMax › NSFW T2V",
-   "options": [
-    "MiniMax › NSFW T2V",
-    "MiniMax › SFW T2V"
-   ],
-   "parent": "enhance"
-  },
-  {
-   "key": "105:256:style_tag",
-   "label": "Style tag",
-   "type": "select",
-   "target": "node",
-   "default": "None",
-   "options": [
-    "None",
-    "[ANIME]",
-    "[PHOTOREALISTIC]",
-    "[SEMIREALANIME]",
-    "[3DCG]",
-    "[CARTOON]",
-    "[CLAYMATION]",
-    "[WATERCOLOR]",
-    "[VINTAGE]",
-    "[NOIR]",
-    "[CYBERPUNK]",
-    "[FANTASY]",
-    "[SOFTFOCUS]",
-    "[HENTAI]"
-   ]
-  },
-  {
-   "key": "upscale",
-   "label": "Upscale",
-   "type": "bool",
-   "target": "job",
-   "default": true
-  },
-  {
-   "key": "rife",
-   "label": "RIFE 48fps (post)",
-   "type": "bool",
-   "target": "job",
-   "default": true
-  },
-  {
-   "key": "upscale_model",
-   "label": "Upscale model",
-   "type": "select",
-   "target": "job",
-   "default": "2xLexicaRRDBNet",
-   "options": [
-    "2x-CGIMaster-v1",
-    "2x-AnimeSharpV3",
-    "2xLexicaRRDBNet",
-    "2xLexicaRRDBNet_Sharp",
-    "RealESRGAN_x2plus",
-    "4xUltrasharp_4xUltrasharpV10",
-    "4x-AnimeSharp",
-    "4xNomos2_hq_dat2",
-    "4xNomos2_otf_esrgan",
-    "4xLSDIRplusC",
-    "RealESRGAN_x4plus",
-    "RealESRGAN_x4plus_anime_6B",
-    "realesrgan-x4minus"
-   ],
-   "parent": "upscale"
-  },
-  {
-   "key": "upscale_target",
-   "label": "Upscale target",
-   "type": "select",
-   "target": "job",
-   "default": "2K",
-   "options": [
-    "2x",
-    "3x",
-    "4x",
-    "1080p",
-    "2K",
-    "4K",
-    "custom"
-   ],
-   "parent": "upscale"
-  },
-  {
-   "key": "126:format",
-   "label": "Video format",
-   "type": "select",
-   "target": "node",
-   "default": "video/h264-mp4",
-   "options": [
-    "video/h264-mp4",
-    "video/hevc-mp4",
-    "video/av1-webm",
-    "video/webm",
-    "image/gif",
-    "image/webp"
-   ]
-  },
-  {
-   "key": "126:crf",
-   "label": "Video quality (CRF, lower=better)",
-   "type": "int",
-   "target": "node",
-   "default": 20
-  }
- ],
- "endpoint_name": "MiniMax H3"
+  "id": "mmh3-t2va",
+  "name": "MiniMax H3 T2VA",
+  "category": "MiniMax H3",
+  "description": "Text → video with audio (MiniMax H3 turbo, serverless INT8)",
+  "handler": "mmh3",
+  "remote_file": "MiniMaxH3-Turbo-T2VA.json",
+  "endpoint_id": "",
+  "outputs": [
+    "video",
+    "audio"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Prompt",
+      "type": "text",
+      "target": "job",
+      "wildcard_prefix": "mmh3/"
+    },
+    {
+      "key": "seconds",
+      "label": "Duration / QwenVL preset",
+      "type": "select",
+      "target": "job",
+      "default": "5",
+      "options": [
+        "5",
+        "10",
+        "15"
+      ]
+    },
+    {
+      "key": "image_size",
+      "label": "Resolution",
+      "type": "select",
+      "target": "job",
+      "default": "auto (segue l'aspect dell'immagine)",
+      "options": [
+        "auto (segue l'aspect dell'immagine)",
+        "1344x768 (16:9)",
+        "768x1344 (9:16)",
+        "1184x864 (4:3)",
+        "864x1184 (3:4)",
+        "1024x1024 (1:1)",
+        "1536x672 (21:9)"
+      ]
+    },
+    {
+      "key": "config",
+      "label": "Preset",
+      "type": "select",
+      "target": "job",
+      "default": "native_turbo",
+      "options": [
+        "native",
+        "native_turbo",
+        "r2va_native",
+        "r2va_native_turbo",
+        "10eros",
+        "10eros_turbo"
+      ]
+    },
+    {
+      "key": "enhance",
+      "label": "Enhancer QwenVL",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "vl_preset",
+      "label": "Enhancer preset",
+      "type": "select",
+      "target": "job",
+      "default": "MiniMax › NSFW T2V",
+      "options": [
+        "MiniMax › NSFW T2V",
+        "MiniMax › SFW T2V"
+      ],
+      "parent": "enhance"
+    },
+    {
+      "key": "105:256:style_tag",
+      "label": "Style tag",
+      "type": "select",
+      "target": "node",
+      "default": "None",
+      "options": [
+        "None",
+        "[ANIME]",
+        "[PHOTOREALISTIC]",
+        "[SEMIREALANIME]",
+        "[3DCG]",
+        "[CARTOON]",
+        "[CLAYMATION]",
+        "[WATERCOLOR]",
+        "[VINTAGE]",
+        "[NOIR]",
+        "[CYBERPUNK]",
+        "[FANTASY]",
+        "[SOFTFOCUS]",
+        "[HENTAI]"
+      ]
+    },
+    {
+      "key": "upscale",
+      "label": "Upscale",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "rife",
+      "label": "RIFE 48fps (post)",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "upscale_model",
+      "label": "Upscale model",
+      "type": "select",
+      "target": "job",
+      "default": "2xLexicaRRDBNet",
+      "options": [
+        "2x-CGIMaster-v1",
+        "2x-AnimeSharpV3",
+        "2xLexicaRRDBNet",
+        "2xLexicaRRDBNet_Sharp",
+        "RealESRGAN_x2plus",
+        "4xUltrasharp_4xUltrasharpV10",
+        "4x-AnimeSharp",
+        "4xNomos2_hq_dat2",
+        "4xNomos2_otf_esrgan",
+        "4xLSDIRplusC",
+        "RealESRGAN_x4plus",
+        "RealESRGAN_x4plus_anime_6B",
+        "realesrgan-x4minus"
+      ],
+      "parent": "upscale"
+    },
+    {
+      "key": "upscale_target",
+      "label": "Upscale target",
+      "type": "select",
+      "target": "job",
+      "default": "2K",
+      "options": [
+        "2x",
+        "3x",
+        "4x",
+        "1080p",
+        "2K",
+        "4K",
+        "custom"
+      ],
+      "parent": "upscale"
+    },
+    {
+      "key": "126:format",
+      "label": "Video format",
+      "type": "select",
+      "target": "node",
+      "default": "video/h264-mp4",
+      "options": [
+        "video/h264-mp4",
+        "video/hevc-mp4",
+        "video/av1-webm",
+        "video/webm",
+        "image/gif",
+        "image/webp"
+      ]
+    },
+    {
+      "key": "126:crf",
+      "label": "Video quality (CRF, lower=better)",
+      "type": "int",
+      "target": "node",
+      "default": 20
+    }
+  ],
+  "endpoint_name": "MiniMax H3"
 }

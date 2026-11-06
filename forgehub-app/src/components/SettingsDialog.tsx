@@ -8,6 +8,8 @@ const LLM_SERVICES = [
   { id: "openrouter", label: "OpenRouter", url: "https://openrouter.ai/api/v1" },
   { id: "openai", label: "OpenAI", url: "https://api.openai.com/v1" },
   { id: "groq", label: "Groq", url: "https://api.groq.com/openai/v1" },
+  { id: "runpod-qwen3", label: "RunPod · Qwen3 32B", url: "https://api.runpod.ai/v2/qwen3-32b-awq/openai/v1", runpodKey: true },
+  { id: "runpod-kimi", label: "RunPod · Moonshot Kimi", url: "https://api.runpod.ai/v2/moonshot-kimi/openai/v1", runpodKey: true },
   { id: "ollama", label: "Ollama (local)", url: "http://127.0.0.1:11434/v1", noKey: true },
   { id: "lmstudio", label: "LM Studio (local)", url: "http://127.0.0.1:1234/v1", noKey: true },
   { id: "custom", label: "Custom (OpenAI-compatible)", url: "" },
@@ -76,8 +78,12 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
     }
   };
 
-  const serviceNeedsKey = (id = service) =>
-    !LLM_SERVICES.find((s) => s.id === id)?.noKey;
+  const serviceUsesRunpodKey = (id = service) =>
+    !!(LLM_SERVICES.find((s) => s.id === id) as { runpodKey?: boolean })?.runpodKey;
+  const serviceNeedsKey = (id = service) => {
+    const svc = LLM_SERVICES.find((s) => s.id === id);
+    return !svc?.noKey && !(svc as { runpodKey?: boolean })?.runpodKey;
+  };
 
   const fetchModels = async (url: string, hasKey = llmKeySet) => {
     if (!url || (serviceNeedsKey() && !hasKey)) { setModels([]); return; }
@@ -363,6 +369,9 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
             placeholder="openrouter/free"
             className="mb-1 font-mono"
           />
+        )}
+        {serviceUsesRunpodKey() && (
+          <div className="mb-2 text-[10px] text-muted">{t.runpodKeyHint}</div>
         )}
         {!llmKeySet && serviceNeedsKey() && (
           <div className="mb-2 text-[10px] text-muted">{t.saveKeyHint}</div>

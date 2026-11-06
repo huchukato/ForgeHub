@@ -133,7 +133,7 @@ def load_meta(path: Path, workflow: dict[str, Any] | None = None, base_dir: Path
             raw = json.load(f)
         meta = WorkflowMeta(**raw)
         meta.requires_endpoint = "endpoint_id" in raw or "endpoint_name" in raw
-        if workflow is not None and not _is_api_format(workflow):
+        if workflow is not None and not _is_api_format(workflow) and not raw.get("public_endpoint"):
             meta.format = "ui"
         return meta
 

@@ -66,9 +66,9 @@ class ChatProxy:
             return ChatResponse(**data)
 
     async def _chat_llm(self, session: aiohttp.ClientSession, request: ChatRequest) -> ChatResponse:
-        headers = {}
-        if SETTINGS.chat_llm_key:
-            headers["Authorization"] = f"Bearer {SETTINGS.chat_llm_key}"
+        key = (SETTINGS.runpod_api_key if "api.runpod.ai" in SETTINGS.chat_llm_url
+               else "") or SETTINGS.chat_llm_key
+        headers = {"Authorization": f"Bearer {key}"} if key else {}
         messages = [{"role": "system", "content": _system_prompt(request.workflow_id)}]
         messages += [{"role": m.role, "content": m.content} for m in request.messages]
         payload = {

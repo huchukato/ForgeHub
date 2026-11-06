@@ -3,6 +3,13 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.1.20] — 2026-11-05
+
+### Added
+- **RunPod Public Endpoints as workflows** — `public_endpoint` metas run model APIs with no dedicated endpoint: Nano Banana 2 Edit, Z-Image Turbo T2I, Flux Schnell/Dev T2I, Seedream 4.0 T2I, Chatterbox Turbo TTS and Minimax Speech 02 HD, grouped under the new **RunPod Cloud** sidebar category. Internal fields (workflow, job_name, bypass_nodes, empty optionals) are stripped and the strict per-endpoint output shapes (`result`, `image_url`, `audio_url`) are normalized into the standard output list — `output.cost` shows the real per-job price instead of the GPU-rate estimate.
+- **Collapsible per-model sidebar groups** — workflow categories are now model names (LTX 2.5, MiniMax H3, Qwen Image 2.1, Pony, RunPod Cloud), each collapsible with localStorage-persisted state; groups auto-expand while searching.
+- **RunPod LLMs as prompt-assist services** — Qwen3 32B and Moonshot Kimi (5 variants) appear in the Settings service picker; `/openai/v1` URLs on `api.runpod.ai` authenticate with the existing RunPod API key automatically.
+
 ## [0.1.19] — 2026-10-30
 
 ### Added

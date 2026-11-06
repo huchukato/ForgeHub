@@ -1,212 +1,212 @@
 {
- "id": "pimpmypony-hiresfix-facedet",
- "name": "PimpMyPony HiRes + FaceDet",
- "category": "image",
- "description": "Pony / Illustrious T2I with wildcards — hires fix and face detailer toggleable in groups (serverless)",
- "handler": "pony",
- "remote_file": "PimpMyPony-HiResFix-FaceDet.json",
- "endpoint_id": "",
- "outputs": [
-  "image"
- ],
- "bypass_groups": {
-  "hires": [
-   "92:152",
-   "92:153"
+  "id": "pimpmypony-hiresfix-facedet",
+  "name": "PimpMyPony HiRes + FaceDet",
+  "category": "Pony",
+  "description": "Pony / Illustrious T2I with wildcards — hires fix and face detailer toggleable in groups (serverless)",
+  "handler": "pony",
+  "remote_file": "PimpMyPony-HiResFix-FaceDet.json",
+  "endpoint_id": "",
+  "outputs": [
+    "image"
   ],
-  "facedet": [
-   "92:133",
-   "92:134",
-   "92:135",
-   "92:136"
-  ]
- },
- "parameters": [
-  {
-   "key": "image_size",
-   "label": "Image size",
-   "type": "select",
-   "target": "job",
-   "default": "1024x1024 (1:1)",
-   "options": [
-    "1024x1024 (1:1)",
-    "1216x832 (3:2)",
-    "832x1216 (2:3)",
-    "1152x896 (4:3)",
-    "896x1152 (3:4)",
-    "1344x768 (16:9)",
-    "768x1344 (9:16)"
-   ]
+  "bypass_groups": {
+    "hires": [
+      "92:152",
+      "92:153"
+    ],
+    "facedet": [
+      "92:133",
+      "92:134",
+      "92:135",
+      "92:136"
+    ]
   },
-  {
-   "key": "prompt",
-   "label": "Prompt (wildcard __name__ o tag Pony)",
-   "type": "text",
-   "target": "job",
-   "wildcard_prefix": "pmp/"
-  },
-  {
-   "key": "82:mode",
-   "label": "Wildcard mode",
-   "type": "select",
-   "target": "node",
-   "default": "populate",
-   "options": [
-    "populate",
-    "fixed",
-    "reproduce"
-   ]
-  },
-  {
-   "key": "82:base_model",
-   "label": "Wildcard preset",
-   "type": "select",
-   "target": "node",
-   "default": "Pony",
-   "options": [
-    "None",
-    "Pony",
-    "Illustrious"
-   ]
-  },
-  {
-   "key": "92:131:ckpt_name",
-   "label": "Checkpoint",
-   "type": "select",
-   "target": "node",
-   "default": "pimpmypony_pmpSemiRealAnime.safetensors",
-   "options": [
-    "pimpmypony_pmpSemiRealAnime.safetensors",
-    "pimpmypony_pmpInCaseEnhanced.safetensors",
-    "pimpmypony_pmpIncaseStyle.safetensors",
-    "ilustmix_v111.safetensors"
-   ]
-  },
-  {
-   "key": "92:132:steps",
-   "label": "Steps",
-   "type": "int",
-   "target": "node",
-   "default": 30
-  },
-  {
-   "key": "92:132:cfg",
-   "label": "CFG",
-   "type": "float",
-   "target": "node",
-   "default": 6
-  },
-  {
-   "key": "92:132:sampler_name",
-   "label": "Sampler",
-   "type": "select",
-   "target": "node",
-   "default": "euler_ancestral",
-   "options": [
-    "dpmpp_2m_sde",
-    "dpmpp_2m",
-    "dpmpp_3m_sde",
-    "euler",
-    "euler_ancestral"
-   ]
-  },
-  {
-   "key": "92:132:scheduler",
-   "label": "Scheduler",
-   "type": "select",
-   "target": "node",
-   "default": "karras",
-   "options": [
-    "karras",
-    "normal",
-    "exponential",
-    "simple",
-    "sgm_uniform"
-   ]
-  },
-  {
-   "key": "enable_hires",
-   "label": "Hires fix (4x → lanczos 50% + refine)",
-   "type": "select",
-   "target": "job",
-   "default": "on",
-   "options": [
-    "on",
-    "off"
-   ]
-  },
-  {
-   "key": "enable_facedet",
-   "label": "Face detailer (YOLO + SAM)",
-   "type": "select",
-   "target": "job",
-   "default": "on",
-   "options": [
-    "on",
-    "off"
-   ]
-  },
-  {
-   "key": "92:152:model_name",
-   "label": "Upscaler (hires)",
-   "type": "select",
-   "parent": "enable_hires",
-   "target": "node",
-   "default": "4xUltrasharp_4xUltrasharpV10.pth",
-   "options": [
-    "4xUltrasharp_4xUltrasharpV10.pth",
-    "4x-AnimeSharp.pth",
-    "RealESRGAN_x4plus.pth"
-   ]
-  },
-  {
-   "key": "92:152:percent",
-   "label": "Hires rescale % (50 = 2x netto)",
-   "type": "int",
-   "parent": "enable_hires",
-   "target": "node",
-   "default": 50
-  },
-  {
-   "key": "92:153:denoise",
-   "label": "Hires refine denoise",
-   "type": "float",
-   "parent": "enable_hires",
-   "target": "node",
-   "default": 0.4
-  },
-  {
-   "key": "92:153:steps",
-   "label": "Hires refine steps",
-   "type": "int",
-   "parent": "enable_hires",
-   "target": "node",
-   "default": 12
-  },
-  {
-   "key": "92:135:denoise",
-   "label": "Detailer denoise",
-   "type": "float",
-   "parent": "enable_facedet",
-   "target": "node",
-   "default": 0.35
-  },
-  {
-   "key": "92:135:steps",
-   "label": "Detailer steps",
-   "type": "int",
-   "parent": "enable_facedet",
-   "target": "node",
-   "default": 20
-  },
-  {
-   "key": "92:133:bbox_threshold",
-   "label": "Face detect threshold",
-   "type": "float",
-   "parent": "enable_facedet",
-   "target": "node",
-   "default": 0.5
-  }
- ],
- "endpoint_name": "Qwen Image 2.1"
+  "parameters": [
+    {
+      "key": "image_size",
+      "label": "Image size",
+      "type": "select",
+      "target": "job",
+      "default": "1024x1024 (1:1)",
+      "options": [
+        "1024x1024 (1:1)",
+        "1216x832 (3:2)",
+        "832x1216 (2:3)",
+        "1152x896 (4:3)",
+        "896x1152 (3:4)",
+        "1344x768 (16:9)",
+        "768x1344 (9:16)"
+      ]
+    },
+    {
+      "key": "prompt",
+      "label": "Prompt (wildcard __name__ o tag Pony)",
+      "type": "text",
+      "target": "job",
+      "wildcard_prefix": "pmp/"
+    },
+    {
+      "key": "82:mode",
+      "label": "Wildcard mode",
+      "type": "select",
+      "target": "node",
+      "default": "populate",
+      "options": [
+        "populate",
+        "fixed",
+        "reproduce"
+      ]
+    },
+    {
+      "key": "82:base_model",
+      "label": "Wildcard preset",
+      "type": "select",
+      "target": "node",
+      "default": "Pony",
+      "options": [
+        "None",
+        "Pony",
+        "Illustrious"
+      ]
+    },
+    {
+      "key": "92:131:ckpt_name",
+      "label": "Checkpoint",
+      "type": "select",
+      "target": "node",
+      "default": "pimpmypony_pmpSemiRealAnime.safetensors",
+      "options": [
+        "pimpmypony_pmpSemiRealAnime.safetensors",
+        "pimpmypony_pmpInCaseEnhanced.safetensors",
+        "pimpmypony_pmpIncaseStyle.safetensors",
+        "ilustmix_v111.safetensors"
+      ]
+    },
+    {
+      "key": "92:132:steps",
+      "label": "Steps",
+      "type": "int",
+      "target": "node",
+      "default": 30
+    },
+    {
+      "key": "92:132:cfg",
+      "label": "CFG",
+      "type": "float",
+      "target": "node",
+      "default": 6
+    },
+    {
+      "key": "92:132:sampler_name",
+      "label": "Sampler",
+      "type": "select",
+      "target": "node",
+      "default": "euler_ancestral",
+      "options": [
+        "dpmpp_2m_sde",
+        "dpmpp_2m",
+        "dpmpp_3m_sde",
+        "euler",
+        "euler_ancestral"
+      ]
+    },
+    {
+      "key": "92:132:scheduler",
+      "label": "Scheduler",
+      "type": "select",
+      "target": "node",
+      "default": "karras",
+      "options": [
+        "karras",
+        "normal",
+        "exponential",
+        "simple",
+        "sgm_uniform"
+      ]
+    },
+    {
+      "key": "enable_hires",
+      "label": "Hires fix (4x → lanczos 50% + refine)",
+      "type": "select",
+      "target": "job",
+      "default": "on",
+      "options": [
+        "on",
+        "off"
+      ]
+    },
+    {
+      "key": "enable_facedet",
+      "label": "Face detailer (YOLO + SAM)",
+      "type": "select",
+      "target": "job",
+      "default": "on",
+      "options": [
+        "on",
+        "off"
+      ]
+    },
+    {
+      "key": "92:152:model_name",
+      "label": "Upscaler (hires)",
+      "type": "select",
+      "parent": "enable_hires",
+      "target": "node",
+      "default": "4xUltrasharp_4xUltrasharpV10.pth",
+      "options": [
+        "4xUltrasharp_4xUltrasharpV10.pth",
+        "4x-AnimeSharp.pth",
+        "RealESRGAN_x4plus.pth"
+      ]
+    },
+    {
+      "key": "92:152:percent",
+      "label": "Hires rescale % (50 = 2x netto)",
+      "type": "int",
+      "parent": "enable_hires",
+      "target": "node",
+      "default": 50
+    },
+    {
+      "key": "92:153:denoise",
+      "label": "Hires refine denoise",
+      "type": "float",
+      "parent": "enable_hires",
+      "target": "node",
+      "default": 0.4
+    },
+    {
+      "key": "92:153:steps",
+      "label": "Hires refine steps",
+      "type": "int",
+      "parent": "enable_hires",
+      "target": "node",
+      "default": 12
+    },
+    {
+      "key": "92:135:denoise",
+      "label": "Detailer denoise",
+      "type": "float",
+      "parent": "enable_facedet",
+      "target": "node",
+      "default": 0.35
+    },
+    {
+      "key": "92:135:steps",
+      "label": "Detailer steps",
+      "type": "int",
+      "parent": "enable_facedet",
+      "target": "node",
+      "default": 20
+    },
+    {
+      "key": "92:133:bbox_threshold",
+      "label": "Face detect threshold",
+      "type": "float",
+      "parent": "enable_facedet",
+      "target": "node",
+      "default": 0.5
+    }
+  ],
+  "endpoint_name": "Qwen Image 2.1"
 }

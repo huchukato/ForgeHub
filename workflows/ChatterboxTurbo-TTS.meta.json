@@ -1,0 +1,17 @@
+{
+  "id": "chatterbox-turbo-tts",
+  "name": "Chatterbox Turbo TTS",
+  "category": "RunPod Cloud",
+  "description": "Text-to-speech — 20 preset voices + URL voice clone (RunPod Public Endpoint)",
+  "endpoint_id": "chatterbox-turbo",
+  "public_endpoint": true,
+  "outputs": ["audio"],
+  "parameters": [
+    { "key": "prompt", "label": "Text to speak", "type": "text", "target": "job" },
+    { "key": "voice", "label": "Voice", "type": "select", "target": "job", "default": "lucy",
+      "options": ["aaron", "abigail", "anaya", "andy", "archer", "brian", "chloe", "dylan", "emmanuel", "ethan", "evelyn", "gavin", "gordon", "ivan", "laura", "lucy", "madison", "marisol", "meera", "walter"] },
+    { "key": "voice_url", "label": "Voice clone URL (optional, overrides voice)", "type": "text", "target": "job", "default": "" },
+    { "key": "format", "label": "Format", "type": "select", "target": "job", "default": "wav",
+      "options": ["wav", "flac", "ogg"] }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "id": "seedream-4-t2i",
+  "name": "Seedream 4.0 T2I",
+  "category": "RunPod Cloud",
+  "description": "ByteDance new-gen text-to-image (RunPod Public Endpoint, $0.027/img)",
+  "endpoint_id": "seedream-v4-t2i",
+  "public_endpoint": true,
+  "outputs": ["image"],
+  "parameters": [
+    { "key": "prompt", "label": "Prompt", "type": "text", "target": "job" },
+    { "key": "negative_prompt", "label": "Negative prompt", "type": "text", "target": "job", "default": "" },
+    { "key": "size", "label": "Size", "type": "select", "target": "job", "default": "1024*1024",
+      "options": ["1024*1024", "1280*720", "720*1280", "2048*2048", "2304*1728", "1728*2304"] },
+    { "key": "seed", "label": "Seed (-1 = random)", "type": "int", "target": "job", "default": -1 }
+  ]
+}

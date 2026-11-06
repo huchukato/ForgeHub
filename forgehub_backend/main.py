@@ -296,8 +296,9 @@ async def provider_models(url: str):
     import aiohttp
     base = url.rstrip("/")
     headers = {}
-    if SETTINGS.chat_llm_key:
-        headers["Authorization"] = f"Bearer {SETTINGS.chat_llm_key}"
+    key = (SETTINGS.runpod_api_key if "api.runpod.ai" in url else "") or SETTINGS.chat_llm_key
+    if key:
+        headers["Authorization"] = f"Bearer {key}"
     try:
         async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=15)) as s:
             async with s.get(f"{base}/models", headers=headers) as resp:
@@ -468,6 +469,7 @@ async def execute(request: ExecuteRequest) -> ExecuteResponse:
             workflow, node_params, job_input, client_id=request.client_id,
             job_meta={"workflow": meta.id, "parameters": raw_parameters,
                       "parameters_expanded": job_params},
+            public_endpoint=meta.public_endpoint,
         )
         return ExecuteResponse(prompt_id=job_id, status="queued")
     except HTTPException:
