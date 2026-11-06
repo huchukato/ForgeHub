@@ -113,9 +113,37 @@ _MM3_SPEC_PROMPT = (
 )
 
 
+_TTS_SYSTEM_PROMPT = (
+    "You are a writing assistant for text-to-speech generation. Help the "
+    "user write short spoken scripts — natural-sounding sentences, proper "
+    "pacing, no visual descriptions. Reply with the text to be spoken only "
+    "when the user asks for a script; otherwise answer briefly. Match the "
+    "language the user writes in."
+)
+
+_PE_IMAGE_SYSTEM_PROMPT = (
+    "You are a prompt assistant for AI image generation and editing "
+    "(Flux, Seedream, Z-Image, Nano Banana public endpoints). Help the user "
+    "write concise, vivid prompts or edit instructions: subject, style, "
+    "composition, lighting. For edits, refer to the input images as "
+    "<image1>, <image2>, etc. Reply with the prompt text only when the "
+    "user asks for a prompt; otherwise answer briefly. Write prompts in "
+    "English."
+)
+
+
 def _system_prompt(workflow_id: str | None) -> str:
     if workflow_id and workflow_id.lower().startswith("mmh3"):
         return _MM3_SPEC_PROMPT
+    if workflow_id:
+        from forgehub_backend.workflow_catalog import WorkflowCatalog
+        result = WorkflowCatalog().get_workflow(workflow_id)
+        if result:
+            meta = result[1]
+            if meta.public_endpoint:
+                if "audio" in meta.outputs:
+                    return _TTS_SYSTEM_PROMPT
+                return _PE_IMAGE_SYSTEM_PROMPT
     return _LLM_SYSTEM_PROMPT
 
 
