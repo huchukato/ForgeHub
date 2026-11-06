@@ -287,15 +287,13 @@ const execute = async () => {
             )}
           </div>
           <div className="flex items-center gap-2">
-            <a
-              href="https://buymeacoffee.com/huchukato"
-              target="_blank"
-              rel="noreferrer"
+            <button
+              onClick={() => bridge?.openExternal?.("https://buymeacoffee.com/huchukato")}
               title="Buy me a coffee"
               className="transition-transform hover:scale-105"
             >
-              <img src="/bmc-button.png" alt="Buy me a coffee" className="h-8 w-auto rounded-lg shadow-[var(--shadow-panel)]" />
-            </a>
+              <img src="./bmc-button.png" alt="Buy me a coffee" className="h-8 w-auto rounded-lg shadow-[var(--shadow-panel)]" />
+            </button>
             {([
               { icon: <Images size={17} />, title: t.outputsTitle, active: galleryOpen, onClick: () => setGalleryOpen((o) => !o) },
               { icon: <MessageSquare size={17} />, title: t.promptAssist, active: chatOpen, onClick: () => setChatOpen((o) => !o) },

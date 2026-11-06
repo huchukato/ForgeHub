@@ -60,7 +60,7 @@
       }
     ],
     "mac": {
-      "icon": "icons/icon.icns",
+      "icon": "icons/logo.icns",
       "category": "public.app-category.graphics-design",
       "target": [
         "dmg"
