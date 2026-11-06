@@ -12,6 +12,20 @@ A desktop app for orchestrating ComfyUI workflows on **Runpod Serverless** endpo
 
 Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio) · [runpod-ltx-25](https://github.com/huchukato/runpod-ltx-25) (LTX 2.5 video+audio: I2VA/T2VA, FL2VA, pose loops)
 
+It also ships built-in **RunPod Cloud** workflows — [RunPod Public Endpoints](https://docs.runpod.io/public-endpoints/reference) that run with just your API key, no endpoint to deploy, billed per use:
+
+| Workflow | What it does | Price |
+| --- | --- | --- |
+| Nano Banana 2 Edit | Multi-image editing (up to 14 refs), up to 4K | $0.0875–0.175/img |
+| Z-Image Turbo T2I | Fast 6B text-to-image | $0.005/img |
+| Flux Schnell T2I | FLUX draft generation | $0.0024/MP |
+| Flux Dev T2I | FLUX flagship quality | $0.02/MP |
+| Seedream 4.0 T2I | ByteDance text-to-image | $0.027/img |
+| Chatterbox Turbo TTS | Text-to-speech, 20 voices + voice clone | $0.001/s |
+| Minimax Speech 02 HD | HD TTS with emotion control | $0.05/1K chars |
+
+Prompt assist (Settings → LLM service) can also run on RunPod LLMs — **Qwen3 32B** and **Moonshot Kimi** — reusing the same API key.
+
 ## 📥 Download (desktop app)
 
 Get the latest build from [Releases](https://github.com/huchukato/ForgeHub/releases/latest) — the backend is bundled, nothing else to install:
