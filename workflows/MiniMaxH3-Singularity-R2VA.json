@@ -32,7 +32,7 @@
     "inputs": {
       "model": "MiniMax H3",
       "aspect_ratio": "3:4",
-      "resolution": "Native \u2014 864\u00d71184",
+      "resolution": "Native — 864×1184",
       "divisible_by": 32,
       "upscale": false,
       "upscale_method": "lanczos",
@@ -100,7 +100,7 @@
   },
   "265": {
     "inputs": {
-      "text": "subject_definitions:\n<Subject 1> is a vibrant, modern 3D render of the text \"MINIMAX H3 SINGULARITY\" with glowing neon circuitry, digital waveforms, and a deep purple cosmic backdrop \u2014 used as a stylized title card. <Picture 1> is a high-contrast, cinematic tech-logo graphic.\n\n<Subject 2> is Jinx, a young woman with electric blue pigtails, pink eyes, cloud-pattern tattoos across her arms and legs, wearing a pink halter top, brown corset, plaid mini-skirt, black arm guards, and combat boots. <Picture 2> is a full character sheet displaying multiple angles and expressions.\n\n<Subject 3> is Tifa Lockhart, a fit young woman with long straight black hair, red eyes, wearing a white ribbed crop top, black utility skirt with straps, black leggings, red combat boots, and red fingerless gloves. <Picture 3> is a full character sheet displaying multiple angles and expressions.\n\nsummary:\nA continuous 5s scene in a sleek modern living room: the apartment door opens to reveal only hands and then close-ups of Jinx and Tifa smiling at each other; their shadows embrace and kiss on the floor as the camera falls; they tumble onto a couch, kiss passionately, Jinx grabs a pillow printed with the Minimax H3 Singularity logo and hurls it at the camera; the lens spins and lands on the pillow at floor level, revealing the logo clearly; an off-screen male voice delivers the tagline as fade to black.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 4]): fully_preserved \u2014 the pillow\u2019s printed logo is in sharp focus, centered, matching the reference\u2019s typography, glow, and circuitry details.\n<Subject 2> (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved \u2014 blue pigtails, pink eyes, tattoos, and outfit remain exact; expressions shift naturally from shy smiles to passionate intimacy.\n<Subject 3> (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved \u2014 black hair, red eyes, white crop, black skirt, and red gloves stay consistent; her playful push and kiss match her confident demeanor.\n\ndetailed_description:\nThe target video uses a modern 3D anime-rendered style with cinematic lighting and shallow depth of field.\n[Shot 1] 00:00.000 \u2014 The apartment door swings inward; a close-up captures a hand gripping the handle, then cuts to tight shots of Jinx and Tifa\u2019s faces as they lock eyes and smile warmly. Soft footsteps echo in the quiet room.\n[Shot 2] 00:02.500 \u2014 The camera tilts down to the floor, framing their elongated shadows. They embrace and press lips together in shadowed intimacy; the camera is knocked loose, tumbling forward with a soft thud.\n[Shot 3] 00:03.200 \u2014 From the floor\u2019s perspective, the two girls are now on a sleek dark couch, kissing and touching. Jinx reaches for the pillow from Shot 1, snatches it, and tosses it forcefully toward the lens.\n[Shot 4] 00:04.000 \u2014 The camera spins rightward from impact, landing on the pillow at floor level. The Minimax H3 Singularity logo is crisp, glowing, and perfectly centered. An off-screen male voice delivers: \"Singularity. One model to rule them all.\" Fade to black. An off-screen voice says: \"Singularty. One model to rule them all.\"\n\noverall_soundscape:\nSoft ambient hum of a modern apartment, gentle footsteps, fabric rustle when Jinx grabs the pillow, a soft camera thud, and a smooth, confident off-screen male voice with a slight tech-modern accent, delivering the tagline in crisp, cinematic timing.\n\nnon_diegetic_music:\nN/A",
+      "text": "subject_definitions:\n<Subject 1> is a vibrant, modern 3D render of the text \"MINIMAX H3 SINGULARITY\" with glowing neon circuitry, digital waveforms, and a deep purple cosmic backdrop — used as a stylized title card. <Picture 1> is a high-contrast, cinematic tech-logo graphic.\n\n<Subject 2> is Jinx, a young woman with electric blue pigtails, pink eyes, cloud-pattern tattoos across her arms and legs, wearing a pink halter top, brown corset, plaid mini-skirt, black arm guards, and combat boots. <Picture 2> is a full character sheet displaying multiple angles and expressions.\n\n<Subject 3> is Tifa Lockhart, a fit young woman with long straight black hair, red eyes, wearing a white ribbed crop top, black utility skirt with straps, black leggings, red combat boots, and red fingerless gloves. <Picture 3> is a full character sheet displaying multiple angles and expressions.\n\nsummary:\nA continuous 5s scene in a sleek modern living room: the apartment door opens to reveal only hands and then close-ups of Jinx and Tifa smiling at each other; their shadows embrace and kiss on the floor as the camera falls; they tumble onto a couch, kiss passionately, Jinx grabs a pillow printed with the Minimax H3 Singularity logo and hurls it at the camera; the lens spins and lands on the pillow at floor level, revealing the logo clearly; an off-screen male voice delivers the tagline as fade to black.\n\nretention_analysis:\n<Subject 1> (appears in [Shot 4]): fully_preserved — the pillow’s printed logo is in sharp focus, centered, matching the reference’s typography, glow, and circuitry details.\n<Subject 2> (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved — blue pigtails, pink eyes, tattoos, and outfit remain exact; expressions shift naturally from shy smiles to passionate intimacy.\n<Subject 3> (appears in [Shot 1], [Shot 2], [Shot 3], [Shot 4]): fully_preserved — black hair, red eyes, white crop, black skirt, and red gloves stay consistent; her playful push and kiss match her confident demeanor.\n\ndetailed_description:\nThe target video uses a modern 3D anime-rendered style with cinematic lighting and shallow depth of field.\n[Shot 1] 00:00.000 — The apartment door swings inward; a close-up captures a hand gripping the handle, then cuts to tight shots of Jinx and Tifa’s faces as they lock eyes and smile warmly. Soft footsteps echo in the quiet room.\n[Shot 2] 00:02.500 — The camera tilts down to the floor, framing their elongated shadows. They embrace and press lips together in shadowed intimacy; the camera is knocked loose, tumbling forward with a soft thud.\n[Shot 3] 00:03.200 — From the floor’s perspective, the two girls are now on a sleek dark couch, kissing and touching. Jinx reaches for the pillow from Shot 1, snatches it, and tosses it forcefully toward the lens.\n[Shot 4] 00:04.000 — The camera spins rightward from impact, landing on the pillow at floor level. The Minimax H3 Singularity logo is crisp, glowing, and perfectly centered. An off-screen male voice delivers: \"Singularity. One model to rule them all.\" Fade to black. An off-screen voice says: \"Singularty. One model to rule them all.\"\n\noverall_soundscape:\nSoft ambient hum of a modern apartment, gentle footsteps, fabric rustle when Jinx grabs the pillow, a soft camera thud, and a smooth, confident off-screen male voice with a slight tech-modern accent, delivering the tagline in crisp, cinematic timing.\n\nnon_diegetic_music:\nN/A",
       "source": [
         "105:276",
         0
@@ -264,7 +264,7 @@
   },
   "105:6": {
     "inputs": {
-      "unet_name": "Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors",
+      "unet_name": "PRISM_DMAD_PDMD_int8.safetensors",
       "weight_dtype": "default"
     },
     "class_type": "UNETLoader",
@@ -389,7 +389,7 @@
   },
   "105:213": {
     "inputs": {
-      "lora_name": "minimax_h3_ref2v_turbo_4step_v0.1_comfyui_bf16.safetensors",
+      "lora_name": "h3-realism-people-t2v-i2v-r2v.safetensors",
       "strength_model": 1,
       "model": [
         "105:6",
@@ -454,9 +454,9 @@
   "105:276": {
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
-      "preset_prompt": "MiniMax \u203a NSFW R2VA",
+      "preset_prompt": "MiniMax › NSFW R2VA",
       "camera_tag": "None",
-      "prompt": "(S1) E l'immagine stampata \\ cucita su un cuscino su un divano, in un soggiorno moderno\n(S2) \u00e8 una character sheet di Jinx\n(S3) \u00e8 un character sheet di Tifa Lockhart\nLa scena inizia con la porta dell'appartamento che si apre e la camera focussed sulla manila. La camera si allontana ed entrano (S2) e (S3), ma non si vedono per intero, l'inquadratura \u00e8 stretta, si vede la mano che apre la porta e poi i due visi che si guardano e sorridono. si sentono i loro passi. la camera punta in basso sulle ombre delle due ragazze che ora si abbracciano e si baciano, ma noi vediamo solo le ombre. (S3) spinge (S2) sul divano, nel farlo colpisce la camera che cade a terra. Ora la camera \u00e8 a terra, un po' storta, e vediamo (S2) ed (S3) sul divano che si baciano e si toccano. (S2) prende il cuscino (S1) e lo lancia. (S1) finisce sulla camera che si ruota a destra per il colpa e ora inquadra il cuscino a terra e si vede chiaramente l'immagine. Una voce maschile fuori campo dice [D]Singularty. One model to rule them all.[/D]. Fade to black e fine. ",
+      "prompt": "(S1) E l'immagine stampata \\ cucita su un cuscino su un divano, in un soggiorno moderno\n(S2) è una character sheet di Jinx\n(S3) è un character sheet di Tifa Lockhart\nLa scena inizia con la porta dell'appartamento che si apre e la camera focussed sulla manila. La camera si allontana ed entrano (S2) e (S3), ma non si vedono per intero, l'inquadratura è stretta, si vede la mano che apre la porta e poi i due visi che si guardano e sorridono. si sentono i loro passi. la camera punta in basso sulle ombre delle due ragazze che ora si abbracciano e si baciano, ma noi vediamo solo le ombre. (S3) spinge (S2) sul divano, nel farlo colpisce la camera che cade a terra. Ora la camera è a terra, un po' storta, e vediamo (S2) ed (S3) sul divano che si baciano e si toccano. (S2) prende il cuscino (S1) e lo lancia. (S1) finisce sulla camera che si ruota a destra per il colpa e ora inquadra il cuscino a terra e si vede chiaramente l'immagine. Una voce maschile fuori campo dice [D]Singularty. One model to rule them all.[/D]. Fade to black e fine. ",
       "max_tokens": 8192,
       "keep_model_loaded": false,
       "seed": 3227859527,
@@ -479,7 +479,7 @@
     },
     "class_type": "QwenVL_Unified",
     "_meta": {
-      "title": "\ud83e\udde0 QwenVL Unified (HF / GGUF)"
+      "title": "🧠 QwenVL Unified (HF / GGUF)"
     }
   },
   "254:176": {
@@ -522,7 +522,7 @@
     },
     "class_type": "UpscalerTensorrt",
     "_meta": {
-      "title": "Upscaler Tensorrt \u26a1"
+      "title": "Upscaler Tensorrt ⚡"
     }
   },
   "254:177": {

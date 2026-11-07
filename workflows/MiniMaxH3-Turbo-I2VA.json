@@ -45,7 +45,7 @@
     "inputs": {
       "model": "MiniMax H3",
       "aspect_ratio": "16:9",
-      "resolution": "Native \u2014 1344\u00d7768",
+      "resolution": "Native — 1344×768",
       "divisible_by": 32,
       "upscale": false,
       "upscale_method": "lanczos",
@@ -283,7 +283,7 @@
   },
   "105:6": {
     "inputs": {
-      "unet_name": "minimax_h3_fl2va_pruned_int8_convrot.safetensors",
+      "unet_name": "10Eros_Max_h3_8stepTURBO_beta7_fix1-native_int8_protected_edges_HQ.safetensors",
       "weight_dtype": "default"
     },
     "class_type": "UNETLoader",
@@ -329,20 +329,6 @@
       "title": "ModelSamplingMiniMaxH3"
     }
   },
-  "105:196": {
-    "inputs": {
-      "lora_name": "minimax_h3_fl2v_turbo_8step_v1.0_768p_comfyui_bf16.safetensors",
-      "strength_model": 1,
-      "model": [
-        "105:6",
-        0
-      ]
-    },
-    "class_type": "LoraLoaderModelOnly",
-    "_meta": {
-      "title": "Carica LoRA"
-    }
-  },
   "105:254": {
     "inputs": {
       "selection": "sol-attn",
@@ -367,7 +353,7 @@
   "105:255": {
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
-      "preset_prompt": "MiniMax \u203a NSFW I2VA",
+      "preset_prompt": "MiniMax › NSFW I2VA",
       "camera_tag": "None",
       "prompt": "",
       "max_tokens": 2048,
@@ -384,7 +370,7 @@
     },
     "class_type": "QwenVL_Unified",
     "_meta": {
-      "title": "\ud83e\udde0 QwenVL Unified (HF / GGUF)"
+      "title": "🧠 QwenVL Unified (HF / GGUF)"
     }
   },
   "105:23": {
@@ -407,7 +393,7 @@
     "inputs": {
       "attention": "comfy kitchen attention",
       "model": [
-        "105:196",
+        "105:6",
         0
       ]
     },
@@ -445,7 +431,7 @@
     },
     "class_type": "UpscalerTensorrt",
     "_meta": {
-      "title": "Upscaler Tensorrt \u26a1"
+      "title": "Upscaler Tensorrt ⚡"
     }
   },
   "253:177": {
