@@ -88,13 +88,13 @@
     },
     {
       "key": "config",
-      "label": "Preset (sampler/turbo LoRA)",
+      "label": "Model preset",
       "type": "select",
       "target": "job",
-      "default": "r2va_singularity",
+      "default": "prism_r2va_turbo",
       "options": [
-        "r2va_singularity",
-        "r2va_singularity_turbo"
+        "prism_r2va_turbo",
+        "hybrid_fl2va_r2va"
       ]
     },
     {

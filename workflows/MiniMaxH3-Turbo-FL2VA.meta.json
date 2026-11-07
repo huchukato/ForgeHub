@@ -55,17 +55,13 @@
     },
     {
       "key": "config",
-      "label": "Preset",
+      "label": "Model preset",
       "type": "select",
       "target": "job",
-      "default": "native_turbo",
+      "default": "10eros_fl2va_turbo",
       "options": [
-        "native",
-        "native_turbo",
-        "r2va_native",
-        "r2va_native_turbo",
-        "10eros",
-        "10eros_turbo"
+        "10eros_fl2va_turbo",
+        "hybrid_fl2va_r2va"
       ]
     },
     {
