@@ -3,6 +3,12 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.2] — 2026-11-07
+
+### Changed
+- **Pony HiRes+FaceDet checkpoint dropdown** — `pmpInCaseEnhanced` swapped for `pmpRealAnime`; `pony_realism_stable_yogi_illustrious_v55` added as a checkpoint option (matches the runpod-qwen21 manifest).
+
+
 ## [0.2.0] — 2026-11-06
 
 ### Added
