@@ -105,8 +105,8 @@ export default function SettingsDialog({ client, open, onClose, onSaved }: Props
       setKeySet(s.runpod_api_key_set);
       setApiKey("");
       const svc = LLM_SERVICES.find((x) => x.url === s.chat_llm_url);
-      const defSvc = LLM_SERVICES.find((x) => x.id === "runpod-kimi")!;
-      setService(svc?.id ?? (s.chat_llm_url ? "custom" : "runpod-kimi"));
+      const defSvc = LLM_SERVICES.find((x) => x.id === "runpod-glm")!;
+      setService(svc?.id ?? (s.chat_llm_url ? "custom" : "runpod-glm"));
       setLlmUrl(s.chat_llm_url || defSvc.url);
       setLlmModel(s.chat_llm_model);
       setLlmKeySet(s.chat_llm_key_set);

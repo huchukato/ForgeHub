@@ -82,7 +82,8 @@ class ChatProxy:
             if not response.ok:
                 await self._raise_with_body(response)
             data = await response.json()
-            content = data["choices"][0]["message"].get("content") or ""
+            msg = data["choices"][0]["message"]
+            content = msg.get("content") or msg.get("reasoning_content") or ""
             return ChatResponse(message=content)
 
 

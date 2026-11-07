@@ -14,9 +14,18 @@ interface Props {
 /** Best-effort extraction of the prompt text from an assistant reply:
  *  drops a leading "Prompt:" label, prefers a quoted span, trims quotes. */
 function extractPrompt(content: string): string {
-  const s = content.trim().replace(/^\*{0,2}Prompt\*{0,2}\s*:?\s*/i, "").trim();
-  const quoted = s.match(/["“]([^"”]{10,})["”]/);
-  return (quoted ? quoted[1] : s.split("\n\n")[0]).trim() || content.trim();
+  let s = content.trim()
+    .replace(/^\**\s*Prompt\s*\**\s*:?\s*\**\s*/i, "")
+    .split(/\*\*(Note|Edit Instruction|Edit|Additional)/)[0]
+    .trim();
+  // pick the first substantial paragraph (skip label-only fragments like "**")
+  const paras = s.split(/\n\s*\n/).map(p => p.trim())
+    .filter(p => p.replace(/\*/g, "").trim().length > 10);
+  s = paras[0] || s;
+  // strip outer quotes only when they wrap the whole span
+  const m = s.match(/^(["“])([\s\S]*)\1$/);
+  if (m) s = m[2].trim();
+  return s || content.trim();
 }
 
 /** Turn "503: {"detail":"Chat request failed: ComfyUI 429: {...rate-limited...}"}"
