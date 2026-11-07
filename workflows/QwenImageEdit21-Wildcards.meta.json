@@ -48,10 +48,10 @@
       "label": "Enhancer preset",
       "type": "select",
       "target": "job",
-      "default": "IMG › Storyboard",
+      "default": "QWEN › Storyboard",
       "options": [
-        "IMG › Storyboard",
-        "IMG › Qwen Edit"
+        "QWEN › Storyboard",
+        "QWEN › Edit"
       ],
       "parent": "enhance"
     },
