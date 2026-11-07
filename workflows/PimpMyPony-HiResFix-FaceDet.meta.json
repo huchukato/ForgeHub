@@ -74,12 +74,13 @@
       "label": "Checkpoint",
       "type": "select",
       "target": "node",
-      "default": "pimpmypony_pmpSemiRealAnime.safetensors",
+      "default": "pmpSemiRealAnime.safetensors",
       "options": [
         "pimpmypony_pmpSemiRealAnime.safetensors",
-        "pimpmypony_pmpInCaseEnhanced.safetensors",
+        "pimpmypony_pmpRealAnime.safetensors",
         "pimpmypony_pmpIncaseStyle.safetensors",
-        "ilustmix_v111.safetensors"
+        "ilustmix_v111.safetensors",
+        "pony_realism_stable_yogi_illustrious_v55.safetensors"
       ]
     },
     {
