@@ -1,0 +1,723 @@
+{
+  "37": {
+    "inputs": {
+      "filename_prefix": "video/LTX_Director",
+      "format": "auto",
+      "format.codec": "auto",
+      "codec": "auto",
+      "video": [
+        "148:2",
+        0
+      ]
+    },
+    "class_type": "SaveVideo",
+    "_meta": {
+      "title": "Salva Video",
+      "cnr_id": "comfy-core",
+      "ver": "0.19.3"
+    }
+  },
+  "134": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma"
+    }
+  },
+  "135": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma"
+    }
+  },
+  "141": {
+    "inputs": {
+      "label_json": "{\"text\":\"LTX 2.5\",\"fontSize\":68,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#ec4899\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "142": {
+    "inputs": {
+      "label_json": "{\"text\":\"DIRECTOR\",\"fontSize\":41,\"fontFamily\":\"Courier New\",\"fontColor\":\"#ec4899\",\"textAlign\":\"left\",\"backgroundColor\":\"#ffffff\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma"
+    }
+  },
+  "704": {
+    "inputs": {},
+    "class_type": "PixaromaGroupSwitch",
+    "_meta": {
+      "title": "SAVE VIDEO",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "d61f7a2379a0466469749e62f0b8064cf310b1be"
+    }
+  },
+  "719": {
+    "inputs": {
+      "text": "A cinematic showcase featuring a purple and chrome humanoid robot with a glowing neural-network halo and an \"H\" chest emblem. The robot awakens in a dark futuristic forge, demonstrates its creative powers through holographic interfaces and energy manipulation, then presents ForgeHub directly to the camera before a heroic finale. Sleek sci-fi aesthetic, violet and purple lighting, photorealistic, atmospheric particles, dramatic cinematic shots. | In a dark futuristic forge, the eyes of a sleek purple robot flicker to life with a soft violet glow. It slowly raises its head, surveying its surroundings as shimmering violet holographic particles swirl around its chassis. Dramatic rim lighting traces the contours of its metallic body against the shadowed background. The camera pushes in slowly, drawing the viewer deeper into the moment. Sound: a low electric hum fills the space, punctuated by the occasional crackle of distant sparks. No speech. | The purple robot strides purposefully toward a holographic workbench, its movements fluid and precise. As it approaches, floating UI panels ignite with light, displaying cascading image grids and video timelines. It sweeps one hand across the interface, causing panels to ripple and rearrange. Behind it, a vast purple nebula shimmers in the distance. Medium shot framing captures both the robot and the expanding digital workspace. Sound: the robot speaks in a deep resonant male voice, calm and confident: \"Welcome to ForgeHub — your AI creation studio.\" | Cinematic macro close-up on the robot's hands as they forge a glowing purple orb of pure energy. Molten light and flying sparks swirl within the orb, coalescing into fleeting images and video frames that spin and reform. The dark background dissolves into soft violet bokeh, isolating the radiant creation at the center of frame. Sound: the robot's deep male voice, steady and deliberate: \"Images, videos, voices — all forged in one place.\" | The purple robot faces the camera directly in a friendly talking-head composition, its expression warm and inviting. It gestures naturally with one hand as it speaks, the movement smooth and assured. A clean dark studio background keeps the focus on the robot, with a soft purple rim light separating it from the shadows. Medium close-up framing creates an intimate, personal connection. Sound: the robot speaks in a deep warm male voice, enthusiastic and welcoming: \"Connect your workflows, pick a model, and create. From a single still to a full cinematic scene — ForgeHub handles the forge, you bring the vision.\" | Low-angle epic shot of the purple robot striking a confident, commanding pose. Its chest emblem pulses with brilliant light, and a neural halo around its head ignites fully, radiating outward. Bright light rays burst behind it, filling the frame with dramatic, cinematic grandeur. The camera holds steady, emphasizing the robot's authority and presence. Sound: the robot speaks in a deep powerful male voice, with strong emphasis: \"ForgeHub — forge what's next.\" | The camera slowly zooms out in a sweeping cinematic pullback, revealing multiple robotic arms welding around a glowing ForgeHub logo emblem at the center of the frame. Sparks drift lazily downward as the logo takes shape, while intricate purple circuitry glows and pulses throughout the background. The screen gently fades to darkness as the emblem reaches full brilliance. Sound: atmospheric music rises and swells, carrying a sense of wonder and completion. No speech.",
+      "source": [
+        "724",
+        8
+      ]
+    },
+    "class_type": "PixaromaShowText",
+    "_meta": {
+      "title": "Qwen Prompt"
+    }
+  },
+  "724": {
+    "inputs": {
+      "start_second": 0,
+      "end_second": 48,
+      "duration_seconds": 48,
+      "start_frame": 0,
+      "end_frame": 1200,
+      "duration_frames": 1200,
+      "timeline_data": "{\"mainTrackEnabled\":true,\"audioTrackEnabled\":true,\"motionTrackEnabled\":true,\"propHeight\":90,\"globalPropHeight\":299,\"showFilenames\":false,\"overrideAudio\":false,\"inpaint_audio\":true,\"global_prompt\":\"A cinematic showcase featuring a purple and chrome humanoid robot with a glowing neural-network halo and an \\\"H\\\" chest emblem. The robot awakens in a dark futuristic forge, demonstrates its creative powers through holographic interfaces and energy manipulation, then presents ForgeHub directly to the camera before a heroic finale. Sleek sci-fi aesthetic, violet and purple lighting, photorealistic, atmospheric particles, dramatic cinematic shots.\",\"retake_global_prompt\":\"\",\"retakeMode\":false,\"retakeStart\":24,\"retakeLength\":48,\"retakePrompt\":\"\",\"retakeStrength\":1,\"retakeVideo\":null,\"normalStartFrame\":0,\"normalDurationFrames\":1200,\"segments\":[{\"id\":\"1794009047306uhj32\",\"start\":0,\"length\":150,\"prompt\":\"The purple robot's eyes flicker on in a dark futuristic forge, it slowly raises its head, violet holographic particles swirl around, dramatic rim lighting, slow push-in camera. Ambient: low electric hum, sparks crackling. No speech.\",\"type\":\"image\",\"imageFile\":\"whatdreamscost/Qwen21_2026-11-06_001%.jpg\",\"imageB64\":\"/api/view?filename=Qwen21_2026-11-06_001%25.jpg&type=input&subfolder=whatdreamscost\",\"isEndFrame\":false},{\"id\":\"1794009092224mawd4\",\"start\":150,\"length\":200,\"prompt\":\"The robot walks to a holographic workbench, floating UI panels light up showing image grids and video timelines, it sweeps a hand across them, purple nebula background, medium shot. He says in a deep resonant male voice, calm and confident: \\\"Welcome to ForgeHub — your AI creation studio.\\\"\",\"type\":\"image\",\"imageFile\":\"whatdreamscost/Qwen21_2026-11-06_002%.jpg\",\"imageB64\":\"/api/view?filename=Qwen21_2026-11-06_002%25.jpg&type=input&subfolder=whatdreamscost\",\"isEndFrame\":false},{\"id\":\"1794009124940ncelz\",\"start\":350,\"length\":200,\"prompt\":\"Close-up on the robot's hands forging a glowing purple orb of energy, molten light and sparks forming images and video frames inside it, dark background, violet bokeh, cinematic macro. He says in a deep male voice, steady and deliberate: \\\"Images, videos, voices — all forged in one place.\\\"\",\"type\":\"image\",\"imageFile\":\"whatdreamscost/Qwen21_2026-11-06_003%.jpg\",\"imageB64\":\"/api/view?filename=Qwen21_2026-11-06_003%25.jpg&type=input&subfolder=whatdreamscost\",\"isEndFrame\":false},{\"id\":\"1794009160683icrvb\",\"start\":550,\"length\":300,\"prompt\":\"The robot faces the camera directly, friendly talking head, gesturing naturally with one hand, clean dark studio background, soft purple rim light, medium close-up. He says in a deep warm male voice, enthusiastic and welcoming: \\\"Connect your workflows, pick a model, and create. From a single still to a full cinematic scene — ForgeHub handles the forge, you bring the vision.\\\"\",\"type\":\"image\",\"imageFile\":\"whatdreamscost/Qwen21_2026-11-06_004%.jpg\",\"imageB64\":\"/api/view?filename=Qwen21_2026-11-06_004%25.jpg&type=input&subfolder=whatdreamscost\",\"isEndFrame\":false},{\"id\":\"179400918135268l70\",\"start\":850,\"length\":200,\"prompt\":\"Low-angle shot, the robot strikes a confident pose, chest emblem pulses bright, neural halo fully lit, light rays burst behind, epic cinematic framing. He says in a deep powerful male voice, with emphasis: \\\"ForgeHub — forge what's next.\\\"\",\"type\":\"image\",\"imageFile\":\"whatdreamscost/Qwen21_2026-11-06_005%.jpg\",\"imageB64\":\"/api/view?filename=Qwen21_2026-11-06_005%25.jpg&type=input&subfolder=whatdreamscost\",\"isEndFrame\":false},{\"id\":\"1794009211756zzson\",\"start\":1050,\"length\":150,\"prompt\":\"Slow cinematic zoom out revealing robotic arms welding around a glowing ForgeHub logo emblem at center, sparks drifting down, purple circuitry glowing in background, screen gently fades. Atmospheric music rises. No speech.\",\"type\":\"image\",\"imageFile\":\"whatdreamscost/banner.jpeg\",\"imageB64\":\"/api/view?filename=banner.jpeg&type=input&subfolder=whatdreamscost\",\"isEndFrame\":false}],\"motionSegments\":[],\"audioSegments\":[]}",
+      "segment_lengths": "150,200,200,300,200,150",
+      "epsilon": 0.001,
+      "guide_strength": "1.00,1.00,1.00,1.00,1.00,1.00",
+      "use_custom_audio": true,
+      "use_custom_motion": true,
+      "inpaint_audio": true,
+      "frame_rate": 25,
+      "display_mode": "seconds",
+      "custom_width": 0,
+      "custom_height": 0,
+      "resize_method": "maintain aspect ratio",
+      "divisible_by": 32,
+      "img_compression": 18,
+      "override_audio": false,
+      "enhance": true,
+      "enhancer_model": "Qwen3.5-9B-Defiant-Fable-Heretic-GGUF :: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
+      "enhancer_preset": "LTX › Director",
+      "local_prompts": "The purple robot's eyes flicker on in a dark futuristic forge, it slowly raises its head, violet holographic particles swirl around, dramatic rim lighting, slow push-in camera. Ambient: low electric hum, sparks crackling. No speech. | The robot walks to a holographic workbench, floating UI panels light up showing image grids and video timelines, it sweeps a hand across them, purple nebula background, medium shot. He says in a deep resonant male voice, calm and confident: \"Welcome to ForgeHub — your AI creation studio.\" | Close-up on the robot's hands forging a glowing purple orb of energy, molten light and sparks forming images and video frames inside it, dark background, violet bokeh, cinematic macro. He says in a deep male voice, steady and deliberate: \"Images, videos, voices — all forged in one place.\" | The robot faces the camera directly, friendly talking head, gesturing naturally with one hand, clean dark studio background, soft purple rim light, medium close-up. He says in a deep warm male voice, enthusiastic and welcoming: \"Connect your workflows, pick a model, and create. From a single still to a full cinematic scene — ForgeHub handles the forge, you bring the vision.\" | Low-angle shot, the robot strikes a confident pose, chest emblem pulses bright, neural halo fully lit, light rays burst behind, epic cinematic framing. He says in a deep powerful male voice, with emphasis: \"ForgeHub — forge what's next.\" | Slow cinematic zoom out revealing robotic arms welding around a glowing ForgeHub logo emblem at center, sparks drifting down, purple circuitry glowing in background, screen gently fades. Atmospheric music rises. No speech.",
+      "timeline_ui": "",
+      "model": [
+        "139:137",
+        0
+      ],
+      "clip": [
+        "139:136",
+        0
+      ],
+      "audio_vae": [
+        "139:8",
+        0
+      ]
+    },
+    "class_type": "LTXDirector",
+    "_meta": {
+      "title": "LTX Director",
+      "cnr_id": "whatdreamscost-comfyui",
+      "ver": "2.0.0"
+    }
+  },
+  "139:137": {
+    "inputs": {
+      "blocks": "",
+      "video_scale": 1,
+      "audio_scale": 1,
+      "audio_to_video_scale": 1,
+      "video_to_audio_scale": 1,
+      "triton_kernels": true,
+      "model": [
+        "139:709",
+        0
+      ]
+    },
+    "class_type": "LTX2AttentionTunerPatch",
+    "_meta": {
+      "title": "LTX2 Attention Tuner Patch"
+    }
+  },
+  "139:35": {
+    "inputs": {
+      "unet_name": "ltx-2.5-22b-distilled-transformer-comfy-int8-convrot.safetensors",
+      "weight_dtype": "default"
+    },
+    "class_type": "UNETLoader",
+    "_meta": {
+      "title": "Carica modello di diffusione",
+      "cnr_id": "comfy-core",
+      "ver": "0.22.3"
+    }
+  },
+  "139:6": {
+    "inputs": {
+      "vae_name": "taeltx2_3.safetensors",
+      "device": "main_device",
+      "weight_dtype": "bf16"
+    },
+    "class_type": "VAELoaderKJ",
+    "_meta": {
+      "title": "Tiny VAELoader KJ",
+      "cnr_id": "comfyui-kjnodes",
+      "ver": "1.2.5"
+    }
+  },
+  "139:136": {
+    "inputs": {
+      "clip_name": "gemma4-12b-uncensored-heretic-ltx2.5-comfy-int8-convrot.safetensors",
+      "type": "ltxv",
+      "device": "default"
+    },
+    "class_type": "CLIPLoader",
+    "_meta": {
+      "title": "Carica CLIP"
+    }
+  },
+  "139:8": {
+    "inputs": {
+      "vae_name": "ltx-2.5-audio-vae-bf16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Carica VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.22.2"
+    }
+  },
+  "139:36": {
+    "inputs": {
+      "vae_name": "ltx-2.5-video-vae-conv-bf16.safetensors"
+    },
+    "class_type": "VAELoader",
+    "_meta": {
+      "title": "Carica VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.22.2"
+    }
+  },
+  "139:709": {
+    "inputs": {
+      "lora_name": "LTX_10Eros-v15_LoRA_fro99-avgrank103.safetensors",
+      "strength_model": 0,
+      "model": [
+        "139:35",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Carica LoRA"
+    }
+  },
+  "146:27": {
+    "inputs": {
+      "frame_rate": [
+        "724",
+        6
+      ],
+      "positive": [
+        "724",
+        1
+      ],
+      "negative": [
+        "146:128",
+        0
+      ]
+    },
+    "class_type": "LTXVConditioning",
+    "_meta": {
+      "title": "LTXVConditioning",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.56"
+    }
+  },
+  "146:128": {
+    "inputs": {
+      "conditioning": [
+        "724",
+        1
+      ]
+    },
+    "class_type": "ConditioningZeroOut",
+    "_meta": {
+      "title": "Condizionamento Azzerato",
+      "cnr_id": "comfy-core",
+      "ver": "0.24.0"
+    }
+  },
+  "146:133": {
+    "inputs": {
+      "ic_lora_name": "None",
+      "ic_lora_strength": 1,
+      "scale_by": 0.5,
+      "upscale_method": "bicubic",
+      "image_attention_strength": 1,
+      "crop": "center",
+      "auto_snap_ic_grid": true,
+      "use_tiled_encode": false,
+      "tile_size": 256,
+      "tile_overlap": 64,
+      "retake_mode": false,
+      "positive": [
+        "146:27",
+        0
+      ],
+      "negative": [
+        "146:27",
+        1
+      ],
+      "vae": [
+        "139:36",
+        0
+      ],
+      "latent": [
+        "724",
+        2
+      ],
+      "guide_data": [
+        "724",
+        4
+      ],
+      "motion_guide_data": [
+        "724",
+        5
+      ],
+      "model": [
+        "724",
+        0
+      ]
+    },
+    "class_type": "LTXDirectorGuide",
+    "_meta": {
+      "title": "LTX Director Guide",
+      "cnr_id": "whatdreamscost-comfyui",
+      "ver": "2.0.0"
+    }
+  },
+  "146:28": {
+    "inputs": {
+      "cfg": 1,
+      "model": [
+        "146:133",
+        3
+      ],
+      "positive": [
+        "146:133",
+        0
+      ],
+      "negative": [
+        "146:133",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFG Guider",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.64"
+    }
+  },
+  "146:29": {
+    "inputs": {
+      "video_latent": [
+        "146:133",
+        2
+      ],
+      "audio_latent": [
+        "724",
+        3
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "Concatena AV Latent",
+      "cnr_id": "comfy-core",
+      "ver": "0.16.0"
+    }
+  },
+  "146:32": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.56"
+    }
+  },
+  "146:33": {
+    "inputs": {
+      "scheduler": "linear_quadratic",
+      "steps": 8,
+      "denoise": 1,
+      "model": [
+        "146:133",
+        3
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "Scheduler Base",
+      "cnr_id": "comfy-core",
+      "ver": "0.16.4"
+    }
+  },
+  "146:31": {
+    "inputs": {
+      "noise": [
+        "147:30",
+        0
+      ],
+      "guider": [
+        "146:28",
+        0
+      ],
+      "sampler": [
+        "146:32",
+        0
+      ],
+      "sigmas": [
+        "146:33",
+        0
+      ],
+      "latent_image": [
+        "146:29",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.60"
+    }
+  },
+  "146:34": {
+    "inputs": {
+      "av_latent": [
+        "146:31",
+        0
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "Separa AV Latente",
+      "cnr_id": "comfy-core",
+      "ver": "0.16.0"
+    }
+  },
+  "147:55": {
+    "inputs": {
+      "positive": [
+        "146:133",
+        0
+      ],
+      "negative": [
+        "146:133",
+        1
+      ],
+      "latent": [
+        "146:34",
+        0
+      ]
+    },
+    "class_type": "LTXDirectorCropGuides",
+    "_meta": {
+      "title": "LTX Director Crop Guides",
+      "cnr_id": "whatdreamscost-comfyui",
+      "ver": "1.3.9"
+    }
+  },
+  "147:13": {
+    "inputs": {
+      "model_name": "ltx-2.5-latent-spatial-upscaler-x2-bf16-1.0.safetensors"
+    },
+    "class_type": "LatentUpscaleModelLoader",
+    "_meta": {
+      "title": "Carica Modello di Ingrandimento Latent",
+      "cnr_id": "comfy-core",
+      "ver": "0.16.4"
+    }
+  },
+  "147:14": {
+    "inputs": {
+      "samples": [
+        "147:55",
+        2
+      ],
+      "upscale_model": [
+        "147:13",
+        0
+      ],
+      "vae": [
+        "139:36",
+        0
+      ]
+    },
+    "class_type": "LTXVLatentUpsampler",
+    "_meta": {
+      "title": "LTXVLatentUpsampler",
+      "cnr_id": "comfy-core",
+      "ver": "0.14.1"
+    }
+  },
+  "147:30": {
+    "inputs": {
+      "noise_seed": 0
+    },
+    "class_type": "RandomNoise",
+    "_meta": {
+      "title": "RandomNoise",
+      "cnr_id": "comfy-core",
+      "ver": "0.19.3"
+    }
+  },
+  "147:132": {
+    "inputs": {
+      "ic_lora_name": "None",
+      "ic_lora_strength": 1,
+      "scale_by": 1,
+      "upscale_method": "bicubic",
+      "image_attention_strength": 1,
+      "crop": "center",
+      "auto_snap_ic_grid": true,
+      "use_tiled_encode": false,
+      "tile_size": 256,
+      "tile_overlap": 64,
+      "retake_mode": false,
+      "positive": [
+        "147:55",
+        0
+      ],
+      "negative": [
+        "147:55",
+        1
+      ],
+      "vae": [
+        "139:36",
+        0
+      ],
+      "latent": [
+        "147:14",
+        0
+      ],
+      "guide_data": [
+        "724",
+        4
+      ],
+      "motion_guide_data": [
+        "724",
+        5
+      ],
+      "model": [
+        "724",
+        0
+      ]
+    },
+    "class_type": "LTXDirectorGuide",
+    "_meta": {
+      "title": "LTX Director Guide",
+      "cnr_id": "whatdreamscost-comfyui",
+      "ver": "2.0.0"
+    }
+  },
+  "147:17": {
+    "inputs": {
+      "cfg": 1,
+      "model": [
+        "147:132",
+        3
+      ],
+      "positive": [
+        "147:132",
+        0
+      ],
+      "negative": [
+        "147:132",
+        1
+      ]
+    },
+    "class_type": "CFGGuider",
+    "_meta": {
+      "title": "CFG Guider",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.64"
+    }
+  },
+  "147:18": {
+    "inputs": {
+      "video_latent": [
+        "147:132",
+        2
+      ],
+      "audio_latent": [
+        "146:34",
+        1
+      ]
+    },
+    "class_type": "LTXVConcatAVLatent",
+    "_meta": {
+      "title": "Concatena AV Latent",
+      "cnr_id": "comfy-core",
+      "ver": "0.7.0"
+    }
+  },
+  "147:20": {
+    "inputs": {
+      "sampler_name": "euler"
+    },
+    "class_type": "KSamplerSelect",
+    "_meta": {
+      "title": "KSamplerSelect",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.56"
+    }
+  },
+  "147:21": {
+    "inputs": {
+      "scheduler": "linear_quadratic",
+      "steps": 4,
+      "denoise": 0.42,
+      "model": [
+        "147:132",
+        3
+      ]
+    },
+    "class_type": "BasicScheduler",
+    "_meta": {
+      "title": "Scheduler Base",
+      "cnr_id": "comfy-core",
+      "ver": "0.16.4"
+    }
+  },
+  "147:19": {
+    "inputs": {
+      "noise": [
+        "147:30",
+        0
+      ],
+      "guider": [
+        "147:17",
+        0
+      ],
+      "sampler": [
+        "147:20",
+        0
+      ],
+      "sigmas": [
+        "147:21",
+        0
+      ],
+      "latent_image": [
+        "147:18",
+        0
+      ]
+    },
+    "class_type": "SamplerCustomAdvanced",
+    "_meta": {
+      "title": "SamplerCustomAdvanced",
+      "cnr_id": "comfy-core",
+      "ver": "0.3.60"
+    }
+  },
+  "147:22": {
+    "inputs": {
+      "av_latent": [
+        "147:19",
+        0
+      ]
+    },
+    "class_type": "LTXVSeparateAVLatent",
+    "_meta": {
+      "title": "Separa AV Latente",
+      "cnr_id": "comfy-core",
+      "ver": "0.5.1"
+    }
+  },
+  "147:54": {
+    "inputs": {
+      "positive": [
+        "147:132",
+        0
+      ],
+      "negative": [
+        "147:132",
+        1
+      ],
+      "latent": [
+        "147:22",
+        0
+      ]
+    },
+    "class_type": "LTXDirectorCropGuides",
+    "_meta": {
+      "title": "LTX Director Crop Guides",
+      "cnr_id": "whatdreamscost-comfyui",
+      "ver": "1.3.9"
+    }
+  },
+  "148:24": {
+    "inputs": {
+      "samples": [
+        "147:22",
+        1
+      ],
+      "audio_vae": [
+        "139:8",
+        0
+      ]
+    },
+    "class_type": "LTXVAudioVAEDecode",
+    "_meta": {
+      "title": "LTXV Audio VAE Decode",
+      "cnr_id": "comfy-core",
+      "ver": "0.16.0"
+    }
+  },
+  "148:1": {
+    "inputs": {
+      "samples": [
+        "147:54",
+        2
+      ],
+      "vae": [
+        "139:36",
+        0
+      ]
+    },
+    "class_type": "VAEDecode",
+    "_meta": {
+      "title": "Decodifica VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.9.1"
+    }
+  },
+  "148:2": {
+    "inputs": {
+      "fps": [
+        "724",
+        6
+      ],
+      "bit_depth": 10,
+      "color_space": "sRGB",
+      "chroma_subsampling": "auto",
+      "codec": "auto",
+      "images": [
+        "148:1",
+        0
+      ],
+      "audio": [
+        "148:24",
+        0
+      ]
+    },
+    "class_type": "CreateVideo",
+    "_meta": {
+      "title": "Crea Video",
+      "cnr_id": "comfy-core",
+      "ver": "0.19.3"
+    }
+  }
+}

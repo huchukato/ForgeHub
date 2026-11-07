@@ -1,0 +1,104 @@
+{
+  "id": "ltx25-director",
+  "name": "LTX 2.5 Director",
+  "category": "LTX 2.5",
+  "description": "Multi-scene long video: stills as keyframes + one prompt per segment, assembled and enhanced by QwenVL in one pass (LTX 2.5 22B distilled, native audio)",
+  "handler": "ltx",
+  "remote_file": "LTX25-Director.json",
+  "endpoint_id": "",
+  "endpoint_name": "LTX 2.5",
+  "outputs": [
+    "video",
+    "audio"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Global prompt",
+      "type": "text",
+      "target": "job",
+      "wildcard_prefix": "ltx/"
+    },
+    {
+      "key": "segments",
+      "label": "Segment prompts (one per still, | separated)",
+      "type": "text",
+      "target": "job"
+    },
+    {
+      "key": "images",
+      "label": "Keyframe stills (one per segment, in order)",
+      "type": "images",
+      "target": "job",
+      "max": 12
+    },
+    {
+      "key": "segment_seconds",
+      "label": "Seconds per segment (comma list, empty = even split of Duration)",
+      "type": "text",
+      "target": "job",
+      "default": ""
+    },
+    {
+      "key": "seconds",
+      "label": "Total duration (s)",
+      "type": "select",
+      "target": "job",
+      "default": "48",
+      "options": [
+        "10",
+        "20",
+        "30",
+        "48",
+        "60"
+      ]
+    },
+    {
+      "key": "enhance",
+      "label": "QwenVL enhance",
+      "type": "select",
+      "target": "job",
+      "default": "on",
+      "options": [
+        "on",
+        "off"
+      ]
+    },
+    {
+      "key": "vl_preset",
+      "label": "Enhancer preset",
+      "type": "select",
+      "target": "job",
+      "default": "LTX › Director",
+      "options": [
+        "LTX › Director",
+        "LTX › SFW T2V",
+        "LTX › NSFW T2V"
+      ]
+    },
+    {
+      "key": "image_size",
+      "label": "Resolution",
+      "type": "select",
+      "target": "job",
+      "default": "1376x768 (16:9)",
+      "options": [
+        "1376x768 (16:9)",
+        "768x1376 (9:16)",
+        "960x960 (1:1)",
+        "1152x768 (3:2)"
+      ]
+    },
+    {
+      "key": "fps",
+      "label": "FPS",
+      "type": "select",
+      "target": "job",
+      "default": "24",
+      "options": [
+        "24",
+        "25"
+      ]
+    }
+  ]
+}

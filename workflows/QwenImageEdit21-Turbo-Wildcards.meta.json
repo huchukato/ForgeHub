@@ -1,0 +1,118 @@
+{
+  "id": "qwen21-turbo",
+  "name": "Qwen Image 2.1 Turbo Edit",
+  "category": "Qwen Image 2.1",
+  "description": "Image edit / character sheet (Qwen Image 2.1 Turbo 8-step, serverless)",
+  "handler": "qwen21",
+  "remote_file": "QwenImageEdit21-Turbo-Wildcards.json",
+  "endpoint_id": "",
+  "outputs": [
+    "image"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Edit instruction",
+      "type": "text",
+      "target": "job",
+      "wildcard_prefix": "qwen21/"
+    },
+    {
+      "key": "images",
+      "label": "Images (base + reference)",
+      "type": "images",
+      "target": "job",
+      "max": 2
+    },
+    {
+      "key": "512:mode",
+      "label": "Wildcard mode",
+      "type": "select",
+      "target": "node",
+      "default": "populate",
+      "options": [
+        "populate",
+        "fixed",
+        "reproduce"
+      ]
+    },
+    {
+      "key": "enhance",
+      "label": "Enhancer QwenVL",
+      "type": "bool",
+      "target": "job",
+      "default": false
+    },
+    {
+      "key": "vl_preset",
+      "label": "Enhancer preset",
+      "type": "select",
+      "target": "job",
+      "default": "QWEN › Storyboard",
+      "options": [
+        "QWEN › Storyboard",
+        "QWEN › Edit"
+      ],
+      "parent": "enhance"
+    },
+    {
+      "key": "image_size",
+      "label": "Image size",
+      "type": "select",
+      "target": "job",
+      "default": "1024x1024",
+      "options": [
+        "1024x1024",
+        "1152x1152",
+        "1344x1344",
+        "2048x2048",
+        "1344x768",
+        "1536x864",
+        "1920x1088",
+        "2048x1152",
+        "1152x864",
+        "1440x1088",
+        "2048x1536",
+        "768x1344",
+        "864x1536",
+        "1088x1920",
+        "1152x2048",
+        "864x1152",
+        "1088x1440",
+        "1536x2048",
+        "768x1152",
+        "832x1248",
+        "1344x2016",
+        "1152x768",
+        "1248x832",
+        "2016x1344",
+        "1536x640",
+        "2016x864",
+        "2528x1088",
+        "640x1536",
+        "1280x720",
+        "720x1280"
+      ]
+    },
+    {
+      "key": "resolution",
+      "label": "Encoder resolution",
+      "type": "select",
+      "target": "job",
+      "default": "1024",
+      "options": [
+        "1024",
+        "1536",
+        "2048"
+      ]
+    },
+    {
+      "key": "515:546:strength_model",
+      "label": "Detailer LoRA strength (0 = off)",
+      "type": "float",
+      "target": "node",
+      "default": 0.7
+    }
+  ],
+  "endpoint_name": "Qwen Image 2.1"
+}
