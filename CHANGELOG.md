@@ -3,6 +3,13 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.3] — 2026-11-07
+
+### Changed
+- **MMH3 workflows**: replaced turbo LoRA nodes with integrated turbo models; updated model references (`Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors` → `PRISM_DMAD_PDMD_int8.safetensors`, `minimax_h3_fl2va_pruned_int8_convrot.safetensors` → `10Eros_Max_h3_8stepTURBO_beta7_fix1-native_int8_protected_edges_HQ.safetensors`)
+- **Manifest**: cleaned `models-manifest.txt` — removed obsolete commented sections, added LoRA style downloads (`h3-realism-people-t2v-i2v-r2v.safetensors`, `h3_character_swap.safetensors`)
+- **ForgeHub**: bumped version to 0.2.3; added changelog
+- **RunPod Hub**: updated hub.json to v1.1.6 with changelog
 ## [0.2.2] — 2026-11-07
 
 ### Changed
