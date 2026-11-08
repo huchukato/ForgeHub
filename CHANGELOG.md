@@ -3,6 +3,11 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.5] — 2026-11-08
+
+### Added
+- **Qwen Image 2.1 model select** — `Diffusion model` dropdown (standard / turbo / uncensored) on the T2I and Edit workflows; the serverless handler resolves the pick to the real checkpoint on the volume. The Turbo Edit workflow keeps its tuned model fixed.
+
 ## [0.2.4] — 2026-11-08
 
 ### Added
