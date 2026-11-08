@@ -1,9 +1,9 @@
 {
   "512": {
     "inputs": {
-      "text": "__qwen21/headswap__",
-      "seed": 175040467273976,
-      "populated_text": "Replace the entire head and hair of the person in <image1> with the head, facial identity, facial hair, and hairstyle of the person in <image2>, re-rendered photorealistically in place — not a composited cutout. Retain the exact skull geometry, hairline, and facial expression from <image2>, adapted to the pose, framing and lighting of <image1>. Blend at the neckline and collar of <image1>, recalculating ambient occlusion and specular highlights so the new head matches the directional lighting and environmental reflections of <image1>. Keep the body, clothing and background of <image1> completely unchanged — the result must look like a single photograph.",
+      "text": "__qwen21/prosheet__",
+      "seed": 56442650435382,
+      "populated_text": "Create a professional character reference sheet based strictly on <image1>.\n\nThe character is the same person shown in <image2>. Use <image2> as an additional reference to capture more accurate facial features, proportions, hairstyle, clothing details, accessories, and other fine details.\n\nCharacter consistency:\n* Preserve the character's exact face, facial structure, hairstyle, proportions, clothing, colors, accessories, and identifiable details from the references.\n* Do not redesign, reinterpret, beautify, or alter the face.\n* Maintain the exact same person and identity across every panel.\n* Capture all fine details from both reference images.\n* Use <image2> whenever it provides additional information or details not clearly visible in <image1>.\n\nTop section — full-body turnaround:\nPlace three full-body character views across the top:\n1. Front view\n2. Side/profile view\n3. Back view\n* Same outfit and identical character proportions in all three views.\n* Use the same neutral standing pose for every view.\n* Arms slightly separated from the torso so the silhouette and clothing are clearly visible.\n* Hands relaxed and naturally posed.\n* Keep the camera height, framing, scale, and perspective consistent between all three views.\n* No pose drift, proportion drift, outfit changes, or character redesign.\n* The back view must accurately match the front and side views.\n\nBottom section — expressions and props:\nUse the bottom area for a clean collection of smaller reference panels.\nInclude three facial expression close-ups:\n* Open mouth\n* Smiling with teeth visible\n* Surprised expression\n\nRight side — large portrait:\nPlace one large, highly detailed shoulder-up portrait of the same person on the right side.\n* Preserve the exact face and identity from <image1> and <image2>.\n* Use <image2> to improve facial accuracy and capture details that may be missing from <image1>.\n* High facial detail and accurate proportions.\n* Clean, centered composition.\n* Professional character-sheet presentation.\n* The portrait must clearly match the face shown in all turnaround views and expression panels.\n\nLayout and quality:\n* Clean, professional character-sheet layout.\n* Clearly separated panels with consistent spacing.\n* Nothing may overlap, collide, merge, or bleed into another panel.\n* No element should cross into another frame.\n* Keep every character, expression, prop, and portrait completely contained within its designated area.\n* No cropped heads, hands, feet, props, or important clothing details.\n* Balanced spacing and clear visual hierarchy.\n* High resolution and highly detailed.\n* Maintain absolute character consistency across the entire sheet.\n* Zero identity drift, zero outfit drift, zero proportion drift, and zero visual inconsistency.",
       "mode": "populate",
       "deduplicate": true,
       "downvote_factor": 0.5,
@@ -11,12 +11,15 @@
     },
     "class_type": "WildcardProcessor",
     "_meta": {
-      "title": "🃏 Wildcard Processor"
+      "title": "🃏 Wildcard Processor",
+      "cnr_id": "ComfyUI-TagForge",
+      "aux_id": "huchukato/ComfyUI-TagForge",
+      "ver": "7e4465489d176225f35882399dafe6ead5b21cd8"
     }
   },
   "513": {
     "inputs": {
-      "text": "Replace the entire head and hair of the person in <image1> with the head, facial identity, facial hair, and hairstyle of the person in <image2>, re-rendered photorealistically in place — not a composited cutout. Retain the exact skull geometry, hairline, and facial expression from <image2>, adapted to the pose, framing and lighting of <image1>. Blend at the neckline and collar of <image1>, recalculating ambient occlusion and specular highlights so the new head matches the directional lighting and environmental reflections of <image1>. Keep the body, clothing and background of <image1> completely unchanged — the result must look like a single photograph.",
+      "text": "Create a professional character reference sheet based strictly on <image1>.\n\nThe character is the same person shown in <image2>. Use <image2> as an additional reference to capture more accurate facial features, proportions, hairstyle, clothing details, accessories, and other fine details.\n\nCharacter consistency:\n* Preserve the character's exact face, facial structure, hairstyle, proportions, clothing, colors, accessories, and identifiable details from the references.\n* Do not redesign, reinterpret, beautify, or alter the face.\n* Maintain the exact same person and identity across every panel.\n* Capture all fine details from both reference images.\n* Use <image2> whenever it provides additional information or details not clearly visible in <image1>.\n\nTop section — full-body turnaround:\nPlace three full-body character views across the top:\n1. Front view\n2. Side/profile view\n3. Back view\n* Same outfit and identical character proportions in all three views.\n* Use the same neutral standing pose for every view.\n* Arms slightly separated from the torso so the silhouette and clothing are clearly visible.\n* Hands relaxed and naturally posed.\n* Keep the camera height, framing, scale, and perspective consistent between all three views.\n* No pose drift, proportion drift, outfit changes, or character redesign.\n* The back view must accurately match the front and side views.\n\nBottom section — expressions and props:\nUse the bottom area for a clean collection of smaller reference panels.\nInclude three facial expression close-ups:\n* Open mouth\n* Smiling with teeth visible\n* Surprised expression\n\nRight side — large portrait:\nPlace one large, highly detailed shoulder-up portrait of the same person on the right side.\n* Preserve the exact face and identity from <image1> and <image2>.\n* Use <image2> to improve facial accuracy and capture details that may be missing from <image1>.\n* High facial detail and accurate proportions.\n* Clean, centered composition.\n* Professional character-sheet presentation.\n* The portrait must clearly match the face shown in all turnaround views and expression panels.\n\nLayout and quality:\n* Clean, professional character-sheet layout.\n* Clearly separated panels with consistent spacing.\n* Nothing may overlap, collide, merge, or bleed into another panel.\n* No element should cross into another frame.\n* Keep every character, expression, prop, and portrait completely contained within its designated area.\n* No cropped heads, hands, feet, props, or important clothing details.\n* Balanced spacing and clear visual hierarchy.\n* High resolution and highly detailed.\n* Maintain absolute character consistency across the entire sheet.\n* Zero identity drift, zero outfit drift, zero proportion drift, and zero visual inconsistency.",
       "source": [
         "515:547",
         0
@@ -24,7 +27,10 @@
     },
     "class_type": "PixaromaShowText",
     "_meta": {
-      "title": "Show Text Pixaroma"
+      "title": "Show Text Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "526": {
@@ -41,7 +47,10 @@
     },
     "class_type": "PixaromaSaveImage",
     "_meta": {
-      "title": "Save Image Pixaroma"
+      "title": "Save Image Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "541": {
@@ -50,53 +59,97 @@
     },
     "class_type": "PixaromaNote",
     "_meta": {
-      "title": "Wildcard Guide"
+      "title": "Wildcard Guide",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "384d296da4a3805865c39e60b0700c2d0eb674fb"
+    }
+  },
+  "548": {
+    "inputs": {
+      "label_json": "{\"text\":\"QwenImageEdit21\",\"fontSize\":54,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#ff8c42\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
+    }
+  },
+  "549": {
+    "inputs": {
+      "label_json": "{\"text\":\"The Only Workflow You Will Need\",\"fontSize\":20,\"fontFamily\":\"Courier New\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#d2a283\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"normal\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
+    }
+  },
+  "550": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
+    }
+  },
+  "551": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "556": {
     "inputs": {},
     "class_type": "PixaromaGroupSwitch",
     "_meta": {
-      "title": "Group Switch Pixaroma"
+      "title": "Group Switch Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "19834fb532529c5d85cda0fc8da18cdd59fcd930"
     }
   },
   "560": {
     "inputs": {
-      "SeedState": "{\"runSeed\":4062943539497467}",
-      "seed": 4062943539497467
+      "SeedState": "{\"runSeed\":3030800623669248}",
+      "seed": 3030800623669248
     },
     "class_type": "PixaromaSeed",
     "_meta": {
-      "title": "3. Seed Random/Fixed?"
+      "title": "3. Seed Random/Fixed?",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "561": {
     "inputs": {
-      "SizesState": "{\"version\":1,\"sizes\":[[1024,1024],[1152,864],[1248,832],[1376,768],[1920,1088],[1536,1536],[2560,1440],[2048,2048],[2400,1792],[2528,1696],[2752,1536]],\"selected\":2,\"orientation\":\"portrait\",\"snap\":32,\"accent\":null,\"collapsed\":false,\"starred\":[\"2048x2048\",\"1792x2400\",\"1696x2528\",\"1536x2752\"],\"w\":832,\"h\":1248}"
+      "SizesState": "{\"version\":1,\"sizes\":[[1024,1024],[1152,864],[1248,832],[1376,768],[1920,1088],[1536,1536],[2560,1440],[2048,2048],[2400,1792],[2528,1696],[2752,1536]],\"selected\":10,\"orientation\":\"landscape\",\"snap\":32,\"w\":2752,\"h\":1536}"
     },
     "class_type": "PixaromaSizes",
     "_meta": {
-      "title": "1. Pick Orientation and Size"
+      "title": "1. Pick Orientation and Size",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "565": {
     "inputs": {
-      "image": "F2K_00021_.png",
-      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"F2K_00021_.png\"}"
+      "image": "FD_2026-11-07_107.jpg",
+      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"FD_2026-11-07_107.jpg\"}"
     },
     "class_type": "PixaromaLoadImageMini",
     "_meta": {
-      "title": "1. Load Image"
-    }
-  },
-  "566": {
-    "inputs": {
-      "image": "SeedVR2_50516_.jpg",
-      "LoadImageMiniState": "{\"version\":1,\"mode\":\"off\",\"max_mp\":1,\"longest_side\":1024,\"scale_factor\":1,\"fit_w\":1024,\"fit_h\":1024,\"cover_w\":1024,\"cover_h\":1024,\"ratio_preset\":\"1:1\",\"ratio_w\":1,\"ratio_h\":1,\"ratio_action\":\"crop\",\"pad_color\":\"#808080\",\"pad_top\":0,\"pad_bottom\":0,\"pad_left\":0,\"pad_right\":0,\"crop_anchor\":\"center\",\"crop_scale\":true,\"snap\":0,\"resample\":\"auto\",\"allow_upscale\":true,\"orig_name\":\"SeedVR2_50516_.jpg\"}"
-    },
-    "class_type": "PixaromaLoadImageMini",
-    "_meta": {
-      "title": "2. Load Image"
+      "title": "1. Load Image",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "567": {
@@ -108,16 +161,20 @@
     },
     "class_type": "PixaromaImageInfo",
     "_meta": {
-      "title": "Image Info Pixaroma"
+      "title": "Image Info Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "dfd97a970f89d065bffd7157c77b2cb7fc59c33a"
     }
   },
   "568": {
     "inputs": {
-      "DropdownState": "{\"version\":1,\"type\":\"int\",\"value\":\"1024\"}"
+      "DropdownState": "{\"version\":1,\"type\":\"int\",\"value\":\"2048\"}"
     },
     "class_type": "PixaromaDropdown",
     "_meta": {
-      "title": "Resolution"
+      "title": "Resolution",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "dfd97a970f89d065bffd7157c77b2cb7fc59c33a"
     }
   },
   "515:490": {
@@ -131,7 +188,9 @@
     },
     "class_type": "QwenImage21Cache",
     "_meta": {
-      "title": "Cache Qwen Image 2.1"
+      "title": "Cache Qwen Image 2.1",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.0"
     }
   },
   "515:488": {
@@ -147,7 +206,9 @@
     },
     "class_type": "VAEDecode",
     "_meta": {
-      "title": "Decodifica VAE"
+      "title": "Decodifica VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.0"
     }
   },
   "515:509": {
@@ -180,7 +241,9 @@
     },
     "class_type": "KSampler",
     "_meta": {
-      "title": "KSampler"
+      "title": "KSampler",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.0"
     }
   },
   "515:486": {
@@ -189,7 +252,9 @@
     },
     "class_type": "VAELoader",
     "_meta": {
-      "title": "Carica VAE"
+      "title": "Carica VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.0"
     }
   },
   "515:493": {
@@ -200,7 +265,9 @@
     },
     "class_type": "CLIPLoader",
     "_meta": {
-      "title": "Carica CLIP"
+      "title": "Carica CLIP",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.0"
     }
   },
   "515:496": {
@@ -210,7 +277,9 @@
     },
     "class_type": "UNETLoader",
     "_meta": {
-      "title": "Carica modello di diffusione"
+      "title": "Carica modello di diffusione",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.0"
     }
   },
   "515:543": {
@@ -227,7 +296,9 @@
     },
     "class_type": "EmptyLatentImage",
     "_meta": {
-      "title": "Immagine Latent Vuota"
+      "title": "Immagine Latent Vuota",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.0"
     }
   },
   "515:545": {
@@ -236,7 +307,10 @@
         "515:547",
         0
       ],
-      "negative_prompt": "",
+      "negative_prompt": [
+        "512",
+        1
+      ],
       "resolution": [
         "568",
         0
@@ -249,10 +323,6 @@
         "565",
         0
       ],
-      "images.image_2": [
-        "566",
-        0
-      ],
       "vae": [
         "515:486",
         0
@@ -260,7 +330,9 @@
     },
     "class_type": "TextEncodeQwenImage21",
     "_meta": {
-      "title": "Codifica testo Qwen Image 2.1"
+      "title": "Codifica testo Qwen Image 2.1",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.0"
     }
   },
   "515:546": {
@@ -274,13 +346,15 @@
     },
     "class_type": "LoraLoaderModelOnly",
     "_meta": {
-      "title": "Carica LoRA"
+      "title": "Carica LoRA",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
   "515:547": {
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
-      "preset_prompt": "IMG › Qwen Edit",
+      "preset_prompt": "QWEN › Edit",
       "camera_tag": "None",
       "prompt": [
         "512",
@@ -288,7 +362,7 @@
       ],
       "max_tokens": 8192,
       "keep_model_loaded": false,
-      "seed": 1762208886,
+      "seed": 3129748130,
       "keep_last_prompt": false,
       "passthrough": true,
       "frame_count": 16,
@@ -296,15 +370,14 @@
       "image": [
         "565",
         0
-      ],
-      "image2": [
-        "566",
-        0
       ]
     },
     "class_type": "QwenVL_Unified",
     "_meta": {
-      "title": "🧠 QwenVL Unified (HF / GGUF)"
+      "title": "🧠 QwenVL Unified (HF / GGUF)",
+      "cnr_id": "ComfyUI-QwenVL-Mod",
+      "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+      "ver": "8deb5d8b379c17000a25d289d76ad68daef2b198"
     }
   },
   "515:559": {
@@ -317,7 +390,9 @@
     },
     "class_type": "ModelAttentionBackend",
     "_meta": {
-      "title": "Backend di attenzione del modello"
+      "title": "Backend di attenzione del modello",
+      "cnr_id": "comfy-core",
+      "ver": "0.37.2"
     }
   }
 }

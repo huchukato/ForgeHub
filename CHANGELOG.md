@@ -3,6 +3,20 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.4] — 2026-11-08
+
+### Added
+- **Qwen Image 2.1 T2I attention chain** — `ModelAttentionBackend` (Qwen attention) and a detail LoRA (`elusarcas-qwen2-1-detailer-v1`, 0.7) wired after the QwenVL prompt enhancer; added Monitor/Run Timer/Label UI nodes, and the negative prompt is now populated from the wildcard.
+- **Qwen Image 2.1 Edit prosheet** — the headswap recipe now renders a `prosheet` character reference sheet (turnaround + expression close-ups + portrait) instead of a head swap.
+
+### Changed
+- **Qwen Image 2.1 T2I prompt** — reworked for a lakeside dusk character; `char/favchar` → `char/rndmcharlb` (re-roll); `enhancement_style` "Qwen Image T2I" → "QWEN › Txt2img"; `style_tag` → "None".
+- **Icons** — refreshed app icons (`icon.png`, `icon.ico`) from the new icon set.
+- **ForgeHub** — bumped version to 0.2.4; changelog entry.
+
+### Fixed
+- **Qwen Image 2.1 T2I meta** — the Style tag select pointed at a stale node id after the prompt enhancer was renumbered (`544:484` → `544:549`).
+
 ## [0.2.3] — 2026-11-07
 
 ### Changed

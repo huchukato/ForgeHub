@@ -1,9 +1,9 @@
 {
   "512": {
     "inputs": {
-      "text": "__pmp/prmpt/lctns/rndmlctns__, __pmp/prmpt/light/rndmlight__, __pmp/prmpt/char/favchar__, large breasts, __pmp/prmpt/clths/rndmclth__, __pmp/prmpt/pose/poses_basic__, __pmp/prmpt/clths/nudty_brsts__, __pmp/actsolo/brstplng__",
-      "seed": 1035925666020603,
-      "populated_text": "studio, twilight, stage lights, sidelighting, window shadow, 1girl, rikku \\(final fantasy x\\), final fantasy, blonde hair, green eyes, large breasts, trousers, lying, nipple slip, grabbing own breast, nipple visible, blushing, biting lip, cozy",
+      "text": "__pmp/prmpt/lctns/rndmlctns__, __pmp/prmpt/light/rndmlight__, __pmp/prmpt/char/rndmcharlb__, __pmp/prmpt/clths/rndmclth__, __pmp/prmpt/pose/poses_basic__, __pmp/prmpt/clths/nudty_brsts__, __pmp/actsolo/brstplng__",
+      "seed": 278589132133602,
+      "populated_text": "lakeside, dusk, bloom, backlighting, shadow, 1girl, dark brown hair, absurdly long hair, jheri curl, ringlets, pink eyes, average body, large breasts, tall, babydoll, on stomach, extended downblouse, solo, both hands on breasts, breast squeeze, eyes closed, mouth open",
       "mode": "populate",
       "deduplicate": true,
       "downvote_factor": 0.5,
@@ -11,20 +11,46 @@
     },
     "class_type": "WildcardProcessor",
     "_meta": {
-      "title": "🃏 Wildcard Processor"
+      "title": "🃏 Wildcard Processor",
+      "cnr_id": "ComfyUI-TagForge",
+      "aux_id": "huchukato/ComfyUI-TagForge",
+      "ver": "7e4465489d176225f35882399dafe6ead5b21cd8"
     }
   },
   "513": {
     "inputs": {
-      "text": "A vibrant 2D anime cel-shaded illustration of Rikku from Final Fantasy X, lying down on a cozy stage under studio twilight lighting. Her blonde hair and green eyes are highlighted by dramatic sidelighting that casts soft window shadows across the scene. She wears tight trousers with her blouse slightly askew, revealing her large breasts and a teasing nipple slip that exposes one visible nipple as she playfully grabs at her own breast. Rikku's face is flushed with a deep blush while she bites her lip in anticipation, capturing an intimate moment of self-pleasure under the warm glow of stage lights. The composition emphasizes her curvaceous figure against the backdrop of cozy theatrical ambiance, rendered in rich anime colors and clean lineart typical of high-quality 2D animation.",
+      "text": "This is a photorealistic cinematic photograph of a tall young woman lying prone on grass near a lake at dusk, captured with natural lighting and shallow depth of field. Across the upper portion of the frame, the sky transitions from deep indigo to soft burnt orange where the sun dips below the horizon line. The background features blurred water ripples reflecting these fading colors, suggesting a calm evening atmosphere without distracting detail. Behind her head in the upper-left corner, clusters of wildflowers bloom in muted white and pale lavender against the darkening grass. The subject occupies the lower two-thirds of the image, lying on her stomach with her legs extending slightly out of frame to the bottom right. Her hair is absurdly long and dark brown, styled into tight jheri curl ringlets that cascade down her back and fan across the ground behind her shoulders. She wears a babydoll dress made of thin, semi-sheer fabric that drapes loosely over her torso with an extended downblouse covering her midsection. Her skin texture appears natural under the fading light, showing subtle pores and soft contours rather than plastic smoothness. Both of her hands rest pressed against her chest in a breast squeeze pose, fingers slightly curled into the fabric of her top. Her eyes are closed tightly while her mouth hangs open in an expression of surrender or sleepiness. The lighting is dominated by the soft backlighting from dusk, casting gentle rim highlights on her silhouette while leaving subtle shadows across the grass. Backlighting from the low sun creates a glowing halo around her hairline and shoulders, separating her silhouette from the darker shoreline vegetation behind her. Shadows fall softly across the grass blades beneath her body, indicating the directionality of the sunset light. Her pink eyes are not visible as she rests them shut, contrasting with the warm tones surrounding her face. A faint breeze seems to ripple through her ringlets, giving movement to an otherwise still moment in time. The overall composition balances the vastness of the evening sky against the intimate details of her pose, creating a sense of quiet solitude within a cinematic frame.",
       "source": [
-        "544:484",
+        "544:549",
         0
       ]
     },
     "class_type": "PixaromaShowText",
     "_meta": {
-      "title": "QWEN ENHANCED PROMPT"
+      "title": "QWEN ENHANCED PROMPT",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
+    }
+  },
+  "517": {
+    "inputs": {},
+    "class_type": "PixaromaMonitor",
+    "_meta": {
+      "title": "Monitor Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
+    }
+  },
+  "518": {
+    "inputs": {},
+    "class_type": "PixaromaRunTimer",
+    "_meta": {
+      "title": "Run Timer Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "526": {
@@ -37,7 +63,34 @@
     },
     "class_type": "PixaromaSaveImage",
     "_meta": {
-      "title": "Save Image Pixaroma"
+      "title": "Save Image Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
+    }
+  },
+  "528": {
+    "inputs": {
+      "label_json": "{\"text\":\"QwenImage21\",\"fontSize\":54,\"fontFamily\":\"Arial\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#ff8c42\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"bold\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
+    }
+  },
+  "530": {
+    "inputs": {
+      "label_json": "{\"text\":\"Qwen Image 2.1 Image Generation\",\"fontSize\":20,\"fontFamily\":\"Courier New\",\"fontColor\":\"#ffffff\",\"textAlign\":\"left\",\"backgroundColor\":\"#d2a283\",\"padding\":10,\"borderRadius\":6,\"opacity\":1,\"fontWeight\":\"normal\",\"lineHeight\":1}"
+    },
+    "class_type": "PixaromaLabel",
+    "_meta": {
+      "title": "Label Pixaroma",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "aux_id": "pixaroma/ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "546": {
@@ -46,26 +99,32 @@
     },
     "class_type": "PixaromaDropdown",
     "_meta": {
-      "title": "Resolution"
+      "title": "Resolution",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "dfd97a970f89d065bffd7157c77b2cb7fc59c33a"
     }
   },
   "547": {
     "inputs": {
-      "SizesState": "{\"version\":1,\"sizes\":[[1024,1024],[1152,864],[1248,832],[1376,768],[1920,1088],[1536,1536],[2560,1440],[2048,2048],[2400,1792],[2528,1696],[2752,1536]],\"selected\":2,\"orientation\":\"portrait\",\"snap\":32,\"accent\":null,\"collapsed\":false,\"starred\":[\"2048x2048\",\"1792x2400\",\"1696x2528\",\"1536x2752\"],\"w\":832,\"h\":1248}"
+      "SizesState": "{\"version\":1,\"sizes\":[[1024,1024],[1152,864],[1248,832],[1376,768],[1920,1088],[1536,1536],[2560,1440],[2048,2048],[2400,1792],[2528,1696],[2752,1536]],\"selected\":2,\"orientation\":\"portrait\",\"snap\":32,\"w\":832,\"h\":1248}"
     },
     "class_type": "PixaromaSizes",
     "_meta": {
-      "title": "1. Pick Orientation and Size"
+      "title": "1. Pick Orientation and Size",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "548": {
     "inputs": {
-      "SeedState": "{\"runSeed\":4757114036778398}",
-      "seed": 4757114036778398
+      "SeedState": "{\"runSeed\":7777894738917384}",
+      "seed": 7777894738917384
     },
     "class_type": "PixaromaSeed",
     "_meta": {
-      "title": "3. Seed Random/Fixed?"
+      "title": "3. Seed Random/Fixed?",
+      "cnr_id": "ComfyUI-Pixaroma",
+      "ver": "7a1cf573034fe14e29c1200d884531231a003e2e"
     }
   },
   "544:451": {
@@ -75,16 +134,21 @@
     },
     "class_type": "UNETLoader",
     "_meta": {
-      "title": "Carica modello di diffusione"
+      "title": "Carica modello di diffusione",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
   "544:452": {
     "inputs": {
       "prompt": [
-        "544:484",
+        "544:549",
         0
       ],
-      "negative_prompt": "",
+      "negative_prompt": [
+        "512",
+        1
+      ],
       "resolution": [
         "546",
         0
@@ -100,7 +164,9 @@
     },
     "class_type": "TextEncodeQwenImage21",
     "_meta": {
-      "title": "Codifica testo Qwen Image 2.1"
+      "title": "Codifica testo Qwen Image 2.1",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
   "544:453": {
@@ -111,7 +177,9 @@
     },
     "class_type": "CLIPLoader",
     "_meta": {
-      "title": "Carica CLIP"
+      "title": "Carica CLIP",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
   "544:454": {
@@ -120,7 +188,9 @@
     },
     "class_type": "VAELoader",
     "_meta": {
-      "title": "Carica VAE"
+      "title": "Carica VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
   "544:456": {
@@ -137,7 +207,9 @@
     },
     "class_type": "EmptyLatentImage",
     "_meta": {
-      "title": "Immagine Latent Vuota"
+      "title": "Immagine Latent Vuota",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
   "544:457": {
@@ -153,7 +225,9 @@
     },
     "class_type": "VAEDecode",
     "_meta": {
-      "title": "Decodifica VAE"
+      "title": "Decodifica VAE",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
   "544:458": {
@@ -168,7 +242,7 @@
       "scheduler": "simple",
       "denoise": 1,
       "model": [
-        "544:480",
+        "544:550",
         0
       ],
       "positive": [
@@ -186,7 +260,9 @@
     },
     "class_type": "KSampler",
     "_meta": {
-      "title": "KSampler"
+      "title": "KSampler",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
   "544:480": {
@@ -194,25 +270,27 @@
       "device": "auto",
       "dtype": "default",
       "model": [
-        "544:451",
+        "544:552",
         0
       ]
     },
     "class_type": "QwenImage21Cache",
     "_meta": {
-      "title": "Cache Qwen Image 2.1"
+      "title": "Cache Qwen Image 2.1",
+      "cnr_id": "comfy-core",
+      "ver": "0.38.2"
     }
   },
-  "544:484": {
+  "544:549": {
     "inputs": {
       "model_name": "GGUF: Qwen3.5-9B-The-Defiant-Fable-Uncnr-Heretic-NEO-MAX-Q6_K.gguf",
       "prompt_text": [
         "512",
         0
       ],
-      "enhancement_style": "Qwen Image T2I",
+      "enhancement_style": "QWEN › Txt2img",
       "camera_tag": "None",
-      "style_tag": "[ANIME]",
+      "style_tag": "None",
       "max_tokens": 8192,
       "temperature": 0.7,
       "top_p": 0.9,
@@ -223,14 +301,44 @@
       "attention_mode": "auto",
       "use_torch_compile": false,
       "keep_model_loaded": false,
-      "seed": 4172162974,
+      "seed": 1111229977,
       "keep_last_prompt": false,
       "passthrough": false,
       "duration": "5s"
     },
     "class_type": "QwenVL_Unified_PromptEnhancer",
     "_meta": {
-      "title": "✍🏻 QwenVL Unified Prompt Enhancer (HF / GGUF)"
+      "title": "✍🏻 QwenVL Unified Prompt Enhancer (HF / GGUF)",
+      "cnr_id": "ComfyUI-QwenVL-Mod",
+      "aux_id": "huchukato/ComfyUI-QwenVL-Mod",
+      "ver": "15e910cf87e90be5161077c53b1cbd3adfd6e511"
+    }
+  },
+  "544:550": {
+    "inputs": {
+      "attention": "comfy kitchen attention",
+      "model": [
+        "544:480",
+        0
+      ]
+    },
+    "class_type": "ModelAttentionBackend",
+    "_meta": {
+      "title": "Backend di attenzione del modello"
+    }
+  },
+  "544:552": {
+    "inputs": {
+      "lora_name": "elusarcas-qwen2-1-detailer-v1.safetensors",
+      "strength_model": 0.6999999999999997,
+      "model": [
+        "544:451",
+        0
+      ]
+    },
+    "class_type": "LoraLoaderModelOnly",
+    "_meta": {
+      "title": "Carica LoRA"
     }
   }
 }

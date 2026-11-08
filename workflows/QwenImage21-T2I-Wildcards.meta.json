@@ -52,7 +52,7 @@
       "parent": "enhance"
     },
     {
-      "key": "544:484:style_tag",
+      "key": "544:549:style_tag",
       "label": "Style tag",
       "type": "select",
       "target": "node",

@@ -1,6 +1,6 @@
 {
   "name": "forgehub-app",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "private": true,
   "description": "Desktop app for ComfyUI workflows on Runpod Serverless",
   "author": "huchukato",
@@ -81,5 +81,5 @@
       "maintainer": "huchukato <noreply@github.com>"
     }
   },
-  "changelog": "## 0.2.3\n\n- Updated MMH3 workflows: replaced turbo LoRA nodes with integrated turbo models\n- Fixed model references: `Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors` \u2192 `PRISM_DMAD_PDMD_int8.safetensors`, `minimax_h3_fl2va_pruned_int8_convrot.safetensors` \u2192 `10Eros_Max_h3_8stepTURBO_beta7_fix1-native_int8_protected_edges_HQ.safetensors`\n- Added LoRA style downloads to manifest: `h3-realism-people-t2v-i2v-r2v.safetensors` (realism) and `h3_character_swap.safetensors` (char_swap)\n- Pulito manifest `models-manifest.txt`: rimosse sezioni commentate non pi\u00f9 attive\n- ForgerHub frontend: bumped version to 0.2.3\n\n## 0.2.2\n\n- Initial release with MMH3 integration, RunPod serverless support, ForgeHub GUI\n"
+  "changelog": "## 0.2.4\n\n- Qwen Image 2.1 T2I: added ModelAttentionBackend (Qwen attention) and a detail LoRA (`elusarcas-qwen2-1-detailer-v1`, 0.7) to the chain; added Monitor/Run Timer/Label UI nodes; negative prompt populated from the wildcard; `char/favchar` \u2192 `char/rndmcharlb` (re-roll); `enhancement_style` \"Qwen Image T2I\" \u2192 \"QWEN \u203a Txt2img\"; `style_tag` \u2192 \"None\"\n- Qwen Image 2.1 Edit: headswap recipe now renders a `prosheet` character reference sheet\n- Fixed the Qwen Image 2.1 T2I Style tag meta reference (stale enhancer id `544:484` \u2192 `544:549`)\n- Refreshed app icons\n- ForgerHub frontend: bumped version to 0.2.4\n\n## 0.2.3\n\n## 0.2.3\n\n- Updated MMH3 workflows: replaced turbo LoRA nodes with integrated turbo models\n- Fixed model references: `Minimax-h3_Singularity_ref2va_Pruned_v1.3_int8.safetensors` \u2192 `PRISM_DMAD_PDMD_int8.safetensors`, `minimax_h3_fl2va_pruned_int8_convrot.safetensors` \u2192 `10Eros_Max_h3_8stepTURBO_beta7_fix1-native_int8_protected_edges_HQ.safetensors`\n- Added LoRA style downloads to manifest: `h3-realism-people-t2v-i2v-r2v.safetensors` (realism) and `h3_character_swap.safetensors` (char_swap)\n- Pulito manifest `models-manifest.txt`: rimosse sezioni commentate non pi\u00f9 attive\n- ForgerHub frontend: bumped version to 0.2.3\n\n## 0.2.2\n\n- Initial release with MMH3 integration, RunPod serverless support, ForgeHub GUI\n"
 }
