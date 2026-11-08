@@ -18,6 +18,18 @@
       "wildcard_prefix": "qwen21/"
     },
     {
+      "key": "model",
+      "label": "Diffusion model",
+      "type": "select",
+      "target": "job",
+      "default": "standard",
+      "options": [
+        "standard",
+        "turbo",
+        "uncensored"
+      ]
+    },
+    {
       "key": "images",
       "label": "Images (base + reference)",
       "type": "images",

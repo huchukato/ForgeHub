@@ -17,6 +17,18 @@
       "target": "job"
     },
     {
+      "key": "model",
+      "label": "Diffusion model",
+      "type": "select",
+      "target": "job",
+      "default": "standard",
+      "options": [
+        "standard",
+        "turbo",
+        "uncensored"
+      ]
+    },
+    {
       "key": "512:mode",
       "label": "Wildcard mode",
       "type": "select",
