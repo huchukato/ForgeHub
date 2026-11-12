@@ -25,7 +25,6 @@
       "default": "standard",
       "options": [
         "standard",
-        "turbo",
         "uncensored"
       ]
     },

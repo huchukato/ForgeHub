@@ -3,6 +3,14 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.6] — 2026-11-11
+
+### Fixed
+- **LTX 2.5 workflows** — the video VAE reference was still the old `conv` variant in all four workflows (Director, FL2VA, I2VA/T2VA, Loop-ABCBA); they now point at the standard `ltx-2.5-video-vae-bf16` the whole stack ships. The workflows would fail validation against the current model set.
+
+### Changed
+- **Qwen model select** — the Turbo option is gone from the T2I and Edit dropdowns: the turbo checkpoint needs its own tuned workflow (Edit-Turbo), picking it in the normal ones would run the wrong schedule.
+
 ## [0.2.5] — 2026-11-08
 
 ### Added

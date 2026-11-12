@@ -740,7 +740,7 @@
   },
   "129:210": {
     "inputs": {
-      "vae_name": "ltx-2.5-video-vae-conv-bf16.safetensors"
+      "vae_name": "ltx-2.5-video-vae-bf16.safetensors"
     },
     "class_type": "VAELoader",
     "_meta": {
