@@ -168,18 +168,24 @@ def load_meta(path: Path, workflow: dict[str, Any] | None = None, base_dir: Path
 
 class WorkflowCatalog:
     def __init__(self, directory: Path | None = None):
-        self.directory = directory or SETTINGS.workflow_dir
+        self.directory = directory
+
+    def _dir(self) -> Path:
+        # Resolved per call: the startup workflow sync repoints
+        # SETTINGS.workflow_dir when the synced copy lands.
+        return self.directory or SETTINGS.workflow_dir
 
     def list_workflows(self) -> list[WorkflowMeta]:
         results = []
-        if not self.directory.exists():
+        directory = self._dir()
+        if not directory.exists():
             return results
-        for path in sorted(self.directory.rglob("*.json")):
+        for path in sorted(directory.rglob("*.json")):
             if path.name.endswith(".meta.json"):
                 continue
             try:
                 workflow = load_workflow(path)
-                meta = load_meta(path, workflow, self.directory)
+                meta = load_meta(path, workflow, directory)
                 if meta.requires_endpoint and not meta.endpoint_id and not meta.endpoint_name:
                     continue  # dedicated endpoint not configured yet
                 results.append(meta)
@@ -189,12 +195,13 @@ class WorkflowCatalog:
         return results
 
     def get_workflow(self, workflow_id: str) -> tuple[dict[str, Any], WorkflowMeta] | None:
-        for path in self.directory.rglob("*.json"):
+        directory = self._dir()
+        for path in directory.rglob("*.json"):
             if path.name.endswith(".meta.json"):
                 continue
             try:
                 workflow = load_workflow(path)
-                meta = load_meta(path, workflow, self.directory)
+                meta = load_meta(path, workflow, directory)
                 if meta.id == workflow_id or _slugify(path.stem) == workflow_id:
                     return workflow, meta
             except Exception:

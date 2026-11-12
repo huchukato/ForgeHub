@@ -3,6 +3,14 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.7] — 2026-11-12
+
+### Added
+- **Workflow startup sync** — the packaged app now mirrors `workflows/**` (API workflows + metas) from the ForgeHub repo at every backend start, into the user storage dir; the catalog resolves its directory per call, so the synced copy takes over as soon as it lands. Workflow and meta edits no longer wait for an app release — push and relaunch. The bundled copy stays as the offline fallback (`FORGEHUB_NO_WORKFLOW_SYNC` disables the sync).
+
+### Fixed
+- **Pony meta** — the Checkpoint select's default (`pmpSemiRealAnime.safetensors`) was missing the `pimpmypony_` prefix and got rejected by the endpoint's list validation.
+
 ## [0.2.6] — 2026-11-11
 
 ### Fixed
