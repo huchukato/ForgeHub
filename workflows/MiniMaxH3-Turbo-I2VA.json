@@ -283,7 +283,7 @@
   },
   "105:6": {
     "inputs": {
-      "unet_name": "10Eros_Max_h3_8stepTURBO_beta7_fix1-native_int8_protected_edges_HQ.safetensors",
+      "unet_name": "Minimax-H3-Hybrid-DMAD-PDMD_int8.safetensors",
       "weight_dtype": "default"
     },
     "class_type": "UNETLoader",
