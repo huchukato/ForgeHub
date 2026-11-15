@@ -293,8 +293,20 @@ export default function RecipeForm({ client, parameters, values, setValue, image
     }
     if (p.type === "video") {
       const fname = String(v ?? "");
+      const videoSrc = fname
+        ? (fname.startsWith("http") ? fname : client.abs(`/outputs/${fname}?type=input`))
+        : "";
       return (
         <div className="flex items-center gap-2">
+          {videoSrc && (
+            <video
+              src={videoSrc}
+              muted
+              playsInline
+              preload="metadata"
+              className="h-36 w-auto max-w-60 rounded-lg border border-border object-cover shadow-[var(--shadow-panel)]"
+            />
+          )}
           <TextInput
             value={fname}
             onChange={(e) => setValue(p.key, e.target.value)}

@@ -9,6 +9,7 @@ interface Props {
   open: boolean;
   onClose: () => void;
   canReference?: boolean;
+  referenceKinds?: { image?: boolean; audio?: boolean; video?: boolean };
   onUseAsInput?: (file: File, remoteUrl?: string) => Promise<void>;
   onDelete?: (o: OutputFile) => Promise<void>;
   onChanged?: () => void;
@@ -35,7 +36,7 @@ function keyOf(o: OutputFile) {
   return `${o.subfolder}/${o.filename}`;
 }
 
-export default function OutputsGallery({ outputs, open, onClose, canReference, onUseAsInput, onDelete, onChanged }: Props) {
+export default function OutputsGallery({ outputs, open, onClose, canReference, referenceKinds, onUseAsInput, onDelete, onChanged }: Props) {
   const t = useT();
   const [filter, setFilter] = useState<"all" | "image" | "video" | "audio">("all");
   const [lightbox, setLightbox] = useState<OutputFile | null>(null);
@@ -226,7 +227,7 @@ export default function OutputsGallery({ outputs, open, onClose, canReference, o
                 {fmtSize(o.size)}
               </span>
               <span className="flex gap-1">
-                {canReference && !isVideo(o.filename) && (
+                {canReference && (referenceKinds ? !!referenceKinds[kindOf(o)] : !isVideo(o.filename)) && (
                   <button
                     onClick={(e) => useAsInput(e, o)}
                     className="pointer-events-auto rounded-md bg-black/60 p-1 text-white/80 backdrop-blur-sm transition-colors hover:text-accent"

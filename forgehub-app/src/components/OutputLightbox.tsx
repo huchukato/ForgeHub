@@ -10,9 +10,14 @@ interface Props {
   onClose: () => void;
   onNavigate: (o: OutputFile) => void;
   canReference?: boolean;
+  referenceKinds?: { image?: boolean; audio?: boolean; video?: boolean };
   onUseAsInput?: (file: File, remoteUrl?: string) => Promise<void>;
   onDelete?: (o: OutputFile) => Promise<void>;
   onChanged?: () => void;
+}
+
+function kindOf(name: string): "image" | "video" | "audio" {
+  return isVideo(name) ? "video" : isAudio(name) ? "audio" : "image";
 }
 
 function isVideo(name: string) {
@@ -60,7 +65,7 @@ function nextPresentedFrame(v: HTMLVideoElement): Promise<void> {
   return Promise.race([wait, new Promise<void>((r) => setTimeout(r, 250))]).then(() => {});
 }
 
-export default function OutputLightbox({ output, outputs, onClose, onNavigate, canReference, onUseAsInput, onDelete, onChanged }: Props) {
+export default function OutputLightbox({ output, outputs, onClose, onNavigate, canReference, referenceKinds, onUseAsInput, onDelete, onChanged }: Props) {
   const t = useT();
   const [capturing, setCapturing] = useState<"current" | "last" | null>(null);
   const [deleting, setDeleting] = useState(false);
@@ -218,7 +223,7 @@ export default function OutputLightbox({ output, outputs, onClose, onNavigate, c
               </button>
             </>
           )}
-          {canReference && !isVideo(output.filename) && (
+          {canReference && (referenceKinds ? !!referenceKinds[kindOf(output.filename)] : !isVideo(output.filename)) && (
             <button
               onClick={() => useAsInput(null, output)}
               className="flex items-center gap-2 rounded-lg border border-accent/40 bg-accent/10 px-3 py-2 font-medium text-accent transition-colors hover:bg-accent/20 hover:shadow-[0_0_12px_rgb(124_92_255/0.2)]"

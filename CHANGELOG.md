@@ -7,6 +7,7 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
 ### Added
 - **RelayVSR x2 video upscale** — new `RelayVSR-x2` workflow on both the LTX 2.5 and MiniMax H3 endpoints: feed any clip (`video` upload), get an exact 2x upscale with audio passthrough. Backed by the Comfy-Org RelayVSR x2 diffusion model + Flash VAE, auto-provisioned on the worker volumes.
+- **Video/audio as job inputs from the gallery** — the "use as input" button now appears on video and audio outputs when the workflow accepts them (previously images only), and video outputs in the lightbox offer both frame-capture and whole-video reference. The video parameter field shows a preview thumbnail for URLs and uploads.
 
 ## [0.2.7] — 2026-11-12
 

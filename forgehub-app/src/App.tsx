@@ -523,6 +523,7 @@ const execute = async () => {
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}
         canReference={!!(imageParam || audioParam || videoParam)}
+        referenceKinds={{ image: !!imageParam, audio: !!audioParam, video: !!videoParam }}
         onUseAsInput={useAsInput}
         onDelete={(o) => client.deleteOutput(o)}
         onChanged={() => client.listOutputs().then(setOutputs).catch(() => {})}
@@ -534,6 +535,7 @@ const execute = async () => {
         onClose={() => setHeroLightbox(null)}
         onNavigate={setHeroLightbox}
         canReference={!!(imageParam || audioParam || videoParam)}
+        referenceKinds={{ image: !!imageParam, audio: !!audioParam, video: !!videoParam }}
         onUseAsInput={useAsInput}
         onDelete={(o) => client.deleteOutput(o)}
         onChanged={() => client.listOutputs().then(setOutputs).catch(() => {})}
