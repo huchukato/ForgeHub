@@ -105,8 +105,16 @@
       "options": [
         "none",
         "realism",
-        "char_swap"
+        "char_swap",
+        "cinematic"
       ]
+    },
+    {
+      "key": "lora_strength",
+      "label": "LoRA strength",
+      "type": "float",
+      "target": "job",
+      "default": 1.0
     },
     {
       "key": "image_size",
