@@ -10,7 +10,7 @@
 
 A desktop app for orchestrating ComfyUI workflows on **Runpod Serverless** endpoints — wildcard prompts, QwenVL prompt enhancer, job queue and output gallery. Backend bundled: nothing else to install.
 
-Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio) · [runpod-ltx-25](https://github.com/huchukato/runpod-ltx-25) (LTX 2.5 video+audio: I2VA/T2VA, FL2VA, pose loops)
+Companion to the workers: [runpod-qwen21](https://github.com/huchukato/runpod-qwen21) (Qwen Image 2.1 T2I/Edit + Pony) · [runpod-minimax-h3](https://github.com/huchukato/runpod-minimax-h3) (MiniMax H3 video+audio) · [runpod-ltx-25](https://github.com/huchukato/runpod-ltx-25) (LTX 2.5 video+audio: I2VA/T2VA, FL2VA, pose loops, Director). Both video workers also ship **RelayVSR x2** — one-step video upscaling for any input clip.
 
 It also ships built-in **RunPod Cloud** workflows — [RunPod Public Endpoints](https://docs.runpod.io/public-endpoints/reference) that run with just your API key, no endpoint to deploy, billed per use:
 

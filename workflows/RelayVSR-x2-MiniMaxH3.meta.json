@@ -1,0 +1,43 @@
+{
+  "id": "relayvsr-x2-minimaxh3",
+  "name": "RelayVSR x2 (MiniMax H3)",
+  "category": "Utility",
+  "description": "Video x2 upscale \u2014 RelayVSR 1-step diffusion + Flash VAE (works on any input clip)",
+  "handler": "mmh3",
+  "remote_file": "RelayVSR-x2-MiniMaxH3.json",
+  "endpoint_id": "",
+  "endpoint_name": "MiniMax H3",
+  "outputs": [
+    "video"
+  ],
+  "parameters": [
+    {
+      "key": "video",
+      "label": "Input video",
+      "type": "video",
+      "target": "job"
+    },
+    {
+      "key": "200:format",
+      "label": "Video format",
+      "type": "select",
+      "target": "node",
+      "default": "video/h264-mp4",
+      "options": [
+        "video/h264-mp4",
+        "video/hevc-mp4",
+        "video/av1-webm",
+        "video/webm",
+        "image/gif",
+        "image/webp"
+      ]
+    },
+    {
+      "key": "200:crf",
+      "label": "Video quality (CRF, lower=better)",
+      "type": "int",
+      "target": "node",
+      "default": 18
+    }
+  ]
+}

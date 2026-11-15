@@ -3,6 +3,11 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.8] — Unreleased
+
+### Added
+- **RelayVSR x2 video upscale** — new `RelayVSR-x2` workflow on both the LTX 2.5 and MiniMax H3 endpoints: feed any clip (`video` upload), get an exact 2x upscale with audio passthrough. Backed by the Comfy-Org RelayVSR x2 diffusion model + Flash VAE, auto-provisioned on the worker volumes.
+
 ## [0.2.7] — 2026-11-12
 
 ### Added

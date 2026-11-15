@@ -1,0 +1,147 @@
+{
+ "1": {
+  "class_type": "VHS_LoadVideo",
+  "inputs": {
+   "video": "input.mp4",
+   "force_rate": 0,
+   "custom_width": 0,
+   "custom_height": 0,
+   "frame_load_cap": 0,
+   "skip_first_frames": 0,
+   "select_every_nth": 1
+  },
+  "_meta": {
+   "title": "Load Video",
+   "cnr_id": "comfyui-videohelpersuite"
+  }
+ },
+ "5i": {
+  "class_type": "VHS_VideoInfoSource",
+  "inputs": {
+   "video_info": [
+    "1",
+    3
+   ]
+  },
+  "_meta": {
+   "title": "Video Info (fps)",
+   "cnr_id": "comfyui-videohelpersuite"
+  }
+ },
+ "4": {
+  "class_type": "UNETLoader",
+  "inputs": {
+   "unet_name": "relayvsr_x2_lightx2v_int8_convrot.safetensors",
+   "weight_dtype": "default"
+  },
+  "_meta": {
+   "title": "UNETLoader"
+  }
+ },
+ "5": {
+  "class_type": "RelayVSRConditioning",
+  "inputs": {
+   "model": [
+    "4",
+    0
+   ],
+   "images": [
+    "1",
+    0
+   ]
+  },
+  "_meta": {
+   "title": "RelayVSR Conditioning"
+  }
+ },
+ "6": {
+  "class_type": "KSampler",
+  "inputs": {
+   "model": [
+    "4",
+    0
+   ],
+   "positive": [
+    "5",
+    0
+   ],
+   "negative": [
+    "5",
+    0
+   ],
+   "latent_image": [
+    "5",
+    1
+   ],
+   "seed": 0,
+   "steps": 1,
+   "cfg": 1.0,
+   "sampler_name": "euler",
+   "scheduler": "simple",
+   "denoise": 1.0
+  },
+  "_meta": {
+   "title": "KSampler"
+  }
+ },
+ "7": {
+  "class_type": "VAELoader",
+  "inputs": {
+   "vae_name": "relayvsr_flash_vae_x2_fp32.safetensors"
+  },
+  "_meta": {
+   "title": "VAELoader"
+  }
+ },
+ "104": {
+  "class_type": "VSRDecode",
+  "inputs": {
+   "vae": [
+    "7",
+    0
+   ],
+   "samples": [
+    "6",
+    0
+   ],
+   "images": [
+    "1",
+    0
+   ],
+   "detail": 1.0
+  },
+  "_meta": {
+   "title": "VSR Decode"
+  }
+ },
+ "200": {
+  "class_type": "VHS_VideoCombine",
+  "inputs": {
+   "images": [
+    "104",
+    0
+   ],
+   "audio": [
+    "1",
+    2
+   ],
+   "frame_rate": [
+    "5i",
+    0
+   ],
+   "loop_count": 0,
+   "filename_prefix": "video/RelayVSR",
+   "format": "video/h264-mp4",
+   "pix_fmt": "yuv420p",
+   "crf": 18,
+   "save_metadata": true,
+   "trim_to_audio": false,
+   "pingpong": false,
+   "save_output": true
+  },
+  "_meta": {
+   "title": "Save Video",
+   "cnr_id": "comfyui-videohelpersuite"
+  }
+ }
+}
