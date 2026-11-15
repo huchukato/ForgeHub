@@ -42,16 +42,9 @@
     {
       "key": "seconds",
       "label": "Total duration (s)",
-      "type": "select",
+      "type": "int",
       "target": "job",
-      "default": "48",
-      "options": [
-        "10",
-        "20",
-        "30",
-        "48",
-        "60"
-      ]
+      "default": 10
     },
     {
       "key": "enhance",
