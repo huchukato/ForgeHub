@@ -3,6 +3,11 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.10] — Unreleased
+
+### Fixed
+- **RunPod endpoint lookup** — RunPod retired the REST v1 host (`rest.runpod.io`, NXDOMAIN), so resolving a workflow's endpoint by name failed with a 502. `list_endpoints` now uses the REST v2 `GET /v2/serverless` API.
+
 ## [0.2.9] — Unreleased
 
 ### Added

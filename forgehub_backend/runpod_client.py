@@ -22,20 +22,22 @@ async def list_endpoints(api_key: str | None = None) -> list[dict[str, Any]]:
         timeout=aiohttp.ClientTimeout(total=20),
         headers={"Authorization": f"Bearer {key}"},
     ) as session:
-        async with session.get("https://rest.runpod.io/v1/endpoints") as resp:
+        async with session.get("https://api.runpod.io/v2/serverless") as resp:
             body = await resp.text()
             if not resp.ok:
                 raise RuntimeError(f"RunPod {resp.status}: {body[:300]}")
             data = json.loads(body)
+    items = data if isinstance(data, list) else next(
+        (v for v in data.values() if isinstance(v, list)), [])
     return [
         {
             "id": ep.get("id", ""),
             "name": ep.get("name", ""),
-            "gpus": ep.get("gpuIds") or ep.get("gpuTypeIds") or "",
-            "workers": ep.get("workersMax"),
+            "gpus": ",".join(ep.get("gpu", {}).get("pools") or []),
+            "workers": (ep.get("workers") or {}).get("max"),
             "createdAt": ep.get("createdAt", ""),
         }
-        for ep in (data if isinstance(data, list) else data.get("endpoints", []))
+        for ep in items
     ]
 
 
