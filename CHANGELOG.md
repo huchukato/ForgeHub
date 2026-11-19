@@ -3,6 +3,11 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
+## [0.2.10] — Unreleased
+
+### Fixed
+- **Workflow startup sync** — filenames with spaces (e.g. `MiniMaxH3 Image - *.json`) were skipped because the raw URL wasn't percent-encoded; same latent fix applied to wildcard sync.
+
 ## [0.2.9] — Unreleased
 
 ### Added

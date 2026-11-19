@@ -11,6 +11,7 @@ import json
 import os
 import pathlib
 import threading
+import urllib.parse
 import urllib.request
 
 from forgehub_backend.config import SETTINGS
@@ -55,7 +56,7 @@ def sync_forgehub_workflows(target: pathlib.Path, upstream: list[str]) -> bool:
             print(f"[ForgeHub] workflow removal failed {rel}: {exc}")
     for rel in upstream:
         try:
-            data = urllib.request.urlopen(_RAW_URL.format(path=rel), timeout=30).read()
+            data = urllib.request.urlopen(_RAW_URL.format(path=urllib.parse.quote(rel, safe="/")), timeout=30).read()
             dest = target / rel
             if dest.exists() and dest.read_bytes() == data:
                 continue

@@ -10,6 +10,7 @@ import json
 import os
 import pathlib
 import threading
+import urllib.parse
 import urllib.request
 
 from forgehub_backend.config import SETTINGS
@@ -87,7 +88,7 @@ def sync_garage_wildcards(target: pathlib.Path, upstream: list[str]) -> bool:
             print(f"[ForgeHub] wildcard removal failed {rel}: {exc}")
     for rel in upstream:
         try:
-            data = urllib.request.urlopen(f"{_GARAGE_WILDCARDS_URL}/{rel}", timeout=10).read()
+            data = urllib.request.urlopen(f"{_GARAGE_WILDCARDS_URL}/{urllib.parse.quote(rel, safe='/')}", timeout=10).read()
             dest = target / rel
             if dest.exists() and dest.read_bytes() == data:
                 continue
