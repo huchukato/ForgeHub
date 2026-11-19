@@ -1,0 +1,63 @@
+{
+  "id": "mmh3-image-t2i",
+  "name": "MiniMax H3 Image T2I",
+  "category": "MiniMax H3",
+  "description": "Text→image stills (MiniMax H3 Image INT8, 6 step, CFG 1, serverless) con enhancer QwenVL",
+  "handler": "mmh3",
+  "remote_file": "MiniMaxH3 Image - Txt2Img.json",
+  "endpoint_id": "",
+  "outputs": [
+    "image"
+  ],
+  "parameters": [
+    {
+      "key": "prompt",
+      "label": "Prompt (wildcard __name__ o tag)",
+      "type": "text",
+      "target": "job",
+      "wildcard_prefix": "mmh3/"
+    },
+    {
+      "key": "enhance",
+      "label": "Enhancer QwenVL",
+      "type": "bool",
+      "target": "job",
+      "default": true
+    },
+    {
+      "key": "vl_preset",
+      "label": "Enhancer preset",
+      "type": "select",
+      "target": "job",
+      "default": "MiniMax › H3-Image T2I",
+      "options": [
+        "MiniMax › H3-Image T2I"
+      ],
+      "parent": "enhance"
+    },
+    {
+      "key": "image_size",
+      "label": "Resolution",
+      "type": "select",
+      "target": "job",
+      "default": "2048x2048",
+      "options": [
+        "1024x1024",
+        "1344x768",
+        "768x1344",
+        "1536x864",
+        "864x1536",
+        "2048x2048",
+        "2304x1728",
+        "2720x1536",
+        "2912x2912",
+        "3360x2496",
+        "3840x2176",
+        "4096x4096",
+        "4736x3552",
+        "5472x3072"
+      ]
+    }
+  ],
+  "endpoint_name": "MiniMax H3"
+}
