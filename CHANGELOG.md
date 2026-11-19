@@ -10,6 +10,8 @@ Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
 ### Fixed
 - **Workflow startup sync** — filenames with spaces (e.g. `MiniMaxH3 Image - *.json`) were skipped because the raw URL wasn't percent-encoded; same latent fix applied to wildcard sync.
+- **macOS DMG icon** — installer window now uses `icons/logo.icns` (same as the app icon) instead of the stale `build/icon.icns`.
+- **Quit crash** — `backendStatus` no longer throws "Object has been destroyed" when the backend exits after the window closed.
 
 ## [0.2.8] — Unreleased
 
