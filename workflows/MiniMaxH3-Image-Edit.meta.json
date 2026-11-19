@@ -15,7 +15,7 @@
       "label": "Edit instruction + aspect ratio (es. 'change X, 16:9' o 'adaptive')",
       "type": "text",
       "target": "job",
-      "wildcard_prefix": "mmh3/"
+      "wildcard_prefix": "mmh3/image-edit/"
     },
     {
       "key": "images",
