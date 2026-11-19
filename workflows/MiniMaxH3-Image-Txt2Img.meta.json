@@ -1,10 +1,10 @@
 {
-  "id": "mmh3-image-edit",
-  "name": "MiniMax H3 Image Edit",
+  "id": "mmh3-image-t2i",
+  "name": "MiniMax H3 Image T2I",
   "category": "MiniMax H3",
-  "description": "Image edit stills (MiniMax H3 Image INT8, 6 step, CFG 1, serverless) con enhancer QwenVL reference-aware",
+  "description": "Text→image stills (MiniMax H3 Image INT8, 6 step, CFG 1, serverless) con enhancer QwenVL",
   "handler": "mmh3",
-  "remote_file": "MiniMaxH3 Image - Edit.json",
+  "remote_file": "MiniMaxH3-Image-Txt2Img.json",
   "endpoint_id": "",
   "outputs": [
     "image"
@@ -12,16 +12,10 @@
   "parameters": [
     {
       "key": "prompt",
-      "label": "Edit instruction + aspect ratio (es. 'change X, 16:9' o 'adaptive')",
+      "label": "Prompt (wildcard __name__ o tag)",
       "type": "text",
       "target": "job",
       "wildcard_prefix": "mmh3/"
-    },
-    {
-      "key": "images",
-      "label": "Source image",
-      "type": "images",
-      "target": "job"
     },
     {
       "key": "enhance",
@@ -35,9 +29,9 @@
       "label": "Enhancer preset",
       "type": "select",
       "target": "job",
-      "default": "MiniMax › H3-Image Edit",
+      "default": "MiniMax › H3-Image T2I",
       "options": [
-        "MiniMax › H3-Image Edit"
+        "MiniMax › H3-Image T2I"
       ],
       "parent": "enhance"
     },
