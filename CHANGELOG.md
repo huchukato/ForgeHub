@@ -3,15 +3,13 @@
 All notable changes to ForgeHub are documented here.
 Format loosely follows [Keep a Changelog](https://keepachangelog.com/).
 
-## [0.2.10] — Unreleased
-
-### Fixed
-- **Workflow startup sync** — filenames with spaces (e.g. `MiniMaxH3 Image - *.json`) were skipped because the raw URL wasn't percent-encoded; same latent fix applied to wildcard sync.
-
 ## [0.2.9] — Unreleased
 
 ### Added
 - **MiniMax H3 Image endpoints** — `MiniMaxH3 Image - Txt2Img` (T2I) and `MiniMaxH3 Image - Edit` on the MiniMax H3 endpoint: 6-step CFG-1 stills generation/editing with the new `MiniMax › H3-Image T2I` / `H3-Image Edit` QwenVL enhancer presets (strict JSON caption contract), wildcard support and resolution picker up to 16MP native sizes.
+
+### Fixed
+- **Workflow startup sync** — filenames with spaces (e.g. `MiniMaxH3 Image - *.json`) were skipped because the raw URL wasn't percent-encoded; same latent fix applied to wildcard sync.
 
 ## [0.2.8] — Unreleased
 
