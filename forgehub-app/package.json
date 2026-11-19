@@ -66,6 +66,9 @@
         "dmg"
       ]
     },
+    "dmg": {
+      "icon": "icons/logo.icns"
+    },
     "win": {
       "icon": "icons/icon.ico",
       "target": [
