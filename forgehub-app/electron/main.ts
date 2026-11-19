@@ -36,7 +36,9 @@ function pingBackend(): Promise<boolean> {
 }
 
 function backendStatus(msg: string) {
-  win?.webContents.send("backend-status", msg);
+  if (win && !win.isDestroyed() && !win.webContents.isDestroyed()) {
+    win.webContents.send("backend-status", msg);
+  }
 }
 
 async function startBackend(): Promise<void> {
@@ -109,6 +111,9 @@ function createWindow() {
       contextIsolation: true,
       nodeIntegration: false,
     },
+  });
+  win.on("closed", () => {
+    win = null;
   });
 
   if (isDev) {
